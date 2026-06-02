@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex StoryCraft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--parchment:#f5e6c8;--parchment-dark:#e8d5a3;--blood:#8b1a1a;--gold:#c8931a;--gold-light:#e8b84b;--ember:#d4521a;--rune:#4a8fa8;--magic:#7b5ea7;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Crimson Text',Georgia,serif;background-color:#0d0a05;color:var(--parchment);min-height:100vh;overflow-x:hidden;}
+body{background-image:radial-gradient(ellipse at 20% 50%,rgba(139,26,26,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(123,94,167,0.06) 0%,transparent 50%);}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8931a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+header{position:relative;text-align:center;padding:3rem 2rem 2rem;border-bottom:1px solid rgba(200,147,26,0.3);background:linear-gradient(180deg,rgba(26,16,8,0.9) 0%,transparent 100%);z-index:10;}
+header::before{content:'\2015\2015 \2736 \2015\2015';display:block;font-size:1rem;color:var(--gold);letter-spacing:0.5rem;margin-bottom:1rem;opacity:0.7;}
+.title-main{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--gold-light);letter-spacing:0.15em;text-shadow:0 0 40px rgba(200,147,26,0.4),0 2px 4px rgba(0,0,0,0.8);}
+.title-sub{font-family:'Crimson Text',serif;font-style:italic;font-size:1.1rem;color:rgba(245,230,200,0.5);margin-top:0.5rem;letter-spacing:0.2em;}
+.title-ornament{font-size:0.8rem;color:var(--gold);opacity:0.5;letter-spacing:0.8rem;margin-top:1rem;}
+
+.sheets-bar{position:relative;z-index:10;background:rgba(26,16,8,0.8);border-bottom:1px solid rgba(200,147,26,0.2);padding:0.75rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.sheets-bar label{font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);letter-spacing:0.1em;white-space:nowrap;}
+.sheets-bar input{flex:1;min-width:200px;background:rgba(245,230,200,0.08);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.75rem;font-family:'Crimson Text',serif;font-size:0.9rem;border-radius:2px;outline:none;}
+.sheets-bar input:focus{border-color:var(--gold);}
+.sheets-bar input::placeholder{color:rgba(245,230,200,0.3);font-style:italic;}
+.sheets-bar select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.25);color:var(--parchment);padding:0.4rem 0.6rem;font-family:'Crimson Text',serif;font-size:0.9rem;border-radius:2px;outline:none;min-width:130px;}
+.sheets-bar select option{background:#1a1008;}
+.btn-load{background:var(--blood);border:1px solid rgba(200,147,26,0.4);color:var(--parchment);padding:0.4rem 1.2rem;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;border-radius:2px;white-space:nowrap;}
+.btn-load:hover{background:#a52020;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#555;flex-shrink:0;}
+.status-dot.ok{background:#4caf50;box-shadow:0 0 6px #4caf50;}
+.status-dot.err{background:var(--blood);box-shadow:0 0 6px var(--blood);}
+.status-dot.loading{background:var(--gold);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+nav{position:relative;z-index:10;display:flex;padding:1.5rem 2rem 0;background:rgba(13,10,5,0.6);overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+.nav-tab{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;color:rgba(245,230,200,0.4);padding:0.55rem 1.1rem;cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:4px 4px 0 0;white-space:nowrap;display:flex;align-items:center;gap:0.4rem;background:transparent;position:relative;top:1px;transition:all 0.2s;}
+.nav-tab:hover{color:var(--parchment-dark);border-color:rgba(200,147,26,0.2);}
+.nav-tab.active{color:var(--gold-light);border-color:rgba(200,147,26,0.4);border-bottom-color:#0d0a05;background:rgba(26,16,8,0.9);}
+.tab-sym{font-size:0.85rem;}
+
+main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147,26,0.3);background:rgba(13,10,5,0.4);min-height:60vh;}
+.page{display:none;animation:fadeIn 0.3s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.filter-bar{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:1rem 1.25rem;background:rgba(26,16,8,0.6);border:1px solid rgba(200,147,26,0.2);border-radius:4px;}
+.fg{display:flex;flex-direction:column;gap:0.25rem;min-width:140px;flex:1;}
+.fg label{font-family:'Cinzel',serif;font-size:0.6rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;}
+.fg input,.fg select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.25);color:var(--parchment);padding:0.35rem 0.6rem;font-family:'Crimson Text',serif;font-size:0.95rem;border-radius:2px;outline:none;}
+.fg select option{background:#1a1008;}
+.fg input:focus,.fg select:focus{border-color:var(--gold);}
+.fg input::placeholder{color:rgba(245,230,200,0.25);font-style:italic;}
+.btn-clear{align-self:flex-end;background:transparent;border:1px solid rgba(200,147,26,0.25);color:rgba(245,230,200,0.4);padding:0.35rem 0.9rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.1em;cursor:pointer;border-radius:2px;}
+.btn-clear:hover{color:var(--parchment);border-color:var(--gold);}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.card{background:linear-gradient(135deg,rgba(26,16,8,0.9),rgba(13,10,5,0.95));border:1px solid rgba(200,147,26,0.2);border-radius:4px;padding:1.25rem;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.25s;}
+.card:hover{border-color:rgba(200,147,26,0.5);transform:translateY(-2px);}
+.card:hover::before{opacity:1;}
+.card-type{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:var(--gold);opacity:0.7;margin-bottom:0.4rem;text-transform:uppercase;}
+.card-name{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--parchment);margin-bottom:0.5rem;line-height:1.3;}
+.card-desc{font-size:0.9rem;color:rgba(245,230,200,0.55);font-style:italic;line-height:1.5;margin-bottom:0.75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
+.tag{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.08em;padding:0.15rem 0.5rem;border-radius:2px;border:1px solid;text-transform:uppercase;}
+.tag-class{color:var(--rune);border-color:rgba(74,143,168,0.4);background:rgba(74,143,168,0.1);}
+.tag-rare{color:var(--magic);border-color:rgba(123,94,167,0.4);background:rgba(123,94,167,0.1);}
+.tag-danger{color:var(--ember);border-color:rgba(212,82,26,0.4);background:rgba(212,82,26,0.1);}
+.tag-gold{color:var(--gold);border-color:rgba(200,147,26,0.4);background:rgba(200,147,26,0.1);}
+.tag-gray{color:rgba(245,230,200,0.5);border-color:rgba(245,230,200,0.15);}
+.tag-green{color:#5a9a4a;border-color:rgba(90,154,74,0.4);background:rgba(90,154,74,0.1);}
+.tag-blood{color:var(--blood);border-color:rgba(139,26,26,0.4);background:rgba(139,26,26,0.1);}
+
+.state-msg{text-align:center;padding:4rem 2rem;color:rgba(245,230,200,0.3);}
+.state-sym{font-size:2.5rem;margin-bottom:1rem;opacity:0.4;font-family:'Cinzel',serif;display:block;}
+.state-msg h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.5rem;color:rgba(245,230,200,0.4);}
+.state-msg p{font-style:italic;font-size:0.9rem;}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,3,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:linear-gradient(160deg,#1a1008,#0d0a05);border:1px solid rgba(200,147,26,0.4);border-radius:6px;padding:2rem;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;position:relative;animation:modalIn 0.25s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+.modal::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(245,230,200,0.4);font-size:1.4rem;cursor:pointer;}
+.modal-close:hover{color:var(--gold);}
+.modal-type{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.7;margin-bottom:0.5rem;}
+.modal-name{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
+.modal-divider{border:none;border-top:1px solid rgba(200,147,26,0.2);margin:1rem 0;}
+.modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.5rem;}
+.modal-field label{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);opacity:0.7;display:block;margin-bottom:0.15rem;}
+.modal-field p{font-size:1rem;color:var(--parchment);}
+.modal-field.full{grid-column:1/-1;}
+.modal-desc{font-style:italic;color:rgba(245,230,200,0.7);font-size:1rem;line-height:1.7;border-left:2px solid rgba(200,147,26,0.3);padding-left:1rem;margin:1rem 0;}
+
+.result-count{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:rgba(245,230,200,0.3);margin-bottom:1rem;text-transform:uppercase;}
+.section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(200,147,26,0.2);display:flex;align-items:center;gap:0.6rem;}
+.stitle-sym{color:var(--gold);opacity:0.6;font-size:1rem;}
+
+.home-sym{font-family:'Cinzel',serif;font-size:2.5rem;margin-bottom:1.5rem;opacity:0.5;color:var(--gold);display:block;}
+.home-title{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold-light);margin-bottom:0.75rem;}
+.home-desc{font-style:italic;color:rgba(245,230,200,0.5);max-width:480px;margin:0 auto 2.5rem;font-size:1.05rem;line-height:1.7;}
+.home-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+.stat-box{text-align:center;padding:1rem 1.2rem;border:1px solid rgba(200,147,26,0.2);border-radius:4px;background:rgba(26,16,8,0.6);min-width:100px;}
+.stat-sym{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);opacity:0.6;display:block;margin-bottom:0.25rem;}
+.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);display:block;}
+.stat-lbl{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.15em;color:rgba(245,230,200,0.35);text-transform:uppercase;}
+
+.sessions-table{width:100%;border-collapse:collapse;font-size:0.95rem;}
+.sessions-table th{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);opacity:0.7;text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid rgba(200,147,26,0.3);text-transform:uppercase;}
+.sessions-table td{padding:0.75rem;border-bottom:1px solid rgba(200,147,26,0.1);color:rgba(245,230,200,0.75);vertical-align:top;}
+.sessions-table tr:hover td{background:rgba(200,147,26,0.05);cursor:pointer;}
+
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:rgba(26,16,8,0.3);}
+::-webkit-scrollbar-thumb{background:rgba(200,147,26,0.3);border-radius:3px;}
+
+/* CONTADOR */
+.cnt-wrap{max-width:680px;margin:0 auto;}
+.cnt-lbl{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+.cnt-input{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.7rem;font-family:'Cinzel',serif;font-size:0.9rem;border-radius:2px;outline:none;width:110px;}
+.cnt-input:focus{border-color:var(--gold);}
+.cnt-select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.7rem;font-family:'Cinzel',serif;font-size:0.85rem;border-radius:2px;outline:none;width:160px;}
+.cnt-select option{background:#1a1008;}
+.cnt-rb-input{width:50px;text-align:center;background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.2);color:var(--parchment);padding:0.3rem;font-family:'Cinzel',serif;font-size:0.9rem;border-radius:2px;outline:none;}
+.cnt-rb-input:focus{border-color:var(--gold);}
+.cnt-btn{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;background:transparent;border:1px solid rgba(200,147,26,0.25);color:rgba(245,230,200,0.4);padding:0.4rem 1rem;border-radius:2px;cursor:pointer;}
+.cnt-btn:hover{border-color:var(--gold);color:var(--parchment);}
+.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.85rem 1.25rem;background:rgba(26,16,8,0.8);border:1px solid rgba(200,147,26,0.25);border-radius:4px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.cnt-pts-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
+.cnt-table{width:100%;border-collapse:collapse;}
+.cnt-table th{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);opacity:0.6;text-align:center;padding:0.5rem 0.5rem 0.75rem;border-bottom:1px solid rgba(200,147,26,0.2);text-transform:uppercase;}
+.cnt-table th:first-child{text-align:left;}
+.cnt-table td{padding:0.65rem 0.5rem;border-bottom:1px solid rgba(200,147,26,0.08);text-align:center;vertical-align:middle;}
+.cnt-table td:first-child{text-align:left;}
+.attr-btn{width:30px;height:30px;background:rgba(26,16,8,0.8);border:1px solid rgba(200,147,26,0.3);color:var(--gold-light);font-size:1.2rem;cursor:pointer;border-radius:2px;font-weight:bold;vertical-align:middle;}
+.attr-btn:hover{background:rgba(200,147,26,0.15);border-color:var(--gold);}
+.attr-btn:disabled{opacity:0.2;cursor:not-allowed;}
+.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--parchment);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(26,16,8,0.6);border-top:1px solid rgba(200,147,26,0.2);border-bottom:1px solid rgba(200,147,26,0.2);height:30px;line-height:30px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="title-main">Codex StoryCraft</h1>
+  <p class="title-sub">sistema de rpg de mesa</p>
+  <p class="title-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</p>
+</header>
+
+<div class="sheets-bar">
+  <label>&#9768; Google Sheets</label>
+  <input type="text" id="sheetUrl" placeholder="Cole aqui a URL da planilha publicada como CSV..." />
+  <select id="sheetTab">
+    <option value="">Aba automatica</option>
+    <option value="Racas">Racas</option>
+    <option value="Classes">Classes</option>
+    <option value="VantagensDesvantagens">Vantagens e Desvantagens</option>
+    <option value="ItensLoja">Itens e Loja</option>
+    <option value="Grimorio">Grimorio</option>
+    <option value="Deuses">Deuses</option>
+    <option value="Velkarion">Velkarion</option>
+    <option value="Estigmas">Estigmas</option>
+  </select>
+  <button class="btn-load" onclick="loadSheet()">Invocar dados</button>
+  <div class="status-dot" id="statusDot"></div>
+  <span id="statusMsg" style="font-size:0.75rem;color:rgba(245,230,200,0.35);font-style:italic;"></span>
+</div>
+
+<nav>
+  <div class="nav-tab active" data-page="inicio"       onclick="showPage('inicio')">       <span class="tab-sym">&#8962;</span> Inicio</div>
+  <div class="nav-tab"        data-page="contador"     onclick="showPage('contador')">     <span class="tab-sym">&#9670;</span> Contador</div>
+  <div class="nav-tab"        data-page="racas"        onclick="showPage('racas')">        <span class="tab-sym">&#9775;</span> Racas</div>
+  <div class="nav-tab"        data-page="classes"      onclick="showPage('classes')">      <span class="tab-sym">&#9876;</span> Classes</div>
+  <div class="nav-tab"        data-page="vantagens"    onclick="showPage('vantagens')">    <span class="tab-sym">&#9651;</span> Vantagens</div>
+  <div class="nav-tab"        data-page="itens"        onclick="showPage('itens')">        <span class="tab-sym">&#9768;</span> Itens</div>
+  <div class="nav-tab"        data-page="grimorio"     onclick="showPage('grimorio')">     <span class="tab-sym">&#10041;</span> Grimorio</div>
+  <div class="nav-tab"        data-page="deuses"       onclick="showPage('deuses')">       <span class="tab-sym">&#9788;</span> Deuses</div>
+  <div class="nav-tab"        data-page="velkarion"    onclick="showPage('velkarion')">    <span class="tab-sym">&#9784;</span> Velkarion</div>
+  <div class="nav-tab"        data-page="estigmas"     onclick="showPage('estigmas')">     <span class="tab-sym">&#10070;</span> Estigmas</div>
+</nav>
+
+<main>
+
+<!-- INICIO -->
+<div id="page-inicio" class="page active">
+  <div style="text-align:center;padding:3rem 1rem;">
+    <span class="home-sym">&#10022;</span>
+    <h2 class="home-title">Bem-vindo ao Codex StoryCraft</h2>
+    <p class="home-desc">O repositorio vivo do universo de Velkarion. Racas, classes, magias, deuses e estigmas — tudo conectado ao seu Google Sheets em tempo real.</p>
+    <div class="home-stats">
+      <div class="stat-box"><span class="stat-sym">&#9775;</span><span class="stat-num" id="stat-racas">—</span><span class="stat-lbl">Racas</span></div>
+      <div class="stat-box"><span class="stat-sym">&#9876;</span><span class="stat-num" id="stat-classes">—</span><span class="stat-lbl">Classes</span></div>
+      <div class="stat-box"><span class="stat-sym">&#10041;</span><span class="stat-num" id="stat-grimorio">—</span><span class="stat-lbl">Magias</span></div>
+      <div class="stat-box"><span class="stat-sym">&#9768;</span><span class="stat-num" id="stat-itens">—</span><span class="stat-lbl">Itens</span></div>
+      <div class="stat-box"><span class="stat-sym">&#9788;</span><span class="stat-num" id="stat-deuses">—</span><span class="stat-lbl">Deuses</span></div>
+      <div class="stat-box"><span class="stat-sym">&#10070;</span><span class="stat-num" id="stat-estigmas">—</span><span class="stat-lbl">Estigmas</span></div>
+    </div>
+    <p style="font-style:italic;color:rgba(245,230,200,0.3);font-size:0.9rem;">Cole a URL do Google Sheets acima e clique em Invocar dados para comecar.</p>
+  </div>
+</div>
+
+<!-- CONTADOR -->
+<div id="page-contador" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9670;</span> Contador de Atributos</h2>
+  <div class="cnt-wrap">
+
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;align-items:flex-end;">
+      <div><span class="cnt-lbl">Nivel do Personagem</span><input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1"></div>
+      <div><span class="cnt-lbl">Raca</span><select class="cnt-select" id="cnt-raca"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select></div>
+      <button class="cnt-btn" onclick="cntReset()">Resetar</button>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.85rem 1.25rem;background:rgba(26,16,8,0.5);border:1px solid rgba(200,147,26,0.15);border-radius:4px;align-items:flex-end;">
+      <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);opacity:0.6;text-transform:uppercase;width:100%;">&#9675; Bonus Racial</span>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
+    </div>
+
+    <div class="cnt-pts-bar">
+      <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(245,230,200,0.5);text-transform:uppercase;">Pontos Restantes</span>
+      <span class="cnt-pts-num" id="cnt-pts">10</span>
+      <span style="color:rgba(200,147,26,0.3);font-size:1.2rem;">/</span>
+      <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:rgba(245,230,200,0.25);">10</span>
+      <span id="cnt-warn" style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--blood);display:none;">&#9888; Pontos excedidos</span>
+      <span id="cnt-escala" style="font-style:italic;font-size:0.82rem;color:rgba(245,230,200,0.35);margin-left:auto;">Nivel 1-9 — max 5 por atributo</span>
+    </div>
+
+    <table class="cnt-table">
+      <thead><tr>
+        <th>Atributo</th>
+        <th>Base</th>
+        <th>Racial</th>
+        <th>Total</th>
+        <th>Custo</th>
+      </tr></thead>
+      <tbody id="cnt-tbody"></tbody>
+    </table>
+
+    <div style="margin-top:1.25rem;padding:0.75rem 1.25rem;background:rgba(26,16,8,0.4);border:1px solid rgba(200,147,26,0.12);border-radius:4px;font-style:italic;font-size:0.85rem;color:rgba(245,230,200,0.35);line-height:1.8;">
+      <span style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--gold);opacity:0.6;font-style:normal;">Tabela de Custo</span><br>
+      1 e 2 pontos: 1pt cada &bull; 3 pontos: 2pts &bull; 4 pontos: 3pts &bull; Reduzir em -1: <span style="color:var(--gold)">+1pt extra</span>
+    </div>
+  </div>
+</div>
+
+<!-- RACAS -->
+<div id="page-racas" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9775;</span> Racas</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, habilidade..." oninput="renderRacas()"></div>
+    <div class="fg"><label>Origem</label><select id="f-raca-origem" onchange="renderRacas()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Atributo</label><select id="f-raca-atrib" onchange="renderRacas()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-racas"></p>
+  <div class="cards-grid" id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9775;</span><h3>Nenhuma raca carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- CLASSES -->
+<div id="page-classes" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9876;</span> Classes</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, papel..." oninput="renderClasses()"></div>
+    <div class="fg"><label>Papel</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Dificuldade</label><select id="f-class-dif" onchange="renderClasses()"><option value="">Todas</option><option>Iniciante</option><option>Intermediario</option><option>Avancado</option><option>Mestre</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-classes"></p>
+  <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9876;</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- VANTAGENS -->
+<div id="page-vantagens" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9651;</span> Vantagens &amp; Desvantagens</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito..." oninput="renderVantagens()"></div>
+    <div class="fg"><label>Tipo</label><select id="f-vd-tipo" onchange="renderVantagens()"><option value="">Todos</option><option>Vantagem</option><option>Desvantagem</option></select></div>
+    <div class="fg"><label>Categoria</label><select id="f-vd-cat" onchange="renderVantagens()"><option value="">Todas</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-vantagens"></p>
+  <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9651;</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- ITENS -->
+<div id="page-itens" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9768;</span> Itens &amp; Loja</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-item-search" placeholder="Nome, efeito..." oninput="renderItens()"></div>
+    <div class="fg"><label>Raridade</label><select id="f-item-raridade" onchange="renderItens()"><option value="">Todas</option><option>Comum</option><option>Incomum</option><option>Raro</option><option>Epico</option><option>Lendario</option><option>Artefato</option></select></div>
+    <div class="fg"><label>Tipo</label><select id="f-item-tipo" onchange="renderItens()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('itens')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-itens"></p>
+  <div class="cards-grid" id="grid-itens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9768;</span><h3>Nenhum item carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- GRIMORIO -->
+<div id="page-grimorio" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#10041;</span> Grimorio</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-mag-search" placeholder="Nome, efeito, escola..." oninput="renderGrimorio()"></div>
+    <div class="fg"><label>Escola</label><select id="f-mag-escola" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Grau</label><select id="f-mag-circulo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Origem</label><select id="f-mag-classe" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Tipo</label><select id="f-mag-tipo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-grimorio"></p>
+  <div class="cards-grid" id="grid-grimorio"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10041;</span><h3>Nenhuma magia carregada</h3><p>Conecte o Google Sheets para ver o grimorio de feiticos.</p></div></div>
+</div>
+
+<!-- DEUSES -->
+<div id="page-deuses" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9788;</span> Deuses</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-deus-search" placeholder="Nome, dominio..." oninput="renderDeuses()"></div>
+    <div class="fg"><label>Alinhamento</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Dominio</label><select id="f-deus-dominio" onchange="renderDeuses()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('deuses')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-deuses"></p>
+  <div class="cards-grid" id="grid-deuses"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9788;</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- VELKARION -->
+<div id="page-velkarion" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#9784;</span> Velkarion — O Mundo</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-vel-search" placeholder="Regiao, cidade..." oninput="renderVelkarion()"></div>
+    <div class="fg"><label>Tipo</label><select id="f-vel-tipo" onchange="renderVelkarion()"><option value="">Todos</option><option>Continente</option><option>Reino</option><option>Cidade</option><option>Regiao</option><option>Ruina</option><option>Masmorra</option></select></div>
+    <div class="fg"><label>Clima</label><select id="f-vel-clima" onchange="renderVelkarion()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('velkarion')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-velkarion"></p>
+  <div class="cards-grid" id="grid-velkarion"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9784;</span><h3>Nenhuma regiao carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+<!-- ESTIGMAS -->
+<div id="page-estigmas" class="page">
+  <h2 class="section-title"><span class="stitle-sym">&#10070;</span> Estigmas</h2>
+  <div class="filter-bar">
+    <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, pericia, poder..." oninput="renderEstigmas()"></div>
+    <div class="fg"><label>Categoria</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Atributo Bonus</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todos</option></select></div>
+    <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
+  </div>
+  <p class="result-count" id="count-estigmas"></p>
+  <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10070;</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+</div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── NAVEGACAO ──
+function showPage(name) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  document.getElementById('page-' + name).classList.add('active');
+  var tab = document.querySelector('[data-page="' + name + '"]');
+  if (tab) tab.classList.add('active');
+}
+
+// ── DATABASE ──
+var DB = { racas:[], classes:[], vantagens:[], itens:[], grimorio:[], deuses:[], velkarion:[], estigmas:[] };
+
+// URLs fixas por aba — já embutidas no app
+var SHEET_URLS = {
+  grimorio: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv"
+};
+
+window.addEventListener('load', function() {
+  var saved = localStorage.getItem('rpg_sheet_url');
+  if (saved) document.getElementById('sheetUrl').value = saved;
+  cntUpdate();
+  // Carrega automaticamente todas as abas com URL fixa
+  autoLoadAll();
+});
+
+async function autoLoadAll() {
+  for (var key in SHEET_URLS) {
+    await autoLoadTab(key, SHEET_URLS[key]);
+  }
+  updateStats();
+  renderAll();
+  cntPopulateRaces();
+}
+
+async function autoLoadTab(tabKey, url) {
+  try {
+    var res = await fetch(url + '&t=' + Date.now());
+    if (!res.ok) return;
+    var text = await res.text();
+    var rows = parseCSV(text);
+    if (!rows.length) return;
+    distributeData(rows, tabKey);
+    document.getElementById('statusDot').className = 'status-dot ok';
+    document.getElementById('statusMsg').textContent = 'Dados carregados automaticamente';
+  } catch(e) {
+    console.warn('Erro ao carregar ' + tabKey + ':', e);
+  }
+}
+
+// ── CSV ──
+function parseCSV(text) {
+  var lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  var rows = [];
+  for (var li = 1; li < lines.length; li++) {
+    var vals = [], cur = '', inQ = false;
+    for (var ci = 0; ci < lines[li].length; ci++) {
+      var c = lines[li][ci];
+      if (c === '"') { inQ = !inQ; continue; }
+      if (c === ',' && !inQ) { vals.push(cur.trim()); cur = ''; } else cur += c;
+    }
+    vals.push(cur.trim());
+    var obj = {};
+    for (var hi = 0; hi < headers.length; hi++) obj[headers[hi]] = (vals[hi]||'').replace(/^"|"$/g,'').trim();
+    if (Object.values(obj).some(function(v){ return v; })) rows.push(obj);
+  }
+  return rows;
+}
+
+function buildCSVUrl(raw) {
+  var url = raw.trim();
+  if (url.indexOf('output=csv') > -1) return url;
+  var m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if (!m) return url;
+  var id = m[1];
+  var gidM = url.match(/[#&?]gid=(\d+)/);
+  var gid = gidM ? gidM[1] : '0';
+  return 'https://docs.google.com/spreadsheets/d/' + id + '/export?format=csv&id=' + id + '&gid=' + gid;
+}
+
+function setStatus(type, msg) {
+  document.getElementById('statusDot').className = 'status-dot ' + type;
+  document.getElementById('statusMsg').textContent = msg;
+}
+
+async function loadSheet() {
+  var rawUrl = document.getElementById('sheetUrl').value.trim();
+  if (!rawUrl) { setStatus('err', 'Cole uma URL valida.'); return; }
+  localStorage.setItem('rpg_sheet_url', rawUrl);
+  var url = buildCSVUrl(rawUrl);
+  setStatus('loading', 'Invocando dados...');
+  try {
+    var res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    var text = await res.text();
+    var rows = parseCSV(text);
+    if (!rows.length) throw new Error('Planilha vazia.');
+    var tab = document.getElementById('sheetTab').value.toLowerCase();
+    distributeData(rows, tab);
+    setStatus('ok', rows.length + ' registros carregados');
+    updateStats();
+    renderAll();
+    cntPopulateRaces();
+  } catch(e) { setStatus('err', 'Erro: ' + e.message); }
+}
+
+function normalizeKey(k) {
+  return k.toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+    .replace('feitico','feitico')
+    .replace('feiticao','feitico');
+}
+
+function distributeData(rows, tab) {
+  var raw  = Object.keys(rows[0]||{});
+  var keys = raw.map(function(k){ return k.toLowerCase(); });
+  var norm = raw.map(function(k){ return normalizeKey(k); });
+
+  // Tab hint takes priority
+  if (tab === 'grimorio')            { DB.grimorio  = rows; return; }
+  if (tab === 'racas')               { DB.racas     = rows; return; }
+  if (tab === 'classes')             { DB.classes   = rows; return; }
+  if (tab === 'vantagensdesvantagens'){ DB.vantagens = rows; return; }
+  if (tab === 'itensloja')           { DB.itens     = rows; return; }
+  if (tab === 'deuses')              { DB.deuses    = rows; return; }
+  if (tab === 'velkarion')           { DB.velkarion = rows; return; }
+  if (tab === 'estigmas')            { DB.estigmas  = rows; return; }
+
+  // Auto-detect by column signatures
+  // Grimorio: has "feitico" or "feitiço" OR has both "escola" and "grau"
+  var hasFeitico = norm.indexOf('feitico') > -1;
+  var hasEscola  = keys.indexOf('escola')  > -1;
+  var hasGrau    = keys.indexOf('grau')    > -1;
+  var hasOrigem  = keys.indexOf('origem')  > -1;
+  if (hasFeitico || (hasEscola && hasGrau) || (hasEscola && hasOrigem)) { DB.grimorio = rows; return; }
+
+  var hasPapel   = keys.indexOf('papel')     > -1;
+  var hasRaridade= keys.indexOf('raridade')  > -1;
+  var hasRaca    = keys.indexOf('raca')      > -1 || norm.indexOf('raca') > -1;
+  var hasDominio = keys.indexOf('dominio')   > -1 || norm.indexOf('dominio') > -1;
+  var hasClasse  = keys.indexOf('classe')    > -1;
+
+  if (hasRaca || (hasClasse && !hasPapel))            { DB.racas     = rows; return; }
+  if (hasPapel)                                        { DB.classes   = rows; return; }
+  if (hasRaridade)                                     { DB.itens     = rows; return; }
+  if (hasDominio)                                      { DB.deuses    = rows; return; }
+  if (keys.indexOf('continente') > -1)                 { DB.velkarion = rows; return; }
+  if (keys.indexOf('estigma') > -1 || keys.indexOf('pericia') > -1) { DB.estigmas = rows; return; }
+  if (keys.indexOf('vantagem') > -1 || keys.indexOf('desvantagem') > -1) { DB.vantagens = rows; return; }
+
+  // Fallback: check first column name
+  var firstCol = norm[0] || '';
+  if (firstCol === 'feitico') { DB.grimorio = rows; return; }
+
+  DB.racas = rows;
+}
+
+function updateStats() {
+  var map = {racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas'};
+  for (var k in map) { var el = document.getElementById('stat-'+map[k]); if(el) el.textContent = DB[k].length||'—'; }
+}
+
+function renderAll() { renderRacas(); renderClasses(); renderVantagens(); renderItens(); renderGrimorio(); renderDeuses(); renderVelkarion(); renderEstigmas(); }
+
+// ── HELPERS ──
+function deaccent(s) {
+  return (s||'').toLowerCase()
+    .replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e')
+    .replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o')
+    .replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c')
+    .replace(/[ñ]/g,'n');
+}
+function gf(row) {
+  var keys = Array.prototype.slice.call(arguments, 1);
+  for (var i=0; i<keys.length; i++) {
+    var rks = Object.keys(row);
+    for (var j=0; j<rks.length; j++) {
+      if (rks[j].toLowerCase()===keys[i].toLowerCase() && row[rks[j]]) return row[rks[j]];
+    }
+  }
+  // fallback: deaccented comparison
+  for (var i=0; i<keys.length; i++) {
+    var dk = deaccent(keys[i]);
+    var rks = Object.keys(row);
+    for (var j=0; j<rks.length; j++) {
+      if (deaccent(rks[j])===dk && row[rks[j]]) return row[rks[j]];
+    }
+  }
+  return '';
+}
+function tag(label, cls) { if(!label) return ''; return '<span class="tag '+cls+'">'+label+'</span>'; }
+function fstr(row) { return Object.values(row).join(' ').toLowerCase(); }
+function rarColor(r) {
+  var m={'lendario':'tag-rare','epico':'tag-rare','raro':'tag-class','incomum':'tag-gold','comum':'tag-gray','artefato':'tag-danger'};
+  return m[(r||'').toLowerCase()]||'tag-gray';
+}
+function popSel(id, opts, cur) {
+  var sel = document.getElementById(id); if(!sel) return;
+  var first = sel.options[0];
+  sel.innerHTML = ''; sel.appendChild(first);
+  for(var i=0;i<opts.length;i++){
+    var o=document.createElement('option'); o.value=opts[i]; o.textContent=opts[i];
+    if(opts[i]===cur) o.selected=true; sel.appendChild(o);
+  }
+}
+function uniq(arr) { var s={}; return arr.filter(function(v){ if(!v||s[v]) return false; s[v]=1; return true; }); }
+function emptyMsg(sym, title) { return '<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+sym+'</span><h3>'+title+'</h3></div>'; }
+
+// ── RENDER RACAS ──
+function renderRacas() {
+  var s=document.getElementById('f-raca-search').value.toLowerCase(), or=document.getElementById('f-raca-origem').value, at=document.getElementById('f-raca-atrib').value;
+  popSel('f-raca-origem', uniq(DB.racas.map(function(r){return gf(r,'Origem','origem');})), or);
+  popSel('f-raca-atrib', uniq(DB.racas.map(function(r){return gf(r,'Atributo','atributo principal');})), at);
+  var data=DB.racas.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!or||gf(r,'Origem','origem')===or)&&(!at||gf(r,'Atributo','atributo principal')===at); });
+  var g=document.getElementById('grid-racas');
+  document.getElementById('count-racas').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9775;',DB.racas.length?'Nenhum resultado':'Nenhuma raca carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',o=gf(r,'Origem','origem'),a=gf(r,'Atributo','atributo principal'),h=gf(r,'Habilidade','habilidade racial'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">raca</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-class')+tag(h,'tag-gold')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER CLASSES ──
+function renderClasses() {
+  var s=document.getElementById('f-class-search').value.toLowerCase(), pa=document.getElementById('f-class-papel').value, di=document.getElementById('f-class-dif').value;
+  popSel('f-class-papel', uniq(DB.classes.map(function(r){return gf(r,'Papel','papel');})), pa);
+  var data=DB.classes.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!pa||gf(r,'Papel','papel')===pa)&&(!di||gf(r,'Dificuldade','dificuldade')===di); });
+  var g=document.getElementById('grid-classes');
+  document.getElementById('count-classes').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9876;',DB.classes.length?'Nenhum resultado':'Nenhuma classe carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',p=gf(r,'Papel','papel'),df=gf(r,'Dificuldade','dificuldade'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">classe</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(p,'tag-class')+tag(df,'tag-danger')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER VANTAGENS ──
+function renderVantagens() {
+  var s=document.getElementById('f-vd-search').value.toLowerCase(), tp=document.getElementById('f-vd-tipo').value, ca=document.getElementById('f-vd-cat').value;
+  popSel('f-vd-cat', uniq(DB.vantagens.map(function(r){return gf(r,'Categoria','categoria');})), ca);
+  var data=DB.vantagens.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!ca||gf(r,'Categoria','categoria')===ca); });
+  var g=document.getElementById('grid-vantagens');
+  document.getElementById('count-vantagens').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9651;',DB.vantagens.length?'Nenhum resultado':'Nenhuma entrada carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ct=gf(r,'Categoria','categoria'),ef=gf(r,'Efeito','efeito','Bonus','bonus'),cs=gf(r,'Custo','custo'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
+    var isD=(tp2||'').toLowerCase()==='desvantagem';
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'vantagem/desvantagem')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ct,'tag-gray')+(ef?tag(ef,isD?'tag-danger':'tag-green'):'')+( cs?tag(cs+' pts','tag-gold'):'')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER ITENS ──
+function renderItens() {
+  var s=document.getElementById('f-item-search').value.toLowerCase(), ra=document.getElementById('f-item-raridade').value, tp=document.getElementById('f-item-tipo').value;
+  popSel('f-item-tipo', uniq(DB.itens.map(function(r){return gf(r,'Tipo','tipo');})), tp);
+  var data=DB.itens.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!ra||gf(r,'Raridade','raridade')===ra)&&(!tp||gf(r,'Tipo','tipo')===tp); });
+  var g=document.getElementById('grid-itens');
+  document.getElementById('count-itens').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9768;',DB.itens.length?'Nenhum resultado':'Nenhum item carregado');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ri=gf(r,'Raridade','raridade'),dn=gf(r,'Dano','dano','Bonus','bonus'),vl=gf(r,'Valor','valor'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER GRIMORIO ──
+function renderGrimorio() {
+  var s  = document.getElementById('f-mag-search').value.toLowerCase();
+  var es = document.getElementById('f-mag-escola').value;
+  var ci = document.getElementById('f-mag-circulo').value;
+  var cl = document.getElementById('f-mag-classe').value;
+  var tp = document.getElementById('f-mag-tipo').value;
+
+  popSel('f-mag-escola',  uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola'); })), es);
+  popSel('f-mag-circulo', uniq(DB.grimorio.map(function(r){ return gf(r,'Grau','grau'); })), ci);
+  popSel('f-mag-classe',  uniq(DB.grimorio.map(function(r){ return gf(r,'Origem','origem'); })), cl);
+  popSel('f-mag-tipo',    uniq(DB.grimorio.map(function(r){ return gf(r,'Tipo','tipo'); })), tp);
+
+  var data = DB.grimorio.filter(function(r) {
+    return (!s  || fstr(r).indexOf(s) > -1)
+        && (!es || gf(r,'Escola','escola') === es)
+        && (!ci || gf(r,'Grau','grau') === ci)
+        && (!cl || gf(r,'Origem','origem') === cl)
+        && (!tp || gf(r,'Tipo','tipo') === tp);
+  });
+
+  var g = document.getElementById('grid-grimorio');
+  document.getElementById('count-grimorio').textContent = data.length + ' resultado' + (data.length === 1 ? '' : 's');
+
+  if (!data.length) {
+    g.innerHTML = emptyMsg('&#10041;', DB.grimorio.length ? 'Nenhum resultado' : 'Nenhuma magia carregada');
+    return;
+  }
+
+  g.innerHTML = data.map(function(r) {
+    var nome   = gf(r,'Feitiço','Feitico','feitico','Nome','nome') || '(sem nome)';
+    var escola = gf(r,'Escola','escola');
+    var grau   = gf(r,'Grau','grau');
+    var origem = gf(r,'Origem','origem');
+    var tipo   = gf(r,'Tipo','tipo');
+    var exec   = gf(r,'Execução','Execucao','execucao','Execução:');
+    var alc    = gf(r,'Alcance','Alcance:','alcance');
+    var dur    = gf(r,'Duração','Duracao','duracao');
+    var res    = gf(r,'Resistência','Resistencia','resistencia','Resistência:');
+    var desc   = gf(r,'Descrição','Descricao','descricao','desc');
+
+    var colorMap = {
+      'abjuracao':'tag-class','abjuração':'tag-class',
+      'evocacao':'tag-danger','evocação':'tag-danger',
+      'necromancia':'tag-blood','transmutacao':'tag-gold','transmutação':'tag-gold',
+      'encantamento':'tag-rare','ilusao':'tag-rare','ilusão':'tag-rare',
+      'convocacao':'tag-green','convocação':'tag-green',
+      'adivinhacao':'tag-gray','advinhação':'tag-gray'
+    };
+    var escolaTag = colorMap[(escola||'').toLowerCase()] || 'tag-gray';
+
+    return '<div class="card" onclick=\'openModal(' + JSON.stringify(JSON.stringify(r)) + ')\'>'
+      + '<div class="card-type">' + (escola || 'magia') + (tipo ? ' — ' + tipo : '') + '</div>'
+      + '<div class="card-name">' + nome + '</div>'
+      + (desc ? '<div class="card-desc">' + desc + '</div>' : '')
+      + '<div class="card-tags">'
+      + (grau   ? tag(grau,   'tag-gold')   : '')
+      + (origem ? tag(origem, 'tag-class')  : '')
+      + tag(escola, escolaTag)
+      + (exec   ? tag(exec,   'tag-gray')   : '')
+      + (alc    ? tag(alc,    'tag-gray')   : '')
+      + (dur    ? tag(dur,    'tag-gray')   : '')
+      + (res && res.toLowerCase() !== 'nenhuma' ? tag('Res: ' + res.substring(0,25), 'tag-danger') : '')
+      + '</div></div>';
+  }).join('');
+}
+
+
+// ── RENDER DEUSES ──
+function renderDeuses() {
+  var s=document.getElementById('f-deus-search').value.toLowerCase(), al=document.getElementById('f-deus-align').value, do2=document.getElementById('f-deus-dominio').value;
+  popSel('f-deus-align', uniq(DB.deuses.map(function(r){return gf(r,'Alinhamento','alinhamento');})), al);
+  popSel('f-deus-dominio', uniq(DB.deuses.map(function(r){return gf(r,'Dominio','dominio','Dom\u00ednio');})), do2);
+  var data=DB.deuses.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!al||gf(r,'Alinhamento','alinhamento')===al)&&(!do2||gf(r,'Dominio','dominio','Dom\u00ednio')===do2); });
+  var g=document.getElementById('grid-deuses');
+  document.getElementById('count-deuses').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9788;',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',do3=gf(r,'Dominio','dominio','Dom\u00ednio'),al2=gf(r,'Alinhamento','alinhamento'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(do3,'tag-gold')+tag(al2,'tag-class')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER VELKARION ──
+function renderVelkarion() {
+  var s=document.getElementById('f-vel-search').value.toLowerCase(), tp=document.getElementById('f-vel-tipo').value, cl=document.getElementById('f-vel-clima').value;
+  popSel('f-vel-clima', uniq(DB.velkarion.map(function(r){return gf(r,'Clima','clima');})), cl);
+  var data=DB.velkarion.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!cl||gf(r,'Clima','clima')===cl); });
+  var g=document.getElementById('grid-velkarion');
+  document.getElementById('count-velkarion').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9784;',DB.velkarion.length?'Nenhum resultado':'Nenhuma regiao carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome','Regiao','regiao')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),cl2=gf(r,'Clima','clima'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'regiao')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-class')+'</div></div>';
+  }).join('');
+}
+
+// ── RENDER ESTIGMAS ──
+function renderEstigmas() {
+  var s=document.getElementById('f-est-search').value.toLowerCase(), ca=document.getElementById('f-est-cat').value, at=document.getElementById('f-est-atrib').value;
+  popSel('f-est-cat', uniq(DB.estigmas.map(function(r){return gf(r,'Categoria','categoria','Tipo','tipo');})), ca);
+  popSel('f-est-atrib', uniq(DB.estigmas.map(function(r){return gf(r,'Atributo','atributo','Bonus','bonus');})), at);
+  var data=DB.estigmas.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Categoria','categoria','Tipo','tipo')===ca)&&(!at||gf(r,'Atributo','atributo','Bonus','bonus')===at); });
+  var g=document.getElementById('grid-estigmas');
+  document.getElementById('count-estigmas').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#10070;',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',ca2=gf(r,'Categoria','categoria','Tipo','tipo'),pe=gf(r,'Pericia','pericia','Per\u00edcia'),bo=gf(r,'Bonus','bonus','Atributo','atributo'),po=gf(r,'Poder','poder'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">estigma</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ca2,'tag-gray')+tag(pe,'tag-class')+tag(bo,'tag-gold')+(po?tag(po,'tag-rare'):'')+'</div></div>';
+  }).join('');
+}
+
+// ── CLEAR FILTERS ──
+function clearFilters(sec) {
+  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-dif'],vantagens:['f-vd-search','f-vd-tipo','f-vd-cat'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var ids=m[sec]||[]; for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
+  var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
+  if(fn[sec]) fn[sec]();
+}
+
+// ── MODAL ──
+function openModal(jsonStr) {
+  var row = JSON.parse(jsonStr);
+  var nome = gf(row,'Nome','nome','Regiao','regiao','Titulo','titulo') || '(sem nome)';
+  var tipo = gf(row,'Tipo','tipo') || '';
+  var descKeys = ['descricao','descri\u00e7\u00e3o','desc','lore','resumo','efeito','objetivo'];
+  var desc = '';
+  var rks = Object.keys(row);
+  for(var i=0;i<rks.length;i++){ if(descKeys.indexOf(rks[i].toLowerCase())>-1&&row[rks[i]]){desc=row[rks[i]];break;} }
+  var skipKeys = ['nome','tipo','descricao','descri\u00e7\u00e3o','desc','lore','resumo','efeito','objetivo'];
+  var fields = rks.filter(function(k){ return skipKeys.indexOf(k.toLowerCase())===-1 && row[k]; });
+  var html = (tipo?'<div class="modal-type">'+tipo+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>'+(desc?'<p class="modal-desc">'+desc+'</p>':'');
+  if(fields.length){ html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return '<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>'; }
+  document.getElementById('modalBody').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+// ── CONTADOR ──
+var cntBase = {for:0,des:0,con:0,int:0,sab:0,car:0};
+var CNT_ATTRS = [{id:'for',nome:'FOR',full:'Forca'},{id:'des',nome:'DES',full:'Destreza'},{id:'con',nome:'CON',full:'Constituicao'},{id:'int',nome:'INT',full:'Inteligencia'},{id:'sab',nome:'SAB',full:'Sabedoria'},{id:'car',nome:'CAR',full:'Carisma'}];
+
+function cntGetLevel() { return Math.min(50,Math.max(1,parseInt(document.getElementById('cnt-nivel').value)||1)); }
+function cntGetMax(n) { if(n<=9)return 5; if(n<=19)return 6; if(n<=29)return 7; if(n<=39)return 8; if(n<=49)return 9; return 10; }
+function cntGetRacial() { return {for:parseInt(document.getElementById('rb-for').value)||0,des:parseInt(document.getElementById('rb-des').value)||0,con:parseInt(document.getElementById('rb-con').value)||0,int:parseInt(document.getElementById('rb-int').value)||0,sab:parseInt(document.getElementById('rb-sab').value)||0,car:parseInt(document.getElementById('rb-car').value)||0}; }
+function cntCusto(v) { if(v<=0)return 0; var c=0; for(var i=1;i<=v;i++){if(i<=2)c+=1;else if(i===3)c+=2;else c+=3;} return c; }
+function cntTotalGasto() { var t=0; for(var i=0;i<CNT_ATTRS.length;i++){var v=cntBase[CNT_ATTRS[i].id];if(v>0)t+=cntCusto(v);else if(v<0)t+=v;} return t; }
+
+function cntUpdate() {
+  var nivel=cntGetLevel(), maxA=cntGetMax(nivel), racial=cntGetRacial(), gasto=cntTotalGasto(), rest=10-gasto;
+  var pEl=document.getElementById('cnt-pts'); if(!pEl)return;
+  pEl.textContent=rest; pEl.style.color=rest<0?'var(--blood)':'var(--gold-light)';
+  document.getElementById('cnt-warn').style.display=rest<0?'inline':'none';
+  var ranges=[[1,9],[10,19],[20,29],[30,39],[40,49],[50,50]], r=[1,9];
+  for(var ri=0;ri<ranges.length;ri++){if(nivel>=ranges[ri][0]&&nivel<=ranges[ri][1]){r=ranges[ri];break;}}
+  document.getElementById('cnt-escala').textContent='Nivel '+(r[0]===r[1]?r[0]:r[0]+'-'+r[1])+' — max '+maxA+' por atributo';
+  var tbody=document.getElementById('cnt-tbody'); if(!tbody)return;
+  var rows='';
+  for(var ai=0;ai<CNT_ATTRS.length;ai++){
+    var a=CNT_ATTRS[ai], bv=cntBase[a.id], rb=racial[a.id], tot=bv+rb;
+    var custo=bv>0?cntCusto(bv):(bv<0?bv:0), custoTxt=bv===0?'—':String(custo);
+    var atMax=tot>=maxA, canUp=!atMax&&bv<maxA&&(rest>0||bv<0), canDown=bv>-1;
+    var totC=atMax?'var(--ember)':'var(--gold-light)', baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--parchment)');
+    var rbC=rb>0?'#5a9a4a':(rb<0?'var(--blood)':'rgba(245,230,200,0.25)'), rbT=rb>0?'+'+rb:String(rb);
+    rows+='<tr>';
+    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gold-light);">'+a.nome+'</span><span style="font-size:0.7rem;color:rgba(245,230,200,0.4);font-style:italic;display:block;">'+a.full+'</span></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;">';
+    rows+='<button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>&#8722;</button>';
+    rows+='<span class="attr-val" style="color:'+baseC+';">'+bv+'</span>';
+    rows+='<button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button>';
+    rows+='</div></td>';
+    rows+='<td style="font-family:Cinzel,serif;font-size:1rem;font-weight:600;color:'+rbC+';">'+rbT+'</td>';
+    rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
+    rows+='<td style="font-family:Cinzel,serif;font-size:0.75rem;color:rgba(245,230,200,0.35);">'+custoTxt+'</td>';
+    rows+='</tr>';
+  }
+  tbody.innerHTML=rows;
+}
+
+function cntChange(atrib, delta) {
+  var nivel=cntGetLevel(), maxA=cntGetMax(nivel), racial=cntGetRacial();
+  var nb=cntBase[atrib]+delta, nt=nb+racial[atrib];
+  if(nb<-1||nt>maxA)return;
+  var g=cntTotalGasto(), ca=cntBase[atrib]>=0?cntCusto(cntBase[atrib]):cntBase[atrib], cn=nb>=0?cntCusto(nb):nb;
+  if(delta>0&&(10-g-(cn-ca))<0)return;
+  cntBase[atrib]=nb; cntUpdate();
+}
+
+function cntReset() {
+  cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
+  var cs=['for','des','con','int','sab','car'];
+  for(var i=0;i<cs.length;i++){var el=document.getElementById('rb-'+cs[i]);if(el)el.value=0;}
+  document.getElementById('cnt-nivel').value=1;
+  document.getElementById('cnt-raca').value='';
+  cntUpdate();
+}
+
+function cntApplyRace() {
+  var sel=document.getElementById('cnt-raca'); if(!sel||!sel.value||sel.value==='custom')return;
+  var raca=null;
+  for(var i=0;i<DB.racas.length;i++){if((DB.racas[i].Nome||DB.racas[i].nome||'')===sel.value){raca=DB.racas[i];break;}}
+  if(!raca)return;
+  var cs=['for','des','con','int','sab','car'];
+  for(var ci=0;ci<cs.length;ci++){
+    var c=cs[ci], el=document.getElementById('rb-'+c), val=0;
+    var ks=[c.toUpperCase(),c,c.charAt(0).toUpperCase()+c.slice(1)];
+    for(var ki=0;ki<ks.length;ki++){if(raca[ks[ki]]!==undefined){val=parseInt(raca[ks[ki]])||0;break;}}
+    if(el)el.value=val;
+  }
+  cntUpdate();
+}
+
+function cntPopulateRaces() {
+  var sel=document.getElementById('cnt-raca'); if(!sel)return;
+  sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
+  for(var i=0;i<DB.racas.length;i++){
+    var n=DB.racas[i].Nome||DB.racas[i].nome||''; if(!n)continue;
+    var o=document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o);
+  }
+}
+
+document.getElementById('cnt-nivel').addEventListener('input', cntUpdate);
+document.getElementById('cnt-raca').addEventListener('change', cntApplyRace);
+var rbIds=['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'];
+for(var ri=0;ri<rbIds.length;ri++){ document.getElementById(rbIds[ri]).addEventListener('input',cntUpdate); }
+
+// ── AUTO-REFRESH ──
+var autoRefreshTimer = null;
+var AUTO_INTERVAL = 30000;
+
+function startAutoRefresh(forceStart) {
+  stopAutoRefresh();
+  var url = document.getElementById('sheetUrl').value.trim();
+  // Start if there is a manual URL OR if forceStart (fixed URLs exist)
+  var hasFixed = Object.keys(SHEET_URLS).length > 0;
+  if (!url && !forceStart && !hasFixed) return;
+  autoRefreshTimer = setInterval(function() {
+    var currentUrl = document.getElementById('sheetUrl').value.trim();
+    silentLoad(currentUrl);
+  }, AUTO_INTERVAL);
+}
+
+function stopAutoRefresh() {
+  if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
+}
+
+async function silentLoad(rawUrl) {
+  // Reload manual URL if set
+  if (rawUrl) {
+    var url = buildCSVUrl(rawUrl);
+    try {
+      var res = await fetch(url + '&t=' + Date.now());
+      if (!res.ok) return;
+      var text = await res.text();
+      var rows = parseCSV(text);
+      if (!rows.length) return;
+      var tab = document.getElementById('sheetTab').value.toLowerCase();
+      distributeData(rows, tab);
+    } catch(e) {}
+  }
+  // Always reload all fixed URLs
+  for (var key in SHEET_URLS) {
+    await autoLoadTab(key, SHEET_URLS[key]);
+  }
+  updateStats();
+  renderAll();
+  cntPopulateRaces();
+  var now = new Date();
+  var h = now.getHours().toString().padStart(2,'0');
+  var m = now.getMinutes().toString().padStart(2,'0');
+  var s = now.getSeconds().toString().padStart(2,'0');
+  document.getElementById('statusMsg').textContent = 'Atualizado automaticamente as ' + h + ':' + m + ':' + s;
+  document.getElementById('statusDot').className = 'status-dot ok';
+}
+
+// Inicia o auto-refresh quando uma URL é colada
+document.getElementById('sheetUrl').addEventListener('input', function() {
+  stopAutoRefresh();
+  if (this.value.trim()) startAutoRefresh();
+});
+
+// Reinicia após carga manual
+var _origLoadSheet = window.loadSheet;
+window.loadSheet = async function() {
+  await _origLoadSheet();
+  startAutoRefresh();
+};
+
+// Contador regressivo no status
+var countdownTimer = null;
+function startCountdown() {
+  if (countdownTimer) clearInterval(countdownTimer);
+  var secs = AUTO_INTERVAL / 1000;
+  countdownTimer = setInterval(function() {
+    secs--;
+    if (secs <= 0) secs = AUTO_INTERVAL / 1000;
+    var url = document.getElementById('sheetUrl').value.trim();
+    if (!url) { clearInterval(countdownTimer); return; }
+    // only show countdown if not showing "atualizado"
+    var msg = document.getElementById('statusMsg').textContent;
+    if (msg.indexOf('Atualizado') === -1) {
+      document.getElementById('statusMsg').textContent = 'Proximo sync em ' + secs + 's';
+    }
+  }, 1000);
+}
+
+// Override startAutoRefresh to also start countdown
+var _origStart = startAutoRefresh;
+startAutoRefresh = function() {
+  _origStart();
+  if (document.getElementById('sheetUrl').value.trim()) startCountdown();
+};
+
+// Auto-refresh always runs (for fixed URLs), even without manual URL
+window.addEventListener('load', function() {
+  var saved = localStorage.getItem('rpg_sheet_url');
+  if (saved && saved.trim()) {
+    document.getElementById('sheetUrl').value = saved;
+  }
+  // Always start refresh cycle for fixed sheet URLs
+  startAutoRefresh(true);
+});
+</script>
+</body>
+</html>
