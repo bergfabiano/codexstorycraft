@@ -1103,13 +1103,26 @@ function normalizeKey(k){return k.toLowerCase().replace(/[^a-z0-9]/g,'');}
 function distributeData(rows,tab){
   var raw=Object.keys(rows[0]||{}),keys=raw.map(function(k){return k.toLowerCase();}),norm=raw.map(normalizeKey);
   // VD sub-categories
-  if(tab==='vd_versateis'){VD.versateis=rows;VD_STATUS.versateis='ok';updateVdBadge('versateis',rows.length);return;}
-  if(tab==='vd_combate'){VD.combate=rows;VD_STATUS.combate='ok';updateVdBadge('combate',rows.length);return;}
-  if(tab==='vd_magicas'){VD.magicas=rows;VD_STATUS.magicas='ok';updateVdBadge('magicas',rows.length);return;}
-  if(tab==='vd_ataques'){VD.ataques=rows;VD_STATUS.ataques='ok';updateVdBadge('ataques',rows.length);return;}
-  if(tab==='vd_superpoderes'){VD.superpoderes=rows;VD_STATUS.superpoderes='ok';updateVdBadge('superpoderes',rows.length);return;}
-  if(tab==='vd_desvantagens'){VD.desvantagens=rows;VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',rows.length);return;}
-  if(tab==='vd_maldicoes'){VD.maldicoes=rows;VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',rows.length);return;}
+  // Remove linhas fantasma onde o valor da coluna de nome é igual ao próprio nome da coluna (cabeçalho duplicado)
+  function cleanVdRows(rows){
+    return rows.filter(function(r){
+      var n=vdNome(r);
+      // Descarta linhas onde o nome é idêntico ao nome de uma das colunas (header leak)
+      var keys=Object.keys(r);
+      for(var i=0;i<keys.length;i++){if(keys[i].trim()===n.trim()) return false;}
+      // Descarta linhas completamente vazias
+      var hasVal=false;
+      for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()) {hasVal=true;break;}}
+      return hasVal;
+    });
+  }
+  if(tab==='vd_versateis'){VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;}
+  if(tab==='vd_combate'){VD.combate=cleanVdRows(rows);VD_STATUS.combate='ok';updateVdBadge('combate',VD.combate.length);return;}
+  if(tab==='vd_magicas'){VD.magicas=cleanVdRows(rows);VD_STATUS.magicas='ok';updateVdBadge('magicas',VD.magicas.length);return;}
+  if(tab==='vd_ataques'){VD.ataques=cleanVdRows(rows);VD_STATUS.ataques='ok';updateVdBadge('ataques',VD.ataques.length);return;}
+  if(tab==='vd_superpoderes'){VD.superpoderes=cleanVdRows(rows);VD_STATUS.superpoderes='ok';updateVdBadge('superpoderes',VD.superpoderes.length);return;}
+  if(tab==='vd_desvantagens'){VD.desvantagens=cleanVdRows(rows);VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',VD.desvantagens.length);return;}
+  if(tab==='vd_maldicoes'){VD.maldicoes=cleanVdRows(rows);VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',VD.maldicoes.length);return;}
   // Legacy vantagens (fallback)
   if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();return;}
   if(tab==='racas_detail'){DB.racas=rows;renderRacas();return;}
@@ -1192,16 +1205,19 @@ function racaFardo(r){return gf(r,'FARDO','Fardo','fardo')||'';}
 function renderRacasCatPills(){
   var el=document.getElementById('raca-cats');
   if(!el) return;
-  // Ordem preferida: da sheet de cats; complementada pelas categorias das próprias raças
+  // Usa APENAS a sheet de cats para definir a ordem e nomes das pills
+  // (o match com as raças é feito de forma flexível em renderRacas)
   var catOrder=[];
   for(var i=0;i<DB.racas_cats.length;i++){
     var cn=gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')||'';
     if(cn&&catOrder.indexOf(cn)===-1) catOrder.push(cn);
   }
-  // Adiciona categorias que existem nas raças mas não na sheet de cats
-  for(var i=0;i<DB.racas.length;i++){
-    var rc=racaCat(DB.racas[i]);
-    if(rc&&catOrder.indexOf(rc)===-1) catOrder.push(rc);
+  // Se sheet de cats ainda não carregou, usa as categorias das próprias raças
+  if(!catOrder.length){
+    for(var i=0;i<DB.racas.length;i++){
+      var rc=racaCat(DB.racas[i]);
+      if(rc&&catOrder.indexOf(rc)===-1) catOrder.push(rc);
+    }
   }
   if(!catOrder.length){el.innerHTML='';return;}
   var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')"><span>◈</span> Todas</button>';
@@ -1503,8 +1519,12 @@ function vdNome(r){
     var kl=keys[i].toLowerCase();
     if((kl.indexOf('nom')>-1||kl.indexOf('vant')>-1||kl.indexOf('desv')>-1||kl.indexOf('mald')>-1||kl.indexOf('tit')>-1)&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]];
   }
-  // Last resort: first non-empty value
-  for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim&&r[keys[i]].trim()) return r[keys[i]];}
+  // Last resort: first non-empty value that isn't a single generic word
+  for(var i=0;i<keys.length;i++){
+    var v=r[keys[i]];
+    if(v&&v.trim&&v.trim()&&v.trim().split(' ').length>1) return v.trim();
+  }
+  for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim&&r[keys[i]].trim()) return r[keys[i]].trim();}
   return '(sem nome)';
 }
 
@@ -1764,6 +1784,8 @@ function openModal(rowOrStr){
   }else{
     html=(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>';
   }
+  // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
+  if(!desc&&isVantagem) desc=vdDesc(row);
   html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
   if(fields.length&&!isVantagem){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
   document.getElementById('modalBody').innerHTML=html;
