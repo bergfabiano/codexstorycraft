@@ -764,13 +764,14 @@ main{
       <button class="vd-cat-btn vd-cat-mal" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')">   <span>☠</span> Maldições</button>
     </div>
 
-    <!-- Barra de busca + sub-filtro -->
+    <!-- Barra de busca -->
     <div class="filter-bar" style="margin-top:0.75rem;">
-      <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito, pré-requisito..." oninput="renderVantagens()"></div>
-      <div class="fg"><label>Custo (pts)</label><select id="f-vd-custo" onchange="renderVantagens()"><option value="">Todos</option></select></div>
-      <div class="fg"><label>Pré-requisito</label><select id="f-vd-prereq" onchange="renderVantagens()"><option value="">Todos</option></select></div>
+      <div class="fg" style="flex:1;"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito, pré-requisito..." oninput="renderVantagens()"></div>
       <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
     </div>
+    <!-- Hidden inputs mantidos para não quebrar o clearFilters -->
+    <select id="f-vd-custo" style="display:none"><option value="">Todos</option></select>
+    <select id="f-vd-prereq" style="display:none"><option value="">Todos</option></select>
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
       <p class="result-count" id="count-vantagens" style="margin-bottom:0;"></p>
