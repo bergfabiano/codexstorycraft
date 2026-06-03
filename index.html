@@ -676,7 +676,7 @@ function updateStats() {
   for (var k in map) { var el = document.getElementById('stat-'+map[k]); if(el) el.textContent = DB[k].length||'—'; }
 }
 
-function renderAll() { renderRacas(); renderClasses(); renderVantagens(); renderItens(); renderGrimorio(); renderDeuses(); renderVelkarion(); renderEstigmas(); }
+function renderAll() { _modalStore = []; renderRacas(); renderClasses(); renderVantagens(); renderItens(); renderGrimorio(); renderDeuses(); renderVelkarion(); renderEstigmas(); }
 
 // ── HELPERS ──
 function deaccent(s) {
@@ -733,7 +733,7 @@ function renderRacas() {
   if(!data.length){g.innerHTML=emptyMsg('&#9775;',DB.racas.length?'Nenhum resultado':'Nenhuma raca carregada');return;}
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome','nome')||'(sem nome)',o=gf(r,'Origem','origem'),a=gf(r,'Atributo','atributo principal'),h=gf(r,'Habilidade','habilidade racial'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">raca</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-class')+tag(h,'tag-gold')+'</div></div>';
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">raca</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-class')+tag(h,'tag-gold')+'</div></div>';
   }).join('');
 }
 
@@ -770,7 +770,7 @@ function renderClasses() {
     var pm  = gf(r,'PM Inicial','pm inicial');
     var ind = gf(r,'Individualidade','individualidade');
     var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display']=n;
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(rCopy))+')\' >'
+    return '<div class="card" onclick="openModalIdx('+_storeModal(rCopy)+')" >'
       + classImgCard(n)
       + '<div class="card-type">' + (cat||'classe') + '</div>'
       + '<div class="card-name">' + n + '</div>'
@@ -859,7 +859,7 @@ function verDonsClasse(nomeClasse) {
         var dn = gf(d,'Nome do Dom','nome do dom') || '(sem nome)';
         var dd = gf(d,'Descrição','Descricao','descricao','desc');
         var dCopy = {}; for(var k in d) dCopy[k]=d[k]; dCopy['_nome_display']=dn;
-        html += '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(dCopy))+')\' >'
+        html += '<div class="card" onclick="openModalIdx('+_storeModal(dCopy)+')" >'
           + '<div class="card-type">dom · ' + gr + '</div>'
           + '<div class="card-name">' + dn + '</div>'
           + (dd ? '<div class="card-desc">' + dd + '</div>' : '')
@@ -913,7 +913,7 @@ function renderVantagens() {
     var d   = gf(r,'Descri\u00e7\u00e3o Completa','Descricao Completa','Descricao','descricao','desc','Descri\u00e7\u00e3o');
     var isDesv = (cat||'').toLowerCase().indexOf('desvantagem') > -1 || (cat||'').toLowerCase().indexOf('maldi') > -1;
     var catColor = isDesv ? 'tag-danger' : 'tag-green';
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" >'
       + '<div class="card-type">' + (cat || 'vantagem') + '</div>'
       + '<div class="card-name">' + n + '</div>'
       + (d ? '<div class="card-desc">' + d + '</div>' : '')
@@ -934,7 +934,7 @@ function renderItens() {
   if(!data.length){g.innerHTML=emptyMsg('&#9768;',DB.itens.length?'Nenhum resultado':'Nenhum item carregado');return;}
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ri=gf(r,'Raridade','raridade'),dn=gf(r,'Dano','dano','Bonus','bonus'),vl=gf(r,'Valor','valor'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
   }).join('');
 }
 
@@ -989,7 +989,7 @@ function renderGrimorio() {
     };
     var escolaTag = colorMap[(escola||'').toLowerCase()] || 'tag-gray';
 
-    return '<div class="card" onclick=\'openModal(' + JSON.stringify(JSON.stringify(r)) + ')\'>'
+    var idx=_storeModal(r);return '<div class="card" onclick="openModalIdx('+idx+')" >'
       + '<div class="card-type">' + (escola || 'magia') + (tipo ? ' — ' + tipo : '') + '</div>'
       + '<div class="card-name">' + nome + '</div>'
       + (desc ? '<div class="card-desc">' + desc + '</div>' : '')
@@ -1017,7 +1017,7 @@ function renderDeuses() {
   if(!data.length){g.innerHTML=emptyMsg('&#9788;',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome','nome')||'(sem nome)',do3=gf(r,'Dominio','dominio','Dom\u00ednio'),al2=gf(r,'Alinhamento','alinhamento'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(do3,'tag-gold')+tag(al2,'tag-class')+'</div></div>';
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(do3,'tag-gold')+tag(al2,'tag-class')+'</div></div>';
   }).join('');
 }
 
@@ -1031,7 +1031,7 @@ function renderVelkarion() {
   if(!data.length){g.innerHTML=emptyMsg('&#9784;',DB.velkarion.length?'Nenhum resultado':'Nenhuma regiao carregada');return;}
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome','nome','Regiao','regiao')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),cl2=gf(r,'Clima','clima'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'regiao')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-class')+'</div></div>';
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">'+(tp2||'regiao')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-class')+'</div></div>';
   }).join('');
 }
 
@@ -1062,7 +1062,8 @@ function renderEstigmas() {
     var van = gf(r,'Vantagem (Nome)','Vantagem','vantagem');
     var idi = gf(r,'Idioma','idioma');
     var ite = gf(r,'Itens','itens');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+    var idx = _storeModal(r);
+    return '<div class="card" onclick="openModalIdx('+idx+')">'
       + '<div class="card-type">estigma · ' + (ori||'') + '</div>'
       + '<div class="card-name">' + n + '</div>'
       + (d ? '<div class="card-desc">' + d + '</div>' : '')
@@ -1084,9 +1085,19 @@ function clearFilters(sec) {
   if(fn[sec]) fn[sec]();
 }
 
+// ── MODAL SAFE STORE ──
+var _modalStore = [];
+function _storeModal(obj) {
+  _modalStore.push(obj);
+  return _modalStore.length - 1;
+}
+function openModalIdx(idx) {
+  openModal(_modalStore[idx]);
+}
+
 // ── MODAL ──
-function openModal(jsonStr) {
-  var row = JSON.parse(jsonStr);
+function openModal(rowOrStr) {
+  var row = (typeof rowOrStr === 'string') ? JSON.parse(rowOrStr) : rowOrStr;
 
   // Detect name: try Feitico/Feitiço first, then generic fields
   var nome = gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma') || '(sem nome)';
