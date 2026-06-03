@@ -1209,7 +1209,8 @@ function verDonsClasse(nomeClasse){
       for(var di=0;di<lista.length;di++){
         var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)',dd=gf(d,'Descrição','Descricao','descricao','desc');
         var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
-        html+='<div class="card" onclick="openModalIdx('+_storeModal(dCopy)+')"><div class="card-type">dom · '+gr+'</div><div class="card-name">'+dn+'</div>'+(dd?'<div class="card-desc">'+dd+'</div>':'')+'<div class="card-tags">'+tag(gr,'tag-gold')+tag(nomeClasse,'tag-especialista')+'</div></div>';
+        var dIdx=_storeModal(dCopy);
+        html+='<div class="card" onclick="openModalIdx('+dIdx+')"><div class="card-type">dom · '+gr+'</div><div class="card-name">'+dn+'</div>'+(dd?'<div class="card-desc">'+dd+'</div>':'')+'<div class="card-tags">'+tag(gr,'tag-gold')+tag(nomeClasse,'tag-especialista')+'</div></div>';
       }
       html+='</div></div>';
     }
