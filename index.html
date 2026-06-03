@@ -1107,12 +1107,15 @@ function distributeData(rows,tab){
   function cleanVdRows(rows){
     return rows.filter(function(r){
       var n=vdNome(r);
-      // Descarta linhas onde o nome é idêntico ao nome de uma das colunas (header leak)
       var keys=Object.keys(r);
-      for(var i=0;i<keys.length;i++){if(keys[i].trim()===n.trim()) return false;}
+      // Descarta linhas onde o nome é idêntico ao nome de uma das colunas (header leak)
+      for(var i=0;i<keys.length;i++){if(keys[i].trim().toLowerCase()===n.trim().toLowerCase()) return false;}
+      // Descarta linhas sem descrição E sem custo (completamente inúteis)
+      var d=vdDesc(r),c=vdCusto(r);
+      if(!d&&!c&&n==='(sem nome)') return false;
       // Descarta linhas completamente vazias
       var hasVal=false;
-      for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()) {hasVal=true;break;}}
+      for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()){hasVal=true;break;}}
       return hasVal;
     });
   }
@@ -1333,12 +1336,12 @@ function abrirDetalhesRaca(idx){
   var irmas=DB.racas.filter(function(x){return racaCat(x)===cat && racaNome(x)!==n;});
 
   var html='';
-  // Header com imagem + nome + descrição lado a lado
+  // Header: avatar pequeno à esquerda, nome + descrição à direita
   html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">';
-  html+=imgBox(getRacaImg(n),'☯',120);
+  html+='<div style="width:80px;height:80px;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid rgba(155,93,229,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;">'+(getRacaImg(n)?'<img src="'+getRacaImg(n)+'" style="width:100%;height:100%;object-fit:cover;">':'<span style="font-family:Cinzel,serif;font-size:1.4rem;color:rgba(155,93,229,0.2);">☯</span>')+'</div>';
   html+='<div style="flex:1;min-width:0;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
-  html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.6rem;">'+n+'</h2>';
+  html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.5rem;">'+n+'</h2>';
   if(desc) html+='<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.6;margin:0;">'+desc+'</p>';
   html+='</div></div>';
 
@@ -1787,7 +1790,18 @@ function openModal(rowOrStr){
   // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
   if(!desc&&isVantagem) desc=vdDesc(row);
   html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
-  if(fields.length&&!isVantagem){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
+  // Para vantagens: mostra custo e pré-requisito de forma elegante
+  if(isVantagem){
+    var vCusto=vdCusto(row),vPrereq=vdPrereq(row),vExtra=gf(row,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
+    var vIsNeg=!!(row['_vd_cat']&&(row['_vd_cat']==='desvantagens'||row['_vd_cat']==='maldicoes'));
+    if(vCusto||vPrereq||vExtra){
+      html+='<hr class="modal-divider"><div style="display:flex;flex-wrap:wrap;gap:0.75rem;">';
+      if(vCusto) html+='<div><div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-bottom:0.2rem;">Custo</div><div style="font-family:Cinzel,serif;font-weight:700;font-size:1rem;color:'+(vIsNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+vCusto+' pts</div></div>';
+      if(vPrereq) html+='<div style="flex:1;min-width:140px;"><div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-bottom:0.2rem;">Pré-requisito</div><div style="font-size:0.9rem;color:var(--text);">'+vPrereq+'</div></div>';
+      if(vExtra) html+='<div><div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-bottom:0.2rem;">Extra</div><div style="font-size:0.9rem;color:var(--text);">'+vExtra+'</div></div>';
+      html+='</div>';
+    }
+  } else if(fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
   document.getElementById('modalBody').innerHTML=html;
   document.getElementById('modalOverlay').classList.add('open');
 }
