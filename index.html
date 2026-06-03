@@ -1318,6 +1318,7 @@ function renderVantagens(){
   var cardCls='card-vd-'+cat;
   g.innerHTML=data.map(function(r){
     var n    = vdNome(r);
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;r=rCopy;
     var custo= vdCusto(r);
     var pre  = vdPrereq(r);
     var d    = vdDesc(r);
@@ -1489,7 +1490,7 @@ function openModalIdx(idx){openModal(_modalStore[idx]);}
 
 function openModal(rowOrStr){
   var row=(typeof rowOrStr==='string')?JSON.parse(rowOrStr):rowOrStr;
-  var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
+  var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
   var escola=gf(row,'Escola','escola'),tipo=gf(row,'Tipo','tipo');
   var header=[escola,tipo].filter(Boolean).join(' — ');
   var descKeys=['descrição completa','descricao completa','descrição','descricao','desc','lore','resumo','efeito','objetivo','texto','detalhes'];
