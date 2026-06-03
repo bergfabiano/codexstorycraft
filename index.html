@@ -194,6 +194,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
       <div class="stat-box"><span class="stat-sym">&#9876;</span><span class="stat-num" id="stat-classes">—</span><span class="stat-lbl">Classes</span></div>
       <div class="stat-box"><span class="stat-sym">&#10041;</span><span class="stat-num" id="stat-grimorio">—</span><span class="stat-lbl">Magias</span></div>
       <div class="stat-box"><span class="stat-sym">&#9768;</span><span class="stat-num" id="stat-itens">—</span><span class="stat-lbl">Itens</span></div>
+      <div class="stat-box"><span class="stat-sym">&#9651;</span><span class="stat-num" id="stat-vantagens">—</span><span class="stat-lbl">Vantagens</span></div>
       <div class="stat-box"><span class="stat-sym">&#9788;</span><span class="stat-num" id="stat-deuses">—</span><span class="stat-lbl">Deuses</span></div>
       <div class="stat-box"><span class="stat-sym">&#10070;</span><span class="stat-num" id="stat-estigmas">—</span><span class="stat-lbl">Estigmas</span></div>
     </div>
@@ -272,6 +273,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
   </div>
   <p class="result-count" id="count-classes"></p>
+  <div id="classes-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
   <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9876;</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
 </div>
 
@@ -285,6 +287,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
   </div>
   <p class="result-count" id="count-vantagens"></p>
+  <div id="vantagensdesvantagens-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
   <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9651;</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
 </div>
 
@@ -353,6 +356,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
   </div>
   <p class="result-count" id="count-estigmas"></p>
+  <div id="estigmas-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
   <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10070;</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
 </div>
 
@@ -383,7 +387,10 @@ var DB = { racas:[], classes:[], vantagens:[], itens:[], grimorio:[], deuses:[],
 
 // URLs fixas por aba — já embutidas no app
 var SHEET_URLS = {
-  grimorio: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv"
+  grimorio:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
+  classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?output=csv",
+  estigmas:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
+  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv"
 };
 
 window.addEventListener('load', function() {
@@ -424,6 +431,8 @@ async function autoLoadTab(tabKey, url) {
         var dbg = document.getElementById('grimorio-debug');
         if (dbg) { dbg.style.display='block'; dbg.textContent = 'Acesso bloqueado pelo Google (CORS). Cole a URL acima e clique Invocar dados.'; }
       }
+      var dbg2 = document.getElementById(tabKey + '-debug');
+      if (dbg2) { dbg2.style.display='block'; dbg2.textContent = 'Acesso bloqueado pelo Google (CORS). Cole a URL acima e clique Invocar dados.'; }
       return false;
     }
     var rows = parseCSV(text);
@@ -436,6 +445,8 @@ async function autoLoadTab(tabKey, url) {
       var dbg = document.getElementById('grimorio-debug');
       if (dbg) { dbg.style.display='block'; dbg.textContent = 'Erro ao carregar: ' + e.message + '. Tente invocar manualmente colando a URL acima.'; }
     }
+    var dbg3 = document.getElementById(tabKey + '-debug');
+    if (dbg3) { dbg3.style.display='block'; dbg3.textContent = 'Erro ao carregar: ' + e.message + '. Tente invocar manualmente.'; }
     return false;
   }
 }
@@ -557,8 +568,8 @@ function distributeData(rows, tab) {
   if (tab === 'grimorio')            { DB.grimorio  = rows; return; }
   if (tab === 'racas')               { DB.racas     = rows; return; }
   if (tab === 'classes')             { DB.classes   = rows; return; }
-  if (tab === 'vantagensdesvantagens'){ DB.vantagens = rows; return; }
-  if (tab === 'itensloja')           { DB.itens     = rows; return; }
+  if (tab === 'vantagensdesvantagens' || tab === 'vantagens') { DB.vantagens = rows; return; }
+  if (tab === 'itensloja' || tab === 'itens') { DB.itens = rows; return; }
   if (tab === 'deuses')              { DB.deuses    = rows; return; }
   if (tab === 'velkarion')           { DB.velkarion = rows; return; }
   if (tab === 'estigmas')            { DB.estigmas  = rows; return; }
@@ -593,7 +604,7 @@ function distributeData(rows, tab) {
 }
 
 function updateStats() {
-  var map = {racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas'};
+  var map = {racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas',vantagens:'vantagens'};
   for (var k in map) { var el = document.getElementById('stat-'+map[k]); if(el) el.textContent = DB[k].length||'—'; }
 }
 
