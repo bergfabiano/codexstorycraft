@@ -1106,23 +1106,17 @@ function distributeData(rows,tab){
   // Remove linhas fantasma onde o valor da coluna de nome é igual ao próprio nome da coluna (cabeçalho duplicado)
   function cleanVdRows(rows){
     return rows.filter(function(r){
-      var n=vdNome(r);
-      var keys=Object.keys(r);
-      // Descarta linhas onde o nome é idêntico ao nome de uma das colunas (header leak)
-      var nl=n.trim().toLowerCase();
-      for(var i=0;i<keys.length;i++){if(keys[i].trim().toLowerCase()===nl) return false;}
-      // Descarta palavras genéricas que são claramente cabeçalhos vazando
-      var genericHeaders=['nome','vantagem','desvantagem','maldicao','maldição','titulo','título','vantagens','desvantagens'];
-      if(genericHeaders.indexOf(nl)>-1){var d2=vdDesc(r),c2=vdCusto(r);if(!d2&&!c2) return false;}
-      // Descarta linhas sem descrição E sem custo (completamente inúteis)
-      var d=vdDesc(r),c=vdCusto(r);
-      if(!d&&!c) return false;
+      var n=vdCol(r,'Nome')||vdCol(r,'nome')||'';
+      // Descarta linha se o nome é exatamente igual ao cabeçalho "Nome"
+      if(n.trim()==='Nome'||n.trim()==='nome') return false;
       // Descarta linhas completamente vazias
+      var keys=Object.keys(r);
       var hasVal=false;
       for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()){hasVal=true;break;}}
       return hasVal;
     });
   }
+
   if(tab==='vd_versateis'){VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;}
   if(tab==='vd_combate'){VD.combate=cleanVdRows(rows);VD_STATUS.combate='ok';updateVdBadge('combate',VD.combate.length);return;}
   if(tab==='vd_magicas'){VD.magicas=cleanVdRows(rows);VD_STATUS.magicas='ok';updateVdBadge('magicas',VD.magicas.length);return;}
@@ -1507,21 +1501,7 @@ function vdCusto(r){ return vdCol(r,'Custo')||vdCol(r,'custo')||vdCol(r,'Pontos'
 function vdPrereq(r){ return vdCol(r,'Requisito')||vdCol(r,'requisito')||vdCol(r,'Pré-requisito')||vdCol(r,'Pre-requisito'); }
 
 function vdNome(r){
-  var n=gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Título','Titulo','titulo','title');
-  if(n) return n;
-  // Fallback: primeira coluna cujo nome contém 'nom','vant','desv','mald','tit' ou que é a primeira coluna string com valor
-  var keys=Object.keys(r);
-  for(var i=0;i<keys.length;i++){
-    var kl=keys[i].toLowerCase();
-    if((kl.indexOf('nom')>-1||kl.indexOf('vant')>-1||kl.indexOf('desv')>-1||kl.indexOf('mald')>-1||kl.indexOf('tit')>-1)&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]];
-  }
-  // Last resort: first non-empty value that isn't a single generic word
-  for(var i=0;i<keys.length;i++){
-    var v=r[keys[i]];
-    if(v&&v.trim&&v.trim()&&v.trim().split(' ').length>1) return v.trim();
-  }
-  for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim&&r[keys[i]].trim()) return r[keys[i]].trim();}
-  return '(sem nome)';
+  return vdCol(r,'Nome')||vdCol(r,'nome')||vdCol(r,'Vantagem')||vdCol(r,'Desvantagem')||vdCol(r,'Maldição')||'(sem nome)';
 }
 
 function renderVantagens(){
