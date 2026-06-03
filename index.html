@@ -428,6 +428,38 @@ var SHEET_URLS = {
   vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv"
 };
 
+// ── IMAGENS DAS CLASSES ──
+// Quando tiver as imagens, adicione aqui: "Nome da Classe": "https://i.imgur.com/XXXXX.jpg"
+var CLASS_IMGS = {
+  // "Arqueiro": "https://i.imgur.com/XXXXX.jpg",
+  // "Bárbaro":  "https://i.imgur.com/XXXXX.jpg",
+};
+
+function getClassImg(n) { return CLASS_IMGS[n] || null; }
+
+function classImgCard(n) {
+  var u = getClassImg(n);
+  var inner = u
+    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
+    : '<span style="font-family:Cinzel,serif;font-size:1.8rem;color:rgba(200,147,26,0.15);">&#9876;</span>';
+  return '<div style="width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;margin-bottom:0.75rem;border:1px solid rgba(200,147,26,0.15);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;">' + inner + '</div>';
+}
+
+function classImgModal(n) {
+  var u = getClassImg(n);
+  var inner = u
+    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
+    : '<span style="font-family:Cinzel,serif;font-size:2rem;color:rgba(200,147,26,0.15);">&#9876;</span>';
+  return '<div style="width:120px;height:120px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.2);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + inner + '</div>';
+}
+
+function classImgDetalhe(n) {
+  var u = getClassImg(n);
+  if (!u) return '';
+  return '<div style="width:160px;height:160px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.3);float:right;margin:0 0 1rem 1.5rem;">'
+    + '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;"></div>';
+}
+
 window.addEventListener('load', function() {
   var saved = localStorage.getItem('rpg_sheet_url');
   if (saved) document.getElementById('sheetUrl').value = saved;
@@ -739,6 +771,7 @@ function renderClasses() {
     var ind = gf(r,'Individualidade','individualidade');
     var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display']=n;
     return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(rCopy))+')\' >'
+      + classImgCard(n)
       + '<div class="card-type">' + (cat||'classe') + '</div>'
       + '<div class="card-name">' + n + '</div>'
       + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
@@ -791,6 +824,7 @@ function verDonsClasse(nomeClasse) {
     var res = gf(classeRow,'Resistência','Resistencia','resistencia');
 
     html += '<div style="margin-bottom:0.5rem;">'
+      + classImgDetalhe(nomeClasse)
       + '<div style="font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">' + (cat||'classe') + '</div>'
       + '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeClasse + '</h2>'
       + '</div>';
@@ -819,16 +853,20 @@ function verDonsClasse(nomeClasse) {
       var lista = grauMap[gr];
       html += '<div class="grau-section">';
       html += '<div class="grau-section-title">— ' + gr + ' —</div>';
+      html += '<div class="cards-grid">';
       for (var di=0; di<lista.length; di++) {
         var d = lista[di];
         var dn = gf(d,'Nome do Dom','nome do dom') || '(sem nome)';
         var dd = gf(d,'Descrição','Descricao','descricao','desc');
-        html += '<div class="don-item">'
-          + '<div class="don-header"><span class="don-nome">' + dn + '</span><span class="don-grau">' + gr + '</span></div>'
-          + (dd ? '<div class="don-desc">' + dd + '</div>' : '')
+        var dCopy = {}; for(var k in d) dCopy[k]=d[k]; dCopy['_nome_display']=dn;
+        html += '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(dCopy))+')\' >'
+          + '<div class="card-type">dom · ' + gr + '</div>'
+          + '<div class="card-name">' + dn + '</div>'
+          + (dd ? '<div class="card-desc">' + dd + '</div>' : '')
+          + '<div class="card-tags">' + tag(gr,'tag-gold') + tag(nomeClasse,'tag-class') + '</div>'
           + '</div>';
       }
-      html += '</div>';
+      html += '</div></div>';
     }
   } else {
     html += '<div class="state-msg"><span class="state-sym">&#10022;</span><h3>Nenhum dom encontrado</h3><p>Esta classe ainda não tem dons cadastrados.</p></div>';
@@ -1072,9 +1110,23 @@ function openModal(jsonStr) {
     return skipKeys.indexOf(deaccent(k)) === -1 && row[k] && row[k].trim();
   });
 
-  var html = (header ? '<div class="modal-type">'+header+'</div>' : '')
-    + '<h2 class="modal-name">'+nome+'</h2>'
-    + (desc ? '<p class="modal-desc">'+desc+'</p>' : '');
+  // Check if this is a class row (has 'Classe' field or '_nome_display' from class card)
+  var isClasse = !!(gf(row,'Classe','classe') && !gf(row,'Nome do Dom','nome do dom') && !gf(row,'Feitiço','Feitico','feitico'));
+  var nomeClasseImg = isClasse ? (gf(row,'Classe','classe') || gf(row,'_nome_display')) : null;
+
+  var html = '';
+  if (nomeClasseImg) {
+    html += '<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'
+      + classImgModal(nomeClasseImg)
+      + '<div style="flex:1;">'
+      + (header ? '<div class="modal-type">'+header+'</div>' : '')
+      + '<h2 class="modal-name">'+nome+'</h2>'
+      + '</div></div>';
+  } else {
+    html = (header ? '<div class="modal-type">'+header+'</div>' : '')
+      + '<h2 class="modal-name">'+nome+'</h2>';
+  }
+  html += (desc ? '<p class="modal-desc">'+desc+'</p>' : '');
 
   if(fields.length){
     html += '<hr class="modal-divider"><div class="modal-fields">'
