@@ -1188,8 +1188,10 @@ function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagen
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
 function gf(row){
   var keys=Array.prototype.slice.call(arguments,1);
-  for(var i=0;i<keys.length;i++){var rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(rks[j].toLowerCase()===keys[i].toLowerCase()&&row[rks[j]])return row[rks[j]];}}
-  for(var i=0;i<keys.length;i++){var dk=deaccent(keys[i]),rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(deaccent(rks[j])===dk&&row[rks[j]])return row[rks[j]];}}
+  // Strip BOM and invisible chars from row keys
+  function cleanKey(k){return k.replace(/^[\uFEFF\u200B\u00A0]+/,'').replace(/[\uFEFF\u200B\u00A0]+$/,'').trim();}
+  for(var i=0;i<keys.length;i++){var rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(cleanKey(rks[j]).toLowerCase()===keys[i].toLowerCase()&&row[rks[j]])return row[rks[j]];}}
+  for(var i=0;i<keys.length;i++){var dk=deaccent(keys[i]),rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(deaccent(cleanKey(rks[j]))===dk&&row[rks[j]])return row[rks[j]];}}
   return '';
 }
 function tag(label,cls){if(!label)return '';return '<span class="tag '+cls+'">'+label+'</span>';}
@@ -1519,12 +1521,14 @@ function vdPrereq(r){
     'prerequisitos','prerequisito','Requisitos','Requisito','requisito','requisitos'
   );
   if(v) return v;
-  // Fallback: varre todas as colunas procurando qualquer uma com "requi" ou "requisit" no nome
+  // Fallback: varre todas as colunas procurando qualquer uma com "requi" no nome
   var keys=Object.keys(r);
   for(var i=0;i<keys.length;i++){
     var kl=keys[i].toLowerCase().replace(/[-\s]/g,'');
     if(kl.indexOf('requi')>-1&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]];
   }
+  // Último recurso: segunda coluna SE for curta (requisitos são curtos, descrições são longas)
+  if(keys.length>=2&&r[keys[1]]&&r[keys[1]].trim()&&r[keys[1]].trim().length<120) return r[keys[1]];
   return '';
 }
 
