@@ -74,6 +74,31 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
 .tag-green{color:#5a9a4a;border-color:rgba(90,154,74,0.4);background:rgba(90,154,74,0.1);}
 .tag-blood{color:var(--blood);border-color:rgba(139,26,26,0.4);background:rgba(139,26,26,0.1);}
 
+/* BOTÃO VER DONS */
+.btn-ver-dons{display:block;width:100%;margin-top:0.75rem;padding:0.4rem 0;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(200,147,26,0.3);border-radius:2px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.btn-ver-dons:hover{background:rgba(200,147,26,0.1);border-color:var(--gold);}
+
+/* DETALHE DE CLASSE */
+.classe-detail{display:none;animation:fadeIn 0.3s ease;}
+.classe-detail.active{display:block;}
+.btn-voltar{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(245,230,200,0.4);background:transparent;border:1px solid rgba(200,147,26,0.2);padding:0.4rem 1rem;border-radius:2px;cursor:pointer;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:0.4rem;}
+.btn-voltar:hover{color:var(--gold);border-color:var(--gold);}
+.classe-header{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 2rem;padding:1.25rem;background:rgba(26,16,8,0.7);border:1px solid rgba(200,147,26,0.25);border-radius:4px;margin-bottom:1.5rem;}
+.classe-header-full{grid-column:1/-1;}
+.classe-field label{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);opacity:0.7;display:block;margin-bottom:0.2rem;text-transform:uppercase;}
+.classe-field p{font-size:0.95rem;color:var(--parchment);line-height:1.5;}
+.classe-field p.destaque{font-size:1rem;font-weight:600;color:var(--gold-light);}
+.classe-ind{font-style:italic;color:rgba(245,230,200,0.7);font-size:0.95rem;line-height:1.7;border-left:2px solid rgba(200,147,26,0.3);padding-left:1rem;margin-bottom:1.5rem;}
+.dons-title{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--gold-light);letter-spacing:0.15em;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(200,147,26,0.2);text-transform:uppercase;}
+.don-item{padding:0.9rem 1.1rem;background:rgba(26,16,8,0.5);border:1px solid rgba(200,147,26,0.12);border-radius:3px;margin-bottom:0.6rem;transition:border-color 0.2s;}
+.don-item:hover{border-color:rgba(200,147,26,0.3);}
+.don-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.4rem;flex-wrap:wrap;}
+.don-nome{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:600;color:var(--parchment);}
+.don-grau{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.1em;padding:0.15rem 0.5rem;border-radius:2px;border:1px solid rgba(200,147,26,0.4);color:var(--gold);background:rgba(200,147,26,0.08);text-transform:uppercase;}
+.don-desc{font-size:0.88rem;color:rgba(245,230,200,0.6);line-height:1.6;font-style:italic;}
+.grau-section{margin-bottom:1.25rem;}
+.grau-section-title{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);opacity:0.5;text-transform:uppercase;margin-bottom:0.6rem;padding-left:0.25rem;}
+
 .state-msg{text-align:center;padding:4rem 2rem;color:rgba(245,230,200,0.3);}
 .state-sym{font-size:2.5rem;margin-bottom:1rem;opacity:0.4;font-family:'Cinzel',serif;display:block;}
 .state-msg h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.5rem;color:rgba(245,230,200,0.4);}
@@ -265,6 +290,8 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
 
 <!-- CLASSES -->
 <div id="page-classes" class="page">
+  <!-- LISTA DE CLASSES -->
+  <div id="classes-lista">
   <h2 class="section-title"><span class="stitle-sym">&#9876;</span> Classes &amp; Dons</h2>
   <div class="filter-bar">
     <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
@@ -275,6 +302,13 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
   <p class="result-count" id="count-classes"></p>
   <div id="classes-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
   <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9876;</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+  </div>
+
+  <!-- DETALHE DE CLASSE -->
+  <div id="classes-detalhe" class="classe-detail">
+    <button class="btn-voltar" onclick="voltarClasses()">&#8592; Voltar às Classes</button>
+    <div id="classe-detalhe-body"></div>
+  </div>
 </div>
 
 <!-- VANTAGENS -->
@@ -680,68 +714,135 @@ function renderClasses() {
   popSel('f-class-papel',  uniq(DB.classes.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
   popSel('f-class-filtro', uniq(DB.dons.map(function(r){ return gf(r,'Classe','classe'); })), cl);
 
+  // Se filtro de dons ativo, mostra detalhe da classe filtrada
+  if (cl) { verDonsClasse(cl); return; }
+
   var dataC = DB.classes.filter(function(r){
     return (!s  || fstr(r).indexOf(s) > -1)
         && (!ca || gf(r,'Categoria','categoria') === ca);
   });
 
-  var dataD = DB.dons.filter(function(r){
-    return (!s  || fstr(r).indexOf(s) > -1)
-        && (!cl || gf(r,'Classe','classe') === cl);
-  });
-
   var g = document.getElementById('grid-classes');
-  document.getElementById('count-classes').textContent = dataC.length + ' classe(s) · ' + dataD.length + ' dom(ns)';
+  document.getElementById('count-classes').textContent = dataC.length + ' classe(s)';
 
-  if (!dataC.length && !dataD.length) {
-    g.innerHTML = emptyMsg('&#9876;', (DB.classes.length || DB.dons.length) ? 'Nenhum resultado' : 'Nenhuma classe carregada');
+  if (!dataC.length) {
+    g.innerHTML = emptyMsg('&#9876;', DB.classes.length ? 'Nenhum resultado' : 'Nenhuma classe carregada');
     return;
   }
 
+  g.innerHTML = dataC.map(function(r){
+    var n   = gf(r,'Classe','classe') || '(sem nome)';
+    var cat = gf(r,'Categoria','categoria');
+    var atb = gf(r,'Atributo de Classe','atributo de classe');
+    var pv  = gf(r,'PV Inicial','pv inicial');
+    var pm  = gf(r,'PM Inicial','pm inicial');
+    var ind = gf(r,'Individualidade','individualidade');
+    var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display']=n;
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(rCopy))+')\' >'
+      + '<div class="card-type">' + (cat||'classe') + '</div>'
+      + '<div class="card-name">' + n + '</div>'
+      + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
+      + '<div class="card-tags">'
+      + (atb ? tag(atb,'tag-class') : '')
+      + (pv  ? tag('PV '+pv,'tag-gold') : '')
+      + (pm  ? tag('PM '+pm,'tag-rare') : '')
+      + '</div>'
+      + '<button class="btn-ver-dons" onclick=\'event.stopPropagation();verDonsClasse("'+n.replace(/"/g,'&quot;')+'")\'>&#10022; Ver Dons desta Classe</button>'
+      + '</div>';
+  }).join('');
+}
+
+function verDonsClasse(nomeClasse) {
+  // Esconde lista, mostra detalhe
+  document.getElementById('classes-lista').style.display = 'none';
+  document.getElementById('classes-detalhe').classList.add('active');
+
+  // Dados da classe
+  var classeRow = null;
+  for (var i=0; i<DB.classes.length; i++) {
+    if (gf(DB.classes[i],'Classe','classe') === nomeClasse) { classeRow = DB.classes[i]; break; }
+  }
+
+  // Dons da classe agrupados por grau
+  var dons = DB.dons.filter(function(r){ return gf(r,'Classe','classe') === nomeClasse; });
+  var grauMap = {};
+  for (var i=0; i<dons.length; i++) {
+    var gr = gf(dons[i],'Grau','grau') || 'Sem Grau';
+    if (!grauMap[gr]) grauMap[gr] = [];
+    grauMap[gr].push(dons[i]);
+  }
+  var graus = Object.keys(grauMap).sort();
+
   var html = '';
 
-  if (dataC.length) {
-    html += '<div style="grid-column:1/-1;font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;padding:0.25rem 0 0.5rem;border-bottom:1px solid rgba(200,147,26,0.15);margin-bottom:0.5rem;">&#9876; Classes</div>';
-    html += dataC.map(function(r){
-      var n   = gf(r,'Classe','classe') || '(sem nome)';
-      var cat = gf(r,'Categoria','categoria');
-      var atb = gf(r,'Atributo de Classe','atributo de classe');
-      var pv  = gf(r,'PV Inicial','pv inicial');
-      var pm  = gf(r,'PM Inicial','pm inicial');
-      var ind = gf(r,'Individualidade','individualidade');
-      // inject display name so modal shows correctly
-      var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display'] = n;
-      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(rCopy))+')\' >'
-        + '<div class="card-type">classe · ' + (cat||'') + '</div>'
-        + '<div class="card-name">' + n + '</div>'
-        + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
-        + '<div class="card-tags">'
-        + (atb ? tag(atb,'tag-class') : '')
-        + (pv  ? tag('PV '+pv,'tag-gold') : '')
-        + (pm  ? tag('PM '+pm,'tag-rune') : '')
-        + '</div></div>';
-    }).join('');
+  // Cabeçalho da classe
+  if (classeRow) {
+    var cat = gf(classeRow,'Categoria','categoria');
+    var atb = gf(classeRow,'Atributo de Classe','atributo de classe');
+    var pvi = gf(classeRow,'PV Inicial','pv inicial');
+    var pvn = gf(classeRow,'PV/Nível','pv/nivel','PV/Nivel');
+    var pmi = gf(classeRow,'PM Inicial','pm inicial');
+    var pmn = gf(classeRow,'PM/Nível','pm/nivel','PM/Nivel');
+    var pro = gf(classeRow,'Proficiências','Proficiencias','proficiencias');
+    var per = gf(classeRow,'Perícia Inicial','Pericia Inicial','pericia inicial');
+    var pex = gf(classeRow,'Perícias Extras','Pericias Extras','pericias extras');
+    var kit = gf(classeRow,'Poder de Kit','poder de kit');
+    var ind = gf(classeRow,'Individualidade','individualidade');
+    var res = gf(classeRow,'Resistência','Resistencia','resistencia');
+
+    html += '<div style="margin-bottom:0.5rem;">'
+      + '<div style="font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">' + (cat||'classe') + '</div>'
+      + '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeClasse + '</h2>'
+      + '</div>';
+
+    if (ind) html += '<p class="classe-ind">' + ind + '</p>';
+
+    html += '<div class="classe-header">';
+    if (atb) html += '<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">' + atb + '</p></div>';
+    if (res) html += '<div class="classe-field"><label>Resistência</label><p>' + res + '</p></div>';
+    if (pvi) html += '<div class="classe-field"><label>PV Inicial</label><p>' + pvi + (pvn?' <span style="color:rgba(245,230,200,0.35);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'') + '</p></div>';
+    if (pmi) html += '<div class="classe-field"><label>PM Inicial</label><p>' + pmi + (pmn?' <span style="color:rgba(245,230,200,0.35);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'') + '</p></div>';
+    if (pro) html += '<div class="classe-field classe-header-full"><label>Proficiências</label><p>' + pro + '</p></div>';
+    if (per) html += '<div class="classe-field"><label>Perícia Inicial</label><p>' + per + '</p></div>';
+    if (pex) html += '<div class="classe-field"><label>Perícias Extras</label><p>' + pex + '</p></div>';
+    if (kit) html += '<div class="classe-field classe-header-full"><label>Poder de Kit</label><p>' + kit + '</p></div>';
+    html += '</div>';
+  } else {
+    html += '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeClasse + '</h2>';
   }
 
-  if (dataD.length) {
-    html += '<div style="grid-column:1/-1;font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;padding:0.75rem 0 0.5rem;border-bottom:1px solid rgba(200,147,26,0.15);margin-bottom:0.5rem;">&#10022; Dons de Classe</div>';
-    html += dataD.map(function(r){
-      var n   = gf(r,'Nome do Dom','nome do dom') || '(sem nome)';
-      var cl2 = gf(r,'Classe','classe');
-      var gr  = gf(r,'Grau','grau');
-      var d   = gf(r,'Descri\u00e7\u00e3o','Descricao','descricao','desc');
-      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
-        + '<div class="card-type">dom · ' + (cl2||'') + '</div>'
-        + '<div class="card-name">' + n + '</div>'
-        + (d ? '<div class="card-desc">' + d + '</div>' : '')
-        + '<div class="card-tags">'
-        + (cl2 ? tag(cl2,'tag-class') : '')
-        + (gr  ? tag('Grau '+gr,'tag-gold') : '')
-        + '</div></div>';
-    }).join('');
+  // Dons agrupados por grau
+  if (graus.length) {
+    html += '<div class="dons-title">&#10022; Dons de ' + nomeClasse + ' <span style="font-size:0.7rem;opacity:0.5;">(' + dons.length + ' dons)</span></div>';
+    for (var gi=0; gi<graus.length; gi++) {
+      var gr = graus[gi];
+      var lista = grauMap[gr];
+      html += '<div class="grau-section">';
+      html += '<div class="grau-section-title">— ' + gr + ' —</div>';
+      for (var di=0; di<lista.length; di++) {
+        var d = lista[di];
+        var dn = gf(d,'Nome do Dom','nome do dom') || '(sem nome)';
+        var dd = gf(d,'Descrição','Descricao','descricao','desc');
+        html += '<div class="don-item">'
+          + '<div class="don-header"><span class="don-nome">' + dn + '</span><span class="don-grau">' + gr + '</span></div>'
+          + (dd ? '<div class="don-desc">' + dd + '</div>' : '')
+          + '</div>';
+      }
+      html += '</div>';
+    }
+  } else {
+    html += '<div class="state-msg"><span class="state-sym">&#10022;</span><h3>Nenhum dom encontrado</h3><p>Esta classe ainda não tem dons cadastrados.</p></div>';
   }
 
-  g.innerHTML = html;
+  document.getElementById('classe-detalhe-body').innerHTML = html;
+  // Scroll ao topo da página de detalhe
+  document.getElementById('classes-detalhe').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function voltarClasses() {
+  document.getElementById('classes-lista').style.display = '';
+  document.getElementById('classes-detalhe').classList.remove('active');
+  document.getElementById('f-class-filtro').value = '';
 }
 
 // ── RENDER VANTAGENS ──
