@@ -1022,7 +1022,12 @@ function parseCSV(text){
     while(i<len){f.push(pf());if(i<len&&text[i]===','){i++;continue;}if(i<len&&(text[i]==='\n'||text[i]==='\r')){if(text[i]==='\r'&&i+1<len&&text[i+1]==='\n')i++;i++;break;}break;}
     return f;
   }
-  headers=pl();headers=headers.map(function(h){return h.replace(/^"|"$/g,'').trim();});
+  headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});
+  // Skip title rows: find the real header (contains known column names)
+  var knownCols=['nome','descricao','descricao completa','vantagem','desvantagem','classe','feitico','feitico','pre-requisitos','prerequisitos','custo','tipo','escola','grau','raridade','origem','atributo','regiao'];
+  function looksLikeHeader(hdrs){return hdrs.some(function(h){var n=h.toLowerCase().replace(/[^a-z]/g,'');return knownCols.indexOf(h.toLowerCase().trim())>-1||knownCols.indexOf(n)>-1;});}
+  var maxSkip=5;
+  while(!looksLikeHeader(headers)&&maxSkip-->0&&i<len){headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});}
   while(i<len){
     if(text[i]==='\n'||text[i]==='\r'){i++;continue;}
     var vals=pl(),obj={};
