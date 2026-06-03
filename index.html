@@ -265,11 +265,11 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
 
 <!-- CLASSES -->
 <div id="page-classes" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9876;</span> Classes</h2>
+  <h2 class="section-title"><span class="stitle-sym">&#9876;</span> Classes &amp; Dons</h2>
   <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, papel..." oninput="renderClasses()"></div>
-    <div class="fg"><label>Papel</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todos</option></select></div>
-    <div class="fg"><label>Dificuldade</label><select id="f-class-dif" onchange="renderClasses()"><option value="">Todas</option><option>Iniciante</option><option>Intermediario</option><option>Avancado</option><option>Mestre</option></select></div>
+    <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
+    <div class="fg"><label>Categoria</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Dons da Classe</label><select id="f-class-filtro" onchange="renderClasses()"><option value="">Todas as classes</option></select></div>
     <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
   </div>
   <p class="result-count" id="count-classes"></p>
@@ -351,8 +351,8 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
   <h2 class="section-title"><span class="stitle-sym">&#10070;</span> Estigmas</h2>
   <div class="filter-bar">
     <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, pericia, poder..." oninput="renderEstigmas()"></div>
-    <div class="fg"><label>Categoria</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Atributo Bonus</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Origem</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
+    <div class="fg"><label>Vantagem</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
     <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
   </div>
   <p class="result-count" id="count-estigmas"></p>
@@ -670,31 +670,121 @@ function renderRacas() {
 }
 
 // ── RENDER CLASSES ──
+// A planilha tem duas seções: linhas com "Atributo de Classe" = classes; linhas com "Nome do Dom" = dons
+function classesOnly() { return DB.classes.filter(function(r){ return !!gf(r,'Classe','classe') && !gf(r,'Nome do Dom','nome do dom','Grau','grau') && !!gf(r,'Atributo de Classe','atributo de classe','PV Inicial','pv inicial'); }); }
+function donsOnly()    { return DB.classes.filter(function(r){ return !!gf(r,'Nome do Dom','nome do dom'); }); }
+
 function renderClasses() {
-  var s=document.getElementById('f-class-search').value.toLowerCase(), pa=document.getElementById('f-class-papel').value, di=document.getElementById('f-class-dif').value;
-  popSel('f-class-papel', uniq(DB.classes.map(function(r){return gf(r,'Papel','papel');})), pa);
-  var data=DB.classes.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!pa||gf(r,'Papel','papel')===pa)&&(!di||gf(r,'Dificuldade','dificuldade')===di); });
-  var g=document.getElementById('grid-classes');
-  document.getElementById('count-classes').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9876;',DB.classes.length?'Nenhum resultado':'Nenhuma classe carregada');return;}
-  g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',p=gf(r,'Papel','papel'),df=gf(r,'Dificuldade','dificuldade'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">classe</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(p,'tag-class')+tag(df,'tag-danger')+'</div></div>';
-  }).join('');
+  var s  = document.getElementById('f-class-search').value.toLowerCase();
+  var ca = document.getElementById('f-class-papel').value;   // agora é Categoria
+  var cl = document.getElementById('f-class-filtro').value;  // filtro por Classe
+
+  var classes = classesOnly();
+  var dons    = donsOnly();
+
+  popSel('f-class-papel',  uniq(classes.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
+  popSel('f-class-filtro', uniq(dons.map(function(r){ return gf(r,'Classe','classe'); })), cl);
+
+  // Filtra classes
+  var dataC = classes.filter(function(r){
+    return (!s  || fstr(r).indexOf(s) > -1)
+        && (!ca || gf(r,'Categoria','categoria') === ca);
+  });
+
+  // Filtra dons
+  var dataD = dons.filter(function(r){
+    return (!s  || fstr(r).indexOf(s) > -1)
+        && (!cl || gf(r,'Classe','classe') === cl);
+  });
+
+  var g = document.getElementById('grid-classes');
+  var total = dataC.length + dataD.length;
+  document.getElementById('count-classes').textContent = dataC.length + ' classe(s) · ' + dataD.length + ' dom(ns)';
+
+  if (!total) { g.innerHTML = emptyMsg('&#9876;', DB.classes.length ? 'Nenhum resultado' : 'Nenhuma classe carregada'); return; }
+
+  var html = '';
+
+  if (dataC.length) {
+    html += '<div style="grid-column:1/-1;font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;padding:0.25rem 0 0.5rem;border-bottom:1px solid rgba(200,147,26,0.15);margin-bottom:0.5rem;">&#9876; Classes</div>';
+    html += dataC.map(function(r){
+      var n   = gf(r,'Classe','classe') || '(sem nome)';
+      var cat = gf(r,'Categoria','categoria');
+      var atb = gf(r,'Atributo de Classe','atributo de classe');
+      var pv  = gf(r,'PV Inicial','pv inicial');
+      var pm  = gf(r,'PM Inicial','pm inicial');
+      var ind = gf(r,'Individualidade','individualidade');
+      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+        + '<div class="card-type">classe · ' + (cat||'') + '</div>'
+        + '<div class="card-name">' + n + '</div>'
+        + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
+        + '<div class="card-tags">'
+        + (atb ? tag(atb,'tag-class') : '')
+        + (pv  ? tag('PV '+pv,'tag-gold') : '')
+        + (pm  ? tag('PM '+pm,'tag-rune') : '')
+        + '</div></div>';
+    }).join('');
+  }
+
+  if (dataD.length) {
+    html += '<div style="grid-column:1/-1;font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;padding:0.75rem 0 0.5rem;border-bottom:1px solid rgba(200,147,26,0.15);margin-bottom:0.5rem;">&#10022; Dons de Classe</div>';
+    html += dataD.map(function(r){
+      var n   = gf(r,'Nome do Dom','nome do dom') || '(sem nome)';
+      var cl2 = gf(r,'Classe','classe');
+      var gr  = gf(r,'Grau','grau');
+      var d   = gf(r,'Descri\u00e7\u00e3o','Descricao','descricao','desc');
+      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+        + '<div class="card-type">dom · ' + (cl2||'') + '</div>'
+        + '<div class="card-name">' + n + '</div>'
+        + (d ? '<div class="card-desc">' + d + '</div>' : '')
+        + '<div class="card-tags">'
+        + (cl2 ? tag(cl2,'tag-class') : '')
+        + (gr  ? tag('Grau '+gr,'tag-gold') : '')
+        + '</div></div>';
+    }).join('');
+  }
+
+  g.innerHTML = html;
 }
 
 // ── RENDER VANTAGENS ──
 function renderVantagens() {
-  var s=document.getElementById('f-vd-search').value.toLowerCase(), tp=document.getElementById('f-vd-tipo').value, ca=document.getElementById('f-vd-cat').value;
-  popSel('f-vd-cat', uniq(DB.vantagens.map(function(r){return gf(r,'Categoria','categoria');})), ca);
-  var data=DB.vantagens.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!ca||gf(r,'Categoria','categoria')===ca); });
-  var g=document.getElementById('grid-vantagens');
-  document.getElementById('count-vantagens').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9651;',DB.vantagens.length?'Nenhum resultado':'Nenhuma entrada carregada');return;}
-  g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ct=gf(r,'Categoria','categoria'),ef=gf(r,'Efeito','efeito','Bonus','bonus'),cs=gf(r,'Custo','custo'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    var isD=(tp2||'').toLowerCase()==='desvantagem';
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">'+(tp2||'vantagem/desvantagem')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ct,'tag-gray')+(ef?tag(ef,isD?'tag-danger':'tag-green'):'')+( cs?tag(cs+' pts','tag-gold'):'')+'</div></div>';
+  var s  = document.getElementById('f-vd-search').value.toLowerCase();
+  var tp = document.getElementById('f-vd-tipo').value;
+  var ca = document.getElementById('f-vd-cat').value;
+
+  // Tipo agora é a Categoria (Vantagens de Combate, Desvantagens, etc.)
+  popSel('f-vd-cat', uniq(DB.vantagens.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
+
+  var data = DB.vantagens.filter(function(r){
+    var cat = gf(r,'Categoria','categoria');
+    // filtro "Tipo" = Vantagem ou Desvantagem inferido da Categoria
+    var isDesv = (cat||'').toLowerCase().indexOf('desvantagem') > -1 || (cat||'').toLowerCase().indexOf('maldi') > -1;
+    var tipoOk = !tp || (tp === 'Vantagem' && !isDesv) || (tp === 'Desvantagem' && isDesv);
+    return (!s  || fstr(r).indexOf(s) > -1)
+        && tipoOk
+        && (!ca || cat === ca);
+  });
+
+  var g = document.getElementById('grid-vantagens');
+  document.getElementById('count-vantagens').textContent = data.length + ' resultados';
+  if (!data.length) { g.innerHTML = emptyMsg('&#9651;', DB.vantagens.length ? 'Nenhum resultado' : 'Nenhuma entrada carregada'); return; }
+
+  g.innerHTML = data.map(function(r){
+    var n   = gf(r,'Nome','nome') || '(sem nome)';
+    var cat = gf(r,'Categoria','categoria');
+    var pre = gf(r,'Pr\u00e9-requisitos','Pre-requisitos','prerequisitos','Pré-requisitos');
+    var d   = gf(r,'Descri\u00e7\u00e3o Completa','Descricao Completa','Descricao','descricao','desc','Descri\u00e7\u00e3o');
+    var isDesv = (cat||'').toLowerCase().indexOf('desvantagem') > -1 || (cat||'').toLowerCase().indexOf('maldi') > -1;
+    var catColor = isDesv ? 'tag-danger' : 'tag-green';
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+      + '<div class="card-type">' + (cat || 'vantagem') + '</div>'
+      + '<div class="card-name">' + n + '</div>'
+      + (d ? '<div class="card-desc">' + d + '</div>' : '')
+      + '<div class="card-tags">'
+      + tag(cat, catColor)
+      + (pre ? tag(pre.substring(0,30), 'tag-gray') : '')
+      + '</div></div>';
   }).join('');
 }
 
@@ -811,22 +901,48 @@ function renderVelkarion() {
 
 // ── RENDER ESTIGMAS ──
 function renderEstigmas() {
-  var s=document.getElementById('f-est-search').value.toLowerCase(), ca=document.getElementById('f-est-cat').value, at=document.getElementById('f-est-atrib').value;
-  popSel('f-est-cat', uniq(DB.estigmas.map(function(r){return gf(r,'Categoria','categoria','Tipo','tipo');})), ca);
-  popSel('f-est-atrib', uniq(DB.estigmas.map(function(r){return gf(r,'Atributo','atributo','Bonus','bonus');})), at);
-  var data=DB.estigmas.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Categoria','categoria','Tipo','tipo')===ca)&&(!at||gf(r,'Atributo','atributo','Bonus','bonus')===at); });
-  var g=document.getElementById('grid-estigmas');
-  document.getElementById('count-estigmas').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#10070;',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
-  g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',ca2=gf(r,'Categoria','categoria','Tipo','tipo'),pe=gf(r,'Pericia','pericia','Per\u00edcia'),bo=gf(r,'Bonus','bonus','Atributo','atributo'),po=gf(r,'Poder','poder'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
-    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' ><div class="card-type">estigma</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ca2,'tag-gray')+tag(pe,'tag-class')+tag(bo,'tag-gold')+(po?tag(po,'tag-rare'):'')+'</div></div>';
+  var s  = document.getElementById('f-est-search').value.toLowerCase();
+  var ca = document.getElementById('f-est-cat').value;
+  var at = document.getElementById('f-est-atrib').value;
+
+  popSel('f-est-cat',   uniq(DB.estigmas.map(function(r){ return gf(r,'Origem','origem','Categoria','categoria'); })), ca);
+  popSel('f-est-atrib', uniq(DB.estigmas.map(function(r){ return gf(r,'Vantagem (Nome)','Vantagem','vantagem'); })), at);
+
+  var data = DB.estigmas.filter(function(r){
+    return (!s  || fstr(r).indexOf(s) > -1)
+        && (!ca || gf(r,'Origem','origem','Categoria','categoria') === ca)
+        && (!at || gf(r,'Vantagem (Nome)','Vantagem','vantagem') === at);
+  });
+
+  var g = document.getElementById('grid-estigmas');
+  document.getElementById('count-estigmas').textContent = data.length + ' resultados';
+  if (!data.length) { g.innerHTML = emptyMsg('&#10070;', DB.estigmas.length ? 'Nenhum resultado' : 'Nenhum estigma carregado'); return; }
+
+  g.innerHTML = data.map(function(r){
+    var n   = gf(r,'Nome do Estigma','nome do estigma','Nome','nome') || '(sem nome)';
+    var ori = gf(r,'Origem','origem');
+    var d   = gf(r,'Descri\u00e7\u00e3o','Descricao','descricao','desc');
+    var per = gf(r,'Per\u00edcias','Pericias','pericias');
+    var van = gf(r,'Vantagem (Nome)','Vantagem','vantagem');
+    var idi = gf(r,'Idioma','idioma');
+    var ite = gf(r,'Itens','itens');
+    return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+      + '<div class="card-type">estigma · ' + (ori||'') + '</div>'
+      + '<div class="card-name">' + n + '</div>'
+      + (d ? '<div class="card-desc">' + d + '</div>' : '')
+      + '<div class="card-tags">'
+      + (ori ? tag(ori,'tag-gray') : '')
+      + (per ? tag(per.substring(0,25),'tag-class') : '')
+      + (van ? tag(van.substring(0,25),'tag-gold') : '')
+      + (idi ? tag(idi,'tag-rare') : '')
+      + (ite ? tag(ite.substring(0,20),'tag-green') : '')
+      + '</div></div>';
   }).join('');
 }
 
 // ── CLEAR FILTERS ──
 function clearFilters(sec) {
-  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-dif'],vantagens:['f-vd-search','f-vd-tipo','f-vd-cat'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-tipo','f-vd-cat'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
   var ids=m[sec]||[]; for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec]) fn[sec]();
