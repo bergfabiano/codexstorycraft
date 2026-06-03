@@ -1192,14 +1192,22 @@ function racaFardo(r){return gf(r,'FARDO','Fardo','fardo')||'';}
 function renderRacasCatPills(){
   var el=document.getElementById('raca-cats');
   if(!el) return;
-  var cats=DB.racas_cats;
-  if(!cats||!cats.length){el.innerHTML='';return;}
+  // Ordem preferida: da sheet de cats; complementada pelas categorias das próprias raças
+  var catOrder=[];
+  for(var i=0;i<DB.racas_cats.length;i++){
+    var cn=gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')||'';
+    if(cn&&catOrder.indexOf(cn)===-1) catOrder.push(cn);
+  }
+  // Adiciona categorias que existem nas raças mas não na sheet de cats
+  for(var i=0;i<DB.racas.length;i++){
+    var rc=racaCat(DB.racas[i]);
+    if(rc&&catOrder.indexOf(rc)===-1) catOrder.push(rc);
+  }
+  if(!catOrder.length){el.innerHTML='';return;}
   var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')"><span>◈</span> Todas</button>';
-  for(var i=0;i<cats.length;i++){
-    var cn=gf(cats[i],'CATEGORIA','Categoria','categoria')||'';
-    if(!cn) continue;
-    var active=(RACA_ACTIVE_CAT===cn)?' active':'';
-    var safe=cn.replace(/\\/g,'').replace(/'/g,'&#39;');
+  for(var i=0;i<catOrder.length;i++){
+    var cn=catOrder[i];
+    var active=(RACA_ACTIVE_CAT.trim().toLowerCase()===cn.trim().toLowerCase())?' active':'';
     btns+='<button class="vd-cat-btn'+active+'" data-rcat="'+cn.replace(/"/g,'&quot;')+'" onclick="switchRacaCat(this.dataset.rcat)"><span>☯</span> '+cn+'</button>';
   }
   el.innerHTML=btns;
@@ -1242,15 +1250,24 @@ function renderRacas(){
   }
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
+  var _ac=RACA_ACTIVE_CAT.trim().toLowerCase();
   var data=DB.racas.filter(function(r){
-    return racaCat(r)===RACA_ACTIVE_CAT && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
+    var rc=(racaCat(r)||'').trim().toLowerCase();
+    return rc===_ac && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
   });
+  // Se não achou nada, tenta match parcial (ex: "Humanoide" vs "Humanoides")
+  if(!data.length){
+    data=DB.racas.filter(function(r){
+      var rc=(racaCat(r)||'').trim().toLowerCase();
+      return rc&&(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
+    });
+  }
   data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
   document.getElementById('count-racas').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+RACA_ACTIVE_CAT;
 
   // Banner da categoria (desc + traço + vd) embutido no grid
   var catRow=null;
-  for(var i=0;i<DB.racas_cats.length;i++){if(gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')===RACA_ACTIVE_CAT){catRow=DB.racas_cats[i];break;}}
+  for(var i=0;i<DB.racas_cats.length;i++){if((gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')||'').trim().toLowerCase()===RACA_ACTIVE_CAT.trim().toLowerCase()){catRow=DB.racas_cats[i];break;}}
   var desc=catRow?gf(catRow,'DESCRIÇÃO DA CATEGORIA','Descrição da Categoria','descricao da categoria'):'';
   var traco=catRow?gf(catRow,'TRAÇO RACIAL (de Categoria)','Traço Racial (de Categoria)','traco racial','TRAÇO RACIAL'):'';
   var vdCat=catRow?gf(catRow,'VANTAGEM / DESVANTAGEM DE CATEGORIA','Vantagem / Desvantagem de Categoria','vantagem / desvantagem de categoria'):'';
