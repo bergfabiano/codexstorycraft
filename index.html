@@ -1551,7 +1551,7 @@ function renderVantagens(){
   var cardCls='card-vd-'+cat;
   g.innerHTML=data.map(function(r){
     var n    = vdNome(r);
-    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;r=rCopy;
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;rCopy['_vd_cat']=cat;r=rCopy;
     var custo= vdCusto(r);
     var pre  = vdPrereq(r);
     var d    = vdDesc(r);
@@ -1752,6 +1752,7 @@ function openModal(rowOrStr){
   var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
   var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
   var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
+  var isVantagem=!isClasse&&!isDeus&&!!(row['_vd_cat']||gf(row,'Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao'));
   var nomeClasseImg=isClasse?(gf(row,'Classe','classe')||gf(row,'_nome_display')):null;
   var nomeDeusImg=isDeus?(gf(row,'Nome do Deus','nome do deus')||gf(row,'_nome_display')):null;
   var html='';
@@ -1763,7 +1764,7 @@ function openModal(rowOrStr){
     html=(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>';
   }
   html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
-  if(fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
+  if(fields.length&&!isVantagem){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
   document.getElementById('modalBody').innerHTML=html;
   document.getElementById('modalOverlay').classList.add('open');
 }
