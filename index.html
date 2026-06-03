@@ -1249,6 +1249,31 @@ function switchVdCat(cat){
 }
 
 // ── RENDER VANTAGENS ──
+function vdDesc(r){
+  // Tenta todas as variantes comuns de coluna de descrição nas planilhas de vantagens
+  return gf(r,
+    'Descrição Completa','Descricao Completa','descricao completa','Descrição completa',
+    'Descrição','Descricao','descricao',
+    'Efeito','efeito',
+    'Texto','texto',
+    'Detalhes','detalhes',
+    'desc'
+  );
+}
+function vdCusto(r){
+  return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor','Custo (pts)','custo (pts)','Custo(pts)');
+}
+function vdPrereq(r){
+  return gf(r,
+    'Pré-requisito','Pre-requisito','Pré-Requisito','Pre-Requisito',
+    'Pré-Requisitos','Pre-Requisitos','Pré-requisitos','Pre-requisitos',
+    'prerequisito','prerequisitos','Requisito','requisito'
+  );
+}
+function vdNome(r){
+  return gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao')||'(sem nome)';
+}
+
 function renderVantagens(){
   var cat=VD_ACTIVE_CAT;
   var rows=VD[cat]||[];
@@ -1257,9 +1282,9 @@ function renderVantagens(){
   var pr=document.getElementById('f-vd-prereq').value;
   var status=VD_STATUS[cat]||'idle';
 
-  // Populate dynamic filters from current data
-  var custos=uniq(rows.map(function(r){return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
-  var prereqs=uniq(rows.map(function(r){return gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');})).filter(Boolean);
+  // Populate dynamic filters
+  var custos=uniq(rows.map(function(r){return vdCusto(r);})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
+  var prereqs=uniq(rows.map(function(r){return vdPrereq(r);})).filter(Boolean);
   popSel('f-vd-custo',custos,cu);
   popSel('f-vd-prereq',prereqs,pr);
 
@@ -1274,10 +1299,10 @@ function renderVantagens(){
 
   statusEl.textContent='';
   var data=rows.filter(function(r){
-    var nome=gf(r,'Nome','nome')||'';
-    var desc=gf(r,'Descrição','Descricao','descricao','Efeito','efeito','desc')||'';
-    var custoV=gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');
-    var prereqV=gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');
+    var nome=vdNome(r);
+    var desc=vdDesc(r)||'';
+    var custoV=vdCusto(r);
+    var prereqV=vdPrereq(r);
     return (!s || (nome+' '+desc+' '+custoV).toLowerCase().indexOf(s)>-1)
         && (!cu || custoV===cu)
         && (!pr || prereqV===pr);
@@ -1292,19 +1317,19 @@ function renderVantagens(){
 
   var cardCls='card-vd-'+cat;
   g.innerHTML=data.map(function(r){
-    var n    = gf(r,'Nome','nome')||'(sem nome)';
-    var custo= gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');
-    var pre  = gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');
-    var d    = gf(r,'Descrição','Descricao','descricao','Efeito','efeito','desc');
+    var n    = vdNome(r);
+    var custo= vdCusto(r);
+    var pre  = vdPrereq(r);
+    var d    = vdDesc(r);
     var tipo = gf(r,'Tipo','tipo');
     var escola= gf(r,'Escola','escola');
-    var extra1= gf(r,'Alcance','alcance','Acumulável','acumulavel');
+    var extra1= gf(r,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
     var sub  = tipo||escola||'';
+    var isNeg=(cat==='desvantagens'||cat==='maldicoes');
 
     var costBadge='';
     if(custo){
-      var isNeg=(cat==='desvantagens'||cat==='maldicoes');
-      costBadge='<span style="font-family:\'Cinzel\',serif;font-weight:700;font-size:0.85rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';margin-left:auto;">'+custo+(isNeg?'':' pts')+'</span>';
+      costBadge='<span style="font-family:\'Cinzel\',serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+(isNeg?' pts':' pts')+'</span>';
     }
 
     return '<div class="card '+cardCls+'" onclick="openModalIdx('+_storeModal(r)+')">'+
@@ -1315,8 +1340,7 @@ function renderVantagens(){
       '<div class="card-name">'+n+'</div>'+
       (d?'<div class="card-desc">'+d+'</div>':'')+
       '<div class="card-tags">'+
-        (custo?tag(custo+' pts','tag-gold'):'') +
-        (pre?tag(pre.substring(0,30),'tag-gray'):'')+
+        (pre?tag(pre.substring(0,35),'tag-gray'):'')+
         (extra1?tag(extra1.substring(0,25),'tag-class'):'')+
       '</div>'+
     '</div>';
@@ -1468,10 +1492,10 @@ function openModal(rowOrStr){
   var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
   var escola=gf(row,'Escola','escola'),tipo=gf(row,'Tipo','tipo');
   var header=[escola,tipo].filter(Boolean).join(' — ');
-  var descKeys=['descrição','descricao','desc','lore','resumo','efeito','objetivo'];
+  var descKeys=['descrição completa','descricao completa','descrição','descricao','desc','lore','resumo','efeito','objetivo','texto','detalhes'];
   var desc='',rks=Object.keys(row);
   for(var i=0;i<rks.length;i++){if(descKeys.indexOf(deaccent(rks[i]))>-1&&row[rks[i]]){desc=row[rks[i]];break;}}
-  var skipKeys=['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo','graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao','graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
+  var skipKeys=['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','vantagem','desvantagem','maldicao','tipo','escola','descrição completa','descricao completa','descrição','descricao','desc','lore','resumo','efeito','objetivo','texto','detalhes','graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao','graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
   var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
   var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
   var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
