@@ -1317,16 +1317,14 @@ function abrirDetalhesRaca(idx){
   var irmas=DB.racas.filter(function(x){return racaCat(x)===cat && racaNome(x)!==n;});
 
   var html='';
-  // Header com imagem + nome (igual às classes)
-  html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">';
+  // Header com imagem + nome + descrição lado a lado
+  html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">';
   html+=imgBox(getRacaImg(n),'☯',120);
-  html+='<div style="flex:1;">';
+  html+='<div style="flex:1;min-width:0;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
-  html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.5rem;">'+n+'</h2>';
+  html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.6rem;">'+n+'</h2>';
+  if(desc) html+='<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.6;margin:0;">'+desc+'</p>';
   html+='</div></div>';
-
-  // Descrição
-  if(desc) html+='<p style="color:var(--text-dim);font-size:0.92rem;line-height:1.65;margin-bottom:1rem;">'+desc+'</p>';
 
   // Habilidades raciais
   var habs=[[hab1,'1ª Habilidade'],[hab2,'2ª Habilidade'],[hab3,'3ª Habilidade']].filter(function(h){return h[0];});
@@ -1464,15 +1462,27 @@ function switchVdCat(cat){
 
 // ── RENDER VANTAGENS ──
 function vdDesc(r){
-  // Tenta todas as variantes comuns de coluna de descrição nas planilhas de vantagens
-  return gf(r,
+  var d=gf(r,
     'Descrição Completa','Descricao Completa','descricao completa','Descrição completa',
     'Descrição','Descricao','descricao',
     'Efeito','efeito',
     'Texto','texto',
     'Detalhes','detalhes',
-    'desc'
+    'Resumo','resumo',
+    'desc','Desc'
   );
+  if(d) return d;
+  // Fallback: qualquer coluna com texto longo que não seja nome/custo/requisito/tipo
+  var skipParts=['nom','vant','desv','mald','tit','cust','pont','val','req','pre','tipo','escola','cat','grau','orig','acum','alc'];
+  var keys=Object.keys(r);
+  var best='';
+  for(var i=0;i<keys.length;i++){
+    var kl=keys[i].toLowerCase();
+    var skip=false;
+    for(var j=0;j<skipParts.length;j++){if(kl.indexOf(skipParts[j])>-1){skip=true;break;}}
+    if(!skip&&r[keys[i]]&&r[keys[i]].length>30&&r[keys[i]].length>best.length) best=r[keys[i]];
+  }
+  return best;
 }
 function vdCusto(r){
   return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor','Custo (pts)','custo (pts)','Custo(pts)');
