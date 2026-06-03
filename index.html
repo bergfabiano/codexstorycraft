@@ -558,6 +558,50 @@ main{
 
 /* ── DEBUG BANNERS ── */
 .debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
+
+/* ── VANTAGENS CATEGORY TABS ── */
+.vd-cats{
+  display:flex;flex-wrap:wrap;gap:0.45rem;
+  margin-bottom:0;
+}
+.vd-cat-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.45rem 0.9rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.68rem;
+  letter-spacing:0.08em;text-transform:uppercase;
+  border:1px solid var(--border);border-radius:20px;
+  color:var(--text-faint);background:var(--surface);
+  cursor:pointer;transition:all 0.18s;white-space:nowrap;
+}
+.vd-cat-btn:hover{color:var(--text);border-color:var(--violet-dim);background:var(--surface2);}
+.vd-cat-btn.active{
+  color:#fff;background:var(--violet);
+  border-color:var(--violet);
+  box-shadow:0 0 14px rgba(155,93,229,0.35);
+}
+.vd-cat-neg{border-color:rgba(255,92,138,0.25);}
+.vd-cat-neg:hover,.vd-cat-neg.active{background:var(--cat-desvantagem);border-color:var(--cat-desvantagem);color:#000;box-shadow:0 0 14px rgba(255,92,138,0.3);}
+.vd-cat-mal{border-color:rgba(180,50,50,0.25);}
+.vd-cat-mal:hover,.vd-cat-mal.active{background:#a03030;border-color:#c03030;color:#fff;box-shadow:0 0 14px rgba(160,48,48,0.4);}
+
+/* Badge de contagem nas pills */
+.vd-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:18px;height:18px;padding:0 4px;
+  background:rgba(255,255,255,0.15);
+  border-radius:9px;
+  font-size:0.58rem;font-weight:700;
+  margin-left:0.2rem;
+}
+
+/* Card accent por categoria de vantagem */
+.card-vd-versateis {--card-accent:#c084fc;--card-accent-faint:rgba(192,132,252,0.1);}
+.card-vd-combate   {--card-accent:var(--cat-combate);--card-accent-faint:var(--cat-combate-dim);}
+.card-vd-magicas   {--card-accent:var(--cat-conjurador);--card-accent-faint:var(--cat-conjurador-dim);}
+.card-vd-ataques   {--card-accent:var(--cyan);--card-accent-faint:rgba(0,212,255,0.08);}
+.card-vd-superpoderes{--card-accent:#f72585;--card-accent-faint:rgba(247,37,133,0.1);}
+.card-vd-desvantagens{--card-accent:var(--cat-desvantagem);--card-accent-faint:rgba(255,92,138,0.1);}
+.card-vd-maldicoes {--card-accent:#c03030;--card-accent-faint:rgba(192,48,48,0.1);}
 </style>
 </head>
 <body>
@@ -708,15 +752,35 @@ main{
   <!-- VANTAGENS -->
   <div id="page-vantagens" class="page">
     <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
-    <div class="filter-bar">
-      <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito..." oninput="renderVantagens()"></div>
-      <div class="fg"><label>Tipo</label><select id="f-vd-tipo" onchange="renderVantagens()"><option value="">Todos</option><option>Vantagem</option><option>Desvantagem</option></select></div>
-      <div class="fg"><label>Categoria</label><select id="f-vd-cat" onchange="renderVantagens()"><option value="">Todas</option></select></div>
+
+    <!-- Filtros por categoria (pill tabs) -->
+    <div class="vd-cats" id="vd-cats">
+      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')">    <span>◈</span> Versáteis</button>
+      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')">      <span>⚔</span> Combate</button>
+      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')">      <span>✦</span> Mágicas</button>
+      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')">      <span>◎</span> Ataques Mágicos</button>
+      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')"> <span>★</span> Superpoderes</button>
+      <button class="vd-cat-btn vd-cat-neg" data-cat="desvantagens" onclick="switchVdCat('desvantagens')"><span>▽</span> Desvantagens</button>
+      <button class="vd-cat-btn vd-cat-mal" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')">   <span>☠</span> Maldições</button>
+    </div>
+
+    <!-- Barra de busca + sub-filtro -->
+    <div class="filter-bar" style="margin-top:0.75rem;">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito, pré-requisito..." oninput="renderVantagens()"></div>
+      <div class="fg"><label>Custo (pts)</label><select id="f-vd-custo" onchange="renderVantagens()"><option value="">Todos</option></select></div>
+      <div class="fg"><label>Pré-requisito</label><select id="f-vd-prereq" onchange="renderVantagens()"><option value="">Todos</option></select></div>
       <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
     </div>
-    <p class="result-count" id="count-vantagens"></p>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
+      <p class="result-count" id="count-vantagens" style="margin-bottom:0;"></p>
+      <div id="vd-load-status" style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+    </div>
+
     <div class="debug-banner" id="vantagensdesvantagens-debug"></div>
-    <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+    <div class="cards-grid" id="grid-vantagens">
+      <div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando vantagens...</h3></div>
+    </div>
   </div>
 
   <!-- ITENS -->
@@ -820,13 +884,26 @@ function showPage(name) {
 // ── DATABASE ──
 var DB={racas:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
 
+// Vantagens por categoria — armazenadas separadamente
+var VD={
+  versateis:[],combate:[],magicas:[],ataques:[],superpoderes:[],desvantagens:[],maldicoes:[]
+};
+var VD_STATUS={versateis:'idle',combate:'idle',magicas:'idle',ataques:'idle',superpoderes:'idle',desvantagens:'idle',maldicoes:'idle'};
+var VD_ACTIVE_CAT='versateis';
+
 var SHEET_URLS={
-  grimorio:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
-  classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
-  dons:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
-  estigmas:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
-  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv",
-  deuses:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv"
+  grimorio:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
+  classes:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
+  dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
+  estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
+  deuses:          "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv",
+  vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2028187038&single=true&output=csv",
+  vd_combate:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2057822365&single=true&output=csv",
+  vd_magicas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1374290350&single=true&output=csv",
+  vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1374290350&single=true&output=csv",
+  vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=596445451&single=true&output=csv",
+  vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=601674192&single=true&output=csv",
+  vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1242532645&single=true&output=csv"
 };
 
 // Imagens
@@ -889,12 +966,19 @@ window.addEventListener('load',function(){
 
 async function autoLoadAll(){
   setStatus('loading','Carregando...');
+  // Pre-mark all VD as loading
+  for(var vc in VD_STATUS) VD_STATUS[vc]='loading';
   var loaded=0;
   for(var key in SHEET_URLS){
     var ok=await autoLoadTab(key,SHEET_URLS[key]);
     if(ok) loaded++;
   }
+  // Any that failed remain 'loading' → treat as empty
+  for(var vc in VD_STATUS){
+    if(VD_STATUS[vc]==='loading'){VD_STATUS[vc]='ok';} // mark done even if empty
+  }
   updateStats();renderAll();cntPopulateRaces();
+  renderVantagens(); // ensure active VD tab renders
   if(loaded>0) setStatus('ok',loaded+' fontes');
   else setStatus('err','Falha');
 }
@@ -985,6 +1069,15 @@ function normalizeKey(k){return k.toLowerCase().replace(/[^a-z0-9]/g,'');}
 
 function distributeData(rows,tab){
   var raw=Object.keys(rows[0]||{}),keys=raw.map(function(k){return k.toLowerCase();}),norm=raw.map(normalizeKey);
+  // VD sub-categories
+  if(tab==='vd_versateis'){VD.versateis=rows;VD_STATUS.versateis='ok';updateVdBadge('versateis',rows.length);return;}
+  if(tab==='vd_combate'){VD.combate=rows;VD_STATUS.combate='ok';updateVdBadge('combate',rows.length);return;}
+  if(tab==='vd_magicas'){VD.magicas=rows;VD_STATUS.magicas='ok';updateVdBadge('magicas',rows.length);return;}
+  if(tab==='vd_ataques'){VD.ataques=rows;VD_STATUS.ataques='ok';updateVdBadge('ataques',rows.length);return;}
+  if(tab==='vd_superpoderes'){VD.superpoderes=rows;VD_STATUS.superpoderes='ok';updateVdBadge('superpoderes',rows.length);return;}
+  if(tab==='vd_desvantagens'){VD.desvantagens=rows;VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',rows.length);return;}
+  if(tab==='vd_maldicoes'){VD.maldicoes=rows;VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',rows.length);return;}
+  // Legacy vantagens (fallback)
   if(tab==='grimorio'){DB.grimorio=rows;return;}
   if(tab==='racas'){DB.racas=rows;return;}
   if(tab==='classes'){DB.classes=rows;return;}
@@ -1008,9 +1101,30 @@ function distributeData(rows,tab){
   DB.racas=rows;
 }
 
+function updateVdBadge(cat,count){
+  var btn=document.querySelector('[data-cat="'+cat+'"]');
+  if(!btn) return;
+  // Remove old badge if any
+  var old=btn.querySelector('.vd-badge');
+  if(old) old.remove();
+  if(count>0){
+    var b=document.createElement('span');
+    b.className='vd-badge';
+    b.textContent=count;
+    btn.appendChild(b);
+  }
+  // Re-render if this is the active category
+  if(cat===VD_ACTIVE_CAT) renderVantagens();
+}
+
 function updateStats(){
-  var m={racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas',vantagens:'vantagens'};
+  var m={racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas'};
   for(var k in m){var el=document.getElementById('stat-'+m[k]);if(el)el.textContent=DB[k].length||'—';}
+  // Vantagens = sum of all VD categories
+  var totalVd=0;
+  for(var vc in VD) totalVd+=VD[vc].length;
+  var elVd=document.getElementById('stat-vantagens');
+  if(elVd) elVd.textContent=totalVd||'—';
 }
 
 function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderItens();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
@@ -1110,24 +1224,102 @@ function voltarClasses(){
   document.getElementById('f-class-filtro').value='';
 }
 
+// ── VANTAGENS: SWITCH CATEGORY ──
+var VD_LABELS={
+  versateis:'Versáteis',combate:'Combate',magicas:'Mágicas',
+  ataques:'Ataques Mágicos',superpoderes:'Superpoderes',
+  desvantagens:'Desvantagens',maldicoes:'Maldições'
+};
+var VD_SYMS={
+  versateis:'◈',combate:'⚔',magicas:'✦',ataques:'◎',
+  superpoderes:'★',desvantagens:'▽',maldicoes:'☠'
+};
+
+function switchVdCat(cat){
+  VD_ACTIVE_CAT=cat;
+  // Update pill buttons
+  document.querySelectorAll('.vd-cat-btn').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-cat')===cat);
+  });
+  // Clear search/filters
+  document.getElementById('f-vd-search').value='';
+  document.getElementById('f-vd-custo').value='';
+  document.getElementById('f-vd-prereq').value='';
+  renderVantagens();
+}
+
 // ── RENDER VANTAGENS ──
 function renderVantagens(){
-  var s=document.getElementById('f-vd-search').value.toLowerCase(),tp=document.getElementById('f-vd-tipo').value,ca=document.getElementById('f-vd-cat').value;
-  popSel('f-vd-cat',uniq(DB.vantagens.map(function(r){return gf(r,'Categoria','categoria');})),ca);
-  var data=DB.vantagens.filter(function(r){
-    var cat=gf(r,'Categoria','categoria');
-    var isDesv=(cat||'').toLowerCase().indexOf('desvantagem')>-1||(cat||'').toLowerCase().indexOf('maldi')>-1;
-    var tipoOk=!tp||(tp==='Vantagem'&&!isDesv)||(tp==='Desvantagem'&&isDesv);
-    return(!s||fstr(r).indexOf(s)>-1)&&tipoOk&&(!ca||cat===ca);
-  });
+  var cat=VD_ACTIVE_CAT;
+  var rows=VD[cat]||[];
+  var s=document.getElementById('f-vd-search').value.toLowerCase();
+  var cu=document.getElementById('f-vd-custo').value;
+  var pr=document.getElementById('f-vd-prereq').value;
+  var status=VD_STATUS[cat]||'idle';
+
+  // Populate dynamic filters from current data
+  var custos=uniq(rows.map(function(r){return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
+  var prereqs=uniq(rows.map(function(r){return gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');})).filter(Boolean);
+  popSel('f-vd-custo',custos,cu);
+  popSel('f-vd-prereq',prereqs,pr);
+
   var g=document.getElementById('grid-vantagens');
-  document.getElementById('count-vantagens').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('△',DB.vantagens.length?'Nenhum resultado':'Nenhuma entrada carregada');return;}
+  var statusEl=document.getElementById('vd-load-status');
+
+  if(status==='idle'||status==='loading'){
+    statusEl.textContent='Carregando...';
+    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+VD_SYMS[cat]+'</span><h3>Carregando '+VD_LABELS[cat]+'...</h3></div>';
+    return;
+  }
+
+  statusEl.textContent='';
+  var data=rows.filter(function(r){
+    var nome=gf(r,'Nome','nome')||'';
+    var desc=gf(r,'Descrição','Descricao','descricao','Efeito','efeito','desc')||'';
+    var custoV=gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');
+    var prereqV=gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');
+    return (!s || (nome+' '+desc+' '+custoV).toLowerCase().indexOf(s)>-1)
+        && (!cu || custoV===cu)
+        && (!pr || prereqV===pr);
+  });
+
+  document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+VD_LABELS[cat];
+
+  if(!data.length){
+    g.innerHTML=emptyMsg(VD_SYMS[cat],rows.length?'Nenhum resultado':'Nenhuma entrada carregada');
+    return;
+  }
+
+  var cardCls='card-vd-'+cat;
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',cat=gf(r,'Categoria','categoria'),pre=gf(r,'Pré-requisitos','Pre-requisitos','prerequisitos','Pré-requisitos'),d=gf(r,'Descrição Completa','Descricao Completa','Descricao','descricao','desc','Descrição');
-    var isDesv=(cat||'').toLowerCase().indexOf('desvantagem')>-1||(cat||'').toLowerCase().indexOf('maldi')>-1;
-    var cc=isDesv?'card-desvantagem':'card-vantagem';
-    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(cat||'vantagem')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cat,isDesv?'tag-danger':'tag-green')+(pre?tag(pre.substring(0,30),'tag-gray'):'')+'</div></div>';
+    var n    = gf(r,'Nome','nome')||'(sem nome)';
+    var custo= gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor');
+    var pre  = gf(r,'Pré-requisito','Pre-requisito','prerequisito','Pré-Requisito','Pre-Requisito','Requisito','requisito');
+    var d    = gf(r,'Descrição','Descricao','descricao','Efeito','efeito','desc');
+    var tipo = gf(r,'Tipo','tipo');
+    var escola= gf(r,'Escola','escola');
+    var extra1= gf(r,'Alcance','alcance','Acumulável','acumulavel');
+    var sub  = tipo||escola||'';
+
+    var costBadge='';
+    if(custo){
+      var isNeg=(cat==='desvantagens'||cat==='maldicoes');
+      costBadge='<span style="font-family:\'Cinzel\',serif;font-weight:700;font-size:0.85rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';margin-left:auto;">'+custo+(isNeg?'':' pts')+'</span>';
+    }
+
+    return '<div class="card '+cardCls+'" onclick="openModalIdx('+_storeModal(r)+')">'+
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
+        '<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+
+        costBadge+
+      '</div>'+
+      '<div class="card-name">'+n+'</div>'+
+      (d?'<div class="card-desc">'+d+'</div>':'')+
+      '<div class="card-tags">'+
+        (custo?tag(custo+' pts','tag-gold'):'') +
+        (pre?tag(pre.substring(0,30),'tag-gray'):'')+
+        (extra1?tag(extra1.substring(0,25),'tag-class'):'')+
+      '</div>'+
+    '</div>';
   }).join('');
 }
 
@@ -1260,7 +1452,7 @@ function renderEstigmas(){
 
 // ── CLEAR FILTERS ──
 function clearFilters(sec){
-  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-tipo','f-vd-cat'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
   var ids=m[sec]||[];for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
