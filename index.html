@@ -490,6 +490,9 @@ main{
 .modal-close:hover{color:var(--violet-bright);}
 .modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);margin-bottom:0.5rem;text-transform:uppercase;}
 .modal-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
+.modal-sub{display:block;margin:0.6rem 0;padding:0.55rem 0.75rem;background:rgba(155,93,229,0.07);border-left:2px solid var(--violet-dim);border-radius:0 6px 6px 0;}
+.modal-sub-title{display:block;font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--gold-light);letter-spacing:0.06em;margin-bottom:0.2rem;}
+.modal-sub-body{display:block;font-size:0.88rem;color:var(--text-dim);line-height:1.55;}
 .modal-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
 .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem 1.5rem;}
 .modal-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;display:block;margin-bottom:0.12rem;text-transform:uppercase;}
@@ -1495,6 +1498,19 @@ var _modalStore=[];
 function _storeModal(obj){_modalStore.push(obj);return _modalStore.length-1;}
 function openModalIdx(idx){openModal(_modalStore[idx]);}
 
+function formatDesc(text){
+  if(!text) return '';
+  var lines=text.split(/\n/);
+  var html='';
+  lines.forEach(function(line){
+    line=line.trim();if(!line)return;
+    var m=line.match(/^([A-Z\xC0-\xD6\xD8-\xDE][A-Za-z\xC0-\xFF][^:]{1,50}):\s*([\s\S]+)/);
+    if(m) html+='<div class="modal-sub"><span class="modal-sub-title">'+m[1]+'</span><span class="modal-sub-body">'+m[2].trim()+'</span></div>';
+    else html+='<p>'+line+'</p>';
+  });
+  return html;
+}
+
 function openModal(rowOrStr){
   var row=(typeof rowOrStr==='string')?JSON.parse(rowOrStr):rowOrStr;
   var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
@@ -1517,7 +1533,7 @@ function openModal(rowOrStr){
   }else{
     html=(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>';
   }
-  html+=(desc?'<p class="modal-desc">'+desc+'</p>':'');
+  html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
   if(fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
   document.getElementById('modalBody').innerHTML=html;
   document.getElementById('modalOverlay').classList.add('open');
