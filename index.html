@@ -5,165 +5,209 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codex StoryCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--parchment:#f5e6c8;--parchment-dark:#e8d5a3;--blood:#8b1a1a;--gold:#c8931a;--gold-light:#e8b84b;--ember:#d4521a;--rune:#4a8fa8;--magic:#7b5ea7;}
+:root{
+  --bg:#08090f;
+  --bg2:#0e1018;
+  --bg3:#131522;
+  --surface:#181b27;
+  --surface2:#1e2133;
+  --border:rgba(120,140,220,0.15);
+  --border-active:rgba(180,155,90,0.6);
+  --copper:#c9874a;
+  --copper-light:#e8a86a;
+  --gold:#b8963a;
+  --gold-light:#d4b060;
+  --gold-glow:rgba(184,150,58,0.25);
+  --blue:#4a6fa8;
+  --blue-light:#7ba3d4;
+  --silver:#c8d0e0;
+  --silver-dim:rgba(200,208,224,0.45);
+  --silver-faint:rgba(200,208,224,0.2);
+  --blood:#a02828;
+  --ember:#c84820;
+  --green:#4a8f5a;
+  --magic:#7b5ea7;
+  --rune:#4a8fa8;
+  --text:#d8dde8;
+  --text-dim:rgba(216,221,232,0.55);
+  --text-faint:rgba(216,221,232,0.25);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Crimson Text',Georgia,serif;background-color:#0d0a05;color:var(--parchment);min-height:100vh;overflow-x:hidden;}
-body{background-image:radial-gradient(ellipse at 20% 50%,rgba(139,26,26,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(123,94,167,0.06) 0%,transparent 50%);}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c8931a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+body{font-family:'Raleway',sans-serif;background-color:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-weight:400;}
 
-header{position:relative;text-align:center;padding:3rem 2rem 2rem;border-bottom:1px solid rgba(200,147,26,0.3);background:linear-gradient(180deg,rgba(26,16,8,0.9) 0%,transparent 100%);z-index:10;}
-header::before{content:'\2015\2015 \2736 \2015\2015';display:block;font-size:1rem;color:var(--gold);letter-spacing:0.5rem;margin-bottom:1rem;opacity:0.7;}
-.title-main{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:var(--gold-light);letter-spacing:0.15em;text-shadow:0 0 40px rgba(200,147,26,0.4),0 2px 4px rgba(0,0,0,0.8);}
-.title-sub{font-family:'Crimson Text',serif;font-style:italic;font-size:1.1rem;color:rgba(245,230,200,0.5);margin-top:0.5rem;letter-spacing:0.2em;}
-.title-ornament{font-size:0.8rem;color:var(--gold);opacity:0.5;letter-spacing:0.8rem;margin-top:1rem;}
+/* Noise texture overlay */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
 
-.sheets-bar{position:relative;z-index:10;background:rgba(26,16,8,0.8);border-bottom:1px solid rgba(200,147,26,0.2);padding:0.75rem 2rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.sheets-bar label{font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);letter-spacing:0.1em;white-space:nowrap;}
-.sheets-bar input{flex:1;min-width:200px;background:rgba(245,230,200,0.08);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.75rem;font-family:'Crimson Text',serif;font-size:0.9rem;border-radius:2px;outline:none;}
+/* Atmospheric glow */
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 0%,rgba(74,111,168,0.08) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 85% 100%,rgba(184,150,58,0.06) 0%,transparent 55%);pointer-events:none;z-index:0;}
+
+/* ── HEADER ── */
+header{position:relative;z-index:10;text-align:center;padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(8,9,15,0.95) 0%,rgba(8,9,15,0.4) 100%);}
+header::before{content:'— ✦ —';display:block;font-size:0.85rem;color:var(--gold);letter-spacing:0.6rem;margin-bottom:1.25rem;opacity:0.6;font-family:'Cinzel',serif;}
+.title-main{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:var(--gold-light);letter-spacing:0.12em;text-shadow:0 0 60px rgba(184,150,58,0.3),0 2px 4px rgba(0,0,0,0.9);}
+.title-sub{font-family:'Raleway',sans-serif;font-weight:300;font-size:0.8rem;color:var(--silver-dim);margin-top:0.6rem;letter-spacing:0.35em;text-transform:uppercase;}
+.title-ornament{font-size:0.75rem;color:var(--gold);opacity:0.4;letter-spacing:1rem;margin-top:1rem;font-family:'Cinzel',serif;}
+
+/* ── SHEETS BAR ── */
+.sheets-bar{position:relative;z-index:10;background:rgba(14,16,24,0.9);border-bottom:1px solid var(--border);padding:0.7rem 2rem;display:flex;align-items:center;gap:0.85rem;flex-wrap:wrap;}
+.sheets-bar label{font-family:'Cinzel',serif;font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;white-space:nowrap;text-transform:uppercase;}
+.sheets-bar input{flex:1;min-width:200px;background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.75rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;transition:border-color 0.2s;}
 .sheets-bar input:focus{border-color:var(--gold);}
-.sheets-bar input::placeholder{color:rgba(245,230,200,0.3);font-style:italic;}
-.sheets-bar select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.25);color:var(--parchment);padding:0.4rem 0.6rem;font-family:'Crimson Text',serif;font-size:0.9rem;border-radius:2px;outline:none;min-width:130px;}
-.sheets-bar select option{background:#1a1008;}
-.btn-load{background:var(--blood);border:1px solid rgba(200,147,26,0.4);color:var(--parchment);padding:0.4rem 1.2rem;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;border-radius:2px;white-space:nowrap;}
-.btn-load:hover{background:#a52020;}
-.status-dot{width:8px;height:8px;border-radius:50%;background:#555;flex-shrink:0;}
+.sheets-bar input::placeholder{color:var(--text-faint);font-style:normal;}
+.sheets-bar select{background:rgba(200,208,224,0.04);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.6rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;min-width:140px;}
+.sheets-bar select option{background:#0e1018;}
+.btn-load{background:var(--blood);border:1px solid rgba(160,40,40,0.6);color:var(--text);padding:0.4rem 1.2rem;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;cursor:pointer;border-radius:3px;white-space:nowrap;text-transform:uppercase;transition:background 0.2s;}
+.btn-load:hover{background:#c03030;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#444;flex-shrink:0;}
 .status-dot.ok{background:#4caf50;box-shadow:0 0 6px #4caf50;}
 .status-dot.err{background:var(--blood);box-shadow:0 0 6px var(--blood);}
 .status-dot.loading{background:var(--gold);animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
-nav{position:relative;z-index:10;display:flex;padding:1.5rem 2rem 0;background:rgba(13,10,5,0.6);overflow-x:auto;scrollbar-width:none;}
+/* ── NAV ── */
+nav{position:relative;z-index:10;display:flex;padding:0 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;gap:0.15rem;}
 nav::-webkit-scrollbar{display:none;}
-.nav-tab{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;color:rgba(245,230,200,0.4);padding:0.55rem 1.1rem;cursor:pointer;border:1px solid transparent;border-bottom:none;border-radius:4px 4px 0 0;white-space:nowrap;display:flex;align-items:center;gap:0.4rem;background:transparent;position:relative;top:1px;transition:all 0.2s;}
-.nav-tab:hover{color:var(--parchment-dark);border-color:rgba(200,147,26,0.2);}
-.nav-tab.active{color:var(--gold-light);border-color:rgba(200,147,26,0.4);border-bottom-color:#0d0a05;background:rgba(26,16,8,0.9);}
-.tab-sym{font-size:0.85rem;}
+.nav-tab{font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;color:var(--text-faint);padding:0.75rem 1.1rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:0.45rem;background:transparent;transition:all 0.2s;text-transform:uppercase;}
+.nav-tab:hover{color:var(--silver-dim);border-bottom-color:rgba(200,208,224,0.2);}
+.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+.tab-sym{font-size:0.8rem;opacity:0.8;}
 
-main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147,26,0.3);background:rgba(13,10,5,0.4);min-height:60vh;}
-.page{display:none;animation:fadeIn 0.3s ease;}
+/* ── MAIN ── */
+main{position:relative;z-index:10;padding:2rem;background:transparent;min-height:60vh;}
+.page{display:none;animation:fadeIn 0.25s ease;}
 .page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-.filter-bar{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:1rem 1.25rem;background:rgba(26,16,8,0.6);border:1px solid rgba(200,147,26,0.2);border-radius:4px;}
-.fg{display:flex;flex-direction:column;gap:0.25rem;min-width:140px;flex:1;}
-.fg label{font-family:'Cinzel',serif;font-size:0.6rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;}
-.fg input,.fg select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.25);color:var(--parchment);padding:0.35rem 0.6rem;font-family:'Crimson Text',serif;font-size:0.95rem;border-radius:2px;outline:none;}
-.fg select option{background:#1a1008;}
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;}
+.fg{display:flex;flex-direction:column;gap:0.3rem;min-width:140px;flex:1;}
+.fg label{font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;}
+.fg input,.fg select{background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:3px;outline:none;transition:border-color 0.2s;}
+.fg select option{background:#0e1018;}
 .fg input:focus,.fg select:focus{border-color:var(--gold);}
-.fg input::placeholder{color:rgba(245,230,200,0.25);font-style:italic;}
-.btn-clear{align-self:flex-end;background:transparent;border:1px solid rgba(200,147,26,0.25);color:rgba(245,230,200,0.4);padding:0.35rem 0.9rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.1em;cursor:pointer;border-radius:2px;}
-.btn-clear:hover{color:var(--parchment);border-color:var(--gold);}
+.fg input::placeholder{color:var(--text-faint);font-style:normal;}
+.btn-clear{align-self:flex-end;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.4rem 1rem;font-family:'Raleway',sans-serif;font-weight:600;font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;border-radius:3px;text-transform:uppercase;transition:all 0.2s;}
+.btn-clear:hover{color:var(--text);border-color:var(--silver-dim);}
 
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
-.card{background:linear-gradient(135deg,rgba(26,16,8,0.9),rgba(13,10,5,0.95));border:1px solid rgba(200,147,26,0.2);border-radius:4px;padding:1.25rem;cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.25s;}
-.card:hover{border-color:rgba(200,147,26,0.5);transform:translateY(-2px);}
-.card:hover::before{opacity:1;}
-.card-type{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:var(--gold);opacity:0.7;margin-bottom:0.4rem;text-transform:uppercase;}
-.card-name{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:600;color:var(--parchment);margin-bottom:0.5rem;line-height:1.3;}
-.card-desc{font-size:0.9rem;color:rgba(245,230,200,0.55);font-style:italic;line-height:1.5;margin-bottom:0.75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* ── CARDS ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.25rem;cursor:pointer;transition:all 0.22s;position:relative;overflow:hidden;}
+.card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,111,168,0.03) 0%,transparent 60%);pointer-events:none;}
+.card:hover{border-color:rgba(180,155,90,0.4);transform:translateY(-2px);background:var(--surface2);box-shadow:0 8px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(180,155,90,0.1);}
+.card-type{font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--copper);opacity:0.8;margin-bottom:0.4rem;text-transform:uppercase;}
+.card-name{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--silver);margin-bottom:0.5rem;line-height:1.3;}
+.card-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.55;margin-bottom:0.75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:normal;}
 .card-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
-.tag{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.08em;padding:0.15rem 0.5rem;border-radius:2px;border:1px solid;text-transform:uppercase;}
-.tag-class{color:var(--rune);border-color:rgba(74,143,168,0.4);background:rgba(74,143,168,0.1);}
-.tag-rare{color:var(--magic);border-color:rgba(123,94,167,0.4);background:rgba(123,94,167,0.1);}
-.tag-danger{color:var(--ember);border-color:rgba(212,82,26,0.4);background:rgba(212,82,26,0.1);}
-.tag-gold{color:var(--gold);border-color:rgba(200,147,26,0.4);background:rgba(200,147,26,0.1);}
-.tag-gray{color:rgba(245,230,200,0.5);border-color:rgba(245,230,200,0.15);}
-.tag-green{color:#5a9a4a;border-color:rgba(90,154,74,0.4);background:rgba(90,154,74,0.1);}
-.tag-blood{color:var(--blood);border-color:rgba(139,26,26,0.4);background:rgba(139,26,26,0.1);}
+.tag{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.6rem;letter-spacing:0.07em;padding:0.2rem 0.55rem;border-radius:3px;border:1px solid;text-transform:uppercase;}
+.tag-class{color:var(--rune);border-color:rgba(74,143,168,0.4);background:rgba(74,143,168,0.08);}
+.tag-rare{color:var(--magic);border-color:rgba(123,94,167,0.4);background:rgba(123,94,167,0.08);}
+.tag-danger{color:var(--ember);border-color:rgba(200,72,32,0.4);background:rgba(200,72,32,0.08);}
+.tag-gold{color:var(--gold-light);border-color:rgba(184,150,58,0.4);background:rgba(184,150,58,0.08);}
+.tag-gray{color:var(--text-dim);border-color:rgba(200,208,224,0.12);}
+.tag-green{color:var(--green);border-color:rgba(74,143,90,0.4);background:rgba(74,143,90,0.08);}
+.tag-blood{color:var(--blood);border-color:rgba(160,40,40,0.4);background:rgba(160,40,40,0.08);}
 
-/* BOTÃO VER DONS */
-.btn-ver-dons{display:block;width:100%;margin-top:0.75rem;padding:0.4rem 0;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(200,147,26,0.3);border-radius:2px;cursor:pointer;transition:all 0.2s;text-align:center;}
-.btn-ver-dons:hover{background:rgba(200,147,26,0.1);border-color:var(--gold);}
+/* ── BTN VER DONS / GRAÇAS ── */
+.btn-ver-dons{display:block;width:100%;margin-top:0.85rem;padding:0.45rem 0;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(184,150,58,0.3);border-radius:3px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.btn-ver-dons:hover{background:rgba(184,150,58,0.08);border-color:var(--gold-light);color:var(--gold-light);}
 
-/* DETALHE DE CLASSE */
+/* ── DETALHE DE CLASSE/DEUS ── */
 .classe-detail{display:none;animation:fadeIn 0.3s ease;}
 .classe-detail.active{display:block;}
-.btn-voltar{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(245,230,200,0.4);background:transparent;border:1px solid rgba(200,147,26,0.2);padding:0.4rem 1rem;border-radius:2px;cursor:pointer;margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:0.4rem;}
-.btn-voltar:hover{color:var(--gold);border-color:var(--gold);}
-.classe-header{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 2rem;padding:1.25rem;background:rgba(26,16,8,0.7);border:1px solid rgba(200,147,26,0.25);border-radius:4px;margin-bottom:1.5rem;}
+.btn-voltar{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.7rem;letter-spacing:0.12em;color:var(--text-faint);background:transparent;border:1px solid var(--border);padding:0.45rem 1.1rem;border-radius:3px;cursor:pointer;margin-bottom:1.75rem;display:inline-flex;align-items:center;gap:0.45rem;text-transform:uppercase;transition:all 0.2s;}
+.btn-voltar:hover{color:var(--gold-light);border-color:var(--gold);}
+.classe-header{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 2rem;padding:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;}
 .classe-header-full{grid-column:1/-1;}
-.classe-field label{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);opacity:0.7;display:block;margin-bottom:0.2rem;text-transform:uppercase;}
-.classe-field p{font-size:0.95rem;color:var(--parchment);line-height:1.5;}
+.classe-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.15em;color:var(--copper);opacity:0.9;display:block;margin-bottom:0.25rem;text-transform:uppercase;}
+.classe-field p{font-size:0.92rem;color:var(--text);line-height:1.5;}
 .classe-field p.destaque{font-size:1rem;font-weight:600;color:var(--gold-light);}
-.classe-ind{font-style:italic;color:rgba(245,230,200,0.7);font-size:0.95rem;line-height:1.7;border-left:2px solid rgba(200,147,26,0.3);padding-left:1rem;margin-bottom:1.5rem;}
-.dons-title{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--gold-light);letter-spacing:0.15em;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(200,147,26,0.2);text-transform:uppercase;}
-.don-item{padding:0.9rem 1.1rem;background:rgba(26,16,8,0.5);border:1px solid rgba(200,147,26,0.12);border-radius:3px;margin-bottom:0.6rem;transition:border-color 0.2s;}
-.don-item:hover{border-color:rgba(200,147,26,0.3);}
-.don-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.4rem;flex-wrap:wrap;}
-.don-nome{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:600;color:var(--parchment);}
-.don-grau{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.1em;padding:0.15rem 0.5rem;border-radius:2px;border:1px solid rgba(200,147,26,0.4);color:var(--gold);background:rgba(200,147,26,0.08);text-transform:uppercase;}
-.don-desc{font-size:0.88rem;color:rgba(245,230,200,0.6);line-height:1.6;font-style:italic;}
+.classe-ind{color:var(--text-dim);font-size:0.92rem;line-height:1.7;border-left:2px solid rgba(184,150,58,0.35);padding-left:1rem;margin-bottom:1.5rem;font-style:normal;}
+.dons-title{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
+.don-item{padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:0.6rem;transition:border-color 0.2s;}
+.don-item:hover{border-color:rgba(184,150,58,0.3);}
+.don-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap;}
+.don-nome{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:600;color:var(--silver);}
+.don-grau{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.1em;padding:0.18rem 0.6rem;border-radius:3px;border:1px solid rgba(184,150,58,0.4);color:var(--gold-light);background:rgba(184,150,58,0.08);text-transform:uppercase;}
+.don-desc{font-size:0.88rem;color:var(--text-dim);line-height:1.6;font-style:normal;}
 .grau-section{margin-bottom:1.25rem;}
-.grau-section-title{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);opacity:0.5;text-transform:uppercase;margin-bottom:0.6rem;padding-left:0.25rem;}
+.grau-section-title{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.2em;color:var(--copper);opacity:0.6;text-transform:uppercase;margin-bottom:0.6rem;padding-left:0.25rem;}
 
-.state-msg{text-align:center;padding:4rem 2rem;color:rgba(245,230,200,0.3);}
-.state-sym{font-size:2.5rem;margin-bottom:1rem;opacity:0.4;font-family:'Cinzel',serif;display:block;}
-.state-msg h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.5rem;color:rgba(245,230,200,0.4);}
-.state-msg p{font-style:italic;font-size:0.9rem;}
+/* ── STATE MSG ── */
+.state-msg{text-align:center;padding:4rem 2rem;color:var(--text-faint);}
+.state-sym{font-size:2.5rem;margin-bottom:1rem;opacity:0.3;font-family:'Cinzel',serif;display:block;}
+.state-msg h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.5rem;color:var(--text-faint);}
+.state-msg p{font-size:0.88rem;color:var(--text-faint);}
 
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,3,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(4px);}
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(4,5,10,0.88);z-index:1000;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(6px);}
 .modal-overlay.open{display:flex;}
-.modal{background:linear-gradient(160deg,#1a1008,#0d0a05);border:1px solid rgba(200,147,26,0.4);border-radius:6px;padding:2rem;max-width:560px;width:100%;max-height:80vh;overflow-y:auto;position:relative;animation:modalIn 0.25s ease;}
-@keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
-.modal::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(245,230,200,0.4);font-size:1.4rem;cursor:pointer;}
-.modal-close:hover{color:var(--gold);}
-.modal-type{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.7;margin-bottom:0.5rem;}
-.modal-name{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
-.modal-divider{border:none;border-top:1px solid rgba(200,147,26,0.2);margin:1rem 0;}
+.modal{background:var(--bg3);border:1px solid rgba(184,150,58,0.35);border-radius:8px;padding:2rem;max-width:580px;width:100%;max-height:82vh;overflow-y:auto;position:relative;animation:modalIn 0.22s ease;box-shadow:0 24px 80px rgba(0,0,0,0.7);}
+@keyframes modalIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
+.modal::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-faint);font-size:1.4rem;cursor:pointer;transition:color 0.2s;}
+.modal-close:hover{color:var(--gold-light);}
+.modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.2em;color:var(--copper);margin-bottom:0.5rem;text-transform:uppercase;}
+.modal-name{font-family:'Cinzel',serif;font-size:1.55rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
+.modal-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
 .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.5rem;}
-.modal-field label{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.12em;color:var(--gold);opacity:0.7;display:block;margin-bottom:0.15rem;}
-.modal-field p{font-size:1rem;color:var(--parchment);}
+.modal-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.15em;color:var(--copper);opacity:0.8;display:block;margin-bottom:0.15rem;text-transform:uppercase;}
+.modal-field p{font-size:0.92rem;color:var(--text);}
 .modal-field.full{grid-column:1/-1;}
-.modal-desc{font-style:italic;color:rgba(245,230,200,0.7);font-size:1rem;line-height:1.7;border-left:2px solid rgba(200,147,26,0.3);padding-left:1rem;margin:1rem 0;}
+.modal-desc{font-style:normal;color:var(--text-dim);font-size:0.92rem;line-height:1.7;border-left:2px solid rgba(184,150,58,0.3);padding-left:1rem;margin:1rem 0;}
 
-.result-count{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;color:rgba(245,230,200,0.3);margin-bottom:1rem;text-transform:uppercase;}
-.section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(200,147,26,0.2);display:flex;align-items:center;gap:0.6rem;}
-.stitle-sym{color:var(--gold);opacity:0.6;font-size:1rem;}
+/* ── RESULT COUNT / SECTION TITLE ── */
+.result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.65rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
+.section-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
+.stitle-sym{color:var(--copper);opacity:0.7;font-size:0.95rem;}
 
-.home-sym{font-family:'Cinzel',serif;font-size:2.5rem;margin-bottom:1.5rem;opacity:0.5;color:var(--gold);display:block;}
-.home-title{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold-light);margin-bottom:0.75rem;}
-.home-desc{font-style:italic;color:rgba(245,230,200,0.5);max-width:480px;margin:0 auto 2.5rem;font-size:1.05rem;line-height:1.7;}
-.home-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
-.stat-box{text-align:center;padding:1rem 1.2rem;border:1px solid rgba(200,147,26,0.2);border-radius:4px;background:rgba(26,16,8,0.6);min-width:100px;}
-.stat-sym{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold);opacity:0.6;display:block;margin-bottom:0.25rem;}
-.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);display:block;}
-.stat-lbl{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.15em;color:rgba(245,230,200,0.35);text-transform:uppercase;}
+/* ── HOME ── */
+.home-sym{font-family:'Cinzel',serif;font-size:2rem;margin-bottom:1.5rem;opacity:0.35;color:var(--gold);display:block;}
+.home-title{font-family:'Cinzel',serif;font-size:1.75rem;color:var(--gold-light);margin-bottom:0.75rem;}
+.home-desc{font-style:normal;color:var(--text-dim);max-width:520px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.75;}
+.home-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0.75rem;max-width:860px;margin:0 auto 2rem;}
+.stat-box{text-align:center;padding:1.1rem 0.75rem;border:1px solid var(--border);border-radius:6px;background:var(--surface);transition:all 0.22s;position:relative;overflow:hidden;}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.2s;}
+.stat-box:hover{border-color:rgba(184,150,58,0.3);background:var(--surface2);}
+.stat-box:hover::before{opacity:1;}
+.stat-sym{font-family:'Cinzel',serif;font-size:1rem;color:var(--copper);opacity:0.7;display:block;margin-bottom:0.4rem;}
+.stat-num{font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);display:block;line-height:1;}
+.stat-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.18em;color:var(--text-faint);text-transform:uppercase;display:block;margin-top:0.4rem;}
 
-.sessions-table{width:100%;border-collapse:collapse;font-size:0.95rem;}
-.sessions-table th{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);opacity:0.7;text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid rgba(200,147,26,0.3);text-transform:uppercase;}
-.sessions-table td{padding:0.75rem;border-bottom:1px solid rgba(200,147,26,0.1);color:rgba(245,230,200,0.75);vertical-align:top;}
-.sessions-table tr:hover td{background:rgba(200,147,26,0.05);cursor:pointer;}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:rgba(184,150,58,0.25);border-radius:3px;}
 
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:rgba(26,16,8,0.3);}
-::-webkit-scrollbar-thumb{background:rgba(200,147,26,0.3);border-radius:3px;}
-
-/* CONTADOR */
-.cnt-wrap{max-width:680px;margin:0 auto;}
-.cnt-lbl{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
-.cnt-input{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.7rem;font-family:'Cinzel',serif;font-size:0.9rem;border-radius:2px;outline:none;width:110px;}
+/* ── CONTADOR ── */
+.cnt-wrap{max-width:700px;margin:0 auto;}
+.cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+.cnt-input{background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.9rem;border-radius:3px;outline:none;width:110px;}
 .cnt-input:focus{border-color:var(--gold);}
-.cnt-select{background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.3);color:var(--parchment);padding:0.4rem 0.7rem;font-family:'Cinzel',serif;font-size:0.85rem;border-radius:2px;outline:none;width:160px;}
-.cnt-select option{background:#1a1008;}
-.cnt-rb-input{width:50px;text-align:center;background:rgba(245,230,200,0.06);border:1px solid rgba(200,147,26,0.2);color:var(--parchment);padding:0.3rem;font-family:'Cinzel',serif;font-size:0.9rem;border-radius:2px;outline:none;}
+.cnt-select{background:rgba(200,208,224,0.04);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;width:170px;}
+.cnt-select option{background:#0e1018;}
+.cnt-rb-input{width:52px;text-align:center;background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.9rem;border-radius:3px;outline:none;}
 .cnt-rb-input:focus{border-color:var(--gold);}
-.cnt-btn{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;background:transparent;border:1px solid rgba(200,147,26,0.25);color:rgba(245,230,200,0.4);padding:0.4rem 1rem;border-radius:2px;cursor:pointer;}
-.cnt-btn:hover{border-color:var(--gold);color:var(--parchment);}
-.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.85rem 1.25rem;background:rgba(26,16,8,0.8);border:1px solid rgba(200,147,26,0.25);border-radius:4px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.cnt-pts-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
+.cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.12em;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.4rem 1rem;border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
+.cnt-btn:hover{border-color:var(--gold);color:var(--text);}
+.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.85rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.cnt-pts-num{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
 .cnt-table{width:100%;border-collapse:collapse;}
-.cnt-table th{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);opacity:0.6;text-align:center;padding:0.5rem 0.5rem 0.75rem;border-bottom:1px solid rgba(200,147,26,0.2);text-transform:uppercase;}
+.cnt-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.18em;color:var(--copper);opacity:0.7;text-align:center;padding:0.5rem 0.5rem 0.75rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
 .cnt-table th:first-child{text-align:left;}
-.cnt-table td{padding:0.65rem 0.5rem;border-bottom:1px solid rgba(200,147,26,0.08);text-align:center;vertical-align:middle;}
+.cnt-table td{padding:0.65rem 0.5rem;border-bottom:1px solid rgba(120,140,220,0.07);text-align:center;vertical-align:middle;}
 .cnt-table td:first-child{text-align:left;}
-.attr-btn{width:30px;height:30px;background:rgba(26,16,8,0.8);border:1px solid rgba(200,147,26,0.3);color:var(--gold-light);font-size:1.2rem;cursor:pointer;border-radius:2px;font-weight:bold;vertical-align:middle;}
-.attr-btn:hover{background:rgba(200,147,26,0.15);border-color:var(--gold);}
-.attr-btn:disabled{opacity:0.2;cursor:not-allowed;}
-.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--parchment);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(26,16,8,0.6);border-top:1px solid rgba(200,147,26,0.2);border-bottom:1px solid rgba(200,147,26,0.2);height:30px;line-height:30px;}
+.attr-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);color:var(--gold-light);font-size:1.2rem;cursor:pointer;border-radius:3px;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
+.attr-btn:hover{background:rgba(184,150,58,0.12);border-color:var(--gold);}
+.attr-btn:disabled{opacity:0.15;cursor:not-allowed;}
+.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(200,208,224,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
+
+/* ── SESSIONS TABLE ── */
+.sessions-table{width:100%;border-collapse:collapse;font-size:0.9rem;}
+.sessions-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.15em;color:var(--copper);opacity:0.8;text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
+.sessions-table td{padding:0.75rem;border-bottom:1px solid rgba(120,140,220,0.07);color:var(--text-dim);vertical-align:top;}
+.sessions-table tr:hover td{background:rgba(184,150,58,0.04);cursor:pointer;}
 </style>
 </head>
 <body>
@@ -190,7 +234,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
   </select>
   <button class="btn-load" onclick="loadSheet()">Invocar dados</button>
   <div class="status-dot" id="statusDot"></div>
-  <span id="statusMsg" style="font-size:0.75rem;color:rgba(245,230,200,0.35);font-style:italic;"></span>
+  <span id="statusMsg" style="font-size:0.75rem;color:var(--text-faint);"></span>
 </div>
 
 <nav>
@@ -223,7 +267,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
       <div class="stat-box"><span class="stat-sym">&#9788;</span><span class="stat-num" id="stat-deuses">—</span><span class="stat-lbl">Deuses</span></div>
       <div class="stat-box"><span class="stat-sym">&#10070;</span><span class="stat-num" id="stat-estigmas">—</span><span class="stat-lbl">Estigmas</span></div>
     </div>
-    <p style="font-style:italic;color:rgba(245,230,200,0.3);font-size:0.9rem;">Cole a URL do Google Sheets acima e clique em Invocar dados para comecar.</p>
+    <p style="color:var(--text-faint);font-size:0.9rem;">Cole a URL do Google Sheets acima e clique em Invocar dados para comecar.</p>
   </div>
 </div>
 
@@ -238,23 +282,23 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
       <button class="cnt-btn" onclick="cntReset()">Resetar</button>
     </div>
 
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.85rem 1.25rem;background:rgba(26,16,8,0.5);border:1px solid rgba(200,147,26,0.15);border-radius:4px;align-items:flex-end;">
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.85rem 1.25rem;background:var(--surface);border:1px solid rgba(184,150,58,0.15);border-radius:4px;align-items:flex-end;">
       <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);opacity:0.6;text-transform:uppercase;width:100%;">&#9675; Bonus Racial</span>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:rgba(245,230,200,0.4);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
     </div>
 
     <div class="cnt-pts-bar">
-      <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:rgba(245,230,200,0.5);text-transform:uppercase;">Pontos Restantes</span>
+      <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
       <span class="cnt-pts-num" id="cnt-pts">10</span>
-      <span style="color:rgba(200,147,26,0.3);font-size:1.2rem;">/</span>
-      <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:rgba(245,230,200,0.25);">10</span>
+      <span style="color:rgba(184,150,58,0.3);font-size:1.2rem;">/</span>
+      <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text-faint);">10</span>
       <span id="cnt-warn" style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--blood);display:none;">&#9888; Pontos excedidos</span>
-      <span id="cnt-escala" style="font-style:italic;font-size:0.82rem;color:rgba(245,230,200,0.35);margin-left:auto;">Nivel 1-9 — max 5 por atributo</span>
+      <span id="cnt-escala" style="font-size:0.82rem;color:var(--text-faint);margin-left:auto;">Nivel 1-9 — max 5 por atributo</span>
     </div>
 
     <table class="cnt-table">
@@ -268,7 +312,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
       <tbody id="cnt-tbody"></tbody>
     </table>
 
-    <div style="margin-top:1.25rem;padding:0.75rem 1.25rem;background:rgba(26,16,8,0.4);border:1px solid rgba(200,147,26,0.12);border-radius:4px;font-style:italic;font-size:0.85rem;color:rgba(245,230,200,0.35);line-height:1.8;">
+    <div style="margin-top:1.25rem;padding:0.75rem 1.25rem;background:var(--surface);border:1px solid rgba(184,150,58,0.12);border-radius:4px;font-size:0.85rem;color:var(--text-faint);line-height:1.8;">
       <span style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--gold);opacity:0.6;font-style:normal;">Tabela de Custo</span><br>
       1 e 2 pontos: 1pt cada &bull; 3 pontos: 2pts &bull; 4 pontos: 3pts &bull; Reduzir em -1: <span style="color:var(--gold)">+1pt extra</span>
     </div>
@@ -300,7 +344,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
   </div>
   <p class="result-count" id="count-classes"></p>
-  <div id="classes-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
+  <div id="classes-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
   <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9876;</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
 
@@ -321,7 +365,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
   </div>
   <p class="result-count" id="count-vantagens"></p>
-  <div id="vantagensdesvantagens-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
+  <div id="vantagensdesvantagens-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
   <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9651;</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
 </div>
 
@@ -350,31 +394,21 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
   </div>
   <p class="result-count" id="count-grimorio"></p>
-  <div id="grimorio-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
+  <div id="grimorio-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
   <div class="cards-grid" id="grid-grimorio"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10041;</span><h3>Nenhuma magia carregada</h3><p>Aguarde o carregamento automatico ou verifique o console.</p></div></div>
 </div>
 
 <!-- DEUSES -->
 <div id="page-deuses" class="page">
-  <!-- LISTA DE DEUSES -->
-  <div id="deuses-lista">
-  <h2 class="section-title"><span class="stitle-sym">&#9788;</span> Deuses &amp; Graças</h2>
+  <h2 class="section-title"><span class="stitle-sym">&#9788;</span> Deuses</h2>
   <div class="filter-bar">
     <div class="fg"><label>Buscar</label><input type="text" id="f-deus-search" placeholder="Nome, dominio..." oninput="renderDeuses()"></div>
-    <div class="fg"><label>Polaridade</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Arsenal Divino</label><select id="f-deus-dominio" onchange="renderDeuses()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Alinhamento</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todos</option></select></div>
+    <div class="fg"><label>Dominio</label><select id="f-deus-dominio" onchange="renderDeuses()"><option value="">Todos</option></select></div>
     <button class="btn-clear" onclick="clearFilters('deuses')">Limpar</button>
   </div>
   <p class="result-count" id="count-deuses"></p>
-  <div id="deuses-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
   <div class="cards-grid" id="grid-deuses"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9788;</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
-  </div>
-
-  <!-- DETALHE DO DEUS -->
-  <div id="deuses-detalhe" class="classe-detail">
-    <button class="btn-voltar" onclick="voltarDeuses()">&#8592; Voltar aos Deuses</button>
-    <div id="deus-detalhe-body"></div>
-  </div>
 </div>
 
 <!-- VELKARION -->
@@ -400,7 +434,7 @@ main{position:relative;z-index:10;padding:2rem;border-top:1px solid rgba(200,147
     <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
   </div>
   <p class="result-count" id="count-estigmas"></p>
-  <div id="estigmas-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(139,26,26,0.2);border:1px solid rgba(139,26,26,0.4);border-radius:4px;font-size:0.85rem;color:rgba(245,230,200,0.7);font-style:italic;"></div>
+  <div id="estigmas-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
   <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10070;</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
 </div>
 
@@ -435,8 +469,7 @@ var SHEET_URLS = {
   classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
   dons:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
   estigmas:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
-  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv",
-  deuses:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv"
+  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv"
 };
 
 // ── IMAGENS DAS CLASSES ──
@@ -448,57 +481,26 @@ var CLASS_IMGS = {
 
 function getClassImg(n) { return CLASS_IMGS[n] || null; }
 
-// ── IMAGENS DOS DEUSES ──
-var DEUS_IMGS = {
-  // "Ignarok": "https://i.imgur.com/XXXXX.jpg",
-  // "Aphyria":  "https://i.imgur.com/XXXXX.jpg",
-};
-
-function getDeusImg(n) { return DEUS_IMGS[n] || null; }
-
-function deusImgCard(n) {
-  var u = getDeusImg(n);
-  var inner = u
-    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:1.8rem;color:rgba(200,147,26,0.15);">&#9788;</span>';
-  return '<div style="width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;margin-bottom:0.75rem;border:1px solid rgba(200,147,26,0.15);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;">' + inner + '</div>';
-}
-
-function deusImgModal(n) {
-  var u = getDeusImg(n);
-  var inner = u
-    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:2rem;color:rgba(200,147,26,0.15);">&#9788;</span>';
-  return '<div style="width:120px;height:120px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.2);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + inner + '</div>';
-}
-
-function deusImgDetalhe(n) {
-  var u = getDeusImg(n);
-  if (!u) return '';
-  return '<div style="width:160px;height:160px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.3);float:right;margin:0 0 1rem 1.5rem;">'
-    + '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;"></div>';
-}
-
 function classImgCard(n) {
   var u = getClassImg(n);
   var inner = u
     ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:1.8rem;color:rgba(200,147,26,0.15);">&#9876;</span>';
-  return '<div style="width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;margin-bottom:0.75rem;border:1px solid rgba(200,147,26,0.15);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;">' + inner + '</div>';
+    : '<span style="font-family:Cinzel,serif;font-size:1.8rem;color:rgba(184,150,58,0.15);">&#9876;</span>';
+  return '<div style="width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;margin-bottom:0.75rem;border:1px solid rgba(184,150,58,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;">' + inner + '</div>';
 }
 
 function classImgModal(n) {
   var u = getClassImg(n);
   var inner = u
     ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:2rem;color:rgba(200,147,26,0.15);">&#9876;</span>';
-  return '<div style="width:120px;height:120px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.2);background:rgba(26,16,8,0.8);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + inner + '</div>';
+    : '<span style="font-family:Cinzel,serif;font-size:2rem;color:rgba(184,150,58,0.15);">&#9876;</span>';
+  return '<div style="width:120px;height:120px;border-radius:4px;overflow:hidden;border:1px solid rgba(184,150,58,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + inner + '</div>';
 }
 
 function classImgDetalhe(n) {
   var u = getClassImg(n);
   if (!u) return '';
-  return '<div style="width:160px;height:160px;border-radius:4px;overflow:hidden;border:1px solid rgba(200,147,26,0.3);float:right;margin:0 0 1rem 1.5rem;">'
+  return '<div style="width:160px;height:160px;border-radius:4px;overflow:hidden;border:1px solid rgba(184,150,58,0.3);float:right;margin:0 0 1rem 1.5rem;">'
     + '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;"></div>';
 }
 
@@ -876,8 +878,8 @@ function verDonsClasse(nomeClasse) {
     html += '<div class="classe-header">';
     if (atb) html += '<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">' + atb + '</p></div>';
     if (res) html += '<div class="classe-field"><label>Resistência</label><p>' + res + '</p></div>';
-    if (pvi) html += '<div class="classe-field"><label>PV Inicial</label><p>' + pvi + (pvn?' <span style="color:rgba(245,230,200,0.35);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'') + '</p></div>';
-    if (pmi) html += '<div class="classe-field"><label>PM Inicial</label><p>' + pmi + (pmn?' <span style="color:rgba(245,230,200,0.35);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'') + '</p></div>';
+    if (pvi) html += '<div class="classe-field"><label>PV Inicial</label><p>' + pvi + (pvn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'') + '</p></div>';
+    if (pmi) html += '<div class="classe-field"><label>PM Inicial</label><p>' + pmi + (pmn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'') + '</p></div>';
     if (pro) html += '<div class="classe-field classe-header-full"><label>Proficiências</label><p>' + pro + '</p></div>';
     if (per) html += '<div class="classe-field"><label>Perícia Inicial</label><p>' + per + '</p></div>';
     if (pex) html += '<div class="classe-field"><label>Perícias Extras</label><p>' + pex + '</p></div>';
@@ -1050,129 +1052,17 @@ function renderGrimorio() {
 
 // ── RENDER DEUSES ──
 function renderDeuses() {
-  var s  = document.getElementById('f-deus-search').value.toLowerCase();
-  var al = document.getElementById('f-deus-align').value;
-  var do2 = document.getElementById('f-deus-dominio').value;
-
-  popSel('f-deus-align',   uniq(DB.deuses.map(function(r){ return gf(r,'Polaridade','polaridade','Alinhamento','alinhamento'); })), al);
-  popSel('f-deus-dominio', uniq(DB.deuses.map(function(r){ return gf(r,'Arsenal Divino','arsenal divino','Dominio','dominio','Dom\u00ednio'); })), do2);
-
-  var data = DB.deuses.filter(function(r){
-    var pol = gf(r,'Polaridade','polaridade','Alinhamento','alinhamento');
-    var ars = gf(r,'Arsenal Divino','arsenal divino','Dominio','dominio','Dom\u00ednio');
-    return (!s   || fstr(r).indexOf(s) > -1)
-        && (!al  || pol === al)
-        && (!do2 || ars === do2);
-  });
-
-  var g = document.getElementById('grid-deuses');
-  document.getElementById('count-deuses').textContent = data.length + ' resultado' + (data.length === 1 ? '' : 's');
-
-  if (!data.length) {
-    g.innerHTML = emptyMsg('&#9788;', DB.deuses.length ? 'Nenhum resultado' : 'Nenhum deus carregado');
-    return;
-  }
-
-  g.innerHTML = data.map(function(r){
-    var n   = gf(r,'Nome do Deus','nome do deus','Nome','nome') || '(sem nome)';
-    var pol = gf(r,'Polaridade','polaridade','Alinhamento','alinhamento');
-    var ars = gf(r,'Arsenal Divino','arsenal divino');
-    var d   = gf(r,'Descri\u00e7\u00e3o','Descricao','descricao','Lore','lore','desc');
-    var polColor = pol === 'Positiva' ? 'tag-green' : pol === 'Negativa' ? 'tag-blood' : 'tag-gray';
-    var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display']=n;
-    return '<div class="card" onclick="openModalIdx('+_storeModal(rCopy)+')">'
-      + deusImgCard(n)
-      + '<div class="card-type">divindade</div>'
-      + '<div class="card-name">' + n + '</div>'
-      + (d ? '<div class="card-desc">' + d + '</div>' : '')
-      + '<div class="card-tags">'
-      + tag(pol, polColor)
-      + tag(ars, 'tag-gold')
-      + '</div>'
-      + '<button class="btn-ver-dons" onclick=\'event.stopPropagation();verGracasDeus("'+n.replace(/"/g,'&quot;')+'")\'>&#9788; Ver Gra\u00e7as desta Divindade</button>'
-      + '</div>';
+  var s=document.getElementById('f-deus-search').value.toLowerCase(), al=document.getElementById('f-deus-align').value, do2=document.getElementById('f-deus-dominio').value;
+  popSel('f-deus-align', uniq(DB.deuses.map(function(r){return gf(r,'Alinhamento','alinhamento');})), al);
+  popSel('f-deus-dominio', uniq(DB.deuses.map(function(r){return gf(r,'Dominio','dominio','Dom\u00ednio');})), do2);
+  var data=DB.deuses.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!al||gf(r,'Alinhamento','alinhamento')===al)&&(!do2||gf(r,'Dominio','dominio','Dom\u00ednio')===do2); });
+  var g=document.getElementById('grid-deuses');
+  document.getElementById('count-deuses').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('&#9788;',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',do3=gf(r,'Dominio','dominio','Dom\u00ednio'),al2=gf(r,'Alinhamento','alinhamento'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(do3,'tag-gold')+tag(al2,'tag-class')+'</div></div>';
   }).join('');
-}
-
-function verGracasDeus(nomeDeus) {
-  document.getElementById('deuses-lista').style.display = 'none';
-  document.getElementById('deuses-detalhe').classList.add('active');
-
-  var deusRow = null;
-  for (var i = 0; i < DB.deuses.length; i++) {
-    var nm = gf(DB.deuses[i],'Nome do Deus','nome do deus','Nome','nome');
-    if (nm === nomeDeus) { deusRow = DB.deuses[i]; break; }
-  }
-
-  if (!deusRow) {
-    document.getElementById('deus-detalhe-body').innerHTML = '<h2 style="font-family:Cinzel,serif;font-size:2rem;color:var(--gold-light);">' + nomeDeus + '</h2><p>Dados não encontrados.</p>';
-    return;
-  }
-
-  var pol = gf(deusRow,'Polaridade','polaridade','Alinhamento','alinhamento');
-  var ars = gf(deusRow,'Arsenal Divino','arsenal divino');
-  var fis = gf(deusRow,'Fi\u00e9is','Fieis','fieis');
-  var dog = gf(deusRow,'Dogmas','dogmas');
-  var obc = gf(deusRow,'Obriga\u00e7\u00f5es e Culto','Obrigacoes e Culto','obrigacoes e culto');
-  var desc = gf(deusRow,'Descri\u00e7\u00e3o','Descricao','descricao','desc');
-
-  // Coletar graças (até 4)
-  var gracas = [];
-  for (var gi = 1; gi <= 4; gi++) {
-    var gt = gf(deusRow, 'Gra\u00e7a ' + gi + ' - T\u00edtulo', 'Graca ' + gi + ' - Titulo');
-    var gd = gf(deusRow, 'Gra\u00e7a ' + gi + ' - Descri\u00e7\u00e3o', 'Graca ' + gi + ' - Descricao');
-    if (gt || gd) gracas.push({ titulo: gt, desc: gd });
-  }
-
-  var polColor = pol === 'Positiva' ? '#5a9a4a' : pol === 'Negativa' ? 'var(--blood)' : 'var(--gold)';
-  var polIcon  = pol === 'Positiva' ? '&#9650;' : pol === 'Negativa' ? '&#9660;' : '&#9670;';
-
-  var html = '';
-
-  // Cabeçalho
-  html += '<div style="margin-bottom:0.5rem;">'
-    + deusImgDetalhe(nomeDeus)
-    + '<div style="font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">divindade</div>'
-    + '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeDeus + '</h2>'
-    + '</div>';
-
-  if (desc) html += '<p class="classe-ind">' + desc + '</p>';
-
-  html += '<div class="classe-header">';
-  if (pol) html += '<div class="classe-field"><label>Polaridade</label><p class="destaque" style="color:'+polColor+';">' + polIcon + ' ' + pol + '</p></div>';
-  if (ars) html += '<div class="classe-field"><label>Arsenal Divino</label><p>' + ars + '</p></div>';
-  if (fis) html += '<div class="classe-field classe-header-full"><label>Fi\u00e9is</label><p>' + fis + '</p></div>';
-  if (dog) html += '<div class="classe-field classe-header-full"><label>Dogmas</label><p>' + dog + '</p></div>';
-  if (obc) html += '<div class="classe-field classe-header-full"><label>Obriga\u00e7\u00f5es e Culto</label><p>' + obc + '</p></div>';
-  html += '</div>';
-
-  // Graças
-  if (gracas.length) {
-    html += '<div class="dons-title">&#9788; Gra\u00e7as de ' + nomeDeus + ' <span style="font-size:0.7rem;opacity:0.5;">(' + gracas.length + ' gra\u00e7a' + (gracas.length > 1 ? 's' : '') + ')</span></div>';
-    html += '<div class="cards-grid">';
-    for (var gi = 0; gi < gracas.length; gi++) {
-      var g = gracas[gi];
-      var gracaNum = gi + 1;
-      html += '<div class="don-item" style="cursor:default;">'
-        + '<div class="don-header">'
-        + '<span class="don-nome">' + (g.titulo || 'Gra\u00e7a ' + gracaNum) + '</span>'
-        + '<span class="don-grau">Gra\u00e7a ' + gracaNum + '</span>'
-        + '</div>'
-        + (g.desc ? '<div class="don-desc">' + g.desc + '</div>' : '')
-        + '</div>';
-    }
-    html += '</div>';
-  } else {
-    html += '<div class="state-msg"><span class="state-sym">&#9788;</span><h3>Nenhuma gra\u00e7a encontrada</h3><p>Esta divindade ainda n\u00e3o tem gra\u00e7as cadastradas.</p></div>';
-  }
-
-  document.getElementById('deus-detalhe-body').innerHTML = html;
-  document.getElementById('deuses-detalhe').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function voltarDeuses() {
-  document.getElementById('deuses-lista').style.display = '';
-  document.getElementById('deuses-detalhe').classList.remove('active');
 }
 
 // ── RENDER VELKARION ──
@@ -1254,7 +1144,7 @@ function openModal(rowOrStr) {
   var row = (typeof rowOrStr === 'string') ? JSON.parse(rowOrStr) : rowOrStr;
 
   // Detect name: try Feitico/Feitiço first, then generic fields
-  var nome = gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma') || '(sem nome)';
+  var nome = gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma') || '(sem nome)';
 
   // Detect type/escola for header
   var escola = gf(row,'Escola','escola');
@@ -1270,9 +1160,7 @@ function openModal(rowOrStr) {
   }
 
   // Fields to show in grid (skip name, type, escola, desc)
-  var skipKeys = ['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo',
-    'graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao',
-    'graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
+  var skipKeys = ['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo'];
   var fields = rks.filter(function(k){
     return skipKeys.indexOf(deaccent(k)) === -1 && row[k] && row[k].trim();
   });
@@ -1281,23 +1169,12 @@ function openModal(rowOrStr) {
   var isClasse = !!(gf(row,'Classe','classe') && !gf(row,'Nome do Dom','nome do dom') && !gf(row,'Feitiço','Feitico','feitico'));
   var nomeClasseImg = isClasse ? (gf(row,'Classe','classe') || gf(row,'_nome_display')) : null;
 
-  // Check if this is a deus row
-  var isDeus = !!(gf(row,'Nome do Deus','nome do deus') || (gf(row,'Polaridade','polaridade') && gf(row,'Arsenal Divino','arsenal divino')));
-  var nomeDeusImg = isDeus ? (gf(row,'Nome do Deus','nome do deus') || gf(row,'_nome_display')) : null;
-
   var html = '';
   if (nomeClasseImg) {
     html += '<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'
       + classImgModal(nomeClasseImg)
       + '<div style="flex:1;">'
       + (header ? '<div class="modal-type">'+header+'</div>' : '')
-      + '<h2 class="modal-name">'+nome+'</h2>'
-      + '</div></div>';
-  } else if (nomeDeusImg) {
-    html += '<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'
-      + deusImgModal(nomeDeusImg)
-      + '<div style="flex:1;">'
-      + '<div class="modal-type">divindade</div>'
       + '<h2 class="modal-name">'+nome+'</h2>'
       + '</div></div>';
   } else {
@@ -1344,10 +1221,10 @@ function cntUpdate() {
     var a=CNT_ATTRS[ai], bv=cntBase[a.id], rb=racial[a.id], tot=bv+rb;
     var custo=bv>0?cntCusto(bv):(bv<0?bv:0), custoTxt=bv===0?'—':String(custo);
     var atMax=tot>=maxA, canUp=!atMax&&bv<maxA&&(rest>0||bv<0), canDown=bv>-1;
-    var totC=atMax?'var(--ember)':'var(--gold-light)', baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--parchment)');
-    var rbC=rb>0?'#5a9a4a':(rb<0?'var(--blood)':'rgba(245,230,200,0.25)'), rbT=rb>0?'+'+rb:String(rb);
+    var totC=atMax?'var(--ember)':'var(--gold-light)', baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--text)');
+    var rbC=rb>0?'#5a9a4a':(rb<0?'var(--blood)':'var(--text-faint)'), rbT=rb>0?'+'+rb:String(rb);
     rows+='<tr>';
-    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gold-light);">'+a.nome+'</span><span style="font-size:0.7rem;color:rgba(245,230,200,0.4);font-style:italic;display:block;">'+a.full+'</span></td>';
+    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gold-light);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></td>';
     rows+='<td><div style="display:inline-flex;align-items:center;">';
     rows+='<button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>&#8722;</button>';
     rows+='<span class="attr-val" style="color:'+baseC+';">'+bv+'</span>';
@@ -1355,7 +1232,7 @@ function cntUpdate() {
     rows+='</div></td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1rem;font-weight:600;color:'+rbC+';">'+rbT+'</td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
-    rows+='<td style="font-family:Cinzel,serif;font-size:0.75rem;color:rgba(245,230,200,0.35);">'+custoTxt+'</td>';
+    rows+='<td style="font-family:Cinzel,serif;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
     rows+='</tr>';
   }
   tbody.innerHTML=rows;
