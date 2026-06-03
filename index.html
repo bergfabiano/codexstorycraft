@@ -5,1380 +5,1398 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Codex StoryCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#08090f;
-  --bg2:#0e1018;
-  --bg3:#131522;
-  --surface:#181b27;
-  --surface2:#1e2133;
-  --border:rgba(120,140,220,0.15);
-  --border-active:rgba(180,155,90,0.6);
-  --copper:#c9874a;
-  --copper-light:#e8a86a;
-  --gold:#b8963a;
-  --gold-light:#d4b060;
-  --gold-glow:rgba(184,150,58,0.25);
-  --blue:#4a6fa8;
-  --blue-light:#7ba3d4;
-  --silver:#c8d0e0;
-  --silver-dim:rgba(200,208,224,0.45);
-  --silver-faint:rgba(200,208,224,0.2);
-  --blood:#a02828;
-  --ember:#c84820;
-  --green:#4a8f5a;
-  --magic:#7b5ea7;
-  --rune:#4a8fa8;
-  --text:#d8dde8;
-  --text-dim:rgba(216,221,232,0.55);
-  --text-faint:rgba(216,221,232,0.25);
+  --bg:#07080e;
+  --bg2:#0c0d16;
+  --bg3:#10111c;
+  --surface:#141520;
+  --surface2:#1a1b2e;
+  --border:rgba(140,100,220,0.14);
+  --border-glow:rgba(180,130,255,0.35);
+
+  /* Neon accent palette */
+  --violet:#9b5de5;
+  --violet-bright:#c084fc;
+  --violet-dim:rgba(155,93,229,0.6);
+  --violet-glow:rgba(155,93,229,0.2);
+  --cyan:#00d4ff;
+  --cyan-dim:rgba(0,212,255,0.5);
+  --magenta:#f72585;
+  --gold:#c9a44a;
+  --gold-light:#e8c56a;
+  --gold-glow:rgba(201,164,74,0.2);
+
+  /* Category colors */
+  --cat-combate:#ff8c42;        /* Combatentes — laranja */
+  --cat-combate-dim:rgba(255,140,66,0.18);
+  --cat-conjurador:#7ecff5;     /* Conjuradores — azul celeste */
+  --cat-conjurador-dim:rgba(126,207,245,0.15);
+  --cat-suporte:#6dffb3;        /* Suporte — verde neon */
+  --cat-suporte-dim:rgba(109,255,179,0.12);
+  --cat-especialista:#c77dff;   /* Especialista — lilás */
+  --cat-especialista-dim:rgba(199,125,255,0.15);
+  --cat-magia-branca:#fffde7;
+  --cat-magia-negra:#bb86fc;
+  --cat-magia-elemental:#ff6b35;
+  --cat-magia-espiritual:#64b5f6;
+  --cat-vantagem:#6dffb3;
+  --cat-desvantagem:#ff5c8a;
+  --cat-deus-positiva:#ffe066;
+  --cat-deus-negativa:#ff5c5c;
+  --cat-deus-neutra:#c0c0ff;
+
+  --text:#d8dae8;
+  --text-dim:rgba(216,218,232,0.55);
+  --text-faint:rgba(216,218,232,0.25);
+  --blood:#c0392b;
+  --ember:#e55c2a;
+  --green:#6dffb3;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Raleway',sans-serif;background-color:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-weight:400;}
 
-/* Noise texture overlay */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+body{
+  font-family:'Raleway',sans-serif;
+  background-color:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-weight:400;
+}
 
-/* Atmospheric glow */
-body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 0%,rgba(74,111,168,0.08) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 85% 100%,rgba(184,150,58,0.06) 0%,transparent 55%);pointer-events:none;z-index:0;}
+/* Subtle grid bg */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(140,100,220,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(140,100,220,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;z-index:0;
+}
+/* Purple atmospheric glow */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(0,212,255,0.04) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(247,37,133,0.04) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
+}
 
-/* ── HEADER ── */
-header{position:relative;z-index:10;text-align:center;padding:2.5rem 2rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(8,9,15,0.95) 0%,rgba(8,9,15,0.4) 100%);}
-header::before{content:'— ✦ —';display:block;font-size:0.85rem;color:var(--gold);letter-spacing:0.6rem;margin-bottom:1.25rem;opacity:0.6;font-family:'Cinzel',serif;}
-.title-main{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:var(--gold-light);letter-spacing:0.12em;text-shadow:0 0 60px rgba(184,150,58,0.3),0 2px 4px rgba(0,0,0,0.9);}
-.title-sub{font-family:'Raleway',sans-serif;font-weight:300;font-size:0.8rem;color:var(--silver-dim);margin-top:0.6rem;letter-spacing:0.35em;text-transform:uppercase;}
-.title-ornament{font-size:0.75rem;color:var(--gold);opacity:0.4;letter-spacing:1rem;margin-top:1rem;font-family:'Cinzel',serif;}
+/* ── APP SHELL: sidebar + content ── */
+#app-shell{
+  display:flex;
+  min-height:100vh;
+  position:relative;
+  z-index:10;
+}
 
-/* ── SHEETS BAR ── */
-.sheets-bar{position:relative;z-index:10;background:rgba(14,16,24,0.9);border-bottom:1px solid var(--border);padding:0.7rem 2rem;display:flex;align-items:center;gap:0.85rem;flex-wrap:wrap;}
-.sheets-bar label{font-family:'Cinzel',serif;font-size:0.65rem;color:var(--gold);letter-spacing:0.12em;white-space:nowrap;text-transform:uppercase;}
-.sheets-bar input{flex:1;min-width:200px;background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.75rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;transition:border-color 0.2s;}
-.sheets-bar input:focus{border-color:var(--gold);}
-.sheets-bar input::placeholder{color:var(--text-faint);font-style:normal;}
-.sheets-bar select{background:rgba(200,208,224,0.04);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.6rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;min-width:140px;}
-.sheets-bar select option{background:#0e1018;}
-.btn-load{background:var(--blood);border:1px solid rgba(160,40,40,0.6);color:var(--text);padding:0.4rem 1.2rem;font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.12em;cursor:pointer;border-radius:3px;white-space:nowrap;text-transform:uppercase;transition:background 0.2s;}
-.btn-load:hover{background:#c03030;}
+/* ── SIDEBAR ── */
+#sidebar{
+  width:220px;
+  flex-shrink:0;
+  background:rgba(10,10,20,0.95);
+  border-right:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  z-index:20;
+}
+
+.sidebar-brand{
+  padding:1.5rem 1.25rem 1rem;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-brand::before{
+  content:'✦';
+  display:block;
+  font-size:0.9rem;
+  color:var(--violet);
+  margin-bottom:0.5rem;
+  filter:drop-shadow(0 0 6px var(--violet));
+}
+.sidebar-title{
+  font-family:'Cinzel',serif;
+  font-size:1rem;
+  font-weight:700;
+  color:var(--gold-light);
+  letter-spacing:0.08em;
+  line-height:1.3;
+  text-shadow:0 0 20px var(--gold-glow);
+}
+.sidebar-sub{
+  font-size:0.6rem;
+  font-weight:600;
+  color:var(--text-faint);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-top:0.3rem;
+}
+
+.sidebar-nav{
+  flex:1;
+  padding:0.75rem 0;
+}
+.nav-tab{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.6rem 1.25rem;
+  font-family:'Raleway',sans-serif;
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  color:var(--text-faint);
+  cursor:pointer;
+  border-left:2px solid transparent;
+  text-transform:uppercase;
+  transition:all 0.18s;
+  white-space:nowrap;
+}
+.nav-tab:hover{
+  color:var(--text);
+  background:rgba(155,93,229,0.06);
+}
+.nav-tab.active{
+  color:var(--violet-bright);
+  border-left-color:var(--violet);
+  background:rgba(155,93,229,0.1);
+  text-shadow:0 0 12px rgba(192,132,252,0.4);
+}
+.tab-sym{font-size:0.85rem;opacity:0.8;}
+
+.sidebar-bottom{
+  padding:0.75rem 1.25rem;
+  border-top:1px solid var(--border);
+}
+
+/* ── MAIN CONTENT ── */
+#content-area{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+/* ── TOPBAR ── */
+#topbar{
+  background:rgba(10,10,20,0.9);
+  border-bottom:1px solid var(--border);
+  padding:0.6rem 1.5rem;
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:15;
+  backdrop-filter:blur(8px);
+}
+#topbar label{
+  font-family:'Cinzel',serif;
+  font-size:0.6rem;
+  color:var(--violet-bright);
+  letter-spacing:0.12em;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+#topbar input{
+  flex:1;
+  min-width:180px;
+  background:rgba(155,93,229,0.06);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:0.38rem 0.7rem;
+  font-family:'Raleway',sans-serif;
+  font-size:0.82rem;
+  border-radius:4px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+#topbar input:focus{border-color:var(--violet);}
+#topbar input::placeholder{color:var(--text-faint);}
+#topbar select{
+  background:rgba(155,93,229,0.05);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:0.38rem 0.6rem;
+  font-family:'Raleway',sans-serif;
+  font-size:0.82rem;
+  border-radius:4px;
+  outline:none;
+  min-width:130px;
+}
+#topbar select option{background:#0c0d16;}
+.btn-load{
+  background:var(--violet);
+  border:none;
+  color:#fff;
+  padding:0.38rem 1.1rem;
+  font-family:'Cinzel',serif;
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  cursor:pointer;
+  border-radius:4px;
+  white-space:nowrap;
+  text-transform:uppercase;
+  transition:all 0.2s;
+  box-shadow:0 0 12px rgba(155,93,229,0.3);
+}
+.btn-load:hover{background:var(--violet-bright);box-shadow:0 0 20px rgba(155,93,229,0.5);}
 .status-dot{width:7px;height:7px;border-radius:50%;background:#444;flex-shrink:0;}
 .status-dot.ok{background:#4caf50;box-shadow:0 0 6px #4caf50;}
 .status-dot.err{background:var(--blood);box-shadow:0 0 6px var(--blood);}
-.status-dot.loading{background:var(--gold);animation:pulse 1s infinite;}
+.status-dot.loading{background:var(--violet-bright);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
-/* ── NAV ── */
-nav{position:relative;z-index:10;display:flex;padding:0 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;gap:0.15rem;}
-nav::-webkit-scrollbar{display:none;}
-.nav-tab{font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.08em;color:var(--text-faint);padding:0.75rem 1.1rem;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:0.45rem;background:transparent;transition:all 0.2s;text-transform:uppercase;}
-.nav-tab:hover{color:var(--silver-dim);border-bottom-color:rgba(200,208,224,0.2);}
-.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold);}
-.tab-sym{font-size:0.8rem;opacity:0.8;}
-
-/* ── MAIN ── */
-main{position:relative;z-index:10;padding:2rem;background:transparent;min-height:60vh;}
-.page{display:none;animation:fadeIn 0.25s ease;}
+/* ── MAIN PAGES ── */
+main{
+  flex:1;
+  padding:1.75rem;
+  background:transparent;
+  min-height:0;
+}
+.page{display:none;animation:fadeIn 0.22s ease;}
 .page.active{display:block;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── FILTER BAR ── */
-.filter-bar{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;}
-.fg{display:flex;flex-direction:column;gap:0.3rem;min-width:140px;flex:1;}
-.fg label{font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;}
-.fg input,.fg select{background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:3px;outline:none;transition:border-color 0.2s;}
-.fg select option{background:#0e1018;}
-.fg input:focus,.fg select:focus{border-color:var(--gold);}
-.fg input::placeholder{color:var(--text-faint);font-style:normal;}
-.btn-clear{align-self:flex-end;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.4rem 1rem;font-family:'Raleway',sans-serif;font-weight:600;font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;border-radius:3px;text-transform:uppercase;transition:all 0.2s;}
-.btn-clear:hover{color:var(--text);border-color:var(--silver-dim);}
+.filter-bar{
+  display:flex;flex-wrap:wrap;gap:0.7rem;
+  margin-bottom:1.5rem;
+  padding:0.9rem 1.1rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+.fg{display:flex;flex-direction:column;gap:0.28rem;min-width:130px;flex:1;}
+.fg label{
+  font-family:'Raleway',sans-serif;font-weight:700;
+  font-size:0.62rem;color:var(--violet-bright);
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.fg input,.fg select{
+  background:rgba(155,93,229,0.06);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:0.38rem 0.6rem;
+  font-family:'Raleway',sans-serif;font-size:0.85rem;
+  border-radius:4px;outline:none;transition:border-color 0.2s;
+}
+.fg select option{background:#0c0d16;}
+.fg input:focus,.fg select:focus{border-color:var(--violet);}
+.fg input::placeholder{color:var(--text-faint);}
+.btn-clear{
+  align-self:flex-end;background:transparent;
+  border:1px solid var(--border);color:var(--text-faint);
+  padding:0.38rem 0.9rem;font-family:'Raleway',sans-serif;
+  font-weight:600;font-size:0.62rem;letter-spacing:0.1em;
+  cursor:pointer;border-radius:4px;text-transform:uppercase;transition:all 0.2s;
+}
+.btn-clear:hover{color:var(--text);border-color:var(--violet-dim);}
 
-/* ── CARDS ── */
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.25rem;cursor:pointer;transition:all 0.22s;position:relative;overflow:hidden;}
-.card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(74,111,168,0.03) 0%,transparent 60%);pointer-events:none;}
-.card:hover{border-color:rgba(180,155,90,0.4);transform:translateY(-2px);background:var(--surface2);box-shadow:0 8px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(180,155,90,0.1);}
-.card-type{font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--copper);opacity:0.8;margin-bottom:0.4rem;text-transform:uppercase;}
-.card-name{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--silver);margin-bottom:0.5rem;line-height:1.3;}
-.card-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.55;margin-bottom:0.75rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:normal;}
-.card-tags{display:flex;flex-wrap:wrap;gap:0.3rem;}
-.tag{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.6rem;letter-spacing:0.07em;padding:0.2rem 0.55rem;border-radius:3px;border:1px solid;text-transform:uppercase;}
-.tag-class{color:var(--rune);border-color:rgba(74,143,168,0.4);background:rgba(74,143,168,0.08);}
-.tag-rare{color:var(--magic);border-color:rgba(123,94,167,0.4);background:rgba(123,94,167,0.08);}
-.tag-danger{color:var(--ember);border-color:rgba(200,72,32,0.4);background:rgba(200,72,32,0.08);}
-.tag-gold{color:var(--gold-light);border-color:rgba(184,150,58,0.4);background:rgba(184,150,58,0.08);}
-.tag-gray{color:var(--text-dim);border-color:rgba(200,208,224,0.12);}
-.tag-green{color:var(--green);border-color:rgba(74,143,90,0.4);background:rgba(74,143,90,0.08);}
-.tag-blood{color:var(--blood);border-color:rgba(160,40,40,0.4);background:rgba(160,40,40,0.08);}
+/* ── CARDS GRID ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.9rem;}
 
-/* ── BTN VER DONS / GRAÇAS ── */
-.btn-ver-dons{display:block;width:100%;margin-top:0.85rem;padding:0.45rem 0;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(184,150,58,0.3);border-radius:3px;cursor:pointer;transition:all 0.2s;text-align:center;}
-.btn-ver-dons:hover{background:rgba(184,150,58,0.08);border-color:var(--gold-light);color:var(--gold-light);}
+/* Base card */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.1rem;
+  cursor:pointer;
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--card-accent,var(--violet)),transparent);
+  opacity:0;transition:opacity 0.2s;
+}
+.card:hover{
+  border-color:var(--card-accent,var(--violet-dim));
+  transform:translateY(-2px);
+  background:var(--surface2);
+  box-shadow:0 6px 24px rgba(0,0,0,0.5),0 0 0 1px var(--card-accent-faint,rgba(155,93,229,0.12));
+}
+.card:hover::before{opacity:1;}
 
-/* ── DETALHE DE CLASSE/DEUS ── */
+/* Category-colored cards */
+.card-combate{--card-accent:var(--cat-combate);--card-accent-faint:var(--cat-combate-dim);}
+.card-conjurador{--card-accent:var(--cat-conjurador);--card-accent-faint:var(--cat-conjurador-dim);}
+.card-suporte{--card-accent:var(--cat-suporte);--card-accent-faint:var(--cat-suporte-dim);}
+.card-especialista{--card-accent:var(--cat-especialista);--card-accent-faint:var(--cat-especialista-dim);}
+.card-vantagem{--card-accent:var(--cat-vantagem);--card-accent-faint:rgba(109,255,179,0.1);}
+.card-desvantagem{--card-accent:var(--cat-desvantagem);--card-accent-faint:rgba(255,92,138,0.1);}
+.card-deus-positiva{--card-accent:var(--cat-deus-positiva);--card-accent-faint:rgba(255,224,102,0.1);}
+.card-deus-negativa{--card-accent:var(--cat-deus-negativa);--card-accent-faint:rgba(255,92,92,0.1);}
+.card-deus-neutra{--card-accent:var(--cat-deus-neutra);--card-accent-faint:rgba(192,192,255,0.1);}
+.card-magia-evocacao{--card-accent:#ff6b35;--card-accent-faint:rgba(255,107,53,0.1);}
+.card-magia-necromancia{--card-accent:#bb86fc;--card-accent-faint:rgba(187,134,252,0.1);}
+.card-magia-encantamento{--card-accent:#f48fb1;--card-accent-faint:rgba(244,143,177,0.1);}
+.card-magia-abjuracao{--card-accent:#7ecff5;--card-accent-faint:rgba(126,207,245,0.1);}
+.card-magia-transmutacao{--card-accent:var(--gold-light);--card-accent-faint:rgba(232,197,106,0.1);}
+.card-magia-convocacao{--card-accent:#6dffb3;--card-accent-faint:rgba(109,255,179,0.1);}
+.card-raça-humano{--card-accent:#e0c070;}
+.card-raça-elfo{--card-accent:#7ecff5;}
+.card-raça-anao{--card-accent:#c9844a;}
+.card-item-artefato{--card-accent:#f72585;}
+.card-item-lendario{--card-accent:#c084fc;}
+.card-item-epico{--card-accent:#7ecff5;}
+.card-item-raro{--card-accent:#6dffb3;}
+
+.card-type{
+  font-family:'Raleway',sans-serif;font-weight:700;
+  font-size:0.58rem;letter-spacing:0.2em;
+  color:var(--card-accent,var(--violet-bright));
+  margin-bottom:0.35rem;text-transform:uppercase;
+  opacity:0.85;
+}
+.card-name{
+  font-family:'Cinzel',serif;font-size:0.98rem;font-weight:600;
+  color:var(--text);margin-bottom:0.45rem;line-height:1.3;
+}
+.card-desc{
+  font-size:0.83rem;color:var(--text-dim);line-height:1.55;
+  margin-bottom:0.7rem;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.28rem;}
+.tag{
+  font-family:'Raleway',sans-serif;font-weight:700;
+  font-size:0.58rem;letter-spacing:0.07em;
+  padding:0.18rem 0.5rem;border-radius:3px;
+  border:1px solid;text-transform:uppercase;
+}
+.tag-class{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.35);background:rgba(126,207,245,0.08);}
+.tag-rare{color:var(--cat-especialista);border-color:rgba(199,125,255,0.35);background:rgba(199,125,255,0.08);}
+.tag-danger{color:var(--ember);border-color:rgba(229,92,42,0.35);background:rgba(229,92,42,0.08);}
+.tag-gold{color:var(--gold-light);border-color:rgba(232,197,106,0.35);background:rgba(232,197,106,0.08);}
+.tag-gray{color:var(--text-dim);border-color:rgba(216,218,232,0.12);}
+.tag-green{color:var(--cat-suporte);border-color:rgba(109,255,179,0.3);background:rgba(109,255,179,0.07);}
+.tag-blood{color:var(--blood);border-color:rgba(192,57,43,0.35);background:rgba(192,57,43,0.08);}
+.tag-combate{color:var(--cat-combate);border-color:rgba(255,140,66,0.35);background:rgba(255,140,66,0.08);}
+.tag-suporte{color:var(--cat-suporte);border-color:rgba(109,255,179,0.3);background:rgba(109,255,179,0.07);}
+.tag-conjurador{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.35);background:rgba(126,207,245,0.08);}
+.tag-especialista{color:var(--cat-especialista);border-color:rgba(199,125,255,0.35);background:rgba(199,125,255,0.08);}
+.tag-positiva{color:var(--cat-deus-positiva);border-color:rgba(255,224,102,0.3);background:rgba(255,224,102,0.07);}
+.tag-negativa{color:var(--cat-deus-negativa);border-color:rgba(255,92,92,0.3);background:rgba(255,92,92,0.07);}
+.tag-neutra{color:var(--cat-deus-neutra);border-color:rgba(192,192,255,0.3);background:rgba(192,192,255,0.07);}
+
+/* ── BTN VER DONS ── */
+.btn-ver-dons{
+  display:block;width:100%;margin-top:0.8rem;padding:0.4rem 0;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--card-accent,var(--violet-bright));
+  background:transparent;
+  border:1px solid var(--card-accent,rgba(155,93,229,0.3));
+  border-radius:4px;cursor:pointer;transition:all 0.2s;text-align:center;
+  opacity:0.8;
+}
+.btn-ver-dons:hover{background:var(--card-accent-faint,rgba(155,93,229,0.1));opacity:1;}
+
+/* ── CLASS / DEUS DETAIL ── */
 .classe-detail{display:none;animation:fadeIn 0.3s ease;}
 .classe-detail.active{display:block;}
-.btn-voltar{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.7rem;letter-spacing:0.12em;color:var(--text-faint);background:transparent;border:1px solid var(--border);padding:0.45rem 1.1rem;border-radius:3px;cursor:pointer;margin-bottom:1.75rem;display:inline-flex;align-items:center;gap:0.45rem;text-transform:uppercase;transition:all 0.2s;}
-.btn-voltar:hover{color:var(--gold-light);border-color:var(--gold);}
-.classe-header{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 2rem;padding:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;}
+.btn-voltar{
+  font-family:'Raleway',sans-serif;font-weight:600;font-size:0.68rem;
+  letter-spacing:0.12em;color:var(--text-faint);
+  background:transparent;border:1px solid var(--border);
+  padding:0.42rem 1rem;border-radius:4px;cursor:pointer;
+  margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:0.4rem;
+  text-transform:uppercase;transition:all 0.2s;
+}
+.btn-voltar:hover{color:var(--violet-bright);border-color:var(--violet);}
+.classe-header{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.7rem 1.75rem;
+  padding:1.1rem;background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;margin-bottom:1.5rem;
+}
 .classe-header-full{grid-column:1/-1;}
-.classe-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.15em;color:var(--copper);opacity:0.9;display:block;margin-bottom:0.25rem;text-transform:uppercase;}
-.classe-field p{font-size:0.92rem;color:var(--text);line-height:1.5;}
-.classe-field p.destaque{font-size:1rem;font-weight:600;color:var(--gold-light);}
-.classe-ind{color:var(--text-dim);font-size:0.92rem;line-height:1.7;border-left:2px solid rgba(184,150,58,0.35);padding-left:1rem;margin-bottom:1.5rem;font-style:normal;}
-.dons-title{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
-.don-item{padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:0.6rem;transition:border-color 0.2s;}
-.don-item:hover{border-color:rgba(184,150,58,0.3);}
-.don-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap;}
-.don-nome{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:600;color:var(--silver);}
-.don-grau{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.1em;padding:0.18rem 0.6rem;border-radius:3px;border:1px solid rgba(184,150,58,0.4);color:var(--gold-light);background:rgba(184,150,58,0.08);text-transform:uppercase;}
-.don-desc{font-size:0.88rem;color:var(--text-dim);line-height:1.6;font-style:normal;}
-.grau-section{margin-bottom:1.25rem;}
-.grau-section-title{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.2em;color:var(--copper);opacity:0.6;text-transform:uppercase;margin-bottom:0.6rem;padding-left:0.25rem;}
+.classe-field label{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;
+  letter-spacing:0.15em;color:var(--violet-bright);opacity:0.85;
+  display:block;margin-bottom:0.22rem;text-transform:uppercase;
+}
+.classe-field p{font-size:0.9rem;color:var(--text);line-height:1.5;}
+.classe-field p.destaque{font-size:0.98rem;font-weight:600;color:var(--gold-light);}
+.classe-ind{
+  color:var(--text-dim);font-size:0.9rem;line-height:1.72;
+  border-left:2px solid var(--violet-dim);padding-left:1rem;margin-bottom:1.5rem;
+}
+.dons-title{
+  font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold-light);
+  letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;
+  border-bottom:1px solid var(--border);text-transform:uppercase;
+}
+.don-item{
+  padding:0.9rem 1rem;background:var(--surface);border:1px solid var(--border);
+  border-radius:6px;margin-bottom:0.55rem;transition:border-color 0.2s;
+}
+.don-item:hover{border-color:var(--violet-dim);}
+.don-header{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.45rem;flex-wrap:wrap;}
+.don-nome{font-family:'Cinzel',serif;font-size:0.92rem;font-weight:600;color:var(--text);}
+.don-grau{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.57rem;
+  letter-spacing:0.1em;padding:0.17rem 0.55rem;border-radius:3px;
+  border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
+  background:rgba(155,93,229,0.1);text-transform:uppercase;
+}
+.don-desc{font-size:0.86rem;color:var(--text-dim);line-height:1.6;}
+.grau-section{margin-bottom:1.2rem;}
+.grau-section-title{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;
+  letter-spacing:0.2em;color:var(--violet-bright);opacity:0.5;
+  text-transform:uppercase;margin-bottom:0.55rem;padding-left:0.2rem;
+}
 
 /* ── STATE MSG ── */
-.state-msg{text-align:center;padding:4rem 2rem;color:var(--text-faint);}
-.state-sym{font-size:2.5rem;margin-bottom:1rem;opacity:0.3;font-family:'Cinzel',serif;display:block;}
-.state-msg h3{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.1em;margin-bottom:0.5rem;color:var(--text-faint);}
-.state-msg p{font-size:0.88rem;color:var(--text-faint);}
+.state-msg{text-align:center;padding:3.5rem 2rem;color:var(--text-faint);}
+.state-sym{font-size:2rem;margin-bottom:0.9rem;opacity:0.25;font-family:'Cinzel',serif;display:block;}
+.state-msg h3{font-family:'Cinzel',serif;font-size:0.95rem;letter-spacing:0.1em;margin-bottom:0.45rem;color:var(--text-faint);}
+.state-msg p{font-size:0.85rem;}
 
 /* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(4,5,10,0.88);z-index:1000;align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(6px);}
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(4,4,12,0.9);z-index:1000;
+  align-items:center;justify-content:center;padding:2rem;
+  backdrop-filter:blur(8px);
+}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--bg3);border:1px solid rgba(184,150,58,0.35);border-radius:8px;padding:2rem;max-width:580px;width:100%;max-height:82vh;overflow-y:auto;position:relative;animation:modalIn 0.22s ease;box-shadow:0 24px 80px rgba(0,0,0,0.7);}
+.modal{
+  background:var(--bg3);border:1px solid rgba(155,93,229,0.35);
+  border-radius:10px;padding:2rem;max-width:580px;width:100%;
+  max-height:82vh;overflow-y:auto;position:relative;
+  animation:modalIn 0.2s ease;
+  box-shadow:0 24px 80px rgba(0,0,0,0.8),0 0 40px rgba(155,93,229,0.08);
+}
 @keyframes modalIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
-.modal::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal::before{
+  content:'';position:absolute;top:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--violet),transparent);
+}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-faint);font-size:1.4rem;cursor:pointer;transition:color 0.2s;}
-.modal-close:hover{color:var(--gold-light);}
-.modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.2em;color:var(--copper);margin-bottom:0.5rem;text-transform:uppercase;}
-.modal-name{font-family:'Cinzel',serif;font-size:1.55rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
+.modal-close:hover{color:var(--violet-bright);}
+.modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);margin-bottom:0.5rem;text-transform:uppercase;}
+.modal-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
 .modal-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
-.modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem 1.5rem;}
-.modal-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.15em;color:var(--copper);opacity:0.8;display:block;margin-bottom:0.15rem;text-transform:uppercase;}
-.modal-field p{font-size:0.92rem;color:var(--text);}
+.modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem 1.5rem;}
+.modal-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;display:block;margin-bottom:0.12rem;text-transform:uppercase;}
+.modal-field p{font-size:0.9rem;color:var(--text);}
 .modal-field.full{grid-column:1/-1;}
-.modal-desc{font-style:normal;color:var(--text-dim);font-size:0.92rem;line-height:1.7;border-left:2px solid rgba(184,150,58,0.3);padding-left:1rem;margin:1rem 0;}
+.modal-desc{color:var(--text-dim);font-size:0.9rem;line-height:1.72;border-left:2px solid var(--violet-dim);padding-left:1rem;margin:1rem 0;}
 
 /* ── RESULT COUNT / SECTION TITLE ── */
-.result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.65rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
-.section-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
-.stitle-sym{color:var(--copper);opacity:0.7;font-size:0.95rem;}
+.result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
+.section-title{font-family:'Cinzel',serif;font-size:0.98rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
+.stitle-sym{color:var(--violet-bright);opacity:0.7;font-size:0.9rem;}
 
 /* ── HOME ── */
-.home-sym{font-family:'Cinzel',serif;font-size:2rem;margin-bottom:1.5rem;opacity:0.35;color:var(--gold);display:block;}
-.home-title{font-family:'Cinzel',serif;font-size:1.75rem;color:var(--gold-light);margin-bottom:0.75rem;}
-.home-desc{font-style:normal;color:var(--text-dim);max-width:520px;margin:0 auto 2.5rem;font-size:0.95rem;line-height:1.75;}
-.home-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:0.75rem;max-width:860px;margin:0 auto 2rem;}
-.stat-box{text-align:center;padding:1.1rem 0.75rem;border:1px solid var(--border);border-radius:6px;background:var(--surface);transition:all 0.22s;position:relative;overflow:hidden;}
-.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.2s;}
-.stat-box:hover{border-color:rgba(184,150,58,0.3);background:var(--surface2);}
-.stat-box:hover::before{opacity:1;}
-.stat-sym{font-family:'Cinzel',serif;font-size:1rem;color:var(--copper);opacity:0.7;display:block;margin-bottom:0.4rem;}
-.stat-num{font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);display:block;line-height:1;}
-.stat-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.18em;color:var(--text-faint);text-transform:uppercase;display:block;margin-top:0.4rem;}
+.home-wrap{max-width:900px;margin:0 auto;padding:1rem 0;}
+.home-hero{
+  text-align:center;padding:2rem 1rem 2.5rem;
+  border-bottom:1px solid var(--border);margin-bottom:2rem;
+}
+.home-glyph{
+  font-size:2.5rem;color:var(--violet);
+  filter:drop-shadow(0 0 20px var(--violet));
+  display:block;margin-bottom:1rem;
+}
+.home-title{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--gold-light);margin-bottom:0.7rem;letter-spacing:0.05em;}
+.home-desc{color:var(--text-dim);max-width:500px;margin:0 auto 0;font-size:0.92rem;line-height:1.75;}
+.home-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.7rem;margin-bottom:2rem;}
+.stat-box{
+  text-align:center;padding:1rem 0.6rem;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--surface);transition:all 0.2s;position:relative;overflow:hidden;
+}
+.stat-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(155,93,229,0.04),transparent);pointer-events:none;}
+.stat-box:hover{border-color:var(--violet-dim);background:var(--surface2);}
+.stat-sym{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--violet-bright);display:block;margin-bottom:0.4rem;filter:drop-shadow(0 0 6px var(--violet));}
+.stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);display:block;line-height:1;text-shadow:0 0 20px var(--gold-glow);}
+.stat-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.18em;color:var(--text-faint);text-transform:uppercase;display:block;margin-top:0.38rem;}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:rgba(184,150,58,0.25);border-radius:3px;}
+::-webkit-scrollbar-thumb{background:rgba(155,93,229,0.3);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(155,93,229,0.5);}
 
 /* ── CONTADOR ── */
-.cnt-wrap{max-width:700px;margin:0 auto;}
-.cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
-.cnt-input{background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.9rem;border-radius:3px;outline:none;width:110px;}
-.cnt-input:focus{border-color:var(--gold);}
-.cnt-select{background:rgba(200,208,224,0.04);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:3px;outline:none;width:170px;}
-.cnt-select option{background:#0e1018;}
-.cnt-rb-input{width:52px;text-align:center;background:rgba(200,208,224,0.05);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.9rem;border-radius:3px;outline:none;}
-.cnt-rb-input:focus{border-color:var(--gold);}
-.cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.12em;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.4rem 1rem;border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
-.cnt-btn:hover{border-color:var(--gold);color:var(--text);}
-.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.85rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.cnt-pts-num{font-family:'Cinzel',serif;font-size:2.2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
+.cnt-wrap{max-width:680px;margin:0 auto;}
+.cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--violet-bright);text-transform:uppercase;display:block;margin-bottom:0.28rem;}
+.cnt-input{background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;width:110px;}
+.cnt-input:focus{border-color:var(--violet);}
+.cnt-select{background:rgba(155,93,229,0.05);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:4px;outline:none;width:170px;}
+.cnt-select option{background:#0c0d16;}
+.cnt-rb-input{width:52px;text-align:center;background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;}
+.cnt-rb-input:focus{border-color:var(--violet);}
+.cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.12em;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.38rem 0.9rem;border-radius:4px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
+.cnt-btn:hover{border-color:var(--violet);color:var(--text);}
+.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.cnt-pts-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
 .cnt-table{width:100%;border-collapse:collapse;}
-.cnt-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.18em;color:var(--copper);opacity:0.7;text-align:center;padding:0.5rem 0.5rem 0.75rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
+.cnt-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.18em;color:var(--violet-bright);opacity:0.65;text-align:center;padding:0.5rem 0.5rem 0.7rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
 .cnt-table th:first-child{text-align:left;}
-.cnt-table td{padding:0.65rem 0.5rem;border-bottom:1px solid rgba(120,140,220,0.07);text-align:center;vertical-align:middle;}
+.cnt-table td{padding:0.6rem 0.5rem;border-bottom:1px solid rgba(140,100,220,0.07);text-align:center;vertical-align:middle;}
 .cnt-table td:first-child{text-align:left;}
-.attr-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);color:var(--gold-light);font-size:1.2rem;cursor:pointer;border-radius:3px;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
-.attr-btn:hover{background:rgba(184,150,58,0.12);border-color:var(--gold);}
+.attr-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);color:var(--violet-bright);font-size:1.2rem;cursor:pointer;border-radius:4px;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
+.attr-btn:hover{background:rgba(155,93,229,0.15);border-color:var(--violet);}
 .attr-btn:disabled{opacity:0.15;cursor:not-allowed;}
-.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(200,208,224,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
+.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(155,93,229,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
 
-/* ── SESSIONS TABLE ── */
-.sessions-table{width:100%;border-collapse:collapse;font-size:0.9rem;}
-.sessions-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.15em;color:var(--copper);opacity:0.8;text-align:left;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
-.sessions-table td{padding:0.75rem;border-bottom:1px solid rgba(120,140,220,0.07);color:var(--text-dim);vertical-align:top;}
-.sessions-table tr:hover td{background:rgba(184,150,58,0.04);cursor:pointer;}
+/* ── DEBUG BANNERS ── */
+.debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
 </style>
 </head>
 <body>
 
-<header>
-  <h1 class="title-main">Codex StoryCraft</h1>
-  <p class="title-sub">sistema de rpg de mesa</p>
-  <p class="title-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</p>
-</header>
+<div id="app-shell">
 
-<div class="sheets-bar">
-  <label>&#9768; Google Sheets</label>
-  <input type="text" id="sheetUrl" placeholder="Cole aqui a URL da planilha publicada como CSV..." />
-  <select id="sheetTab">
-    <option value="">Aba automatica</option>
-    <option value="Racas">Racas</option>
-    <option value="Classes">Classes</option>
-    <option value="VantagensDesvantagens">Vantagens e Desvantagens</option>
-    <option value="ItensLoja">Itens e Loja</option>
-    <option value="Grimorio">Grimorio</option>
-    <option value="Deuses">Deuses</option>
-    <option value="Velkarion">Velkarion</option>
-    <option value="Estigmas">Estigmas</option>
-  </select>
-  <button class="btn-load" onclick="loadSheet()">Invocar dados</button>
-  <div class="status-dot" id="statusDot"></div>
-  <span id="statusMsg" style="font-size:0.75rem;color:var(--text-faint);"></span>
-</div>
-
-<nav>
-  <div class="nav-tab active" data-page="inicio"       onclick="showPage('inicio')">       <span class="tab-sym">&#8962;</span> Inicio</div>
-  <div class="nav-tab"        data-page="contador"     onclick="showPage('contador')">     <span class="tab-sym">&#9670;</span> Contador</div>
-  <div class="nav-tab"        data-page="racas"        onclick="showPage('racas')">        <span class="tab-sym">&#9775;</span> Racas</div>
-  <div class="nav-tab"        data-page="classes"      onclick="showPage('classes')">      <span class="tab-sym">&#9876;</span> Classes</div>
-  <div class="nav-tab"        data-page="vantagens"    onclick="showPage('vantagens')">    <span class="tab-sym">&#9651;</span> Vantagens</div>
-  <div class="nav-tab"        data-page="itens"        onclick="showPage('itens')">        <span class="tab-sym">&#9768;</span> Itens</div>
-  <div class="nav-tab"        data-page="grimorio"     onclick="showPage('grimorio')">     <span class="tab-sym">&#10041;</span> Grimorio</div>
-  <div class="nav-tab"        data-page="deuses"       onclick="showPage('deuses')">       <span class="tab-sym">&#9788;</span> Deuses</div>
-  <div class="nav-tab"        data-page="velkarion"    onclick="showPage('velkarion')">    <span class="tab-sym">&#9784;</span> Velkarion</div>
-  <div class="nav-tab"        data-page="estigmas"     onclick="showPage('estigmas')">     <span class="tab-sym">&#10070;</span> Estigmas</div>
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-title">Codex StoryCraft</div>
+    <div class="sidebar-sub">Sistema RPG de Mesa</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-tab active" data-page="inicio"    onclick="showPage('inicio')">    <span class="tab-sym">⌂</span> Início</div>
+    <div class="nav-tab" data-page="contador"  onclick="showPage('contador')">  <span class="tab-sym">◆</span> Contador</div>
+    <div class="nav-tab" data-page="racas"     onclick="showPage('racas')">     <span class="tab-sym">☯</span> Raças</div>
+    <div class="nav-tab" data-page="classes"   onclick="showPage('classes')">   <span class="tab-sym">⚔</span> Classes</div>
+    <div class="nav-tab" data-page="vantagens" onclick="showPage('vantagens')"> <span class="tab-sym">△</span> Vantagens</div>
+    <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">     <span class="tab-sym">✤</span> Itens</div>
+    <div class="nav-tab" data-page="grimorio"  onclick="showPage('grimorio')">  <span class="tab-sym">✦</span> Grimório</div>
+    <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">    <span class="tab-sym">☀</span> Deuses</div>
+    <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')"> <span class="tab-sym">⚐</span> Velkarion</div>
+    <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">  <span class="tab-sym">✸</span> Estigmas</div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="status-dot" id="statusDot" style="display:inline-block;margin-right:0.4rem;"></div>
+    <span id="statusMsg" style="font-size:0.65rem;color:var(--text-faint);vertical-align:middle;"></span>
+  </div>
 </nav>
 
-<main>
+<!-- CONTENT AREA -->
+<div id="content-area">
 
-<!-- INICIO -->
-<div id="page-inicio" class="page active">
-  <div style="text-align:center;padding:3rem 1rem;">
-    <span class="home-sym">&#10022;</span>
-    <h2 class="home-title">Bem-vindo ao Codex StoryCraft</h2>
-    <p class="home-desc">O repositorio vivo do universo de Velkarion. Racas, classes, magias, deuses e estigmas — tudo conectado ao seu Google Sheets em tempo real.</p>
-    <div class="home-stats">
-      <div class="stat-box"><span class="stat-sym">&#9775;</span><span class="stat-num" id="stat-racas">—</span><span class="stat-lbl">Racas</span></div>
-      <div class="stat-box"><span class="stat-sym">&#9876;</span><span class="stat-num" id="stat-classes">—</span><span class="stat-lbl">Classes</span></div>
-      <div class="stat-box"><span class="stat-sym">&#10041;</span><span class="stat-num" id="stat-grimorio">—</span><span class="stat-lbl">Magias</span></div>
-      <div class="stat-box"><span class="stat-sym">&#9768;</span><span class="stat-num" id="stat-itens">—</span><span class="stat-lbl">Itens</span></div>
-      <div class="stat-box"><span class="stat-sym">&#9651;</span><span class="stat-num" id="stat-vantagens">—</span><span class="stat-lbl">Vantagens</span></div>
-      <div class="stat-box"><span class="stat-sym">&#9788;</span><span class="stat-num" id="stat-deuses">—</span><span class="stat-lbl">Deuses</span></div>
-      <div class="stat-box"><span class="stat-sym">&#10070;</span><span class="stat-num" id="stat-estigmas">—</span><span class="stat-lbl">Estigmas</span></div>
-    </div>
-    <p style="color:var(--text-faint);font-size:0.9rem;">Cole a URL do Google Sheets acima e clique em Invocar dados para comecar.</p>
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <label>⚙ Sheets</label>
+    <input type="text" id="sheetUrl" placeholder="Cole a URL da planilha publicada como CSV..." />
+    <select id="sheetTab">
+      <option value="">Aba automática</option>
+      <option value="Racas">Raças</option>
+      <option value="Classes">Classes</option>
+      <option value="VantagensDesvantagens">Vantagens</option>
+      <option value="ItensLoja">Itens</option>
+      <option value="Grimorio">Grimório</option>
+      <option value="Deuses">Deuses</option>
+      <option value="Velkarion">Velkarion</option>
+      <option value="Estigmas">Estigmas</option>
+    </select>
+    <button class="btn-load" onclick="loadSheet()">Invocar Dados</button>
   </div>
-</div>
 
-<!-- CONTADOR -->
-<div id="page-contador" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9670;</span> Contador de Atributos</h2>
-  <div class="cnt-wrap">
+  <!-- PAGES -->
+  <main>
 
-    <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;align-items:flex-end;">
-      <div><span class="cnt-lbl">Nivel do Personagem</span><input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1"></div>
-      <div><span class="cnt-lbl">Raca</span><select class="cnt-select" id="cnt-raca"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select></div>
-      <button class="cnt-btn" onclick="cntReset()">Resetar</button>
-    </div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.85rem 1.25rem;background:var(--surface);border:1px solid rgba(184,150,58,0.15);border-radius:4px;align-items:flex-end;">
-      <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);opacity:0.6;text-transform:uppercase;width:100%;">&#9675; Bonus Racial</span>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Cinzel',serif;font-size:0.55rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
-    </div>
-
-    <div class="cnt-pts-bar">
-      <span style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
-      <span class="cnt-pts-num" id="cnt-pts">10</span>
-      <span style="color:rgba(184,150,58,0.3);font-size:1.2rem;">/</span>
-      <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text-faint);">10</span>
-      <span id="cnt-warn" style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--blood);display:none;">&#9888; Pontos excedidos</span>
-      <span id="cnt-escala" style="font-size:0.82rem;color:var(--text-faint);margin-left:auto;">Nivel 1-9 — max 5 por atributo</span>
-    </div>
-
-    <table class="cnt-table">
-      <thead><tr>
-        <th>Atributo</th>
-        <th>Base</th>
-        <th>Racial</th>
-        <th>Total</th>
-        <th>Custo</th>
-      </tr></thead>
-      <tbody id="cnt-tbody"></tbody>
-    </table>
-
-    <div style="margin-top:1.25rem;padding:0.75rem 1.25rem;background:var(--surface);border:1px solid rgba(184,150,58,0.12);border-radius:4px;font-size:0.85rem;color:var(--text-faint);line-height:1.8;">
-      <span style="font-family:'Cinzel',serif;font-size:0.65rem;color:var(--gold);opacity:0.6;font-style:normal;">Tabela de Custo</span><br>
-      1 e 2 pontos: 1pt cada &bull; 3 pontos: 2pts &bull; 4 pontos: 3pts &bull; Reduzir em -1: <span style="color:var(--gold)">+1pt extra</span>
+  <!-- INÍCIO -->
+  <div id="page-inicio" class="page active">
+    <div class="home-wrap">
+      <div class="home-hero">
+        <span class="home-glyph">✦</span>
+        <h2 class="home-title">Codex StoryCraft</h2>
+        <p class="home-desc">O repositório vivo do universo de Velkarion. Raças, classes, magias, deuses e estigmas — tudo conectado ao seu Google Sheets em tempo real.</p>
+      </div>
+      <div class="home-stats">
+        <div class="stat-box"><span class="stat-sym">☯</span><span class="stat-num" id="stat-racas">—</span><span class="stat-lbl">Raças</span></div>
+        <div class="stat-box"><span class="stat-sym">⚔</span><span class="stat-num" id="stat-classes">—</span><span class="stat-lbl">Classes</span></div>
+        <div class="stat-box"><span class="stat-sym">✦</span><span class="stat-num" id="stat-grimorio">—</span><span class="stat-lbl">Magias</span></div>
+        <div class="stat-box"><span class="stat-sym">✤</span><span class="stat-num" id="stat-itens">—</span><span class="stat-lbl">Itens</span></div>
+        <div class="stat-box"><span class="stat-sym">△</span><span class="stat-num" id="stat-vantagens">—</span><span class="stat-lbl">Vantagens</span></div>
+        <div class="stat-box"><span class="stat-sym">☀</span><span class="stat-num" id="stat-deuses">—</span><span class="stat-lbl">Deuses</span></div>
+        <div class="stat-box"><span class="stat-sym">✸</span><span class="stat-num" id="stat-estigmas">—</span><span class="stat-lbl">Estigmas</span></div>
+      </div>
+      <p style="text-align:center;font-size:0.82rem;color:var(--text-faint);">Cole a URL do Google Sheets acima e clique em Invocar Dados para começar.</p>
     </div>
   </div>
-</div>
 
-<!-- RACAS -->
-<div id="page-racas" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9775;</span> Racas</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, habilidade..." oninput="renderRacas()"></div>
-    <div class="fg"><label>Origem</label><select id="f-raca-origem" onchange="renderRacas()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Atributo</label><select id="f-raca-atrib" onchange="renderRacas()"><option value="">Todos</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
+  <!-- CONTADOR -->
+  <div id="page-contador" class="page">
+    <h2 class="section-title"><span class="stitle-sym">◆</span> Contador de Atributos</h2>
+    <div class="cnt-wrap">
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;align-items:flex-end;">
+        <div><span class="cnt-lbl">Nível</span><input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1"></div>
+        <div><span class="cnt-lbl">Raça</span><select class="cnt-select" id="cnt-raca"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select></div>
+        <button class="cnt-btn" onclick="cntReset()">Resetar</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;align-items:flex-end;">
+        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;width:100%;">○ Bônus Racial</span>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
+      </div>
+      <div class="cnt-pts-bar">
+        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
+        <span class="cnt-pts-num" id="cnt-pts">10</span>
+        <span style="color:rgba(155,93,229,0.3);font-size:1.2rem;">/</span>
+        <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text-faint);">10</span>
+        <span id="cnt-warn" style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;color:var(--blood);display:none;">⚠ Pontos excedidos</span>
+        <span id="cnt-escala" style="font-size:0.82rem;color:var(--text-faint);margin-left:auto;">Nível 1-9 — max 5 por atributo</span>
+      </div>
+      <table class="cnt-table">
+        <thead><tr>
+          <th>Atributo</th><th>Base</th><th>Racial</th><th>Total</th><th>Custo</th>
+        </tr></thead>
+        <tbody id="cnt-tbody"></tbody>
+      </table>
+      <div style="margin-top:1.2rem;padding:0.7rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.83rem;color:var(--text-faint);line-height:1.8;">
+        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;">Tabela de Custo</span><br>
+        1 e 2 pontos: 1pt cada &bull; 3 pontos: 2pts &bull; 4 pontos: 3pts &bull; Reduzir em -1: <span style="color:var(--gold-light)">+1pt extra</span>
+      </div>
+    </div>
   </div>
-  <p class="result-count" id="count-racas"></p>
-  <div class="cards-grid" id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9775;</span><h3>Nenhuma raca carregada</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-<!-- CLASSES -->
-<div id="page-classes" class="page">
-  <!-- LISTA DE CLASSES -->
-  <div id="classes-lista">
-  <h2 class="section-title"><span class="stitle-sym">&#9876;</span> Classes &amp; Dons</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
-    <div class="fg"><label>Categoria</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Dons da Classe</label><select id="f-class-filtro" onchange="renderClasses()"><option value="">Todas as classes</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
-  </div>
-  <p class="result-count" id="count-classes"></p>
-  <div id="classes-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
-  <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9876;</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+  <!-- RAÇAS -->
+  <div id="page-racas" class="page">
+    <h2 class="section-title"><span class="stitle-sym">☯</span> Raças</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, habilidade..." oninput="renderRacas()"></div>
+      <div class="fg"><label>Origem</label><select id="f-raca-origem" onchange="renderRacas()"><option value="">Todas</option></select></div>
+      <div class="fg"><label>Atributo</label><select id="f-raca-atrib" onchange="renderRacas()"><option value="">Todos</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-racas"></p>
+    <div class="cards-grid" id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☯</span><h3>Nenhuma raça carregada</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
 
-  <!-- DETALHE DE CLASSE -->
-  <div id="classes-detalhe" class="classe-detail">
-    <button class="btn-voltar" onclick="voltarClasses()">&#8592; Voltar às Classes</button>
-    <div id="classe-detalhe-body"></div>
+  <!-- CLASSES -->
+  <div id="page-classes" class="page">
+    <div id="classes-lista">
+      <h2 class="section-title"><span class="stitle-sym">⚔</span> Classes &amp; Dons</h2>
+      <div class="filter-bar">
+        <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
+        <div class="fg"><label>Categoria</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todas</option></select></div>
+        <div class="fg"><label>Dons da Classe</label><select id="f-class-filtro" onchange="renderClasses()"><option value="">Todas as classes</option></select></div>
+        <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
+      </div>
+      <p class="result-count" id="count-classes"></p>
+      <div class="debug-banner" id="classes-debug"></div>
+      <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">⚔</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+    </div>
+    <div id="classes-detalhe" class="classe-detail">
+      <button class="btn-voltar" onclick="voltarClasses()">← Voltar às Classes</button>
+      <div id="classe-detalhe-body"></div>
+    </div>
   </div>
-</div>
 
-<!-- VANTAGENS -->
-<div id="page-vantagens" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9651;</span> Vantagens &amp; Desvantagens</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito..." oninput="renderVantagens()"></div>
-    <div class="fg"><label>Tipo</label><select id="f-vd-tipo" onchange="renderVantagens()"><option value="">Todos</option><option>Vantagem</option><option>Desvantagem</option></select></div>
-    <div class="fg"><label>Categoria</label><select id="f-vd-cat" onchange="renderVantagens()"><option value="">Todas</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
+  <!-- VANTAGENS -->
+  <div id="page-vantagens" class="page">
+    <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito..." oninput="renderVantagens()"></div>
+      <div class="fg"><label>Tipo</label><select id="f-vd-tipo" onchange="renderVantagens()"><option value="">Todos</option><option>Vantagem</option><option>Desvantagem</option></select></div>
+      <div class="fg"><label>Categoria</label><select id="f-vd-cat" onchange="renderVantagens()"><option value="">Todas</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-vantagens"></p>
+    <div class="debug-banner" id="vantagensdesvantagens-debug"></div>
+    <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
-  <p class="result-count" id="count-vantagens"></p>
-  <div id="vantagensdesvantagens-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
-  <div class="cards-grid" id="grid-vantagens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9651;</span><h3>Nenhuma entrada carregada</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-<!-- ITENS -->
-<div id="page-itens" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9768;</span> Itens &amp; Loja</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-item-search" placeholder="Nome, efeito..." oninput="renderItens()"></div>
-    <div class="fg"><label>Raridade</label><select id="f-item-raridade" onchange="renderItens()"><option value="">Todas</option><option>Comum</option><option>Incomum</option><option>Raro</option><option>Epico</option><option>Lendario</option><option>Artefato</option></select></div>
-    <div class="fg"><label>Tipo</label><select id="f-item-tipo" onchange="renderItens()"><option value="">Todos</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('itens')">Limpar</button>
+  <!-- ITENS -->
+  <div id="page-itens" class="page">
+    <h2 class="section-title"><span class="stitle-sym">✤</span> Itens &amp; Loja</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-item-search" placeholder="Nome, efeito..." oninput="renderItens()"></div>
+      <div class="fg"><label>Raridade</label><select id="f-item-raridade" onchange="renderItens()"><option value="">Todas</option><option>Comum</option><option>Incomum</option><option>Raro</option><option>Epico</option><option>Lendario</option><option>Artefato</option></select></div>
+      <div class="fg"><label>Tipo</label><select id="f-item-tipo" onchange="renderItens()"><option value="">Todos</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('itens')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-itens"></p>
+    <div class="cards-grid" id="grid-itens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✤</span><h3>Nenhum item carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
-  <p class="result-count" id="count-itens"></p>
-  <div class="cards-grid" id="grid-itens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9768;</span><h3>Nenhum item carregado</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-<!-- GRIMORIO -->
-<div id="page-grimorio" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#10041;</span> Grimorio</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-mag-search" placeholder="Nome, efeito, escola..." oninput="renderGrimorio()"></div>
-    <div class="fg"><label>Escola</label><select id="f-mag-escola" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Grau</label><select id="f-mag-circulo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
-    <div class="fg"><label>Origem</label><select id="f-mag-classe" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Tipo</label><select id="f-mag-tipo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
+  <!-- GRIMÓRIO -->
+  <div id="page-grimorio" class="page">
+    <h2 class="section-title"><span class="stitle-sym">✦</span> Grimório</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-mag-search" placeholder="Nome, efeito, escola..." oninput="renderGrimorio()"></div>
+      <div class="fg"><label>Escola</label><select id="f-mag-escola" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
+      <div class="fg"><label>Grau</label><select id="f-mag-circulo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
+      <div class="fg"><label>Origem</label><select id="f-mag-classe" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
+      <div class="fg"><label>Tipo</label><select id="f-mag-tipo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-grimorio"></p>
+    <div class="debug-banner" id="grimorio-debug"></div>
+    <div class="cards-grid" id="grid-grimorio"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✦</span><h3>Nenhuma magia carregada</h3><p>Aguarde o carregamento automático.</p></div></div>
   </div>
-  <p class="result-count" id="count-grimorio"></p>
-  <div id="grimorio-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
-  <div class="cards-grid" id="grid-grimorio"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10041;</span><h3>Nenhuma magia carregada</h3><p>Aguarde o carregamento automatico ou verifique o console.</p></div></div>
-</div>
 
-<!-- DEUSES -->
-<div id="page-deuses" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9788;</span> Deuses</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-deus-search" placeholder="Nome, dominio..." oninput="renderDeuses()"></div>
-    <div class="fg"><label>Alinhamento</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todos</option></select></div>
-    <div class="fg"><label>Dominio</label><select id="f-deus-dominio" onchange="renderDeuses()"><option value="">Todos</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('deuses')">Limpar</button>
+  <!-- DEUSES -->
+  <div id="page-deuses" class="page">
+    <div id="deuses-lista">
+      <h2 class="section-title"><span class="stitle-sym">☀</span> Deuses &amp; Graças</h2>
+      <div class="filter-bar">
+        <div class="fg"><label>Buscar</label><input type="text" id="f-deus-search" placeholder="Nome, domínio..." oninput="renderDeuses()"></div>
+        <div class="fg"><label>Polaridade</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todas</option></select></div>
+        <div class="fg"><label>Arsenal Divino</label><select id="f-deus-dominio" onchange="renderDeuses()"><option value="">Todos</option></select></div>
+        <button class="btn-clear" onclick="clearFilters('deuses')">Limpar</button>
+      </div>
+      <p class="result-count" id="count-deuses"></p>
+      <div class="debug-banner" id="deuses-debug"></div>
+      <div class="cards-grid" id="grid-deuses"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☀</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+    </div>
+    <div id="deuses-detalhe" class="classe-detail">
+      <button class="btn-voltar" onclick="voltarDeuses()">← Voltar aos Deuses</button>
+      <div id="deus-detalhe-body"></div>
+    </div>
   </div>
-  <p class="result-count" id="count-deuses"></p>
-  <div class="cards-grid" id="grid-deuses"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9788;</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-<!-- VELKARION -->
-<div id="page-velkarion" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#9784;</span> Velkarion — O Mundo</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-vel-search" placeholder="Regiao, cidade..." oninput="renderVelkarion()"></div>
-    <div class="fg"><label>Tipo</label><select id="f-vel-tipo" onchange="renderVelkarion()"><option value="">Todos</option><option>Continente</option><option>Reino</option><option>Cidade</option><option>Regiao</option><option>Ruina</option><option>Masmorra</option></select></div>
-    <div class="fg"><label>Clima</label><select id="f-vel-clima" onchange="renderVelkarion()"><option value="">Todos</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('velkarion')">Limpar</button>
+  <!-- VELKARION -->
+  <div id="page-velkarion" class="page">
+    <h2 class="section-title"><span class="stitle-sym">⚐</span> Velkarion — O Mundo</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-vel-search" placeholder="Região, cidade..." oninput="renderVelkarion()"></div>
+      <div class="fg"><label>Tipo</label><select id="f-vel-tipo" onchange="renderVelkarion()"><option value="">Todos</option><option>Continente</option><option>Reino</option><option>Cidade</option><option>Regiao</option><option>Ruina</option><option>Masmorra</option></select></div>
+      <div class="fg"><label>Clima</label><select id="f-vel-clima" onchange="renderVelkarion()"><option value="">Todos</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('velkarion')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-velkarion"></p>
+    <div class="cards-grid" id="grid-velkarion"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">⚐</span><h3>Nenhuma região carregada</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
-  <p class="result-count" id="count-velkarion"></p>
-  <div class="cards-grid" id="grid-velkarion"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#9784;</span><h3>Nenhuma regiao carregada</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-<!-- ESTIGMAS -->
-<div id="page-estigmas" class="page">
-  <h2 class="section-title"><span class="stitle-sym">&#10070;</span> Estigmas</h2>
-  <div class="filter-bar">
-    <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, pericia, poder..." oninput="renderEstigmas()"></div>
-    <div class="fg"><label>Origem</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
-    <div class="fg"><label>Vantagem</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
-    <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
+  <!-- ESTIGMAS -->
+  <div id="page-estigmas" class="page">
+    <h2 class="section-title"><span class="stitle-sym">✸</span> Estigmas</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, perícia, poder..." oninput="renderEstigmas()"></div>
+      <div class="fg"><label>Origem</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
+      <div class="fg"><label>Vantagem</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
+    </div>
+    <p class="result-count" id="count-estigmas"></p>
+    <div class="debug-banner" id="estigmas-debug"></div>
+    <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✸</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
-  <p class="result-count" id="count-estigmas"></p>
-  <div id="estigmas-debug" style="display:none;margin-bottom:1rem;padding:0.75rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:4px;font-size:0.85rem;color:var(--text-dim);"></div>
-  <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">&#10070;</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
-</div>
 
-</main>
+  </main>
+</div><!-- /content-area -->
+</div><!-- /app-shell -->
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalBody"></div>
   </div>
 </div>
 
 <script>
-// ── NAVEGACAO ──
+// ── NAVEGAÇÃO ──
 function showPage(name) {
-  var pages = document.querySelectorAll('.page');
-  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
-  var tabs = document.querySelectorAll('.nav-tab');
-  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-  document.getElementById('page-' + name).classList.add('active');
-  var tab = document.querySelector('[data-page="' + name + '"]');
-  if (tab) tab.classList.add('active');
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+name).classList.add('active');
+  var tab=document.querySelector('[data-page="'+name+'"]');
+  if(tab) tab.classList.add('active');
 }
 
 // ── DATABASE ──
-var DB = { racas:[], classes:[], dons:[], vantagens:[], itens:[], grimorio:[], deuses:[], velkarion:[], estigmas:[] };
+var DB={racas:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
 
-// URLs fixas por aba — já embutidas no app
-var SHEET_URLS = {
+var SHEET_URLS={
   grimorio:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
   classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
   dons:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
   estigmas:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
-  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv"
+  vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv",
+  deuses:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv"
 };
 
-// ── IMAGENS DAS CLASSES ──
-// Quando tiver as imagens, adicione aqui: "Nome da Classe": "https://i.imgur.com/XXXXX.jpg"
-var CLASS_IMGS = {
-  // "Arqueiro": "https://i.imgur.com/XXXXX.jpg",
-  // "Bárbaro":  "https://i.imgur.com/XXXXX.jpg",
-};
+// Imagens
+var CLASS_IMGS={};
+var DEUS_IMGS={};
+function getClassImg(n){return CLASS_IMGS[n]||null;}
+function getDeusImg(n){return DEUS_IMGS[n]||null;}
 
-function getClassImg(n) { return CLASS_IMGS[n] || null; }
-
-function classImgCard(n) {
-  var u = getClassImg(n);
-  var inner = u
-    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:1.8rem;color:rgba(184,150,58,0.15);">&#9876;</span>';
-  return '<div style="width:100%;aspect-ratio:1/1;border-radius:3px;overflow:hidden;margin-bottom:0.75rem;border:1px solid rgba(184,150,58,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;">' + inner + '</div>';
+function imgBox(u,sym,size,extra){
+  var s=size||'100%';
+  var inner=u?'<img src="'+u+'" style="width:100%;height:100%;object-fit:cover;">'
+    :'<span style="font-family:Cinzel,serif;font-size:1.6rem;color:rgba(155,93,229,0.15);">'+sym+'</span>';
+  var style=typeof size==='number'
+    ?'width:'+size+'px;height:'+size+'px;'
+    :'width:100%;aspect-ratio:1/1;';
+  return '<div style="'+style+'border-radius:6px;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(155,93,229,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
 }
 
-function classImgModal(n) {
-  var u = getClassImg(n);
-  var inner = u
-    ? '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;">'
-    : '<span style="font-family:Cinzel,serif;font-size:2rem;color:rgba(184,150,58,0.15);">&#9876;</span>';
-  return '<div style="width:120px;height:120px;border-radius:4px;overflow:hidden;border:1px solid rgba(184,150,58,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + inner + '</div>';
+// ── CATEGORY COLORS ──
+function classCardClass(cat){
+  var c=(cat||'').toLowerCase();
+  if(c.indexOf('combate')>-1||c.indexOf('combatente')>-1||c.indexOf('guerr')>-1||c.indexOf('barb')>-1||c.indexOf('lutad')>-1) return 'card-combate';
+  if(c.indexOf('conjurad')>-1||c.indexOf('mag')>-1||c.indexOf('feiticei')>-1||c.indexOf('arcan')>-1||c.indexOf('druida')>-1||c.indexOf('cleri')>-1) return 'card-conjurador';
+  if(c.indexOf('supor')>-1||c.indexOf('cura')>-1||c.indexOf('bard')>-1||c.indexOf('paladino')>-1) return 'card-suporte';
+  if(c.indexOf('especial')>-1||c.indexOf('ladino')>-1||c.indexOf('ranger')>-1||c.indexOf('explorad')>-1||c.indexOf('assassin')>-1) return 'card-especialista';
+  return '';
+}
+function deusCardClass(pol){
+  var p=(pol||'').toLowerCase();
+  if(p==='positiva') return 'card-deus-positiva';
+  if(p==='negativa') return 'card-deus-negativa';
+  return 'card-deus-neutra';
+}
+function escolaCardClass(escola){
+  var e=(escola||'').toLowerCase();
+  if(e.indexOf('evoca')>-1) return 'card-magia-evocacao';
+  if(e.indexOf('necro')>-1) return 'card-magia-necromancia';
+  if(e.indexOf('encant')>-1) return 'card-magia-encantamento';
+  if(e.indexOf('abjur')>-1) return 'card-magia-abjuracao';
+  if(e.indexOf('transmut')>-1) return 'card-magia-transmutacao';
+  if(e.indexOf('convoc')>-1) return 'card-magia-convocacao';
+  return '';
+}
+function rarCardClass(r){
+  var m={'artefato':'card-item-artefato','lendario':'card-item-lendario','lendário':'card-item-lendario','epico':'card-item-epico','épico':'card-item-epico','raro':'card-item-raro'};
+  return m[(r||'').toLowerCase()]||'';
+}
+function vdCardClass(cat){
+  var c=(cat||'').toLowerCase();
+  if(c.indexOf('desvantagem')>-1||c.indexOf('maldi')>-1) return 'card-desvantagem';
+  return 'card-vantagem';
 }
 
-function classImgDetalhe(n) {
-  var u = getClassImg(n);
-  if (!u) return '';
-  return '<div style="width:160px;height:160px;border-radius:4px;overflow:hidden;border:1px solid rgba(184,150,58,0.3);float:right;margin:0 0 1rem 1.5rem;">'
-    + '<img src="'+u+'" alt="'+n+'" style="width:100%;height:100%;object-fit:cover;"></div>';
-}
-
-window.addEventListener('load', function() {
-  var saved = localStorage.getItem('rpg_sheet_url');
-  if (saved) document.getElementById('sheetUrl').value = saved;
+window.addEventListener('load',function(){
+  var saved=localStorage.getItem('rpg_sheet_url');
+  if(saved) document.getElementById('sheetUrl').value=saved;
   cntUpdate();
-  // Carrega automaticamente todas as abas com URL fixa
   autoLoadAll();
 });
 
-async function autoLoadAll() {
-  setStatus('loading', 'Carregando dados...');
-  var loaded = 0;
-  for (var key in SHEET_URLS) {
-    var ok = await autoLoadTab(key, SHEET_URLS[key]);
-    if (ok) loaded++;
+async function autoLoadAll(){
+  setStatus('loading','Carregando...');
+  var loaded=0;
+  for(var key in SHEET_URLS){
+    var ok=await autoLoadTab(key,SHEET_URLS[key]);
+    if(ok) loaded++;
   }
-  updateStats();
-  renderAll();
-  cntPopulateRaces();
-  if (loaded > 0) {
-    setStatus('ok', loaded + ' fonte(s) carregadas');
-  } else {
-    setStatus('err', 'Falha ao carregar planilhas');
-  }
+  updateStats();renderAll();cntPopulateRaces();
+  if(loaded>0) setStatus('ok',loaded+' fontes');
+  else setStatus('err','Falha');
 }
 
-async function autoLoadTab(tabKey, url) {
-  try {
-    // Add cache-busting timestamp
-    var sep = url.indexOf('?') > -1 ? '&' : '?';
-    var res = await fetch(url + sep + 't=' + Date.now());
-    if (!res.ok) { console.warn('HTTP ' + res.status + ' for ' + tabKey); return false; }
-    var text = await res.text();
-    if (!text || text.indexOf('Host not in allowlist') > -1) {
-      console.warn('CORS blocked for ' + tabKey);
-      if (tabKey === 'grimorio') {
-        var dbg = document.getElementById('grimorio-debug');
-        if (dbg) { dbg.style.display='block'; dbg.textContent = 'Acesso bloqueado pelo Google (CORS). Cole a URL acima e clique Invocar dados.'; }
-      }
-      var dbg2 = document.getElementById(tabKey + '-debug');
-      if (dbg2) { dbg2.style.display='block'; dbg2.textContent = 'Acesso bloqueado pelo Google (CORS). Cole a URL acima e clique Invocar dados.'; }
+async function autoLoadTab(tabKey,url){
+  try{
+    var sep=url.indexOf('?')>-1?'&':'?';
+    var res=await fetch(url+sep+'t='+Date.now());
+    if(!res.ok) return false;
+    var text=await res.text();
+    if(!text||text.indexOf('Host not in allowlist')>-1){
+      showDebug(tabKey,'Bloqueado pelo Google (CORS). Cole a URL e clique Invocar Dados.');
       return false;
     }
-    var rows = parseCSV(text);
-    if (!rows.length) { console.warn('No rows for ' + tabKey); return false; }
-    distributeData(rows, tabKey);
+    var rows=parseCSV(text);
+    if(!rows.length) return false;
+    distributeData(rows,tabKey);
     return true;
-  } catch(e) {
-    console.warn('Erro ao carregar ' + tabKey + ':', e.message);
-    if (tabKey === 'grimorio') {
-      var dbg = document.getElementById('grimorio-debug');
-      if (dbg) { dbg.style.display='block'; dbg.textContent = 'Erro ao carregar: ' + e.message + '. Tente invocar manualmente colando a URL acima.'; }
-    }
-    var dbg3 = document.getElementById(tabKey + '-debug');
-    if (dbg3) { dbg3.style.display='block'; dbg3.textContent = 'Erro ao carregar: ' + e.message + '. Tente invocar manualmente.'; }
+  }catch(e){
+    showDebug(tabKey,'Erro: '+e.message);
     return false;
   }
 }
 
+function showDebug(k,msg){
+  var el=document.getElementById(k+'-debug');
+  if(el){el.style.display='block';el.textContent=msg;}
+}
+
 // ── CSV ──
-function parseCSV(text) {
-  // Robust CSV parser that handles multiline quoted fields
-  var headers = [];
-  var rows = [];
-  var i = 0;
-  var len = text.length;
-
-  function parseField() {
-    var val = '';
-    if (i < len && text[i] === '"') {
-      i++; // skip opening quote
-      while (i < len) {
-        if (text[i] === '"') {
-          if (i+1 < len && text[i+1] === '"') {
-            val += '"'; i += 2; // escaped quote
-          } else {
-            i++; break; // closing quote
-          }
-        } else {
-          val += text[i++];
-        }
-      }
-    } else {
-      while (i < len && text[i] !== ',' && text[i] !== '\n' && text[i] !== '\r') {
-        val += text[i++];
-      }
-    }
-    return val.trim();
+function parseCSV(text){
+  var headers=[],rows=[],i=0,len=text.length;
+  function pf(){
+    var v='';
+    if(i<len&&text[i]==='"'){i++;while(i<len){if(text[i]==='"'){if(i+1<len&&text[i+1]==='"'){v+='"';i+=2;}else{i++;break;}}else{v+=text[i++];}}}
+    else{while(i<len&&text[i]!==','&&text[i]!=='\n'&&text[i]!=='\r'){v+=text[i++];}}
+    return v.trim();
   }
-
-  function parseLine() {
-    var fields = [];
-    while (i < len) {
-      fields.push(parseField());
-      if (i < len && text[i] === ',') { i++; continue; }
-      if (i < len && (text[i] === '\n' || text[i] === '\r')) {
-        if (text[i] === '\r' && i+1 < len && text[i+1] === '\n') i++;
-        i++;
-        break;
-      }
-      break;
-    }
-    return fields;
+  function pl(){
+    var f=[];
+    while(i<len){f.push(pf());if(i<len&&text[i]===','){i++;continue;}if(i<len&&(text[i]==='\n'||text[i]==='\r')){if(text[i]==='\r'&&i+1<len&&text[i+1]==='\n')i++;i++;break;}break;}
+    return f;
   }
-
-  // Parse header row
-  headers = parseLine();
-  headers = headers.map(function(h){ return h.replace(/^"|"$/g,'').trim(); });
-
-  // Parse data rows
-  while (i < len) {
-    // Skip empty lines
-    if (text[i] === '\n' || text[i] === '\r') { i++; continue; }
-    var vals = parseLine();
-    var obj = {};
-    for (var hi = 0; hi < headers.length; hi++) {
-      obj[headers[hi]] = (vals[hi] || '').replace(/^"|"$/g,'').trim();
-    }
-    if (Object.values(obj).some(function(v){ return v; })) rows.push(obj);
+  headers=pl();headers=headers.map(function(h){return h.replace(/^"|"$/g,'').trim();});
+  while(i<len){
+    if(text[i]==='\n'||text[i]==='\r'){i++;continue;}
+    var vals=pl(),obj={};
+    for(var hi=0;hi<headers.length;hi++){obj[headers[hi]]=(vals[hi]||'').replace(/^"|"$/g,'').trim();}
+    if(Object.values(obj).some(function(v){return v;})) rows.push(obj);
   }
   return rows;
 }
 
-function buildCSVUrl(raw) {
-  var url = raw.trim();
-  if (url.indexOf('output=csv') > -1) return url;
-  var m = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-  if (!m) return url;
-  var id = m[1];
-  var gidM = url.match(/[#&?]gid=(\d+)/);
-  var gid = gidM ? gidM[1] : '0';
-  return 'https://docs.google.com/spreadsheets/d/' + id + '/export?format=csv&id=' + id + '&gid=' + gid;
+function buildCSVUrl(raw){
+  var url=raw.trim();
+  if(url.indexOf('output=csv')>-1) return url;
+  var m=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if(!m) return url;
+  var id=m[1],gidM=url.match(/[#&?]gid=(\d+)/),gid=gidM?gidM[1]:'0';
+  return 'https://docs.google.com/spreadsheets/d/'+id+'/export?format=csv&id='+id+'&gid='+gid;
 }
 
-function setStatus(type, msg) {
-  document.getElementById('statusDot').className = 'status-dot ' + type;
-  document.getElementById('statusMsg').textContent = msg;
+function setStatus(type,msg){
+  document.getElementById('statusDot').className='status-dot '+type;
+  document.getElementById('statusMsg').textContent=msg;
 }
 
-async function loadSheet() {
-  var rawUrl = document.getElementById('sheetUrl').value.trim();
-  if (!rawUrl) { autoLoadAll(); return; }
-  localStorage.setItem('rpg_sheet_url', rawUrl);
-  var url = buildCSVUrl(rawUrl);
-  setStatus('loading', 'Invocando dados...');
-  try {
-    var res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    var text = await res.text();
-    var rows = parseCSV(text);
-    if (!rows.length) throw new Error('Planilha vazia.');
-    var tab = document.getElementById('sheetTab').value.toLowerCase();
-    distributeData(rows, tab);
-    setStatus('ok', rows.length + ' registros carregados');
-    updateStats();
-    renderAll();
-    cntPopulateRaces();
-  } catch(e) { setStatus('err', 'Erro: ' + e.message); }
+async function loadSheet(){
+  var rawUrl=document.getElementById('sheetUrl').value.trim();
+  if(!rawUrl){autoLoadAll();return;}
+  localStorage.setItem('rpg_sheet_url',rawUrl);
+  var url=buildCSVUrl(rawUrl);
+  setStatus('loading','Invocando...');
+  try{
+    var res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    var text=await res.text();
+    var rows=parseCSV(text);
+    if(!rows.length) throw new Error('Planilha vazia.');
+    var tab=document.getElementById('sheetTab').value.toLowerCase();
+    distributeData(rows,tab);
+    setStatus('ok',rows.length+' registros');
+    updateStats();renderAll();cntPopulateRaces();
+  }catch(e){setStatus('err','Erro: '+e.message);}
 }
 
-function normalizeKey(k) {
-  return k.toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-    .replace('feitico','feitico')
-    .replace('feiticao','feitico');
+function normalizeKey(k){return k.toLowerCase().replace(/[^a-z0-9]/g,'');}
+
+function distributeData(rows,tab){
+  var raw=Object.keys(rows[0]||{}),keys=raw.map(function(k){return k.toLowerCase();}),norm=raw.map(normalizeKey);
+  if(tab==='grimorio'){DB.grimorio=rows;return;}
+  if(tab==='racas'){DB.racas=rows;return;}
+  if(tab==='classes'){DB.classes=rows;return;}
+  if(tab==='dons'){DB.dons=rows;return;}
+  if(tab==='vantagensdesvantagens'||tab==='vantagens'){DB.vantagens=rows;return;}
+  if(tab==='itensloja'||tab==='itens'){DB.itens=rows;return;}
+  if(tab==='deuses'){DB.deuses=rows;return;}
+  if(tab==='velkarion'){DB.velkarion=rows;return;}
+  if(tab==='estigmas'){DB.estigmas=rows;return;}
+  var hasFeitico=norm.indexOf('feitico')>-1,hasEscola=keys.indexOf('escola')>-1,hasGrau=keys.indexOf('grau')>-1,hasOrigem=keys.indexOf('origem')>-1;
+  if(hasFeitico||(hasEscola&&hasGrau)||(hasEscola&&hasOrigem)){DB.grimorio=rows;return;}
+  var hasPapel=keys.indexOf('papel')>-1,hasRaridade=keys.indexOf('raridade')>-1,hasRaca=keys.indexOf('raca')>-1||norm.indexOf('raca')>-1,hasDominio=keys.indexOf('dominio')>-1||norm.indexOf('dominio')>-1,hasClasse=keys.indexOf('classe')>-1,hasNomeDeus=norm.indexOf('nomedodeus')>-1||norm.indexOf('nomedeus')>-1;
+  if(hasNomeDeus){DB.deuses=rows;return;}
+  if(hasRaca||(hasClasse&&!hasPapel)){DB.racas=rows;return;}
+  if(hasPapel){DB.classes=rows;return;}
+  if(hasRaridade){DB.itens=rows;return;}
+  if(hasDominio){DB.deuses=rows;return;}
+  if(keys.indexOf('continente')>-1){DB.velkarion=rows;return;}
+  if(keys.indexOf('estigma')>-1||keys.indexOf('pericia')>-1){DB.estigmas=rows;return;}
+  if(keys.indexOf('vantagem')>-1||keys.indexOf('desvantagem')>-1){DB.vantagens=rows;return;}
+  DB.racas=rows;
 }
 
-function distributeData(rows, tab) {
-  var raw  = Object.keys(rows[0]||{});
-  var keys = raw.map(function(k){ return k.toLowerCase(); });
-  var norm = raw.map(function(k){ return normalizeKey(k); });
-
-  // Tab hint takes priority
-  if (tab === 'grimorio')            { DB.grimorio  = rows; return; }
-  if (tab === 'racas')               { DB.racas     = rows; return; }
-  if (tab === 'classes')             { DB.classes   = rows; return; }
-  if (tab === 'dons')                { DB.dons      = rows; return; }
-  if (tab === 'vantagensdesvantagens' || tab === 'vantagens') { DB.vantagens = rows; return; }
-  if (tab === 'itensloja' || tab === 'itens') { DB.itens = rows; return; }
-  if (tab === 'deuses')              { DB.deuses    = rows; return; }
-  if (tab === 'velkarion')           { DB.velkarion = rows; return; }
-  if (tab === 'estigmas')            { DB.estigmas  = rows; return; }
-
-  // Auto-detect by column signatures
-  // Grimorio: has "feitico" or "feitiço" OR has both "escola" and "grau"
-  var hasFeitico = norm.indexOf('feitico') > -1;
-  var hasEscola  = keys.indexOf('escola')  > -1;
-  var hasGrau    = keys.indexOf('grau')    > -1;
-  var hasOrigem  = keys.indexOf('origem')  > -1;
-  if (hasFeitico || (hasEscola && hasGrau) || (hasEscola && hasOrigem)) { DB.grimorio = rows; return; }
-
-  var hasPapel   = keys.indexOf('papel')     > -1;
-  var hasRaridade= keys.indexOf('raridade')  > -1;
-  var hasRaca    = keys.indexOf('raca')      > -1 || norm.indexOf('raca') > -1;
-  var hasDominio = keys.indexOf('dominio')   > -1 || norm.indexOf('dominio') > -1;
-  var hasClasse  = keys.indexOf('classe')    > -1;
-
-  if (hasRaca || (hasClasse && !hasPapel))            { DB.racas     = rows; return; }
-  if (hasPapel)                                        { DB.classes   = rows; return; }
-  if (hasRaridade)                                     { DB.itens     = rows; return; }
-  if (hasDominio)                                      { DB.deuses    = rows; return; }
-  if (keys.indexOf('continente') > -1)                 { DB.velkarion = rows; return; }
-  if (keys.indexOf('estigma') > -1 || keys.indexOf('pericia') > -1) { DB.estigmas = rows; return; }
-  if (keys.indexOf('vantagem') > -1 || keys.indexOf('desvantagem') > -1) { DB.vantagens = rows; return; }
-
-  // Fallback: check first column name
-  var firstCol = norm[0] || '';
-  if (firstCol === 'feitico') { DB.grimorio = rows; return; }
-
-  DB.racas = rows;
+function updateStats(){
+  var m={racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas',vantagens:'vantagens'};
+  for(var k in m){var el=document.getElementById('stat-'+m[k]);if(el)el.textContent=DB[k].length||'—';}
 }
 
-function updateStats() {
-  var map = {racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas',vantagens:'vantagens'};
-  for (var k in map) { var el = document.getElementById('stat-'+map[k]); if(el) el.textContent = DB[k].length||'—'; }
-}
-
-function renderAll() { _modalStore = []; renderRacas(); renderClasses(); renderVantagens(); renderItens(); renderGrimorio(); renderDeuses(); renderVelkarion(); renderEstigmas(); }
+function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderItens();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
 
 // ── HELPERS ──
-function deaccent(s) {
-  return (s||'').toLowerCase()
-    .replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e')
-    .replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o')
-    .replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c')
-    .replace(/[ñ]/g,'n');
-}
-function gf(row) {
-  var keys = Array.prototype.slice.call(arguments, 1);
-  for (var i=0; i<keys.length; i++) {
-    var rks = Object.keys(row);
-    for (var j=0; j<rks.length; j++) {
-      if (rks[j].toLowerCase()===keys[i].toLowerCase() && row[rks[j]]) return row[rks[j]];
-    }
-  }
-  // fallback: deaccented comparison
-  for (var i=0; i<keys.length; i++) {
-    var dk = deaccent(keys[i]);
-    var rks = Object.keys(row);
-    for (var j=0; j<rks.length; j++) {
-      if (deaccent(rks[j])===dk && row[rks[j]]) return row[rks[j]];
-    }
-  }
+function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n');}
+function gf(row){
+  var keys=Array.prototype.slice.call(arguments,1);
+  for(var i=0;i<keys.length;i++){var rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(rks[j].toLowerCase()===keys[i].toLowerCase()&&row[rks[j]])return row[rks[j]];}}
+  for(var i=0;i<keys.length;i++){var dk=deaccent(keys[i]),rks=Object.keys(row);for(var j=0;j<rks.length;j++){if(deaccent(rks[j])===dk&&row[rks[j]])return row[rks[j]];}}
   return '';
 }
-function tag(label, cls) { if(!label) return ''; return '<span class="tag '+cls+'">'+label+'</span>'; }
-function fstr(row) { return Object.values(row).join(' ').toLowerCase(); }
-function rarColor(r) {
-  var m={'lendario':'tag-rare','epico':'tag-rare','raro':'tag-class','incomum':'tag-gold','comum':'tag-gray','artefato':'tag-danger'};
-  return m[(r||'').toLowerCase()]||'tag-gray';
-}
-function popSel(id, opts, cur) {
-  var sel = document.getElementById(id); if(!sel) return;
-  var first = sel.options[0];
-  sel.innerHTML = ''; sel.appendChild(first);
-  for(var i=0;i<opts.length;i++){
-    var o=document.createElement('option'); o.value=opts[i]; o.textContent=opts[i];
-    if(opts[i]===cur) o.selected=true; sel.appendChild(o);
-  }
-}
-function uniq(arr) { var s={}; return arr.filter(function(v){ if(!v||s[v]) return false; s[v]=1; return true; }); }
-function emptyMsg(sym, title) { return '<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+sym+'</span><h3>'+title+'</h3></div>'; }
+function tag(label,cls){if(!label)return '';return '<span class="tag '+cls+'">'+label+'</span>';}
+function fstr(row){return Object.values(row).join(' ').toLowerCase();}
+function rarColor(r){var m={'lendario':'tag-rare','lendário':'tag-rare','epico':'tag-rare','épico':'tag-rare','raro':'tag-class','incomum':'tag-gold','comum':'tag-gray','artefato':'tag-danger'};return m[(r||'').toLowerCase()]||'tag-gray';}
+function popSel(id,opts,cur){var sel=document.getElementById(id);if(!sel)return;var first=sel.options[0];sel.innerHTML='';sel.appendChild(first);for(var i=0;i<opts.length;i++){var o=document.createElement('option');o.value=opts[i];o.textContent=opts[i];if(opts[i]===cur)o.selected=true;sel.appendChild(o);}}
+function uniq(arr){var s={};return arr.filter(function(v){if(!v||s[v])return false;s[v]=1;return true;});}
+function emptyMsg(sym,title){return '<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+sym+'</span><h3>'+title+'</h3></div>';}
 
-// ── RENDER RACAS ──
-function renderRacas() {
-  var s=document.getElementById('f-raca-search').value.toLowerCase(), or=document.getElementById('f-raca-origem').value, at=document.getElementById('f-raca-atrib').value;
-  popSel('f-raca-origem', uniq(DB.racas.map(function(r){return gf(r,'Origem','origem');})), or);
-  popSel('f-raca-atrib', uniq(DB.racas.map(function(r){return gf(r,'Atributo','atributo principal');})), at);
-  var data=DB.racas.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!or||gf(r,'Origem','origem')===or)&&(!at||gf(r,'Atributo','atributo principal')===at); });
+// ── RENDER RAÇAS ──
+function renderRacas(){
+  var s=document.getElementById('f-raca-search').value.toLowerCase(),or=document.getElementById('f-raca-origem').value,at=document.getElementById('f-raca-atrib').value;
+  popSel('f-raca-origem',uniq(DB.racas.map(function(r){return gf(r,'Origem','origem');})),or);
+  popSel('f-raca-atrib',uniq(DB.racas.map(function(r){return gf(r,'Atributo','atributo principal');})),at);
+  var data=DB.racas.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!or||gf(r,'Origem','origem')===or)&&(!at||gf(r,'Atributo','atributo principal')===at);});
   var g=document.getElementById('grid-racas');
   document.getElementById('count-racas').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9775;',DB.racas.length?'Nenhum resultado':'Nenhuma raca carregada');return;}
+  if(!data.length){g.innerHTML=emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',o=gf(r,'Origem','origem'),a=gf(r,'Atributo','atributo principal'),h=gf(r,'Habilidade','habilidade racial'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">raca</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-class')+tag(h,'tag-gold')+'</div></div>';
+    var n=gf(r,'Nome','nome')||'(sem nome)',o=gf(r,'Origem','origem'),a=gf(r,'Atributo','atributo principal'),h=gf(r,'Habilidade','habilidade racial'),d=gf(r,'Descricao','descricao','Descrição','desc');
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">raça</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-conjurador')+tag(h,'tag-gold')+'</div></div>';
   }).join('');
 }
 
 // ── RENDER CLASSES ──
-function renderClasses() {
-  var s  = document.getElementById('f-class-search').value.toLowerCase();
-  var ca = document.getElementById('f-class-papel').value;
-  var cl = document.getElementById('f-class-filtro').value;
-
-  popSel('f-class-papel',  uniq(DB.classes.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
-  popSel('f-class-filtro', uniq(DB.dons.map(function(r){ return gf(r,'Classe','classe'); })), cl);
-
-  // Se filtro de dons ativo, mostra detalhe da classe filtrada
-  if (cl) { verDonsClasse(cl); return; }
-
-  var dataC = DB.classes.filter(function(r){
-    return (!s  || fstr(r).indexOf(s) > -1)
-        && (!ca || gf(r,'Categoria','categoria') === ca);
-  });
-
-  var g = document.getElementById('grid-classes');
-  document.getElementById('count-classes').textContent = dataC.length + ' classe(s)';
-
-  if (!dataC.length) {
-    g.innerHTML = emptyMsg('&#9876;', DB.classes.length ? 'Nenhum resultado' : 'Nenhuma classe carregada');
-    return;
-  }
-
-  g.innerHTML = dataC.map(function(r){
-    var n   = gf(r,'Classe','classe') || '(sem nome)';
-    var cat = gf(r,'Categoria','categoria');
-    var atb = gf(r,'Atributo de Classe','atributo de classe');
-    var pv  = gf(r,'PV Inicial','pv inicial');
-    var pm  = gf(r,'PM Inicial','pm inicial');
-    var ind = gf(r,'Individualidade','individualidade');
-    var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display']=n;
-    return '<div class="card" onclick="openModalIdx('+_storeModal(rCopy)+')" >'
-      + classImgCard(n)
-      + '<div class="card-type">' + (cat||'classe') + '</div>'
-      + '<div class="card-name">' + n + '</div>'
-      + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
-      + '<div class="card-tags">'
-      + (atb ? tag(atb,'tag-class') : '')
-      + (pv  ? tag('PV '+pv,'tag-gold') : '')
-      + (pm  ? tag('PM '+pm,'tag-rare') : '')
-      + '</div>'
-      + '<button class="btn-ver-dons" onclick=\'event.stopPropagation();verDonsClasse("'+n.replace(/"/g,'&quot;')+'")\'>&#10022; Ver Dons desta Classe</button>'
-      + '</div>';
+function renderClasses(){
+  var s=document.getElementById('f-class-search').value.toLowerCase(),ca=document.getElementById('f-class-papel').value,cl=document.getElementById('f-class-filtro').value;
+  popSel('f-class-papel',uniq(DB.classes.map(function(r){return gf(r,'Categoria','categoria');})),ca);
+  popSel('f-class-filtro',uniq(DB.dons.map(function(r){return gf(r,'Classe','classe');})),cl);
+  if(cl){verDonsClasse(cl);return;}
+  var dataC=DB.classes.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Categoria','categoria')===ca);});
+  var g=document.getElementById('grid-classes');
+  document.getElementById('count-classes').textContent=dataC.length+' classe(s)';
+  if(!dataC.length){g.innerHTML=emptyMsg('⚔',DB.classes.length?'Nenhum resultado':'Nenhuma classe carregada');return;}
+  g.innerHTML=dataC.map(function(r){
+    var n=gf(r,'Classe','classe')||'(sem nome)',cat=gf(r,'Categoria','categoria'),atb=gf(r,'Atributo de Classe','atributo de classe'),pv=gf(r,'PV Inicial','pv inicial'),pm=gf(r,'PM Inicial','pm inicial'),ind=gf(r,'Individualidade','individualidade');
+    var cc=classCardClass(cat);
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getClassImg(n),'⚔')+'<div class="card-type">'+(cat||'classe')+'</div><div class="card-name">'+n+'</div>'+(ind?'<div class="card-desc">'+ind+'</div>':'')+'<div class="card-tags">'+(atb?tag(atb,cc?'tag-'+cc.replace('card-',''):'tag-class'):'')+(pv?tag('PV '+pv,'tag-gold'):'')+(pm?tag('PM '+pm,'tag-rare'):'')+'</div><button class="btn-ver-dons" onclick=\'event.stopPropagation();verDonsClasse("'+n.replace(/"/g,'&quot;')+'")\'>✦ Ver Dons desta Classe</button></div>';
   }).join('');
 }
 
-function verDonsClasse(nomeClasse) {
-  // Esconde lista, mostra detalhe
-  document.getElementById('classes-lista').style.display = 'none';
+function verDonsClasse(nomeClasse){
+  document.getElementById('classes-lista').style.display='none';
   document.getElementById('classes-detalhe').classList.add('active');
-
-  // Dados da classe
-  var classeRow = null;
-  for (var i=0; i<DB.classes.length; i++) {
-    if (gf(DB.classes[i],'Classe','classe') === nomeClasse) { classeRow = DB.classes[i]; break; }
-  }
-
-  // Dons da classe agrupados por grau
-  var dons = DB.dons.filter(function(r){ return gf(r,'Classe','classe') === nomeClasse; });
-  var grauMap = {};
-  for (var i=0; i<dons.length; i++) {
-    var gr = gf(dons[i],'Grau','grau') || 'Sem Grau';
-    if (!grauMap[gr]) grauMap[gr] = [];
-    grauMap[gr].push(dons[i]);
-  }
-  var graus = Object.keys(grauMap).sort();
-
-  var html = '';
-
-  // Cabeçalho da classe
-  if (classeRow) {
-    var cat = gf(classeRow,'Categoria','categoria');
-    var atb = gf(classeRow,'Atributo de Classe','atributo de classe');
-    var pvi = gf(classeRow,'PV Inicial','pv inicial');
-    var pvn = gf(classeRow,'PV/Nível','pv/nivel','PV/Nivel');
-    var pmi = gf(classeRow,'PM Inicial','pm inicial');
-    var pmn = gf(classeRow,'PM/Nível','pm/nivel','PM/Nivel');
-    var pro = gf(classeRow,'Proficiências','Proficiencias','proficiencias');
-    var per = gf(classeRow,'Perícia Inicial','Pericia Inicial','pericia inicial');
-    var pex = gf(classeRow,'Perícias Extras','Pericias Extras','pericias extras');
-    var kit = gf(classeRow,'Poder de Kit','poder de kit');
-    var ind = gf(classeRow,'Individualidade','individualidade');
-    var res = gf(classeRow,'Resistência','Resistencia','resistencia');
-
-    html += '<div style="margin-bottom:0.5rem;">'
-      + classImgDetalhe(nomeClasse)
-      + '<div style="font-family:Cinzel,serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">' + (cat||'classe') + '</div>'
-      + '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeClasse + '</h2>'
-      + '</div>';
-
-    if (ind) html += '<p class="classe-ind">' + ind + '</p>';
-
-    html += '<div class="classe-header">';
-    if (atb) html += '<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">' + atb + '</p></div>';
-    if (res) html += '<div class="classe-field"><label>Resistência</label><p>' + res + '</p></div>';
-    if (pvi) html += '<div class="classe-field"><label>PV Inicial</label><p>' + pvi + (pvn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'') + '</p></div>';
-    if (pmi) html += '<div class="classe-field"><label>PM Inicial</label><p>' + pmi + (pmn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'') + '</p></div>';
-    if (pro) html += '<div class="classe-field classe-header-full"><label>Proficiências</label><p>' + pro + '</p></div>';
-    if (per) html += '<div class="classe-field"><label>Perícia Inicial</label><p>' + per + '</p></div>';
-    if (pex) html += '<div class="classe-field"><label>Perícias Extras</label><p>' + pex + '</p></div>';
-    if (kit) html += '<div class="classe-field classe-header-full"><label>Poder de Kit</label><p>' + kit + '</p></div>';
-    html += '</div>';
-  } else {
-    html += '<h2 style="font-family:Cinzel,serif;font-size:2rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">' + nomeClasse + '</h2>';
-  }
-
-  // Dons agrupados por grau
-  if (graus.length) {
-    html += '<div class="dons-title">&#10022; Dons de ' + nomeClasse + ' <span style="font-size:0.7rem;opacity:0.5;">(' + dons.length + ' dons)</span></div>';
-    for (var gi=0; gi<graus.length; gi++) {
-      var gr = graus[gi];
-      var lista = grauMap[gr];
-      html += '<div class="grau-section">';
-      html += '<div class="grau-section-title">— ' + gr + ' —</div>';
-      html += '<div class="cards-grid">';
-      for (var di=0; di<lista.length; di++) {
-        var d = lista[di];
-        var dn = gf(d,'Nome do Dom','nome do dom') || '(sem nome)';
-        var dd = gf(d,'Descrição','Descricao','descricao','desc');
-        var dCopy = {}; for(var k in d) dCopy[k]=d[k]; dCopy['_nome_display']=dn;
-        html += '<div class="card" onclick="openModalIdx('+_storeModal(dCopy)+')" >'
-          + '<div class="card-type">dom · ' + gr + '</div>'
-          + '<div class="card-name">' + dn + '</div>'
-          + (dd ? '<div class="card-desc">' + dd + '</div>' : '')
-          + '<div class="card-tags">' + tag(gr,'tag-gold') + tag(nomeClasse,'tag-class') + '</div>'
-          + '</div>';
+  var classeRow=null;
+  for(var i=0;i<DB.classes.length;i++){if(gf(DB.classes[i],'Classe','classe')===nomeClasse){classeRow=DB.classes[i];break;}}
+  var dons=DB.dons.filter(function(r){return gf(r,'Classe','classe')===nomeClasse;});
+  var grauMap={};
+  for(var i=0;i<dons.length;i++){var gr=gf(dons[i],'Grau','grau')||'Sem Grau';if(!grauMap[gr])grauMap[gr]=[];grauMap[gr].push(dons[i]);}
+  var graus=Object.keys(grauMap).sort(),html='';
+  if(classeRow){
+    var cat=gf(classeRow,'Categoria','categoria'),atb=gf(classeRow,'Atributo de Classe','atributo de classe'),pvi=gf(classeRow,'PV Inicial','pv inicial'),pvn=gf(classeRow,'PV/Nível','pv/nivel','PV/Nivel'),pmi=gf(classeRow,'PM Inicial','pm inicial'),pmn=gf(classeRow,'PM/Nível','pm/nivel','PM/Nivel'),pro=gf(classeRow,'Proficiências','Proficiencias','proficiencias'),per=gf(classeRow,'Perícia Inicial','Pericia Inicial','pericia inicial'),pex=gf(classeRow,'Perícias Extras','Pericias Extras','pericias extras'),kit=gf(classeRow,'Poder de Kit','poder de kit'),ind=gf(classeRow,'Individualidade','individualidade'),res=gf(classeRow,'Resistência','Resistencia','resistencia');
+    html+='<div style="margin-bottom:0.5rem;">'+(getClassImg(nomeClasse)?'<div style="width:160px;height:160px;border-radius:6px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);float:right;margin:0 0 1rem 1.5rem;"><img src="'+getClassImg(nomeClasse)+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">'+(cat||'classe')+'</div><h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2></div>';
+    if(ind)html+='<p class="classe-ind">'+ind+'</p>';
+    html+='<div class="classe-header">';
+    if(atb)html+='<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">'+atb+'</p></div>';
+    if(res)html+='<div class="classe-field"><label>Resistência</label><p>'+res+'</p></div>';
+    if(pvi)html+='<div class="classe-field"><label>PV Inicial</label><p>'+pvi+(pvn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'')+'</p></div>';
+    if(pmi)html+='<div class="classe-field"><label>PM Inicial</label><p>'+pmi+(pmn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'')+'</p></div>';
+    if(pro)html+='<div class="classe-field classe-header-full"><label>Proficiências</label><p>'+pro+'</p></div>';
+    if(per)html+='<div class="classe-field"><label>Perícia Inicial</label><p>'+per+'</p></div>';
+    if(pex)html+='<div class="classe-field"><label>Perícias Extras</label><p>'+pex+'</p></div>';
+    if(kit)html+='<div class="classe-field classe-header-full"><label>Poder de Kit</label><p>'+kit+'</p></div>';
+    html+='</div>';
+  }else{html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2>';}
+  if(graus.length){
+    html+='<div class="dons-title">✦ Dons de '+nomeClasse+' <span style="font-size:0.7rem;opacity:0.4;">('+dons.length+' dons)</span></div>';
+    for(var gi=0;gi<graus.length;gi++){
+      var gr=graus[gi],lista=grauMap[gr];
+      html+='<div class="grau-section"><div class="grau-section-title">— '+gr+' —</div><div class="cards-grid">';
+      for(var di=0;di<lista.length;di++){
+        var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)',dd=gf(d,'Descrição','Descricao','descricao','desc');
+        var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
+        html+='<div class="card" onclick="openModalIdx('+_storeModal(dCopy)+')"><div class="card-type">dom · '+gr+'</div><div class="card-name">'+dn+'</div>'+(dd?'<div class="card-desc">'+dd+'</div>':'')+'<div class="card-tags">'+tag(gr,'tag-gold')+tag(nomeClasse,'tag-especialista')+'</div></div>';
       }
-      html += '</div></div>';
+      html+='</div></div>';
     }
-  } else {
-    html += '<div class="state-msg"><span class="state-sym">&#10022;</span><h3>Nenhum dom encontrado</h3><p>Esta classe ainda não tem dons cadastrados.</p></div>';
-  }
-
-  document.getElementById('classe-detalhe-body').innerHTML = html;
-  // Scroll ao topo da página de detalhe
+  }else{html+='<div class="state-msg"><span class="state-sym">✦</span><h3>Nenhum dom encontrado</h3></div>';}
+  document.getElementById('classe-detalhe-body').innerHTML=html;
   document.getElementById('classes-detalhe').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function voltarClasses() {
-  document.getElementById('classes-lista').style.display = '';
+function voltarClasses(){
+  document.getElementById('classes-lista').style.display='';
   document.getElementById('classes-detalhe').classList.remove('active');
-  document.getElementById('f-class-filtro').value = '';
+  document.getElementById('f-class-filtro').value='';
 }
 
 // ── RENDER VANTAGENS ──
-function renderVantagens() {
-  var s  = document.getElementById('f-vd-search').value.toLowerCase();
-  var tp = document.getElementById('f-vd-tipo').value;
-  var ca = document.getElementById('f-vd-cat').value;
-
-  // Tipo agora é a Categoria (Vantagens de Combate, Desvantagens, etc.)
-  popSel('f-vd-cat', uniq(DB.vantagens.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
-
-  var data = DB.vantagens.filter(function(r){
-    var cat = gf(r,'Categoria','categoria');
-    // filtro "Tipo" = Vantagem ou Desvantagem inferido da Categoria
-    var isDesv = (cat||'').toLowerCase().indexOf('desvantagem') > -1 || (cat||'').toLowerCase().indexOf('maldi') > -1;
-    var tipoOk = !tp || (tp === 'Vantagem' && !isDesv) || (tp === 'Desvantagem' && isDesv);
-    return (!s  || fstr(r).indexOf(s) > -1)
-        && tipoOk
-        && (!ca || cat === ca);
+function renderVantagens(){
+  var s=document.getElementById('f-vd-search').value.toLowerCase(),tp=document.getElementById('f-vd-tipo').value,ca=document.getElementById('f-vd-cat').value;
+  popSel('f-vd-cat',uniq(DB.vantagens.map(function(r){return gf(r,'Categoria','categoria');})),ca);
+  var data=DB.vantagens.filter(function(r){
+    var cat=gf(r,'Categoria','categoria');
+    var isDesv=(cat||'').toLowerCase().indexOf('desvantagem')>-1||(cat||'').toLowerCase().indexOf('maldi')>-1;
+    var tipoOk=!tp||(tp==='Vantagem'&&!isDesv)||(tp==='Desvantagem'&&isDesv);
+    return(!s||fstr(r).indexOf(s)>-1)&&tipoOk&&(!ca||cat===ca);
   });
-
-  var g = document.getElementById('grid-vantagens');
-  document.getElementById('count-vantagens').textContent = data.length + ' resultados';
-  if (!data.length) { g.innerHTML = emptyMsg('&#9651;', DB.vantagens.length ? 'Nenhum resultado' : 'Nenhuma entrada carregada'); return; }
-
-  g.innerHTML = data.map(function(r){
-    var n   = gf(r,'Nome','nome') || '(sem nome)';
-    var cat = gf(r,'Categoria','categoria');
-    var pre = gf(r,'Pr\u00e9-requisitos','Pre-requisitos','prerequisitos','Pré-requisitos');
-    var d   = gf(r,'Descri\u00e7\u00e3o Completa','Descricao Completa','Descricao','descricao','desc','Descri\u00e7\u00e3o');
-    var isDesv = (cat||'').toLowerCase().indexOf('desvantagem') > -1 || (cat||'').toLowerCase().indexOf('maldi') > -1;
-    var catColor = isDesv ? 'tag-danger' : 'tag-green';
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" >'
-      + '<div class="card-type">' + (cat || 'vantagem') + '</div>'
-      + '<div class="card-name">' + n + '</div>'
-      + (d ? '<div class="card-desc">' + d + '</div>' : '')
-      + '<div class="card-tags">'
-      + tag(cat, catColor)
-      + (pre ? tag(pre.substring(0,30), 'tag-gray') : '')
-      + '</div></div>';
+  var g=document.getElementById('grid-vantagens');
+  document.getElementById('count-vantagens').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('△',DB.vantagens.length?'Nenhum resultado':'Nenhuma entrada carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome')||'(sem nome)',cat=gf(r,'Categoria','categoria'),pre=gf(r,'Pré-requisitos','Pre-requisitos','prerequisitos','Pré-requisitos'),d=gf(r,'Descrição Completa','Descricao Completa','Descricao','descricao','desc','Descrição');
+    var isDesv=(cat||'').toLowerCase().indexOf('desvantagem')>-1||(cat||'').toLowerCase().indexOf('maldi')>-1;
+    var cc=isDesv?'card-desvantagem':'card-vantagem';
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(cat||'vantagem')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cat,isDesv?'tag-danger':'tag-green')+(pre?tag(pre.substring(0,30),'tag-gray'):'')+'</div></div>';
   }).join('');
 }
 
 // ── RENDER ITENS ──
-function renderItens() {
-  var s=document.getElementById('f-item-search').value.toLowerCase(), ra=document.getElementById('f-item-raridade').value, tp=document.getElementById('f-item-tipo').value;
-  popSel('f-item-tipo', uniq(DB.itens.map(function(r){return gf(r,'Tipo','tipo');})), tp);
-  var data=DB.itens.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!ra||gf(r,'Raridade','raridade')===ra)&&(!tp||gf(r,'Tipo','tipo')===tp); });
+function renderItens(){
+  var s=document.getElementById('f-item-search').value.toLowerCase(),ra=document.getElementById('f-item-raridade').value,tp=document.getElementById('f-item-tipo').value;
+  popSel('f-item-tipo',uniq(DB.itens.map(function(r){return gf(r,'Tipo','tipo');})),tp);
+  var data=DB.itens.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ra||gf(r,'Raridade','raridade')===ra)&&(!tp||gf(r,'Tipo','tipo')===tp);});
   var g=document.getElementById('grid-itens');
   document.getElementById('count-itens').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9768;',DB.itens.length?'Nenhum resultado':'Nenhum item carregado');return;}
+  if(!data.length){g.innerHTML=emptyMsg('✤',DB.itens.length?'Nenhum resultado':'Nenhum item carregado');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ri=gf(r,'Raridade','raridade'),dn=gf(r,'Dano','dano','Bonus','bonus'),vl=gf(r,'Valor','valor'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','desc');
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
+    var n=gf(r,'Nome','nome')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),ri=gf(r,'Raridade','raridade'),dn=gf(r,'Dano','dano','Bonus','bonus'),vl=gf(r,'Valor','valor'),d=gf(r,'Descricao','descricao','Descrição','desc');
+    var cc=rarCardClass(ri);
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
   }).join('');
 }
 
-// ── RENDER GRIMORIO ──
-function renderGrimorio() {
-  var s  = document.getElementById('f-mag-search').value.toLowerCase();
-  var es = document.getElementById('f-mag-escola').value;
-  var ci = document.getElementById('f-mag-circulo').value;
-  var cl = document.getElementById('f-mag-classe').value;
-  var tp = document.getElementById('f-mag-tipo').value;
-
-  popSel('f-mag-escola',  uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola'); })), es);
-  popSel('f-mag-circulo', uniq(DB.grimorio.map(function(r){ return gf(r,'Grau','grau'); })), ci);
-  popSel('f-mag-classe',  uniq(DB.grimorio.map(function(r){ return gf(r,'Origem','origem'); })), cl);
-  popSel('f-mag-tipo',    uniq(DB.grimorio.map(function(r){ return gf(r,'Tipo','tipo'); })), tp);
-
-  var data = DB.grimorio.filter(function(r) {
-    return (!s  || fstr(r).indexOf(s) > -1)
-        && (!es || gf(r,'Escola','escola') === es)
-        && (!ci || gf(r,'Grau','grau') === ci)
-        && (!cl || gf(r,'Origem','origem') === cl)
-        && (!tp || gf(r,'Tipo','tipo') === tp);
-  });
-
-  var g = document.getElementById('grid-grimorio');
-  document.getElementById('count-grimorio').textContent = data.length + ' resultado' + (data.length === 1 ? '' : 's');
-
-  if (!data.length) {
-    g.innerHTML = emptyMsg('&#10041;', DB.grimorio.length ? 'Nenhum resultado' : 'Nenhuma magia carregada');
-    return;
-  }
-
-  g.innerHTML = data.map(function(r) {
-    var nome   = gf(r,'Feitiço','Feitico','feitico','Nome','nome') || '(sem nome)';
-    var escola = gf(r,'Escola','escola');
-    var grau   = gf(r,'Grau','grau');
-    var origem = gf(r,'Origem','origem');
-    var tipo   = gf(r,'Tipo','tipo');
-    var exec   = gf(r,'Execução','Execucao','execucao','Execução:');
-    var alc    = gf(r,'Alcance','Alcance:','alcance');
-    var dur    = gf(r,'Duração','Duracao','duracao');
-    var res    = gf(r,'Resistência','Resistencia','resistencia','Resistência:');
-    var desc   = gf(r,'Descrição','Descricao','descricao','desc');
-
-    var colorMap = {
-      'abjuracao':'tag-class','abjuração':'tag-class',
-      'evocacao':'tag-danger','evocação':'tag-danger',
-      'necromancia':'tag-blood','transmutacao':'tag-gold','transmutação':'tag-gold',
-      'encantamento':'tag-rare','ilusao':'tag-rare','ilusão':'tag-rare',
-      'convocacao':'tag-green','convocação':'tag-green',
-      'adivinhacao':'tag-gray','advinhação':'tag-gray'
-    };
-    var escolaTag = colorMap[(escola||'').toLowerCase()] || 'tag-gray';
-
-    var idx=_storeModal(r);return '<div class="card" onclick="openModalIdx('+idx+')" >'
-      + '<div class="card-type">' + (escola || 'magia') + (tipo ? ' — ' + tipo : '') + '</div>'
-      + '<div class="card-name">' + nome + '</div>'
-      + (desc ? '<div class="card-desc">' + desc + '</div>' : '')
-      + '<div class="card-tags">'
-      + (grau   ? tag(grau,   'tag-gold')   : '')
-      + (origem ? tag(origem, 'tag-class')  : '')
-      + tag(escola, escolaTag)
-      + (exec   ? tag(exec,   'tag-gray')   : '')
-      + (alc    ? tag(alc,    'tag-gray')   : '')
-      + (dur    ? tag(dur,    'tag-gray')   : '')
-      + (res && res.toLowerCase() !== 'nenhuma' ? tag('Res: ' + res.substring(0,25), 'tag-danger') : '')
-      + '</div></div>';
+// ── RENDER GRIMÓRIO ──
+function renderGrimorio(){
+  var s=document.getElementById('f-mag-search').value.toLowerCase(),es=document.getElementById('f-mag-escola').value,ci=document.getElementById('f-mag-circulo').value,cl=document.getElementById('f-mag-classe').value,tp=document.getElementById('f-mag-tipo').value;
+  popSel('f-mag-escola',uniq(DB.grimorio.map(function(r){return gf(r,'Escola','escola');})),es);
+  popSel('f-mag-circulo',uniq(DB.grimorio.map(function(r){return gf(r,'Grau','grau');})),ci);
+  popSel('f-mag-classe',uniq(DB.grimorio.map(function(r){return gf(r,'Origem','origem');})),cl);
+  popSel('f-mag-tipo',uniq(DB.grimorio.map(function(r){return gf(r,'Tipo','tipo');})),tp);
+  var data=DB.grimorio.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!es||gf(r,'Escola','escola')===es)&&(!ci||gf(r,'Grau','grau')===ci)&&(!cl||gf(r,'Origem','origem')===cl)&&(!tp||gf(r,'Tipo','tipo')===tp);});
+  var g=document.getElementById('grid-grimorio');
+  document.getElementById('count-grimorio').textContent=data.length+' resultado'+(data.length===1?'':'s');
+  if(!data.length){g.innerHTML=emptyMsg('✦',DB.grimorio.length?'Nenhum resultado':'Nenhuma magia carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var nome=gf(r,'Feitiço','Feitico','feitico','Nome','nome')||'(sem nome)',escola=gf(r,'Escola','escola'),grau=gf(r,'Grau','grau'),origem=gf(r,'Origem','origem'),tipo=gf(r,'Tipo','tipo'),exec=gf(r,'Execução','Execucao','execucao'),alc=gf(r,'Alcance','alcance'),dur=gf(r,'Duração','Duracao','duracao'),res=gf(r,'Resistência','Resistencia','resistencia'),desc=gf(r,'Descrição','Descricao','descricao','desc');
+    var cc=escolaCardClass(escola);
+    var idx=_storeModal(r);
+    return '<div class="card '+cc+'" onclick="openModalIdx('+idx+')"><div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div><div class="card-name">'+nome+'</div>'+(desc?'<div class="card-desc">'+desc+'</div>':'')+'<div class="card-tags">'+(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'')+'</div></div>';
   }).join('');
 }
-
 
 // ── RENDER DEUSES ──
-function renderDeuses() {
-  var s=document.getElementById('f-deus-search').value.toLowerCase(), al=document.getElementById('f-deus-align').value, do2=document.getElementById('f-deus-dominio').value;
-  popSel('f-deus-align', uniq(DB.deuses.map(function(r){return gf(r,'Alinhamento','alinhamento');})), al);
-  popSel('f-deus-dominio', uniq(DB.deuses.map(function(r){return gf(r,'Dominio','dominio','Dom\u00ednio');})), do2);
-  var data=DB.deuses.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!al||gf(r,'Alinhamento','alinhamento')===al)&&(!do2||gf(r,'Dominio','dominio','Dom\u00ednio')===do2); });
+function renderDeuses(){
+  var s=document.getElementById('f-deus-search').value.toLowerCase(),al=document.getElementById('f-deus-align').value,do2=document.getElementById('f-deus-dominio').value;
+  popSel('f-deus-align',uniq(DB.deuses.map(function(r){return gf(r,'Polaridade','polaridade','Alinhamento','alinhamento');})),al);
+  popSel('f-deus-dominio',uniq(DB.deuses.map(function(r){return gf(r,'Arsenal Divino','arsenal divino','Dominio','dominio');})),do2);
+  var data=DB.deuses.filter(function(r){
+    var pol=gf(r,'Polaridade','polaridade','Alinhamento','alinhamento'),ars=gf(r,'Arsenal Divino','arsenal divino','Dominio','dominio');
+    return(!s||fstr(r).indexOf(s)>-1)&&(!al||pol===al)&&(!do2||ars===do2);
+  });
   var g=document.getElementById('grid-deuses');
-  document.getElementById('count-deuses').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9788;',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
+  document.getElementById('count-deuses').textContent=data.length+' resultado'+(data.length===1?'':'s');
+  if(!data.length){g.innerHTML=emptyMsg('☀',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',do3=gf(r,'Dominio','dominio','Dom\u00ednio'),al2=gf(r,'Alinhamento','alinhamento'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(do3,'tag-gold')+tag(al2,'tag-class')+'</div></div>';
+    var n=gf(r,'Nome do Deus','nome do deus','Nome','nome')||'(sem nome)',pol=gf(r,'Polaridade','polaridade','Alinhamento','alinhamento'),ars=gf(r,'Arsenal Divino','arsenal divino'),d=gf(r,'Descrição','Descricao','descricao','Lore','lore','desc');
+    var cc=deusCardClass(pol);
+    var polTag=pol==='Positiva'?'tag-positiva':pol==='Negativa'?'tag-negativa':'tag-neutra';
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getDeusImg(n),'☀')+'<div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(pol,polTag)+tag(ars,'tag-gold')+'</div><button class="btn-ver-dons" onclick=\'event.stopPropagation();verGracasDeus("'+n.replace(/"/g,'&quot;')+'")\'>☀ Ver Graças desta Divindade</button></div>';
   }).join('');
+}
+
+function verGracasDeus(nomeDeus){
+  document.getElementById('deuses-lista').style.display='none';
+  document.getElementById('deuses-detalhe').classList.add('active');
+  var deusRow=null;
+  for(var i=0;i<DB.deuses.length;i++){if(gf(DB.deuses[i],'Nome do Deus','nome do deus','Nome','nome')===nomeDeus){deusRow=DB.deuses[i];break;}}
+  if(!deusRow){document.getElementById('deus-detalhe-body').innerHTML='<h2 style="font-family:Cinzel,serif;font-size:1.8rem;color:var(--gold-light);">'+nomeDeus+'</h2>';return;}
+  var pol=gf(deusRow,'Polaridade','polaridade','Alinhamento','alinhamento'),ars=gf(deusRow,'Arsenal Divino','arsenal divino'),fis=gf(deusRow,'Fiéis','Fieis','fieis'),dog=gf(deusRow,'Dogmas','dogmas'),obc=gf(deusRow,'Obrigações e Culto','Obrigacoes e Culto','obrigacoes e culto'),desc=gf(deusRow,'Descrição','Descricao','descricao','desc');
+  var gracas=[];
+  for(var gi=1;gi<=4;gi++){
+    var gt=gf(deusRow,'Graça '+gi+' - Título','Graca '+gi+' - Titulo'),gd=gf(deusRow,'Graça '+gi+' - Descrição','Graca '+gi+' - Descricao');
+    if(gt||gd)gracas.push({titulo:gt,desc:gd});
+  }
+  var polColor=pol==='Positiva'?'var(--cat-deus-positiva)':pol==='Negativa'?'var(--cat-deus-negativa)':'var(--cat-deus-neutra)';
+  var polIcon=pol==='Positiva'?'▲':pol==='Negativa'?'▼':'◆';
+  var imgU=getDeusImg(nomeDeus);
+  var html='<div style="margin-bottom:0.5rem;">'+(imgU?'<div style="width:160px;height:160px;border-radius:6px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);float:right;margin:0 0 1rem 1.5rem;"><img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">divindade</div><h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeDeus+'</h2></div>';
+  if(desc)html+='<p class="classe-ind">'+desc+'</p>';
+  html+='<div class="classe-header">';
+  if(pol)html+='<div class="classe-field"><label>Polaridade</label><p class="destaque" style="color:'+polColor+';">'+polIcon+' '+pol+'</p></div>';
+  if(ars)html+='<div class="classe-field"><label>Arsenal Divino</label><p>'+ars+'</p></div>';
+  if(fis)html+='<div class="classe-field classe-header-full"><label>Fiéis</label><p>'+fis+'</p></div>';
+  if(dog)html+='<div class="classe-field classe-header-full"><label>Dogmas</label><p>'+dog+'</p></div>';
+  if(obc)html+='<div class="classe-field classe-header-full"><label>Obrigações e Culto</label><p>'+obc+'</p></div>';
+  html+='</div>';
+  if(gracas.length){
+    html+='<div class="dons-title">☀ Graças de '+nomeDeus+' <span style="font-size:0.7rem;opacity:0.4;">('+gracas.length+' graça'+(gracas.length>1?'s':'')+')</span></div>';
+    html+='<div class="cards-grid">';
+    for(var gi=0;gi<gracas.length;gi++){
+      var g=gracas[gi];
+      html+='<div class="don-item"><div class="don-header"><span class="don-nome">'+(g.titulo||'Graça '+(gi+1))+'</span><span class="don-grau">Graça '+(gi+1)+'</span></div>'+(g.desc?'<div class="don-desc">'+g.desc+'</div>':'')+'</div>';
+    }
+    html+='</div>';
+  }else{html+='<div class="state-msg"><span class="state-sym">☀</span><h3>Nenhuma graça encontrada</h3></div>';}
+  document.getElementById('deus-detalhe-body').innerHTML=html;
+  document.getElementById('deuses-detalhe').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function voltarDeuses(){
+  document.getElementById('deuses-lista').style.display='';
+  document.getElementById('deuses-detalhe').classList.remove('active');
 }
 
 // ── RENDER VELKARION ──
-function renderVelkarion() {
-  var s=document.getElementById('f-vel-search').value.toLowerCase(), tp=document.getElementById('f-vel-tipo').value, cl=document.getElementById('f-vel-clima').value;
-  popSel('f-vel-clima', uniq(DB.velkarion.map(function(r){return gf(r,'Clima','clima');})), cl);
-  var data=DB.velkarion.filter(function(r){ return (!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!cl||gf(r,'Clima','clima')===cl); });
+function renderVelkarion(){
+  var s=document.getElementById('f-vel-search').value.toLowerCase(),tp=document.getElementById('f-vel-tipo').value,cl=document.getElementById('f-vel-clima').value;
+  popSel('f-vel-clima',uniq(DB.velkarion.map(function(r){return gf(r,'Clima','clima');})),cl);
+  var data=DB.velkarion.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!cl||gf(r,'Clima','clima')===cl);});
   var g=document.getElementById('grid-velkarion');
   document.getElementById('count-velkarion').textContent=data.length+' resultados';
-  if(!data.length){g.innerHTML=emptyMsg('&#9784;',DB.velkarion.length?'Nenhum resultado':'Nenhuma regiao carregada');return;}
+  if(!data.length){g.innerHTML=emptyMsg('⚐',DB.velkarion.length?'Nenhum resultado':'Nenhuma região carregada');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome','Regiao','regiao')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),cl2=gf(r,'Clima','clima'),d=gf(r,'Descricao','descricao','Descri\u00e7\u00e3o','Lore','lore','desc');
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')" ><div class="card-type">'+(tp2||'regiao')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-class')+'</div></div>';
+    var n=gf(r,'Nome','nome','Regiao','regiao')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),cl2=gf(r,'Clima','clima'),d=gf(r,'Descricao','descricao','Descrição','Lore','lore','desc');
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(tp2||'região')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-conjurador')+'</div></div>';
   }).join('');
 }
 
 // ── RENDER ESTIGMAS ──
-function renderEstigmas() {
-  var s  = document.getElementById('f-est-search').value.toLowerCase();
-  var ca = document.getElementById('f-est-cat').value;
-  var at = document.getElementById('f-est-atrib').value;
-
-  popSel('f-est-cat',   uniq(DB.estigmas.map(function(r){ return gf(r,'Origem','origem','Categoria','categoria'); })), ca);
-  popSel('f-est-atrib', uniq(DB.estigmas.map(function(r){ return gf(r,'Vantagem (Nome)','Vantagem','vantagem'); })), at);
-
-  var data = DB.estigmas.filter(function(r){
-    return (!s  || fstr(r).indexOf(s) > -1)
-        && (!ca || gf(r,'Origem','origem','Categoria','categoria') === ca)
-        && (!at || gf(r,'Vantagem (Nome)','Vantagem','vantagem') === at);
-  });
-
-  var g = document.getElementById('grid-estigmas');
-  document.getElementById('count-estigmas').textContent = data.length + ' resultados';
-  if (!data.length) { g.innerHTML = emptyMsg('&#10070;', DB.estigmas.length ? 'Nenhum resultado' : 'Nenhum estigma carregado'); return; }
-
-  g.innerHTML = data.map(function(r){
-    var n   = gf(r,'Nome do Estigma','nome do estigma','Nome','nome') || '(sem nome)';
-    var ori = gf(r,'Origem','origem');
-    var d   = gf(r,'Descri\u00e7\u00e3o','Descricao','descricao','desc');
-    var per = gf(r,'Per\u00edcias','Pericias','pericias');
-    var van = gf(r,'Vantagem (Nome)','Vantagem','vantagem');
-    var idi = gf(r,'Idioma','idioma');
-    var ite = gf(r,'Itens','itens');
-    var idx = _storeModal(r);
-    return '<div class="card" onclick="openModalIdx('+idx+')">'
-      + '<div class="card-type">estigma · ' + (ori||'') + '</div>'
-      + '<div class="card-name">' + n + '</div>'
-      + (d ? '<div class="card-desc">' + d + '</div>' : '')
-      + '<div class="card-tags">'
-      + (ori ? tag(ori,'tag-gray') : '')
-      + (per ? tag(per.substring(0,25),'tag-class') : '')
-      + (van ? tag(van.substring(0,25),'tag-gold') : '')
-      + (idi ? tag(idi,'tag-rare') : '')
-      + (ite ? tag(ite.substring(0,20),'tag-green') : '')
-      + '</div></div>';
+function renderEstigmas(){
+  var s=document.getElementById('f-est-search').value.toLowerCase(),ca=document.getElementById('f-est-cat').value,at=document.getElementById('f-est-atrib').value;
+  popSel('f-est-cat',uniq(DB.estigmas.map(function(r){return gf(r,'Origem','origem','Categoria','categoria');})),ca);
+  popSel('f-est-atrib',uniq(DB.estigmas.map(function(r){return gf(r,'Vantagem (Nome)','Vantagem','vantagem');})),at);
+  var data=DB.estigmas.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Origem','origem','Categoria','categoria')===ca)&&(!at||gf(r,'Vantagem (Nome)','Vantagem','vantagem')===at);});
+  var g=document.getElementById('grid-estigmas');
+  document.getElementById('count-estigmas').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('✸',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)',ori=gf(r,'Origem','origem'),d=gf(r,'Descrição','Descricao','descricao','desc'),per=gf(r,'Perícias','Pericias','pericias'),van=gf(r,'Vantagem (Nome)','Vantagem','vantagem'),idi=gf(r,'Idioma','idioma'),ite=gf(r,'Itens','itens');
+    var idx=_storeModal(r);
+    return '<div class="card card-especialista" onclick="openModalIdx('+idx+')"><div class="card-type">estigma · '+(ori||'')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'')+'</div></div>';
   }).join('');
 }
 
 // ── CLEAR FILTERS ──
-function clearFilters(sec) {
+function clearFilters(sec){
   var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-tipo','f-vd-cat'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
-  var ids=m[sec]||[]; for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
+  var ids=m[sec]||[];for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
-  if(fn[sec]) fn[sec]();
-}
-
-// ── MODAL SAFE STORE ──
-var _modalStore = [];
-function _storeModal(obj) {
-  _modalStore.push(obj);
-  return _modalStore.length - 1;
-}
-function openModalIdx(idx) {
-  openModal(_modalStore[idx]);
+  if(fn[sec])fn[sec]();
 }
 
 // ── MODAL ──
-function openModal(rowOrStr) {
-  var row = (typeof rowOrStr === 'string') ? JSON.parse(rowOrStr) : rowOrStr;
+var _modalStore=[];
+function _storeModal(obj){_modalStore.push(obj);return _modalStore.length-1;}
+function openModalIdx(idx){openModal(_modalStore[idx]);}
 
-  // Detect name: try Feitico/Feitiço first, then generic fields
-  var nome = gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma') || '(sem nome)';
-
-  // Detect type/escola for header
-  var escola = gf(row,'Escola','escola');
-  var tipo   = gf(row,'Tipo','tipo');
-  var header = [escola, tipo].filter(Boolean).join(' — ');
-
-  // Detect description
-  var descKeys = ['descrição','descricao','desc','lore','resumo','efeito','objetivo'];
-  var desc = '';
-  var rks = Object.keys(row);
-  for(var i=0;i<rks.length;i++){
-    if(descKeys.indexOf(deaccent(rks[i]))>-1 && row[rks[i]]){ desc=row[rks[i]]; break; }
+function openModal(rowOrStr){
+  var row=(typeof rowOrStr==='string')?JSON.parse(rowOrStr):rowOrStr;
+  var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
+  var escola=gf(row,'Escola','escola'),tipo=gf(row,'Tipo','tipo');
+  var header=[escola,tipo].filter(Boolean).join(' — ');
+  var descKeys=['descrição','descricao','desc','lore','resumo','efeito','objetivo'];
+  var desc='',rks=Object.keys(row);
+  for(var i=0;i<rks.length;i++){if(descKeys.indexOf(deaccent(rks[i]))>-1&&row[rks[i]]){desc=row[rks[i]];break;}}
+  var skipKeys=['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo','graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao','graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
+  var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
+  var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
+  var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
+  var nomeClasseImg=isClasse?(gf(row,'Classe','classe')||gf(row,'_nome_display')):null;
+  var nomeDeusImg=isDeus?(gf(row,'Nome do Deus','nome do deus')||gf(row,'_nome_display')):null;
+  var html='';
+  if(nomeClasseImg){
+    html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getClassImg(nomeClasseImg),'⚔',100)+'<div style="flex:1;">'+(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2></div></div>';
+  }else if(nomeDeusImg){
+    html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getDeusImg(nomeDeusImg),'☀',100)+'<div style="flex:1;"><div class="modal-type">divindade</div><h2 class="modal-name">'+nome+'</h2></div></div>';
+  }else{
+    html=(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>';
   }
-
-  // Fields to show in grid (skip name, type, escola, desc)
-  var skipKeys = ['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo'];
-  var fields = rks.filter(function(k){
-    return skipKeys.indexOf(deaccent(k)) === -1 && row[k] && row[k].trim();
-  });
-
-  // Check if this is a class row (has 'Classe' field or '_nome_display' from class card)
-  var isClasse = !!(gf(row,'Classe','classe') && !gf(row,'Nome do Dom','nome do dom') && !gf(row,'Feitiço','Feitico','feitico'));
-  var nomeClasseImg = isClasse ? (gf(row,'Classe','classe') || gf(row,'_nome_display')) : null;
-
-  var html = '';
-  if (nomeClasseImg) {
-    html += '<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'
-      + classImgModal(nomeClasseImg)
-      + '<div style="flex:1;">'
-      + (header ? '<div class="modal-type">'+header+'</div>' : '')
-      + '<h2 class="modal-name">'+nome+'</h2>'
-      + '</div></div>';
-  } else {
-    html = (header ? '<div class="modal-type">'+header+'</div>' : '')
-      + '<h2 class="modal-name">'+nome+'</h2>';
-  }
-  html += (desc ? '<p class="modal-desc">'+desc+'</p>' : '');
-
-  if(fields.length){
-    html += '<hr class="modal-divider"><div class="modal-fields">'
-      + fields.map(function(k){
-          return '<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';
-        }).join('')
-      + '</div>';
-  }
-
-  document.getElementById('modalBody').innerHTML = html;
+  html+=(desc?'<p class="modal-desc">'+desc+'</p>':'');
+  if(fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
+  document.getElementById('modalBody').innerHTML=html;
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
 
 // ── CONTADOR ──
-var cntBase = {for:0,des:0,con:0,int:0,sab:0,car:0};
-var CNT_ATTRS = [{id:'for',nome:'FOR',full:'Forca'},{id:'des',nome:'DES',full:'Destreza'},{id:'con',nome:'CON',full:'Constituicao'},{id:'int',nome:'INT',full:'Inteligencia'},{id:'sab',nome:'SAB',full:'Sabedoria'},{id:'car',nome:'CAR',full:'Carisma'}];
-
-function cntGetLevel() { return Math.min(50,Math.max(1,parseInt(document.getElementById('cnt-nivel').value)||1)); }
-function cntGetMax(n) { if(n<=9)return 5; if(n<=19)return 6; if(n<=29)return 7; if(n<=39)return 8; if(n<=49)return 9; return 10; }
-function cntGetRacial() { return {for:parseInt(document.getElementById('rb-for').value)||0,des:parseInt(document.getElementById('rb-des').value)||0,con:parseInt(document.getElementById('rb-con').value)||0,int:parseInt(document.getElementById('rb-int').value)||0,sab:parseInt(document.getElementById('rb-sab').value)||0,car:parseInt(document.getElementById('rb-car').value)||0}; }
-function cntCusto(v) { if(v<=0)return 0; var c=0; for(var i=1;i<=v;i++){if(i<=2)c+=1;else if(i===3)c+=2;else c+=3;} return c; }
-function cntTotalGasto() { var t=0; for(var i=0;i<CNT_ATTRS.length;i++){var v=cntBase[CNT_ATTRS[i].id];if(v>0)t+=cntCusto(v);else if(v<0)t+=v;} return t; }
-
-function cntUpdate() {
-  var nivel=cntGetLevel(), maxA=cntGetMax(nivel), racial=cntGetRacial(), gasto=cntTotalGasto(), rest=10-gasto;
-  var pEl=document.getElementById('cnt-pts'); if(!pEl)return;
-  pEl.textContent=rest; pEl.style.color=rest<0?'var(--blood)':'var(--gold-light)';
+var cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
+var CNT_ATTRS=[{id:'for',nome:'FOR',full:'Força'},{id:'des',nome:'DES',full:'Destreza'},{id:'con',nome:'CON',full:'Constituição'},{id:'int',nome:'INT',full:'Inteligência'},{id:'sab',nome:'SAB',full:'Sabedoria'},{id:'car',nome:'CAR',full:'Carisma'}];
+function cntGetLevel(){return Math.min(50,Math.max(1,parseInt(document.getElementById('cnt-nivel').value)||1));}
+function cntGetMax(n){if(n<=9)return 5;if(n<=19)return 6;if(n<=29)return 7;if(n<=39)return 8;if(n<=49)return 9;return 10;}
+function cntGetRacial(){return{for:parseInt(document.getElementById('rb-for').value)||0,des:parseInt(document.getElementById('rb-des').value)||0,con:parseInt(document.getElementById('rb-con').value)||0,int:parseInt(document.getElementById('rb-int').value)||0,sab:parseInt(document.getElementById('rb-sab').value)||0,car:parseInt(document.getElementById('rb-car').value)||0};}
+function cntCusto(v){if(v<=0)return 0;var c=0;for(var i=1;i<=v;i++){if(i<=2)c+=1;else if(i===3)c+=2;else c+=3;}return c;}
+function cntTotalGasto(){var t=0;for(var i=0;i<CNT_ATTRS.length;i++){var v=cntBase[CNT_ATTRS[i].id];if(v>0)t+=cntCusto(v);else if(v<0)t+=v;}return t;}
+function cntUpdate(){
+  var nivel=cntGetLevel(),maxA=cntGetMax(nivel),racial=cntGetRacial(),gasto=cntTotalGasto(),rest=10-gasto;
+  var pEl=document.getElementById('cnt-pts');if(!pEl)return;
+  pEl.textContent=rest;pEl.style.color=rest<0?'var(--blood)':'var(--gold-light)';
   document.getElementById('cnt-warn').style.display=rest<0?'inline':'none';
-  var ranges=[[1,9],[10,19],[20,29],[30,39],[40,49],[50,50]], r=[1,9];
+  var ranges=[[1,9],[10,19],[20,29],[30,39],[40,49],[50,50]],r=[1,9];
   for(var ri=0;ri<ranges.length;ri++){if(nivel>=ranges[ri][0]&&nivel<=ranges[ri][1]){r=ranges[ri];break;}}
-  document.getElementById('cnt-escala').textContent='Nivel '+(r[0]===r[1]?r[0]:r[0]+'-'+r[1])+' — max '+maxA+' por atributo';
-  var tbody=document.getElementById('cnt-tbody'); if(!tbody)return;
+  document.getElementById('cnt-escala').textContent='Nível '+(r[0]===r[1]?r[0]:r[0]+'-'+r[1])+' — max '+maxA+' por atributo';
+  var tbody=document.getElementById('cnt-tbody');if(!tbody)return;
   var rows='';
   for(var ai=0;ai<CNT_ATTRS.length;ai++){
-    var a=CNT_ATTRS[ai], bv=cntBase[a.id], rb=racial[a.id], tot=bv+rb;
-    var custo=bv>0?cntCusto(bv):(bv<0?bv:0), custoTxt=bv===0?'—':String(custo);
-    var atMax=tot>=maxA, canUp=!atMax&&bv<maxA&&(rest>0||bv<0), canDown=bv>-1;
-    var totC=atMax?'var(--ember)':'var(--gold-light)', baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--text)');
-    var rbC=rb>0?'#5a9a4a':(rb<0?'var(--blood)':'var(--text-faint)'), rbT=rb>0?'+'+rb:String(rb);
+    var a=CNT_ATTRS[ai],bv=cntBase[a.id],rb=racial[a.id],tot=bv+rb;
+    var custo=bv>0?cntCusto(bv):(bv<0?bv:0),custoTxt=bv===0?'—':String(custo);
+    var atMax=tot>=maxA,canUp=!atMax&&bv<maxA&&(rest>0||bv<0),canDown=bv>-1;
+    var totC=atMax?'var(--ember)':'var(--gold-light)',baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--text)');
+    var rbC=rb>0?'var(--green)':(rb<0?'var(--blood)':'var(--text-faint)'),rbT=rb>0?'+'+rb:String(rb);
     rows+='<tr>';
-    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--gold-light);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></td>';
-    rows+='<td><div style="display:inline-flex;align-items:center;">';
-    rows+='<button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>&#8722;</button>';
-    rows+='<span class="attr-val" style="color:'+baseC+';">'+bv+'</span>';
-    rows+='<button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button>';
-    rows+='</div></td>';
+    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--violet-bright);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1rem;font-weight:600;color:'+rbC+';">'+rbT+'</td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
-    rows+='<td style="font-family:Cinzel,serif;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
+    rows+='<td style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
     rows+='</tr>';
   }
   tbody.innerHTML=rows;
 }
-
-function cntChange(atrib, delta) {
-  var nivel=cntGetLevel(), maxA=cntGetMax(nivel), racial=cntGetRacial();
-  var nb=cntBase[atrib]+delta, nt=nb+racial[atrib];
+function cntChange(atrib,delta){
+  var nivel=cntGetLevel(),maxA=cntGetMax(nivel),racial=cntGetRacial();
+  var nb=cntBase[atrib]+delta,nt=nb+racial[atrib];
   if(nb<-1||nt>maxA)return;
-  var g=cntTotalGasto(), ca=cntBase[atrib]>=0?cntCusto(cntBase[atrib]):cntBase[atrib], cn=nb>=0?cntCusto(nb):nb;
+  var g=cntTotalGasto(),ca=cntBase[atrib]>=0?cntCusto(cntBase[atrib]):cntBase[atrib],cn=nb>=0?cntCusto(nb):nb;
   if(delta>0&&(10-g-(cn-ca))<0)return;
-  cntBase[atrib]=nb; cntUpdate();
+  cntBase[atrib]=nb;cntUpdate();
 }
-
-function cntReset() {
+function cntReset(){
   cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
-  var cs=['for','des','con','int','sab','car'];
-  for(var i=0;i<cs.length;i++){var el=document.getElementById('rb-'+cs[i]);if(el)el.value=0;}
+  ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=0;});
   document.getElementById('cnt-nivel').value=1;
   document.getElementById('cnt-raca').value='';
   cntUpdate();
 }
-
-function cntApplyRace() {
-  var sel=document.getElementById('cnt-raca'); if(!sel||!sel.value||sel.value==='custom')return;
+function cntApplyRace(){
+  var sel=document.getElementById('cnt-raca');if(!sel||!sel.value||sel.value==='custom')return;
   var raca=null;
   for(var i=0;i<DB.racas.length;i++){if((DB.racas[i].Nome||DB.racas[i].nome||'')===sel.value){raca=DB.racas[i];break;}}
   if(!raca)return;
-  var cs=['for','des','con','int','sab','car'];
-  for(var ci=0;ci<cs.length;ci++){
-    var c=cs[ci], el=document.getElementById('rb-'+c), val=0;
-    var ks=[c.toUpperCase(),c,c.charAt(0).toUpperCase()+c.slice(1)];
-    for(var ki=0;ki<ks.length;ki++){if(raca[ks[ki]]!==undefined){val=parseInt(raca[ks[ki]])||0;break;}}
+  ['for','des','con','int','sab','car'].forEach(function(c){
+    var el=document.getElementById('rb-'+c),val=0;
+    [c.toUpperCase(),c,c.charAt(0).toUpperCase()+c.slice(1)].forEach(function(k){if(raca[k]!==undefined)val=parseInt(raca[k])||0;});
     if(el)el.value=val;
-  }
+  });
   cntUpdate();
 }
-
-function cntPopulateRaces() {
-  var sel=document.getElementById('cnt-raca'); if(!sel)return;
+function cntPopulateRaces(){
+  var sel=document.getElementById('cnt-raca');if(!sel)return;
   sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
-  for(var i=0;i<DB.racas.length;i++){
-    var n=DB.racas[i].Nome||DB.racas[i].nome||''; if(!n)continue;
-    var o=document.createElement('option'); o.value=n; o.textContent=n; sel.appendChild(o);
-  }
+  DB.racas.forEach(function(r){var n=r.Nome||r.nome||'';if(!n)return;var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);});
 }
-
-document.getElementById('cnt-nivel').addEventListener('input', cntUpdate);
-document.getElementById('cnt-raca').addEventListener('change', cntApplyRace);
-var rbIds=['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'];
-for(var ri=0;ri<rbIds.length;ri++){ document.getElementById(rbIds[ri]).addEventListener('input',cntUpdate); }
+document.getElementById('cnt-nivel').addEventListener('input',cntUpdate);
+document.getElementById('cnt-raca').addEventListener('change',cntApplyRace);
+['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'].forEach(function(id){document.getElementById(id).addEventListener('input',cntUpdate);});
 
 // ── AUTO-REFRESH ──
-var autoRefreshTimer = null;
-var AUTO_INTERVAL = 30000;
-
-function startAutoRefresh(forceStart) {
+var autoRefreshTimer=null,AUTO_INTERVAL=30000;
+function startAutoRefresh(forceStart){
   stopAutoRefresh();
-  var url = document.getElementById('sheetUrl').value.trim();
-  // Start if there is a manual URL OR if forceStart (fixed URLs exist)
-  var hasFixed = Object.keys(SHEET_URLS).length > 0;
-  if (!url && !forceStart && !hasFixed) return;
-  autoRefreshTimer = setInterval(function() {
-    var currentUrl = document.getElementById('sheetUrl').value.trim();
-    silentLoad(currentUrl);
-  }, AUTO_INTERVAL);
+  var url=document.getElementById('sheetUrl').value.trim();
+  var hasFixed=Object.keys(SHEET_URLS).length>0;
+  if(!url&&!forceStart&&!hasFixed)return;
+  autoRefreshTimer=setInterval(function(){silentLoad(document.getElementById('sheetUrl').value.trim());},AUTO_INTERVAL);
 }
-
-function stopAutoRefresh() {
-  if (autoRefreshTimer) { clearInterval(autoRefreshTimer); autoRefreshTimer = null; }
-}
-
-async function silentLoad(rawUrl) {
-  // Reload manual URL if set
-  if (rawUrl) {
-    var url = buildCSVUrl(rawUrl);
-    try {
-      var res = await fetch(url + '&t=' + Date.now());
-      if (!res.ok) return;
-      var text = await res.text();
-      var rows = parseCSV(text);
-      if (!rows.length) return;
-      var tab = document.getElementById('sheetTab').value.toLowerCase();
-      distributeData(rows, tab);
-    } catch(e) {}
+function stopAutoRefresh(){if(autoRefreshTimer){clearInterval(autoRefreshTimer);autoRefreshTimer=null;}}
+async function silentLoad(rawUrl){
+  if(rawUrl){
+    try{var res=await fetch(buildCSVUrl(rawUrl)+'&t='+Date.now());if(!res.ok)return;var text=await res.text();var rows=parseCSV(text);if(!rows.length)return;distributeData(rows,document.getElementById('sheetTab').value.toLowerCase());}catch(e){}
   }
-  // Always reload all fixed URLs
-  for (var key in SHEET_URLS) {
-    await autoLoadTab(key, SHEET_URLS[key]);
-  }
-  updateStats();
-  renderAll();
-  cntPopulateRaces();
-  var now = new Date();
-  var h = now.getHours().toString().padStart(2,'0');
-  var m = now.getMinutes().toString().padStart(2,'0');
-  var s = now.getSeconds().toString().padStart(2,'0');
-  document.getElementById('statusMsg').textContent = 'Atualizado automaticamente as ' + h + ':' + m + ':' + s;
-  document.getElementById('statusDot').className = 'status-dot ok';
+  for(var key in SHEET_URLS)await autoLoadTab(key,SHEET_URLS[key]);
+  updateStats();renderAll();cntPopulateRaces();
+  var now=new Date();
+  document.getElementById('statusMsg').textContent='Sync '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  document.getElementById('statusDot').className='status-dot ok';
 }
-
-// Inicia o auto-refresh quando uma URL é colada
-document.getElementById('sheetUrl').addEventListener('input', function() {
-  stopAutoRefresh();
-  if (this.value.trim()) startAutoRefresh();
-});
-
-// Reinicia após carga manual
-var _origLoadSheet = window.loadSheet;
-window.loadSheet = async function() {
-  await _origLoadSheet();
-  startAutoRefresh();
-};
-
-// Contador regressivo no status
-var countdownTimer = null;
-function startCountdown() {
-  if (countdownTimer) clearInterval(countdownTimer);
-  var secs = AUTO_INTERVAL / 1000;
-  countdownTimer = setInterval(function() {
-    secs--;
-    if (secs <= 0) secs = AUTO_INTERVAL / 1000;
-    var url = document.getElementById('sheetUrl').value.trim();
-    if (!url) { clearInterval(countdownTimer); return; }
-    // only show countdown if not showing "atualizado"
-    var msg = document.getElementById('statusMsg').textContent;
-    if (msg.indexOf('Atualizado') === -1) {
-      document.getElementById('statusMsg').textContent = 'Proximo sync em ' + secs + 's';
-    }
-  }, 1000);
-}
-
-// Override startAutoRefresh to also start countdown
-var _origStart = startAutoRefresh;
-startAutoRefresh = function() {
-  _origStart();
-  if (document.getElementById('sheetUrl').value.trim()) startCountdown();
-};
-
-// Auto-refresh always runs (for fixed URLs), even without manual URL
-window.addEventListener('load', function() {
-  var saved = localStorage.getItem('rpg_sheet_url');
-  if (saved && saved.trim()) {
-    document.getElementById('sheetUrl').value = saved;
-  }
-  // Always start refresh cycle for fixed sheet URLs
+document.getElementById('sheetUrl').addEventListener('input',function(){stopAutoRefresh();if(this.value.trim())startAutoRefresh();});
+var _origLoadSheet=window.loadSheet;
+window.loadSheet=async function(){await _origLoadSheet();startAutoRefresh();};
+window.addEventListener('load',function(){
+  var saved=localStorage.getItem('rpg_sheet_url');
+  if(saved&&saved.trim())document.getElementById('sheetUrl').value=saved;
   startAutoRefresh(true);
 });
 </script>
