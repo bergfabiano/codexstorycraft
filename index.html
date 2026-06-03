@@ -383,12 +383,13 @@ function showPage(name) {
 }
 
 // ── DATABASE ──
-var DB = { racas:[], classes:[], vantagens:[], itens:[], grimorio:[], deuses:[], velkarion:[], estigmas:[] };
+var DB = { racas:[], classes:[], dons:[], vantagens:[], itens:[], grimorio:[], deuses:[], velkarion:[], estigmas:[] };
 
 // URLs fixas por aba — já embutidas no app
 var SHEET_URLS = {
   grimorio:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
-  classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?output=csv",
+  classes:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
+  dons:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
   estigmas:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
   vantagensdesvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?output=csv"
 };
@@ -568,6 +569,7 @@ function distributeData(rows, tab) {
   if (tab === 'grimorio')            { DB.grimorio  = rows; return; }
   if (tab === 'racas')               { DB.racas     = rows; return; }
   if (tab === 'classes')             { DB.classes   = rows; return; }
+  if (tab === 'dons')                { DB.dons      = rows; return; }
   if (tab === 'vantagensdesvantagens' || tab === 'vantagens') { DB.vantagens = rows; return; }
   if (tab === 'itensloja' || tab === 'itens') { DB.itens = rows; return; }
   if (tab === 'deuses')              { DB.deuses    = rows; return; }
@@ -670,38 +672,31 @@ function renderRacas() {
 }
 
 // ── RENDER CLASSES ──
-// A planilha tem duas seções: linhas com "Atributo de Classe" = classes; linhas com "Nome do Dom" = dons
-function classesOnly() { return DB.classes.filter(function(r){ return !!gf(r,'Classe','classe') && !gf(r,'Nome do Dom','nome do dom','Grau','grau') && !!gf(r,'Atributo de Classe','atributo de classe','PV Inicial','pv inicial'); }); }
-function donsOnly()    { return DB.classes.filter(function(r){ return !!gf(r,'Nome do Dom','nome do dom'); }); }
-
 function renderClasses() {
   var s  = document.getElementById('f-class-search').value.toLowerCase();
-  var ca = document.getElementById('f-class-papel').value;   // agora é Categoria
-  var cl = document.getElementById('f-class-filtro').value;  // filtro por Classe
+  var ca = document.getElementById('f-class-papel').value;
+  var cl = document.getElementById('f-class-filtro').value;
 
-  var classes = classesOnly();
-  var dons    = donsOnly();
+  popSel('f-class-papel',  uniq(DB.classes.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
+  popSel('f-class-filtro', uniq(DB.dons.map(function(r){ return gf(r,'Classe','classe'); })), cl);
 
-  popSel('f-class-papel',  uniq(classes.map(function(r){ return gf(r,'Categoria','categoria'); })), ca);
-  popSel('f-class-filtro', uniq(dons.map(function(r){ return gf(r,'Classe','classe'); })), cl);
-
-  // Filtra classes
-  var dataC = classes.filter(function(r){
+  var dataC = DB.classes.filter(function(r){
     return (!s  || fstr(r).indexOf(s) > -1)
         && (!ca || gf(r,'Categoria','categoria') === ca);
   });
 
-  // Filtra dons
-  var dataD = dons.filter(function(r){
+  var dataD = DB.dons.filter(function(r){
     return (!s  || fstr(r).indexOf(s) > -1)
         && (!cl || gf(r,'Classe','classe') === cl);
   });
 
   var g = document.getElementById('grid-classes');
-  var total = dataC.length + dataD.length;
   document.getElementById('count-classes').textContent = dataC.length + ' classe(s) · ' + dataD.length + ' dom(ns)';
 
-  if (!total) { g.innerHTML = emptyMsg('&#9876;', DB.classes.length ? 'Nenhum resultado' : 'Nenhuma classe carregada'); return; }
+  if (!dataC.length && !dataD.length) {
+    g.innerHTML = emptyMsg('&#9876;', (DB.classes.length || DB.dons.length) ? 'Nenhum resultado' : 'Nenhuma classe carregada');
+    return;
+  }
 
   var html = '';
 
@@ -714,7 +709,9 @@ function renderClasses() {
       var pv  = gf(r,'PV Inicial','pv inicial');
       var pm  = gf(r,'PM Inicial','pm inicial');
       var ind = gf(r,'Individualidade','individualidade');
-      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(r))+')\' >'
+      // inject display name so modal shows correctly
+      var rCopy = {}; for(var k in r) rCopy[k]=r[k]; rCopy['_nome_display'] = n;
+      return '<div class="card" onclick=\'openModal('+JSON.stringify(JSON.stringify(rCopy))+')\' >'
         + '<div class="card-type">classe · ' + (cat||'') + '</div>'
         + '<div class="card-name">' + n + '</div>'
         + (ind ? '<div class="card-desc">' + ind + '</div>' : '')
@@ -953,7 +950,7 @@ function openModal(jsonStr) {
   var row = JSON.parse(jsonStr);
 
   // Detect name: try Feitico/Feitiço first, then generic fields
-  var nome = gf(row,'Feitiço','Feitico','feitico','Nome','nome','Regiao','regiao','Titulo','titulo') || '(sem nome)';
+  var nome = gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Classe','classe','Nome','nome','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma') || '(sem nome)';
 
   // Detect type/escola for header
   var escola = gf(row,'Escola','escola');
@@ -969,7 +966,7 @@ function openModal(jsonStr) {
   }
 
   // Fields to show in grid (skip name, type, escola, desc)
-  var skipKeys = ['feitiço','feitico','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo'];
+  var skipKeys = ['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome','tipo','escola','descrição','descricao','desc','lore','resumo','efeito','objetivo'];
   var fields = rks.filter(function(k){
     return skipKeys.indexOf(deaccent(k)) === -1 && row[k] && row[k].trim();
   });
