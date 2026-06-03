@@ -1048,13 +1048,13 @@ function parseCSV(text, noSkip){
     while(i<len){f.push(pf());if(i<len&&text[i]===','){i++;continue;}if(i<len&&(text[i]==='\n'||text[i]==='\r')){if(text[i]==='\r'&&i+1<len&&text[i+1]==='\n')i++;i++;break;}break;}
     return f;
   }
-  headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});
+  headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});
   // Skip title rows only when tab is unknown (manual URL input)
   if(!noSkip){
-    var knownCols=['nome','descricao','descricao completa','vantagem','desvantagem','classe','feitico','pre-requisitos','prerequisitos','custo','tipo','escola','grau','raridade','origem','atributo','regiao','categoria','linhagem','fardo'];
+    var knownCols=['nome','descricao','descricao completa','vantagem','desvantagem','classe','feitico','pre-requisitos','prerequisitos','requisito','requisitos','custo','tipo','escola','grau','raridade','origem','atributo','regiao','categoria','linhagem','fardo'];
     function looksLikeHeader(hdrs){return hdrs.some(function(h){var n=h.toLowerCase().replace(/[^a-z]/g,'');return knownCols.indexOf(h.toLowerCase().trim())>-1||knownCols.indexOf(n)>-1;});}
     var maxSkip=5;
-    while(!looksLikeHeader(headers)&&maxSkip-->0&&i<len){headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});}
+    while(!looksLikeHeader(headers)&&maxSkip-->0&&i<len){headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});}
   }
   while(i<len){
     if(text[i]==='\n'||text[i]==='\r'){i++;continue;}
@@ -1496,12 +1496,24 @@ function vdCol(r, colName){
   }
   return '';
 }
-function vdDesc(r){ return vdCol(r,'Descricao')||vdCol(r,'Descrição')||vdCol(r,'descricao'); }
+function vdDesc(r){ return vdCol(r,'Descricao')||vdCol(r,'Descrição')||vdCol(r,'descricao')||gf(r,'Descricao','Descrição','descricao','Efeito','efeito','Texto','texto'); }
 function vdCusto(r){ return vdCol(r,'Custo')||vdCol(r,'custo')||vdCol(r,'Pontos'); }
-function vdPrereq(r){ return vdCol(r,'Requisito')||vdCol(r,'requisito')||vdCol(r,'Pré-requisito')||vdCol(r,'Pre-requisito'); }
+function vdPrereq(r){ return vdCol(r,'Requisito')||vdCol(r,'requisito')||gf(r,'Requisito','requisito','Pré-requisito','Pre-requisito','Pré-Requisito'); }
 
 function vdNome(r){
-  return vdCol(r,'Nome')||vdCol(r,'nome')||vdCol(r,'Vantagem')||vdCol(r,'Desvantagem')||vdCol(r,'Maldição')||'(sem nome)';
+  // vdCol primeiro (nome exato), depois gf (flexível), depois primeira coluna não-vazia
+  var v=vdCol(r,'Nome')||vdCol(r,'nome');
+  if(v) return v;
+  v=gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao');
+  if(v) return v;
+  // Última opção: primeira coluna não-vazia que não seja cabeçalho
+  var keys=Object.keys(r);
+  for(var i=0;i<keys.length;i++){
+    var val=(r[keys[i]]||'').trim();
+    var key=(keys[i]||'').replace(/[﻿​ ]/g,'').trim().toLowerCase();
+    if(val&&key!=='requisito'&&key!=='descricao'&&key!=='custo') return val;
+  }
+  return '(sem nome)';
 }
 
 function renderVantagens(){
