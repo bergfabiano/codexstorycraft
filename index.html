@@ -1323,7 +1323,6 @@ function abrirDetalhesRaca(idx){
   html+='<div style="flex:1;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
   html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.5rem;">'+n+'</h2>';
-  if(lin) html+='<span style="display:inline-block;font-family:Raleway,sans-serif;font-size:0.75rem;font-weight:700;color:var(--gold-light);background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);border-radius:12px;padding:0.2rem 0.65rem;margin-bottom:0.4rem;">✦ Linhagem: '+lin+'</span>';
   html+='</div></div>';
 
   // Descrição
@@ -1339,6 +1338,13 @@ function abrirDetalhesRaca(idx){
     });
   }
 
+  // Linhagem
+  if(lin){
+    html+='<hr class="modal-divider">';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">✦ Linhagem</div>';
+    html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+lin+'</p>';
+  }
+
   // Fardo
   if(fardo){
     html+='<hr class="modal-divider">';
@@ -1346,30 +1352,13 @@ function abrirDetalhesRaca(idx){
     html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+fardo+'</p>';
   }
 
-  // Seção da Categoria
-  if(descCat||traco||vdCat||irmas.length){
+  // Seção da Categoria (sem outras raças)
+  if(descCat||traco||vdCat){
     html+='<hr class="modal-divider">';
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.85rem;">◈ Categoria: '+cat+'</div>';
     if(descCat) html+='<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.6;margin-bottom:0.75rem;">'+descCat+'</p>';
     if(traco) html+='<div class="modal-sub"><span class="modal-sub-title">Traço Racial da Categoria</span><span class="modal-sub-body">'+traco+'</span></div>';
     if(vdCat) html+='<div class="modal-sub" style="border-left-color:var(--cat-desvantagem);"><span class="modal-sub-title" style="color:var(--cat-desvantagem);">Vantagem / Desvantagem de Categoria</span><span class="modal-sub-body">'+formatDesc(vdCat)+'</span></div>';
-    // Outras raças da categoria
-    if(irmas.length){
-      html+='<div style="font-family:Cinzel,serif;font-size:0.72rem;font-weight:700;color:var(--text-faint);letter-spacing:0.1em;text-transform:uppercase;margin:1rem 0 0.6rem;">Outras raças desta categoria</div>';
-      html+='<div class="cards-grid" style="gap:0.5rem;">';
-      irmas.forEach(function(x){
-        var xn=racaNome(x),xd=racaDesc(x),xl=racaLinhagem(x);
-        var xCopy={};for(var k in x)xCopy[k]=x[k];xCopy['_nome_display']=xn;
-        html+='<div class="card card-raca" style="cursor:pointer;" onclick="abrirDetalhesRaca('+_storeModal(xCopy)+')">'+
-          imgBox(getRacaImg(xn),'☯')+
-          '<div class="card-type">'+(cat||'raça')+'</div>'+
-          '<div class="card-name">'+xn+'</div>'+
-          (xd?'<div class="card-desc">'+xd.substring(0,80)+(xd.length>80?'…':'')+'</div>':'')+
-          '<div class="card-tags">'+(xl?tag(xl.substring(0,25),'tag-gold'):'')+'</div>'+
-        '</div>';
-      });
-      html+='</div>';
-    }
   }
 
   document.getElementById('raca-detalhe-body').innerHTML=html;
