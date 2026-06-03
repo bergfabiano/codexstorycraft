@@ -1109,10 +1109,14 @@ function distributeData(rows,tab){
       var n=vdNome(r);
       var keys=Object.keys(r);
       // Descarta linhas onde o nome é idêntico ao nome de uma das colunas (header leak)
-      for(var i=0;i<keys.length;i++){if(keys[i].trim().toLowerCase()===n.trim().toLowerCase()) return false;}
+      var nl=n.trim().toLowerCase();
+      for(var i=0;i<keys.length;i++){if(keys[i].trim().toLowerCase()===nl) return false;}
+      // Descarta palavras genéricas que são claramente cabeçalhos vazando
+      var genericHeaders=['nome','vantagem','desvantagem','maldicao','maldição','titulo','título','vantagens','desvantagens'];
+      if(genericHeaders.indexOf(nl)>-1){var d2=vdDesc(r),c2=vdCusto(r);if(!d2&&!c2) return false;}
       // Descarta linhas sem descrição E sem custo (completamente inúteis)
       var d=vdDesc(r),c=vdCusto(r);
-      if(!d&&!c&&n==='(sem nome)') return false;
+      if(!d&&!c) return false;
       // Descarta linhas completamente vazias
       var hasVal=false;
       for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()){hasVal=true;break;}}
@@ -1515,13 +1519,18 @@ function vdPrereq(r){
     'prerequisitos','prerequisito','Requisitos','Requisito','requisito','requisitos'
   );
   if(v) return v;
-  // Fallback: varre todas as colunas procurando qualquer uma com "requi" no nome
+  // Fallback: varre todas as colunas procurando qualquer uma com "requi" ou "requisit" no nome
   var keys=Object.keys(r);
   for(var i=0;i<keys.length;i++){
     var kl=keys[i].toLowerCase().replace(/[-\s]/g,'');
     if(kl.indexOf('requi')>-1&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]];
   }
   return '';
+}
+
+// Versão direta para uso no modal (recebe o objeto row completo)
+function vdPrereqFromRow(row){
+  return vdPrereq(row);
 }
 function vdNome(r){
   var n=gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Título','Titulo','titulo','title');
@@ -1786,7 +1795,7 @@ function openModal(rowOrStr){
   var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
   var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
   var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
-  var isVantagem=!isClasse&&!isDeus&&!!(row['_vd_cat']||gf(row,'Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao'));
+  var isVantagem=!isClasse&&!isDeus&&!!(row['_vd_cat']||gf(row,'Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Requisito','requisito'));
   var nomeClasseImg=isClasse?(gf(row,'Classe','classe')||gf(row,'_nome_display')):null;
   var nomeDeusImg=isDeus?(gf(row,'Nome do Deus','nome do deus')||gf(row,'_nome_display')):null;
   var html='';
