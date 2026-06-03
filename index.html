@@ -606,6 +606,57 @@ main{
 .card-vd-desvantagens{--card-accent:var(--cat-desvantagem);--card-accent-faint:rgba(255,92,138,0.1);}
 .card-vd-maldicoes {--card-accent:#c03030;--card-accent-faint:rgba(192,48,48,0.1);}
 .card-raca{--card-accent:#6dffb3;--card-accent-faint:rgba(109,255,179,0.08);}
+
+/* ── CATEGORIAS ── */
+.cat-section{
+  margin-bottom:2.5rem;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.cat-section-header{
+  padding:1.25rem 1.5rem 1rem;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(155,93,229,0.07),transparent);
+  position:relative;
+}
+.cat-section-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--violet),transparent);
+}
+.cat-section-title{
+  font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;
+  color:var(--gold-light);letter-spacing:0.08em;margin-bottom:0.6rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.cat-section-desc{
+  color:var(--text-dim);font-size:0.9rem;line-height:1.7;
+  margin-bottom:0.85rem;
+}
+.cat-info-row{
+  display:flex;flex-wrap:wrap;gap:0.65rem;margin-bottom:0;
+}
+.cat-info-block{
+  flex:1;min-width:220px;padding:0.75rem 1rem;
+  border-radius:6px;border:1px solid var(--border);
+  background:rgba(0,0,0,0.2);
+}
+.cat-info-block.traco{border-left:3px solid var(--violet-bright);}
+.cat-info-block.desv{border-left:3px solid var(--cat-desvantagem);}
+.cat-info-label{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;
+  letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.4rem;display:block;
+}
+.cat-info-block.traco .cat-info-label{color:var(--violet-bright);}
+.cat-info-block.desv .cat-info-label{color:var(--cat-desvantagem);}
+.cat-info-text{font-size:0.88rem;color:var(--text-dim);line-height:1.6;}
+.cat-racas-wrap{padding:1.25rem 1.5rem;}
+.cat-racas-label{
+  font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;
+  color:var(--text-faint);letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:0.85rem;
+}
 </style>
 </head>
 <body>
@@ -622,6 +673,7 @@ main{
     <div class="nav-tab active" data-page="inicio"    onclick="showPage('inicio')">    <span class="tab-sym">⌂</span> Início</div>
     <div class="nav-tab" data-page="contador"  onclick="showPage('contador')">  <span class="tab-sym">◆</span> Contador</div>
     <div class="nav-tab" data-page="racas"     onclick="showPage('racas')">     <span class="tab-sym">☯</span> Raças</div>
+    <div class="nav-tab" data-page="categorias" onclick="showPage('categorias')"><span class="tab-sym">◈</span> Categorias</div>
     <div class="nav-tab" data-page="classes"   onclick="showPage('classes')">   <span class="tab-sym">⚔</span> Classes</div>
     <div class="nav-tab" data-page="vantagens" onclick="showPage('vantagens')"> <span class="tab-sym">△</span> Vantagens</div>
     <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">     <span class="tab-sym">✤</span> Itens</div>
@@ -737,6 +789,15 @@ main{
     <div id="racas-detalhe" class="classe-detail">
       <button class="btn-voltar" onclick="voltarRacas()">← Voltar às Raças</button>
       <div id="raca-detalhe-body"></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIAS -->
+  <div id="page-categorias" class="page">
+    <h2 class="section-title"><span class="stitle-sym">◈</span> Categorias de Raças</h2>
+    <div id="categorias-debug" class="debug-banner"></div>
+    <div id="grid-categorias">
+      <div class="state-msg"><span class="state-sym">◈</span><h3>Carregando categorias...</h3></div>
     </div>
   </div>
 
@@ -1100,8 +1161,8 @@ function distributeData(rows,tab){
   if(tab==='vd_desvantagens'){VD.desvantagens=rows;VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',rows.length);return;}
   if(tab==='vd_maldicoes'){VD.maldicoes=rows;VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',rows.length);return;}
   // Legacy vantagens (fallback)
-  if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();return;}
-  if(tab==='racas_detail'){DB.racas=rows;renderRacas();return;}
+  if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();renderCategorias();return;}
+  if(tab==='racas_detail'){DB.racas=rows;renderRacas();renderCategorias();return;}
   if(tab==='grimorio'){DB.grimorio=rows;return;}
   if(tab==='racas'){DB.racas=rows;return;}
   if(tab==='classes'){DB.classes=rows;return;}
@@ -1151,7 +1212,7 @@ function updateStats(){
   if(elVd) elVd.textContent=totalVd||'—';
 }
 
-function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderItens();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
+function renderAll(){_modalStore=[];renderRacas();renderCategorias();renderClasses();renderVantagens();renderItens();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
 
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n');}
@@ -1225,6 +1286,67 @@ function renderRacas(){
       '</div>'+
     '</div>';
   }).join('');
+}
+
+// ── RENDER CATEGORIAS ──
+function renderCategorias(){
+  var g=document.getElementById('grid-categorias');
+  if(!g) return;
+  var cats=DB.racas_cats;
+  if(!cats||!cats.length){
+    g.innerHTML='<div class="state-msg"><span class="state-sym">◈</span><h3>Nenhuma categoria carregada</h3><p>Aguarde o carregamento automático.</p></div>';
+    return;
+  }
+  var html='';
+  for(var i=0;i<cats.length;i++){
+    var catRow=cats[i];
+    var cat=gf(catRow,'CATEGORIA','Categoria','categoria')||'';
+    if(!cat) continue;
+    var desc=gf(catRow,'DESCRIÇÃO DA CATEGORIA','Descrição da Categoria','descricao da categoria')||'';
+    var traco=gf(catRow,'TRAÇO RACIAL (de Categoria)','Traço Racial (de Categoria)','traco racial (de categoria)','TRAÇO RACIAL')||'';
+    var vdCat=gf(catRow,'VANTAGEM / DESVANTAGEM DE CATEGORIA','Vantagem / Desvantagem de Categoria','vantagem / desvantagem de categoria')||'';
+    var racasDaCat=DB.racas.filter(function(c){return function(r){return racaCat(r)===c;};}(cat));
+    html+='<div class="cat-section">';
+    html+='<div class="cat-section-header">';
+    html+='<div class="cat-section-title"><span style="color:var(--violet-bright);opacity:0.8;">◈</span> '+cat+'</div>';
+    if(desc) html+='<p class="cat-section-desc">'+desc+'</p>';
+    if(traco||vdCat){
+      html+='<div class="cat-info-row">';
+      if(traco) html+='<div class="cat-info-block traco"><span class="cat-info-label">⚡ Traço Racial de Categoria</span><p class="cat-info-text">'+traco+'</p></div>';
+      if(vdCat) html+='<div class="cat-info-block desv"><span class="cat-info-label">▽ Vantagem / Desvantagem de Categoria</span><p class="cat-info-text">'+vdCat+'</p></div>';
+      html+='</div>';
+    }
+    html+='</div>';
+    html+='<div class="cat-racas-wrap">';
+    if(racasDaCat.length){
+      html+='<div class="cat-racas-label">'+racasDaCat.length+' Raça'+(racasDaCat.length===1?'':'s')+'</div>';
+      html+='<div class="cards-grid" style="gap:0.7rem;">';
+      for(var ri=0;ri<racasDaCat.length;ri++){
+        var r2=racasDaCat[ri];
+        var n2=racaNome(r2),d2=racaDesc(r2),lin2=racaLinhagem(r2);
+        var rCopy={};for(var k in r2)rCopy[k]=r2[k];rCopy['_nome_display']=n2;
+        var idx2=_storeModal(rCopy);
+        html+='<div class="card card-raca" onclick="irParaDetalhesRaca('+idx2+')">'+
+          imgBox(getRacaImg(n2),'☯')+
+          '<div class="card-type">'+cat+'</div>'+
+          '<div class="card-name">'+n2+'</div>'+
+          (d2?'<div class="card-desc">'+d2.substring(0,90)+(d2.length>90?'…':'')+'</div>':'')+
+          '<div class="card-tags">'+(lin2?tag(lin2.substring(0,28),'tag-gold'):'')+'</div>'+
+        '</div>';
+      }
+      html+='</div>';
+    } else {
+      html+='<p style="color:var(--text-faint);font-size:0.85rem;padding:0.5rem 0;">Nenhuma raça encontrada nesta categoria.</p>';
+    }
+    html+='</div>';
+    html+='</div>';
+  }
+  g.innerHTML=html||'<div class="state-msg"><span class="state-sym">◈</span><h3>Nenhuma categoria encontrada</h3></div>';
+}
+
+function irParaDetalhesRaca(idx){
+  showPage('racas');
+  setTimeout(function(){abrirDetalhesRaca(idx);},80);
 }
 
 function abrirDetalhesRaca(idx){
