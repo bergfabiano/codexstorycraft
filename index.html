@@ -1110,14 +1110,17 @@ function distributeData(rows,tab){
   // Remove linhas fantasma onde o valor da coluna de nome é igual ao próprio nome da coluna (cabeçalho duplicado)
   function cleanVdRows(rows){
     return rows.filter(function(r){
-      var n=vdCol(r,'Nome')||vdCol(r,'nome')||'';
-      // Descarta linha se o nome é exatamente igual ao cabeçalho "Nome"
-      if(n.trim()==='Nome'||n.trim()==='nome') return false;
-      // Descarta linhas completamente vazias
       var keys=Object.keys(r);
-      var hasVal=false;
-      for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim()){hasVal=true;break;}}
-      return hasVal;
+      // Descarta linhas completamente vazias
+      var vals=keys.map(function(k){return(r[k]||'').trim();}).filter(Boolean);
+      if(!vals.length) return false;
+      // Descarta se TODOS os valores são iguais aos nomes das colunas (header vazando)
+      var allAreHeaders=vals.every(function(v){return keys.indexOf(v)>-1||keys.map(function(k){return k.replace(/[﻿​ ]/g,'').trim();}).indexOf(v)>-1;});
+      if(allAreHeaders) return false;
+      // Descarta se o primeiro valor não-vazio é literalmente "Nome" e não há descrição longa
+      var firstVal=vals[0]||'';
+      if(firstVal==='Nome'&&vals.length<=2) return false;
+      return true;
     });
   }
 
@@ -1500,7 +1503,16 @@ function vdCol(r, colName){
   }
   return '';
 }
-function vdDesc(r){ return vdCol(r,'Descricao')||vdCol(r,'Descrição')||vdCol(r,'descricao')||gf(r,'Descricao','Descrição','descricao','Efeito','efeito','Texto','texto'); }
+function vdDesc(r){
+  var d=vdCol(r,'Descricao')||vdCol(r,'Descrição')||vdCol(r,'descricao')||gf(r,'Descricao','Descrição','descricao','Efeito','efeito','Texto','texto');
+  if(d) return d;
+  // Fallback: terceira coluna (ordem: Nome, Requisito, Descricao)
+  var keys=Object.keys(r);
+  if(keys.length>=3&&r[keys[2]]&&r[keys[2]].trim().length>10) return r[keys[2]].trim();
+  // Qualquer coluna com texto longo
+  for(var i=0;i<keys.length;i++){if(r[keys[i]]&&r[keys[i]].trim().length>30) return r[keys[i]].trim();}
+  return '';
+}
 function vdCusto(r){ return vdCol(r,'Custo')||vdCol(r,'custo')||vdCol(r,'Pontos'); }
 function vdPrereq(r){ return vdCol(r,'Requisito')||vdCol(r,'requisito')||gf(r,'Requisito','requisito','Pré-requisito','Pre-requisito','Pré-Requisito'); }
 
