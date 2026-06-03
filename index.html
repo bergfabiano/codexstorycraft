@@ -1507,12 +1507,21 @@ function vdCusto(r){
   return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor','Custo (pts)','custo (pts)','Custo(pts)');
 }
 function vdPrereq(r){
-  return gf(r,
+  // Tenta variantes conhecidas primeiro
+  var v=gf(r,
     'Pré-requisitos','Pre-requisitos','Pré-Requisitos','Pre-Requisitos',
     'Pré-requisito','Pre-requisito','Pré-Requisito','Pre-Requisito',
     'Pré requisitos','Pre requisitos','Pré Requisitos','Pre Requisitos',
     'prerequisitos','prerequisito','Requisitos','Requisito','requisito','requisitos'
   );
+  if(v) return v;
+  // Fallback: varre todas as colunas procurando qualquer uma com "requi" no nome
+  var keys=Object.keys(r);
+  for(var i=0;i<keys.length;i++){
+    var kl=keys[i].toLowerCase().replace(/[-\s]/g,'');
+    if(kl.indexOf('requi')>-1&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]];
+  }
+  return '';
 }
 function vdNome(r){
   var n=gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Título','Titulo','titulo','title');
