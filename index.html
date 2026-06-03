@@ -924,7 +924,7 @@ var SHEET_URLS={
   vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2028187038&single=true&output=csv",
   vd_combate:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2057822365&single=true&output=csv",
   vd_magicas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1374290350&single=true&output=csv",
-  vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1374290350&single=true&output=csv",
+  vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1029747843&single=true&output=csv",
   vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=596445451&single=true&output=csv",
   vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=601674192&single=true&output=csv",
   vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1242532645&single=true&output=csv"
@@ -1486,47 +1486,25 @@ function switchVdCat(cat){
 }
 
 // ── RENDER VANTAGENS ──
-function vdDesc(r){
-  var d=gf(r,
-    'Descrição Completa','Descricao Completa','descricao completa','Descrição completa',
-    'Descrição','Descricao','descricao',
-    'Efeito','efeito',
-    'Texto','texto',
-    'Detalhes','detalhes',
-    'Resumo','resumo',
-    'desc','Desc'
-  );
-  if(d) return d;
-  // Fallback: qualquer coluna com texto longo que não seja nome/custo/requisito/tipo
-  var skipParts=['nom','vant','desv','mald','tit','cust','pont','val','req','pre','tipo','escola','cat','grau','orig','acum','alc'];
+// Lê coluna pelo nome exato, sem depender de gf
+function vdCol(r, colName){
   var keys=Object.keys(r);
-  var best='';
+  // Passa 1: exato
   for(var i=0;i<keys.length;i++){
-    var kl=keys[i].toLowerCase();
-    var skip=false;
-    for(var j=0;j<skipParts.length;j++){if(kl.indexOf(skipParts[j])>-1){skip=true;break;}}
-    if(!skip&&r[keys[i]]&&r[keys[i]].length>30&&r[keys[i]].length>best.length) best=r[keys[i]];
+    var k=keys[i].replace(/[﻿​ ]/g,'').trim();
+    if(k===colName&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]].trim();
   }
-  return best;
-}
-function vdCusto(r){
-  return gf(r,'Custo','custo','Pontos','pontos','Pts','pts','Valor','valor','Custo (pts)','custo (pts)','Custo(pts)');
-}
-function vdPrereq(r){
-  // Lê todas as chaves e compara limpando acentos, hífens, espaços e chars invisíveis
-  var keys=Object.keys(r);
-  var targets=['requisito','prerequisito','requisitos','prerequisitos'];
+  // Passa 2: case-insensitive
+  var cl=colName.toLowerCase();
   for(var i=0;i<keys.length;i++){
-    var raw=keys[i];
-    // Limpa BOM, espaços, hífens, acentos
-    var clean=raw.replace(/[﻿​ \s\-]/g,'').toLowerCase();
-    clean=clean.replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c');
-    if(targets.indexOf(clean)>-1&&r[raw]&&r[raw].trim()) return r[raw];
+    var k=keys[i].replace(/[﻿​ ]/g,'').trim().toLowerCase();
+    if(k===cl&&r[keys[i]]&&r[keys[i]].trim()) return r[keys[i]].trim();
   }
   return '';
 }
-
-// Versão direta para uso no modal (recebe o objeto row completo)
+function vdDesc(r){ return vdCol(r,'Descricao')||vdCol(r,'Descrição')||vdCol(r,'descricao'); }
+function vdCusto(r){ return vdCol(r,'Custo')||vdCol(r,'custo')||vdCol(r,'Pontos'); }
+function vdPrereq(r){ return vdCol(r,'Requisito')||vdCol(r,'requisito')||vdCol(r,'Pré-requisito')||vdCol(r,'Pre-requisito'); }
 
 function vdNome(r){
   var n=gf(r,'Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Título','Titulo','titulo','title');
