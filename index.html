@@ -605,6 +605,7 @@ main{
 .card-vd-superpoderes{--card-accent:#f72585;--card-accent-faint:rgba(247,37,133,0.1);}
 .card-vd-desvantagens{--card-accent:var(--cat-desvantagem);--card-accent-faint:rgba(255,92,138,0.1);}
 .card-vd-maldicoes {--card-accent:#c03030;--card-accent-faint:rgba(192,48,48,0.1);}
+.card-raca{--card-accent:#6dffb3;--card-accent-faint:rgba(109,255,179,0.08);}
 </style>
 </head>
 <body>
@@ -721,15 +722,22 @@ main{
 
   <!-- RAÇAS -->
   <div id="page-racas" class="page">
-    <h2 class="section-title"><span class="stitle-sym">☯</span> Raças</h2>
-    <div class="filter-bar">
-      <div class="fg"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, habilidade..." oninput="renderRacas()"></div>
-      <div class="fg"><label>Origem</label><select id="f-raca-origem" onchange="renderRacas()"><option value="">Todas</option></select></div>
-      <div class="fg"><label>Atributo</label><select id="f-raca-atrib" onchange="renderRacas()"><option value="">Todos</option></select></div>
-      <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
+    <div id="racas-lista">
+      <h2 class="section-title"><span class="stitle-sym">☯</span> Raças</h2>
+      <!-- Pills de categoria -->
+      <div class="vd-cats" id="raca-cats" style="margin-bottom:0;"></div>
+      <!-- Busca -->
+      <div class="filter-bar" style="margin-top:0.75rem;">
+        <div class="fg" style="flex:1;"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, linhagem, habilidade..." oninput="renderRacas()"></div>
+        <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
+      </div>
+      <p class="result-count" id="count-racas" style="margin-bottom:0.5rem;"></p>
+      <div class="cards-grid" id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☯</span><h3>Carregando raças...</h3></div></div>
     </div>
-    <p class="result-count" id="count-racas"></p>
-    <div class="cards-grid" id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☯</span><h3>Nenhuma raça carregada</h3><p>Conecte o Google Sheets.</p></div></div>
+    <div id="racas-detalhe" class="classe-detail">
+      <button class="btn-voltar" onclick="voltarRacas()">← Voltar às Raças</button>
+      <div id="raca-detalhe-body"></div>
+    </div>
   </div>
 
   <!-- CLASSES -->
@@ -886,7 +894,8 @@ function showPage(name) {
 }
 
 // ── DATABASE ──
-var DB={racas:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
+var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
+var RACA_ACTIVE_CAT='';
 
 // Vantagens por categoria — armazenadas separadamente
 var VD={
@@ -896,6 +905,8 @@ var VD_STATUS={versateis:'idle',combate:'idle',magicas:'idle',ataques:'idle',sup
 var VD_ACTIVE_CAT='versateis';
 
 var SHEET_URLS={
+  racas_cats:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1OwHUQC1k1sJer_cqjpn4MQGTSLGf3KM-QWx9JZSn1d3BISe0LnL2cekECuI53qaDmvL75I5sskTo/pub?gid=1306419449&single=true&output=csv",
+  racas_detail:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vS1OwHUQC1k1sJer_cqjpn4MQGTSLGf3KM-QWx9JZSn1d3BISe0LnL2cekECuI53qaDmvL75I5sskTo/pub?gid=241427134&single=true&output=csv",
   grimorio:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
   classes:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
   dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
@@ -1028,7 +1039,7 @@ function parseCSV(text){
   }
   headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});
   // Skip title rows: find the real header (contains known column names)
-  var knownCols=['nome','descricao','descricao completa','vantagem','desvantagem','classe','feitico','feitico','pre-requisitos','prerequisitos','custo','tipo','escola','grau','raridade','origem','atributo','regiao'];
+  var knownCols=['nome','descricao','descricao completa','vantagem','desvantagem','classe','feitico','feitico','pre-requisitos','prerequisitos','custo','tipo','escola','grau','raridade','origem','atributo','regiao','categoria','linhagem','fardo'];
   function looksLikeHeader(hdrs){return hdrs.some(function(h){var n=h.toLowerCase().replace(/[^a-z]/g,'');return knownCols.indexOf(h.toLowerCase().trim())>-1||knownCols.indexOf(n)>-1;});}
   var maxSkip=5;
   while(!looksLikeHeader(headers)&&maxSkip-->0&&i<len){headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').trim();});}
@@ -1087,6 +1098,8 @@ function distributeData(rows,tab){
   if(tab==='vd_desvantagens'){VD.desvantagens=rows;VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',rows.length);return;}
   if(tab==='vd_maldicoes'){VD.maldicoes=rows;VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',rows.length);return;}
   // Legacy vantagens (fallback)
+  if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();return;}
+  if(tab==='racas_detail'){DB.racas=rows;renderRacas();return;}
   if(tab==='grimorio'){DB.grimorio=rows;return;}
   if(tab==='racas'){DB.racas=rows;return;}
   if(tab==='classes'){DB.classes=rows;return;}
@@ -1154,18 +1167,114 @@ function uniq(arr){var s={};return arr.filter(function(v){if(!v||s[v])return fal
 function emptyMsg(sym,title){return '<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+sym+'</span><h3>'+title+'</h3></div>';}
 
 // ── RENDER RAÇAS ──
+function racaNome(r){return gf(r,'NOME','Nome','nome')||'(sem nome)';}
+function racaCat(r){return gf(r,'CATEGORIA','Categoria','categoria')||'';}
+function racaDesc(r){return gf(r,'DESCRIÇÃO DA RAÇA','Descrição da Raça','descricao da raca','DESCRICAO DA RACA','Descrição','descricao','desc')||'';}
+function racaHab1(r){return gf(r,'HAB. RACIAL – ATRIBUTOS / PASSIVOS','Hab. Racial – Atributos / Passivos','habilidade racial','hab. racial')||'';}
+function racaHab2(r){return gf(r,'HAB. RACIAL – 2ª HABILIDADE','Hab. Racial – 2ª Habilidade','2a habilidade')||'';}
+function racaHab3(r){return gf(r,'HAB. RACIAL – 3ª HABILIDADE','Hab. Racial – 3ª Habilidade','3a habilidade')||'';}
+function racaLinhagem(r){return gf(r,'LINHAGEM','Linhagem','linhagem')||'';}
+function racaFardo(r){return gf(r,'FARDO','Fardo','fardo')||'';}
+
+function renderRacasCatPills(){
+  var el=document.getElementById('raca-cats');
+  if(!el) return;
+  var cats=DB.racas_cats;
+  if(!cats||!cats.length){el.innerHTML='';return;}
+  var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')"><span>◈</span> Todas</button>';
+  for(var i=0;i<cats.length;i++){
+    var cn=gf(cats[i],'CATEGORIA','Categoria','categoria')||'';
+    if(!cn) continue;
+    var active=(RACA_ACTIVE_CAT===cn)?' active':'';
+    var safe=cn.replace(/\\/g,'').replace(/'/g,'&#39;');
+    btns+='<button class="vd-cat-btn'+active+'" data-rcat="'+cn.replace(/"/g,'&quot;')+'" onclick="switchRacaCat(this.dataset.rcat)"><span>☯</span> '+cn+'</button>';
+  }
+  el.innerHTML=btns;
+}
+
+function switchRacaCat(cat){
+  RACA_ACTIVE_CAT=cat;
+  renderRacasCatPills();
+  renderRacas();
+}
+
 function renderRacas(){
-  var s=document.getElementById('f-raca-search').value.toLowerCase(),or=document.getElementById('f-raca-origem').value,at=document.getElementById('f-raca-atrib').value;
-  popSel('f-raca-origem',uniq(DB.racas.map(function(r){return gf(r,'Origem','origem');})),or);
-  popSel('f-raca-atrib',uniq(DB.racas.map(function(r){return gf(r,'Atributo','atributo principal');})),at);
-  var data=DB.racas.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!or||gf(r,'Origem','origem')===or)&&(!at||gf(r,'Atributo','atributo principal')===at);});
+  var s=document.getElementById('f-raca-search').value.toLowerCase();
   var g=document.getElementById('grid-racas');
-  document.getElementById('count-racas').textContent=data.length+' resultados';
+  if(!g) return;
+  var data=DB.racas.filter(function(r){
+    var n=racaNome(r),cat=racaCat(r);
+    if(RACA_ACTIVE_CAT && cat!==RACA_ACTIVE_CAT) return false;
+    return !s || fstr(r).toLowerCase().indexOf(s)>-1;
+  });
+  document.getElementById('count-racas').textContent=data.length+' resultado'+(data.length===1?'':'s')+(RACA_ACTIVE_CAT?' em '+RACA_ACTIVE_CAT:'');
   if(!data.length){g.innerHTML=emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome','nome')||'(sem nome)',o=gf(r,'Origem','origem'),a=gf(r,'Atributo','atributo principal'),h=gf(r,'Habilidade','habilidade racial'),d=gf(r,'Descricao','descricao','Descrição','desc');
-    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">raça</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(o,'tag-gray')+tag(a,'tag-conjurador')+tag(h,'tag-gold')+'</div></div>';
+    var n=racaNome(r),cat=racaCat(r),desc=racaDesc(r),lin=racaLinhagem(r),hab1=racaHab1(r);
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
+    return '<div class="card card-raca" onclick="abrirDetalhesRaca('+_storeModal(rCopy)+')">'+
+      '<div class="card-type">'+(cat||'raça')+'</div>'+
+      '<div class="card-name">'+n+'</div>'+
+      (desc?'<div class="card-desc">'+desc.substring(0,120)+(desc.length>120?'…':'')+'</div>':'')+
+      '<div class="card-tags">'+
+        (lin?tag(lin.substring(0,30),'tag-gold'):'')+
+        (hab1?tag(hab1.substring(0,30),'tag-conjurador'):'')+
+      '</div>'+
+    '</div>';
   }).join('');
+}
+
+function abrirDetalhesRaca(idx){
+  var r=_modalStore[idx];
+  var n=racaNome(r),cat=racaCat(r),desc=racaDesc(r),hab1=racaHab1(r),hab2=racaHab2(r),hab3=racaHab3(r),lin=racaLinhagem(r),fardo=racaFardo(r);
+  // Busca dados da categoria
+  var catRow=null;
+  for(var i=0;i<DB.racas_cats.length;i++){if(gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')===cat){catRow=DB.racas_cats[i];break;}}
+  var traco=catRow?gf(catRow,'TRAÇO RACIAL (de Categoria)','Traço Racial (de Categoria)','traco racial','TRAÇO RACIAL'):'';
+  var vdCat=catRow?gf(catRow,'VANTAGEM / DESVANTAGEM DE CATEGORIA','Vantagem / Desvantagem de Categoria','vantagem / desvantagem de categoria'):'';
+  var descCat=catRow?gf(catRow,'DESCRIÇÃO DA CATEGORIA','Descrição da Categoria','descricao da categoria'):'';
+  var html='';
+  html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
+  html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+n+'</h2>';
+  if(desc) html+='<p style="color:var(--text-dim);font-size:0.92rem;line-height:1.65;margin-bottom:1.25rem;">'+desc+'</p>';
+  // Habilidades raciais
+  var habs=[[hab1,'1ª Habilidade'],[hab2,'2ª Habilidade'],[hab3,'3ª Habilidade']].filter(function(h){return h[0];});
+  if(habs.length){
+    html+='<div class="modal-divider" style="margin:1rem 0 0.75rem;"></div>';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">⚡ Habilidades Raciais</div>';
+    habs.forEach(function(h){
+      html+='<div class="modal-sub"><span class="modal-sub-title">'+h[1]+'</span><span class="modal-sub-body">'+h[0]+'</span></div>';
+    });
+  }
+  // Linhagem
+  if(lin){
+    html+='<div class="modal-divider" style="margin:1rem 0 0.75rem;"></div>';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--gold-light);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">✦ Linhagem</div>';
+    html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+lin+'</p>';
+  }
+  // Fardo
+  if(fardo){
+    html+='<div class="modal-divider" style="margin:1rem 0 0.75rem;"></div>';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">▽ Fardo</div>';
+    html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+fardo+'</p>';
+  }
+  // Dados da categoria
+  if(descCat||traco||vdCat){
+    html+='<div class="modal-divider" style="margin:1rem 0 0.75rem;"></div>';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);opacity:0.7;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">◈ Categoria: '+cat+'</div>';
+    if(descCat) html+='<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.6;margin-bottom:0.5rem;">'+descCat+'</p>';
+    if(traco) html+='<div class="modal-sub"><span class="modal-sub-title">Traço Racial</span><span class="modal-sub-body">'+traco+'</span></div>';
+    if(vdCat) html+='<div class="modal-sub"><span class="modal-sub-title">Vantagem/Desvantagem de Categoria</span><span class="modal-sub-body">'+vdCat+'</span></div>';
+  }
+  document.getElementById('raca-detalhe-body').innerHTML=html;
+  document.getElementById('racas-lista').style.display='none';
+  document.getElementById('racas-detalhe').classList.add('active');
+  document.getElementById('racas-detalhe').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function voltarRacas(){
+  document.getElementById('racas-lista').style.display='';
+  document.getElementById('racas-detalhe').classList.remove('active');
 }
 
 // ── RENDER CLASSES ──
@@ -1487,7 +1596,7 @@ function renderEstigmas(){
 
 // ── CLEAR FILTERS ──
 function clearFilters(sec){
-  var m={racas:['f-raca-search','f-raca-origem','f-raca-atrib'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var m={racas:['f-raca-search'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
   var ids=m[sec]||[];for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
