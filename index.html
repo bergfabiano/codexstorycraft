@@ -832,17 +832,52 @@ main{
     </div>
   </div>
 
-  <!-- ITENS -->
+  <!-- ITENS / LOJA -->
   <div id="page-itens" class="page">
-    <h2 class="section-title"><span class="stitle-sym">✤</span> Itens &amp; Loja</h2>
-    <div class="filter-bar">
-      <div class="fg"><label>Buscar</label><input type="text" id="f-item-search" placeholder="Nome, efeito..." oninput="renderItens()"></div>
-      <div class="fg"><label>Raridade</label><select id="f-item-raridade" onchange="renderItens()"><option value="">Todas</option><option>Comum</option><option>Incomum</option><option>Raro</option><option>Epico</option><option>Lendario</option><option>Artefato</option></select></div>
-      <div class="fg"><label>Tipo</label><select id="f-item-tipo" onchange="renderItens()"><option value="">Todos</option></select></div>
-      <button class="btn-clear" onclick="clearFilters('itens')">Limpar</button>
+    <h2 class="section-title"><span class="stitle-sym">✤</span> Loja de Velkarion</h2>
+
+    <!-- Categoria tabs -->
+    <div class="vd-cats" id="loja-cats" style="margin-bottom:0.75rem;flex-wrap:wrap;">
+      <button class="vd-cat-btn active" data-lcat="armas"      onclick="switchLoja('armas')">      &#x2694; Armas</button>
+      <button class="vd-cat-btn" data-lcat="municao"    onclick="switchLoja('municao')">   &#x25C6; Muni&#xE7;&#xE3;o</button>
+      <button class="vd-cat-btn" data-lcat="focus"      onclick="switchLoja('focus')">     &#x2726; F&#xF3;cus</button>
+      <button class="vd-cat-btn" data-lcat="armadura"   onclick="switchLoja('armadura')">  &#x25A0; Armadura</button>
+      <button class="vd-cat-btn" data-lcat="itens"      onclick="switchLoja('itens')">     &#x2736; Itens</button>
+      <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"> &#x2665; Montarias</button>
+      <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')">  &#x2318; Ve&#xED;culos</button>
+      <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')">  &#x2737; Servi&#xE7;os</button>
+      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')">   &#x2615; Alimenta&#xE7;&#xE3;o</button>
+      <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')">  &#x2302; Base (Melhorias)</button>
+      <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')">  &#x2302; Base (Estruturas)</button>
+      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Ibu&#xED;dos</button>
+      <button class="vd-cat-btn" data-lcat="pocoes"     onclick="switchLoja('pocoes')">    &#x2697; Po&#xE7;&#xF5;es</button>
+      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')">&#x2736; Alqu&#xED;micos</button>
+      <button class="vd-cat-btn vd-cat-neg" data-lcat="venenos"    onclick="switchLoja('venenos')">   &#x2620; Venenos</button>
+      <button class="vd-cat-btn vd-cat-neg" data-lcat="sicario"    onclick="switchLoja('sicario')">   &#x2620; V. Sic&#xE1;rio</button>
+      <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')">  &#x25C8; Min&#xE9;rios</button>
+      <button class="vd-cat-btn" data-lcat="auxiliares" onclick="switchLoja('auxiliares')">&#x25B6; Auxiliares</button>
+      <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')">     &#x25C6; Gemas</button>
+      <button class="vd-cat-btn" data-lcat="joias"      onclick="switchLoja('joias')">     &#x2605; J&#xF3;ias</button>
+      <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')">   &#x21AF; Aprimoramentos</button>
+      <button class="vd-cat-btn" data-lcat="encant"     onclick="switchLoja('encant')">    &#x2604; Encantamentos</button>
     </div>
-    <p class="result-count" id="count-itens"></p>
-    <div class="cards-grid" id="grid-itens"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✤</span><h3>Nenhum item carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+
+    <!-- Search bar -->
+    <div class="filter-bar" style="margin-top:0.5rem;">
+      <div class="fg" style="flex:2;"><label>Buscar</label><input type="text" id="f-loja-search" placeholder="Nome, efeito, categoria..." oninput="renderLoja()"></div>
+      <div class="fg"><label>Categoria</label><select id="f-loja-cat" onchange="renderLoja()"><option value="">Todas</option></select></div>
+      <div class="fg"><label>Pre&#xE7;o m&#xE1;x.</label><input type="number" id="f-loja-preco" placeholder="Ex: 500" oninput="renderLoja()" style="background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.6rem;font-family:Raleway,sans-serif;font-size:0.85rem;border-radius:4px;outline:none;width:100%;"></div>
+      <button class="btn-clear" onclick="clearLojaFilters()">Limpar</button>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
+      <p class="result-count" id="count-loja" style="margin-bottom:0;"></p>
+      <div id="loja-load-status" style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+    </div>
+
+    <div class="cards-grid" id="grid-loja">
+      <div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✤</span><h3>Carregando loja...</h3></div>
+    </div>
   </div>
 
   <!-- GRIMÓRIO -->
@@ -932,6 +967,14 @@ function showPage(name) {
 
 // ── DATABASE ──
 var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
+var LOJA={
+  armas:[],municao:[],focus:[],armadura:[],itens:[],montarias:[],veiculos:[],
+  servicos:[],aliment:[],base_mel:[],base_est:[],imbuidos:[],pocoes:[],
+  alquimicos:[],venenos:[],sicario:[],minerios:[],auxiliares:[],
+  gemas:[],joias:[],aprimor:[],encant:[]
+};
+var LOJA_STATUS={};
+var LOJA_ACTIVE='armas';
 var RACA_ACTIVE_CAT='';
 
 // Vantagens por categoria — armazenadas separadamente
@@ -956,6 +999,29 @@ var SHEET_URLS={
   vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=899034162&single=true&output=csv",
   vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1465549294&single=true&output=csv",
   vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1580295224&single=true&output=csv"
+};
+  loja_armas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=0&single=true&output=csv",
+  loja_municao:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1139815210&single=true&output=csv",
+  loja_focus:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1978615584&single=true&output=csv",
+  loja_armadura:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1261608740&single=true&output=csv",
+  loja_itens:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=844275103&single=true&output=csv",
+  loja_montarias:  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=639613334&single=true&output=csv",
+  loja_veiculos:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1903288691&single=true&output=csv",
+  loja_servicos:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=569452126&single=true&output=csv",
+  loja_aliment:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1261375177&single=true&output=csv",
+  loja_base_mel:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=298446523&single=true&output=csv",
+  loja_base_est:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=878526036&single=true&output=csv",
+  loja_imbuidos:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1270176649&single=true&output=csv",
+  loja_pocoes:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1780383104&single=true&output=csv",
+  loja_alquimicos: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=692269012&single=true&output=csv",
+  loja_venenos:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=2046406320&single=true&output=csv",
+  loja_sicario:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=203269519&single=true&output=csv",
+  loja_minerios:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1252698681&single=true&output=csv",
+  loja_auxiliares: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1790782335&single=true&output=csv",
+  loja_gemas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1725420729&single=true&output=csv",
+  loja_joias:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=953411783&single=true&output=csv",
+  loja_aprimor:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1730917400&single=true&output=csv",
+  loja_encant:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1996414926&single=true&output=csv"
 };
 
 // Imagens
@@ -1190,6 +1256,28 @@ function distributeData(rows,tab){
   if(tab==='dons'){DB.dons=rows;return;}
   if(tab==='vantagensdesvantagens'||tab==='vantagens'){DB.vantagens=rows;return;}
   if(tab==='itensloja'||tab==='itens'){DB.itens=rows;return;}
+  if(tab==='loja_armas'){LOJA.armas=rows;LOJA_STATUS.armas='ok';renderLoja();return;}
+  if(tab==='loja_municao'){LOJA.municao=rows;LOJA_STATUS.municao='ok';renderLoja();return;}
+  if(tab==='loja_focus'){LOJA.focus=rows;LOJA_STATUS.focus='ok';renderLoja();return;}
+  if(tab==='loja_armadura'){LOJA.armadura=rows;LOJA_STATUS.armadura='ok';renderLoja();return;}
+  if(tab==='loja_itens'){LOJA.itens=rows;LOJA_STATUS.itens='ok';renderLoja();return;}
+  if(tab==='loja_montarias'){LOJA.montarias=rows;LOJA_STATUS.montarias='ok';renderLoja();return;}
+  if(tab==='loja_veiculos'){LOJA.veiculos=rows;LOJA_STATUS.veiculos='ok';renderLoja();return;}
+  if(tab==='loja_servicos'){LOJA.servicos=rows;LOJA_STATUS.servicos='ok';renderLoja();return;}
+  if(tab==='loja_aliment'){LOJA.aliment=rows;LOJA_STATUS.aliment='ok';renderLoja();return;}
+  if(tab==='loja_base_mel'){LOJA.base_mel=rows;LOJA_STATUS.base_mel='ok';renderLoja();return;}
+  if(tab==='loja_base_est'){LOJA.base_est=rows;LOJA_STATUS.base_est='ok';renderLoja();return;}
+  if(tab==='loja_imbuidos'){LOJA.imbuidos=rows;LOJA_STATUS.imbuidos='ok';renderLoja();return;}
+  if(tab==='loja_pocoes'){LOJA.pocoes=rows;LOJA_STATUS.pocoes='ok';renderLoja();return;}
+  if(tab==='loja_alquimicos'){LOJA.alquimicos=rows;LOJA_STATUS.alquimicos='ok';renderLoja();return;}
+  if(tab==='loja_venenos'){LOJA.venenos=rows;LOJA_STATUS.venenos='ok';renderLoja();return;}
+  if(tab==='loja_sicario'){LOJA.sicario=rows;LOJA_STATUS.sicario='ok';renderLoja();return;}
+  if(tab==='loja_minerios'){LOJA.minerios=rows;LOJA_STATUS.minerios='ok';renderLoja();return;}
+  if(tab==='loja_auxiliares'){LOJA.auxiliares=rows;LOJA_STATUS.auxiliares='ok';renderLoja();return;}
+  if(tab==='loja_gemas'){LOJA.gemas=rows;LOJA_STATUS.gemas='ok';renderLoja();return;}
+  if(tab==='loja_joias'){LOJA.joias=rows;LOJA_STATUS.joias='ok';renderLoja();return;}
+  if(tab==='loja_aprimor'){LOJA.aprimor=rows;LOJA_STATUS.aprimor='ok';renderLoja();return;}
+  if(tab==='loja_encant'){LOJA.encant=rows;LOJA_STATUS.encant='ok';renderLoja();return;}
   if(tab==='deuses'){DB.deuses=rows;return;}
   if(tab==='velkarion'){DB.velkarion=rows;return;}
   if(tab==='estigmas'){DB.estigmas=rows;return;}
@@ -1669,6 +1757,247 @@ function renderItens(){
     var cc=rarCardClass(ri);
     return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(tp2||'item')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(ri,rarColor(ri))+tag(dn,'tag-danger')+(vl?tag(vl,'tag-gold'):'')+'</div></div>';
   }).join('');
+}
+
+// ── RENDER LOJA ──
+var LOJA_LABELS={
+  armas:'Armas',municao:'Munição',focus:'Fócus',armadura:'Armadura',
+  itens:'Itens',montarias:'Montarias & Animais',veiculos:'Veículos',
+  servicos:'Serviços',aliment:'Alimentação',base_mel:'Base (Melhorias)',
+  base_est:'Base (Estruturas)',imbuidos:'Imbuídos',pocoes:'Poções',
+  alquimicos:'Alquímicos',venenos:'Venenos',sicario:'V. Sicário',
+  minerios:'Minérios',auxiliares:'Auxiliares',gemas:'Gemas',
+  joias:'Jóias',aprimor:'Aprimoramentos',encant:'Encantamentos'
+};
+var LOJA_SYMS={
+  armas:'&#x2694;',municao:'&#x25C6;',focus:'&#x2726;',armadura:'&#x25A0;',
+  itens:'&#x2736;',montarias:'&#x2665;',veiculos:'&#x2318;',servicos:'&#x2737;',
+  aliment:'&#x2615;',base_mel:'&#x2302;',base_est:'&#x2302;',imbuidos:'&#x2747;',
+  pocoes:'&#x2697;',alquimicos:'&#x2736;',venenos:'&#x2620;',sicario:'&#x2620;',
+  minerios:'&#x25C8;',auxiliares:'&#x25B6;',gemas:'&#x25C6;',joias:'&#x2605;',
+  aprimor:'&#x21AF;',encant:'&#x2604;'
+};
+
+// Extract name, price, category, description from any loja row
+function lojaGetField(r){
+  // Name - varies by category
+  return r['Arma']||r['Munição']||r['Tipo de Munição']||r['Fócus']||r['Amadura']||r['Armadura']||
+    r['Item']||r['Montaria']||r['Veículo / Tipo']||r['Serviço']||r['Refeição']||
+    r['Nome']||r['Imbuído']||r['Poção']||r['Veneno']||r['Veneno Sicário']||
+    r['Minério']||r['Auxiliar']||r['Gema']||r['Joia']||r[Object.keys(r)[0]]||'(sem nome)';
+}
+function lojaGetPreco(r){
+  return r['Preço']||r['Custo']||r['Valor']||r['Valor Armas']||r['Armas']||'';
+}
+function lojaGetCat(r){
+  return r['Categoria']||r['Sub-categoria']||r['Nível']||r['Cor']||r['Complexidade']||'';
+}
+function lojaGetDesc(r){
+  var d=r['Descrição']||r['Efeito']||r['Uso / Descrição']||r['Efeito e Descrição']||
+    r['Propriedades']||r['Propriedades e Observações']||r['Descrição']||'';
+  // Format line breaks
+  if(d) d=d.replace(/\n/g,'<br>');
+  return d;
+}
+function lojaGetTags(r,cat){
+  var tags=[];
+  var p=lojaGetPreco(r);
+  if(p) tags.push({label:p+' fl',cls:'tag-gold'});
+  if(cat==='armas'||cat==='focus'){
+    var dmg=r['Dano']||'';var tipo=r['Tipo do Dano']||r['Tipo de Dano']||'';
+    if(dmg) tags.push({label:dmg,cls:'tag-danger'});
+    if(tipo) tags.push({label:tipo,cls:'tag-gray'});
+    var alc=r['Alcance']||''; if(alc) tags.push({label:alc,cls:'tag-class'});
+  }
+  if(cat==='armadura'){
+    var mit=r['Bônus (Mitigação de Dano)']||'';
+    if(mit) tags.push({label:'MD '+mit,cls:'tag-conjurador'});
+  }
+  if(cat==='pocoes'||cat==='alquimicos'||cat==='venenos'||cat==='sicario'){
+    var niv=r['Nível']||''; if(niv) tags.push({label:'Nv '+niv,cls:'tag-rare'});
+  }
+  if(cat==='minerios'||cat==='gemas'||cat==='joias'){
+    var comp=r['Complexidade']||''; if(comp) tags.push({label:comp,cls:'tag-rare'});
+    var cor=r['Cor']||''; if(cor) tags.push({label:cor,cls:'tag-gray'});
+  }
+  var esp=r['Espaços']||''; if(esp&&esp!=='0') tags.push({label:esp+' esp',cls:'tag-gray'});
+  return tags;
+}
+
+function lojaCardAccent(cat){
+  var m={
+    armas:'var(--cat-combate)',municao:'var(--cat-combate)',focus:'var(--cat-conjurador)',
+    armadura:'var(--cat-suporte)',itens:'var(--cat-especialista)',montarias:'var(--green)',
+    veiculos:'var(--cyan)',servicos:'var(--gold-light)',aliment:'var(--green)',
+    base_mel:'var(--gold-light)',base_est:'var(--gold)',imbuidos:'var(--violet-bright)',
+    pocoes:'var(--cyan)',alquimicos:'var(--cyan-dim)',venenos:'var(--cat-desvantagem)',
+    sicario:'var(--blood)',minerios:'var(--gold-light)',auxiliares:'var(--violet)',
+    gemas:'var(--cyan)',joias:'var(--magenta)',aprimor:'var(--violet-bright)',encant:'var(--violet)'
+  };
+  return m[cat]||'var(--violet)';
+}
+
+function switchLoja(cat){
+  LOJA_ACTIVE=cat;
+  document.querySelectorAll('[data-lcat]').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-lcat')===cat);
+  });
+  document.getElementById('f-loja-search').value='';
+  document.getElementById('f-loja-cat').value='';
+  renderLoja();
+}
+
+function clearLojaFilters(){
+  document.getElementById('f-loja-search').value='';
+  document.getElementById('f-loja-cat').value='';
+  var p=document.getElementById('f-loja-preco');if(p)p.value='';
+  renderLoja();
+}
+
+function renderLoja(){
+  var cat=LOJA_ACTIVE;
+  var rows=LOJA[cat]||[];
+  var s=(document.getElementById('f-loja-search').value||'').toLowerCase();
+  var selCat=document.getElementById('f-loja-cat').value||'';
+  var maxP=parseFloat(document.getElementById('f-loja-preco').value||'')||0;
+  var g=document.getElementById('grid-loja');
+  var statusEl=document.getElementById('loja-load-status');
+  if(!g)return;
+
+  if(!rows.length){
+    statusEl.textContent=LOJA_STATUS[cat]?'':'Carregando...';
+    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+LOJA_SYMS[cat]+'</span><h3>'+(!LOJA_STATUS[cat]?'Carregando '+LOJA_LABELS[cat]+'...':\'Nenhum item carregado')+'</h3></div>';
+    return;
+  }
+  statusEl.textContent='';
+
+  // Populate category filter
+  var cats=[];
+  rows.forEach(function(r){var c=lojaGetCat(r);if(c&&cats.indexOf(c)===-1)cats.push(c);});
+  var fCat=document.getElementById('f-loja-cat');
+  if(fCat){
+    var cur=fCat.value;
+    fCat.innerHTML='<option value="">Todas</option>';
+    cats.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;if(c===cur)o.selected=true;fCat.appendChild(o);});
+  }
+
+  // Filter rows - skip header rows
+  var data=rows.filter(function(r){
+    var n=lojaGetField(r)||'';
+    var keys=Object.keys(r);
+    // Skip rows where first value equals its column name (header leak)
+    if(keys.length&&keys[0].trim()===n.trim()) return false;
+    if(!n||n==='(sem nome)') return false;
+    if(s&&(n+' '+lojaGetDesc(r)+' '+lojaGetCat(r)).toLowerCase().indexOf(s)===-1) return false;
+    if(selCat&&lojaGetCat(r)!==selCat) return false;
+    if(maxP){var p=parseFloat((lojaGetPreco(r)||'0').replace(/[^\d.]/g,''));if(p&&p>maxP)return false;}
+    return true;
+  });
+
+  document.getElementById('count-loja').textContent=data.length+' item'+(data.length===1?'':\'s')+' em '+LOJA_LABELS[cat];
+
+  if(!data.length){
+    g.innerHTML=emptyMsg(LOJA_SYMS[cat],rows.length?'Nenhum resultado':\'Nenhum item carregado');
+    return;
+  }
+
+  var accent=lojaCardAccent(cat);
+  var grouped={};
+  data.forEach(function(r){
+    var c=lojaGetCat(r)||'Geral';
+    if(!grouped[c])grouped[c]=[];
+    grouped[c].push(r);
+  });
+
+  var html='';
+  Object.keys(grouped).forEach(function(grpName){
+    var grp=grouped[grpName];
+    if(Object.keys(grouped).length>1){
+      html+='<div style="grid-column:1/-1;margin:0.5rem 0 0.3rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);">'+
+        '<span style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:'+accent+';letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;">'+grpName+'</span>'+
+        '<span style="font-family:Raleway,sans-serif;font-size:0.62rem;color:var(--text-faint);margin-left:0.5rem;">'+grp.length+' item'+(grp.length===1?'':'s')+'</span>'+
+      '</div>';
+    }
+    grp.forEach(function(r){
+      var n=lojaGetField(r);
+      var desc=lojaGetDesc(r);
+      var tags=lojaGetTags(r,cat);
+      var rCopy={};for(var k in r)rCopy[k]=r[k];
+      rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';
+      // Build modal desc from all relevant fields
+      var modalFields=[];
+      Object.keys(r).forEach(function(k){
+        var kl=k.toLowerCase();
+        var skip=['categoria','sub-categoria','nivel','n\u00edvel'];
+        var nameKeys=lojaGetField(r);
+        if(r[k]===nameKeys)return;
+        if(r[k]&&r[k].trim()&&skip.indexOf(kl)===-1) modalFields.push(k);
+      });
+      rCopy['_modal_fields']=JSON.stringify(modalFields);
+
+      html+='<div class="card" style="--card-accent:'+accent+';--card-accent-faint:'+accent.replace(')',',0.1)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+        '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
+          '<div class="card-type" style="color:'+accent+';">'+LOJA_LABELS[cat]+'</div>'+
+          (lojaGetPreco(r)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r)+' fl</span>':\'')+
+        '</div>'+
+        '<div class="card-name">'+n+'</div>'+
+        (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
+        '<div class="card-tags">'+tags.map(function(t){return tag(t.label,t.cls);}).join('')+ '</div>'+
+      '</div>';
+    });
+  });
+
+  g.innerHTML='<div class="cards-grid" style="display:contents;">'+html+'</div>';
+}
+
+function openLojaModal(idx){
+  var row=_modalStore[idx];
+  var n=row['_nome_display']||'(sem nome)';
+  var cat=row['_loja_cat']||'itens';
+  var accent=lojaCardAccent(cat);
+  var html='<div class="modal-type" style="color:'+accent+'">'+LOJA_LABELS[cat]+'</div>'+
+    '<h2 class="modal-name">'+n+'</h2>';
+
+  var preco=lojaGetPreco(row);
+  var desc=lojaGetDesc(row);
+  var tags=lojaGetTags(row,cat);
+
+  if(desc) html+='<div class="modal-desc">'+formatDesc(desc.replace(/<br>/g,'\n'))+'</div>';
+
+  // Structured fields
+  var skip=['_nome_display','_loja_cat','_vd_cat','_modal_fields'];
+  var skipLower=['categoria','sub-categoria','n\u00edvel','nivel','cor','complexidade'];
+  var nameVal=n;
+  var fields=Object.keys(row).filter(function(k){
+    if(skip.indexOf(k)>-1)return false;
+    var kl=k.toLowerCase().replace(/[^a-z]/g,'');
+    if(skipLower.indexOf(k.toLowerCase().trim())>-1)return false;
+    if(!row[k]||!row[k].trim())return false;
+    if(row[k]===nameVal||row[k]===preco)return false;
+    // Skip desc fields (already shown above)
+    var descKeys=['descri\u00e7\u00e3o','descricao','efeito','uso / descri\u00e7\u00e3o','efeito e descri\u00e7\u00e3o','propriedades','propriedades e observa\u00e7\u00f5es'];
+    if(descKeys.indexOf(k.toLowerCase())>-1)return false;
+    return true;
+  });
+
+  if(fields.length){
+    html+='<hr class="modal-divider"><div class="modal-fields" style="grid-template-columns:1fr 1fr;">';
+    fields.forEach(function(k){
+      html+='<div class="modal-field'+(row[k].length>60?' full':'')+'"><label>'+k+'</label><p>'+row[k]+'</p></div>';
+    });
+    html+='</div>';
+  }
+
+  // Price highlight at bottom
+  if(preco){
+    html+='<div style="margin-top:1rem;padding:0.6rem 0.9rem;background:rgba(201,164,74,0.08);border:1px solid rgba(201,164,74,0.25);border-radius:6px;display:flex;align-items:center;gap:0.6rem;">'+
+      '<span style="font-family:Cinzel,serif;font-size:0.65rem;font-weight:700;color:var(--gold-light);opacity:0.7;text-transform:uppercase;letter-spacing:0.12em;">Pre\u00e7o</span>'+
+      '<span style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:var(--gold-light);">'+preco+' florins</span>'+
+    '</div>';
+  }
+
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('modalOverlay').classList.add('open');
 }
 
 // ── RENDER GRIMÓRIO ──
