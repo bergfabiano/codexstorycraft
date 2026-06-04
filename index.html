@@ -1569,17 +1569,37 @@ async function autoLoadAll(){
   else setStatus('err','Falha');
 }
 
+// Proxy CORS para quando o arquivo é aberto localmente (file://)
+var CORS_PROXY='https://corsproxy.io/?';
+function isFileProtocol(){ return location.protocol==='file:'; }
+
+async function fetchCSV(url){
+  var sep=url.indexOf('?')>-1?'&':'?';
+  var fullUrl=url+sep+'t='+Date.now();
+  // Tenta direto primeiro
+  try{
+    var res=await fetch(fullUrl);
+    if(res.ok){
+      var text=await res.text();
+      if(text&&text.indexOf('Host not in allowlist')===-1) return text;
+    }
+  }catch(e){}
+  // Fallback: proxy CORS (funciona em file:// e ambientes com CORS restrito)
+  try{
+    var proxyUrl=CORS_PROXY+encodeURIComponent(url);
+    var res2=await fetch(proxyUrl);
+    if(res2.ok){
+      var text2=await res2.text();
+      if(text2&&text2.indexOf('Host not in allowlist')===-1) return text2;
+    }
+  }catch(e2){}
+  return null;
+}
+
 async function autoLoadTab(tabKey,url){
   try{
-    var sep=url.indexOf('?')>-1?'&':'?';
-    var res=await fetch(url+sep+'t='+Date.now());
-    if(!res.ok) return false;
-    var text=await res.text();
-    if(!text||text.indexOf('Host not in allowlist')>-1){
-      showDebug(tabKey,'Bloqueado pelo Google (CORS). Cole a URL e clique Invocar Dados.');
-      return false;
-    }
-    // Planilhas de continente Velkarion têm linhas de título antes do cabeçalho real
+    var text=await fetchCSV(url);
+    if(!text) return false;
     var isVelCont=(tabKey.indexOf('vel_')===0&&tabKey!=='vel_velkarion'&&tabKey!=='vel_indice');
     var rows=isVelCont?parseCSVVelCont(text):parseCSV(text,true);
     if(!rows.length) return false;
@@ -1737,9 +1757,8 @@ async function loadSheet(){
   var url=buildCSVUrl(rawUrl);
   setStatus('loading','Invocando...');
   try{
-    var res=await fetch(url);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    var text=await res.text();
+    var text=await fetchCSV(url);
+    if(!text) throw new Error('Não foi possível carregar a planilha.');
     var rows=parseCSV(text);
     if(!rows.length) throw new Error('Planilha vazia.');
     var tab=document.getElementById('sheetTab').value.toLowerCase();
