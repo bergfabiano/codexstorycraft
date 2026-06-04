@@ -1973,6 +1973,14 @@ function parseRacialBonus(text){
   return entries;
 }
 
+function cntPopulateRaces(){
+  var sel=document.getElementById('cnt-raca');if(!sel)return;
+  sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
+  DB.racas.forEach(function(r){
+    var n=racaNome(r);if(!n||n==='(sem nome)')return;
+    var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
+  });
+}
 function cntApplyRace(){
   var sel=document.getElementById('cnt-raca');
   RACIAL_CHOICES=[];
@@ -2040,6 +2048,10 @@ function cntChoiceSelect(idx,val){
   cntSyncRbFromChoices();
   cntUpdate();
 }
+
+document.getElementById('cnt-nivel').addEventListener('input',cntUpdate);
+document.getElementById('cnt-raca').addEventListener('change',cntApplyRace);
+['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('input',cntUpdate);});
 </script>
 </body>
 </html>
