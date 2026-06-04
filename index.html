@@ -1788,22 +1788,30 @@ function lojaGetField(r){
     r['Nome']||r['Imbuído']||r['Poção']||r['Veneno']||r['Veneno Sicário']||
     r['Minério']||r['Auxiliar']||r['Gema']||r['Joia']||r[Object.keys(r)[0]]||'(sem nome)';
 }
-function lojaGetPreco(r){
+function lojaGetPreco(r,cat){
   return r['Preço']||r['Custo']||r['Valor']||r['Valor Armas']||r['Armas']||'';
 }
-function lojaGetCat(r){
+function lojaGetCat(r,cat){
+  if(cat==='imbuidos') return r['Escala']||r['Nível']||r['Categoria']||r['Sub-categoria']||'';
+  if(cat==='minerios'||cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
   return r['Categoria']||r['Sub-categoria']||r['Nível']||r['Cor']||r['Complexidade']||'';
 }
-function lojaGetDesc(r){
-  var d=r['Descrição']||r['Efeito']||r['Uso / Descrição']||r['Efeito e Descrição']||
-    r['Propriedades']||r['Propriedades e Observações']||r['Descrição']||'';
-  // Format line breaks
+function lojaGetDesc(r,cat){
+  var d='';
+  if(cat==='focus'){
+    d=r['Descrição']||r['Efeito']||r['Uso / Descrição']||r['Descrição do Fócus']||'';
+  } else if(cat==='armadura'){
+    d=r['Descrição']||r['Propriedades']||r['Propriedades e Observações']||r['Efeito']||'';
+  } else {
+    d=r['Descrição']||r['Efeito']||r['Uso / Descrição']||r['Efeito e Descrição']||
+      r['Propriedades']||r['Propriedades e Observações']||'';
+  }
   if(d) d=d.replace(/\n/g,'<br>');
   return d;
 }
 function lojaGetTags(r,cat){
   var tags=[];
-  var p=lojaGetPreco(r);
+  var p=lojaGetPreco(r,cat);
   if(p) tags.push({label:p+' fl',cls:'tag-gold'});
   if(cat==='armas'||cat==='focus'){
     var dmg=r['Dano']||'';var tipo=r['Tipo do Dano']||r['Tipo de Dano']||'';
@@ -1814,6 +1822,7 @@ function lojaGetTags(r,cat){
   if(cat==='armadura'){
     var mit=r['Bônus (Mitigação de Dano)']||'';
     if(mit) tags.push({label:'MD '+mit,cls:'tag-conjurador'});
+    var tip=r['Tipo']||r['Categoria']||''; if(tip) tags.push({label:tip,cls:'tag-gray'});
   }
   if(cat==='pocoes'||cat==='alquimicos'||cat==='venenos'||cat==='sicario'){
     var niv=r['Nível']||''; if(niv) tags.push({label:'Nv '+niv,cls:'tag-rare'});
@@ -1821,6 +1830,9 @@ function lojaGetTags(r,cat){
   if(cat==='minerios'||cat==='gemas'||cat==='joias'){
     var comp=r['Complexidade']||''; if(comp) tags.push({label:comp,cls:'tag-rare'});
     var cor=r['Cor']||''; if(cor) tags.push({label:cor,cls:'tag-gray'});
+  }
+  if(cat==='imbuidos'){
+    var escala=r['Escala']||r['Nível']||''; if(escala) tags.push({label:escala,cls:'tag-rare'});
   }
   var esp=r['Espaços']||''; if(esp&&esp!=='0') tags.push({label:esp+' esp',cls:'tag-gray'});
   return tags;
@@ -1875,7 +1887,7 @@ function renderLoja(){
 
   // Populate category filter
   var cats=[];
-  rows.forEach(function(r){var c=lojaGetCat(r);if(c&&cats.indexOf(c)===-1)cats.push(c);});
+  rows.forEach(function(r){var c=lojaGetCat(r,cat);if(c&&cats.indexOf(c)===-1)cats.push(c);});
   var fCat=document.getElementById('f-loja-cat');
   if(fCat){
     var cur=fCat.value;
@@ -1890,9 +1902,9 @@ function renderLoja(){
     // Skip rows where first value equals its column name (header leak)
     if(keys.length&&keys[0].trim()===n.trim()) return false;
     if(!n||n==='(sem nome)') return false;
-    if(s&&(n+' '+lojaGetDesc(r)+' '+lojaGetCat(r)).toLowerCase().indexOf(s)===-1) return false;
-    if(selCat&&lojaGetCat(r)!==selCat) return false;
-    if(maxP){var p=parseFloat((lojaGetPreco(r)||'0').replace(/[^\d.]/g,''));if(p&&p>maxP)return false;}
+    if(s&&(n+' '+lojaGetDesc(r,cat)+' '+lojaGetCat(r,cat)).toLowerCase().indexOf(s)===-1) return false;
+    if(selCat&&lojaGetCat(r,cat)!==selCat) return false;
+    if(maxP){var p=parseFloat((lojaGetPreco(r,cat)||'0').replace(/[^\d.]/g,''));if(p&&p>maxP)return false;}
     return true;
   });
 
@@ -1906,15 +1918,27 @@ function renderLoja(){
   var accent=lojaCardAccent(cat);
   var grouped={};
   data.forEach(function(r){
-    var c=lojaGetCat(r)||'Geral';
+    var c=lojaGetCat(r,cat)||'Geral';
     if(!grouped[c])grouped[c]=[];
     grouped[c].push(r);
   });
 
+  // Para imbuidos: ordena grupos pela escala de poder
+  var groupKeys=Object.keys(grouped);
+  if(cat==='imbuidos'){
+    var scaleOrder=['Comum','Incomum','Raro','Lendário','Colossal','Titânico','Épico','Primordial','Divino','Mítico'];
+    groupKeys.sort(function(a,b){
+      var ia=scaleOrder.findIndex(function(s){return a.toLowerCase().indexOf(s.toLowerCase())>-1;});
+      var ib=scaleOrder.findIndex(function(s){return b.toLowerCase().indexOf(s.toLowerCase())>-1;});
+      if(ia===-1)ia=999;if(ib===-1)ib=999;
+      return ia-ib||a.localeCompare(b,'pt');
+    });
+  }
+
   var html='';
-  Object.keys(grouped).forEach(function(grpName){
+  groupKeys.forEach(function(grpName){
     var grp=grouped[grpName];
-    if(Object.keys(grouped).length>1){
+    if(groupKeys.length>1){
       html+='<div style="grid-column:1/-1;margin:0.5rem 0 0.3rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);">'+
         '<span style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:'+accent+';letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;">'+grpName+'</span>'+
         '<span style="font-family:Raleway,sans-serif;font-size:0.62rem;color:var(--text-faint);margin-left:0.5rem;">'+grp.length+' item'+(grp.length===1?'':'s')+'</span>'+
@@ -1922,7 +1946,7 @@ function renderLoja(){
     }
     grp.forEach(function(r){
       var n=lojaGetField(r);
-      var desc=lojaGetDesc(r);
+      var desc=lojaGetDesc(r,cat);
       var tags=lojaGetTags(r,cat);
       var rCopy={};for(var k in r)rCopy[k]=r[k];
       rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';
@@ -1940,7 +1964,7 @@ function renderLoja(){
       html+='<div class="card" style="--card-accent:'+accent+';--card-accent-faint:'+accent.replace(')',',0.1)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
           '<div class="card-type" style="color:'+accent+';">'+LOJA_LABELS[cat]+'</div>'+
-          (lojaGetPreco(r)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r)+' fl</span>':'')+
+          (lojaGetPreco(r,cat)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r,cat)+' fl</span>':'')+
         '</div>'+
         '<div class="card-name">'+n+'</div>'+
         (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
@@ -1960,8 +1984,8 @@ function openLojaModal(idx){
   var html='<div class="modal-type" style="color:'+accent+'">'+LOJA_LABELS[cat]+'</div>'+
     '<h2 class="modal-name">'+n+'</h2>';
 
-  var preco=lojaGetPreco(row);
-  var desc=lojaGetDesc(row);
+  var preco=lojaGetPreco(row,cat);
+  var desc=lojaGetDesc(row,cat);
   var tags=lojaGetTags(row,cat);
 
   if(desc) html+='<div class="modal-desc">'+formatDesc(desc.replace(/<br>/g,'\n'))+'</div>';
