@@ -799,6 +799,7 @@ main{
     </div>
 
     <div class="debug-banner" id="vantagensdesvantagens-debug"></div>
+    <div id="vd-debug-info" style="font-size:0.7rem;color:lime;background:#000;padding:0.5rem;margin-bottom:0.5rem;word-break:break-all;display:none;"></div>
     <div class="cards-grid" id="grid-vantagens">
       <div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando vantagens...</h3></div>
     </div>
@@ -921,13 +922,13 @@ var SHEET_URLS={
   dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
   estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
   deuses:          "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv",
-  vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2028187038&single=true&output=csv",
-  vd_combate:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=2057822365&single=true&output=csv",
-  vd_magicas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1374290350&single=true&output=csv",
-  vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1029747843&single=true&output=csv",
-  vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=596445451&single=true&output=csv",
-  vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=601674192&single=true&output=csv",
-  vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRCpZUfFMaT3q4TfwO9WkJnlvVl4LlMjQlhFelc3mhJEF1tvdk2LankCqAoS3KTHnz2toWiNnYaYgEL/pub?gid=1242532645&single=true&output=csv"
+  vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=2089466067&single=true&output=csv",
+  vd_combate:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=2084160057&single=true&output=csv",
+  vd_magicas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=931293028&single=true&output=csv",
+  vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=358878802&single=true&output=csv",
+  vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=899034162&single=true&output=csv",
+  vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1465549294&single=true&output=csv",
+  vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1580295224&single=true&output=csv"
 };
 
 // Imagens
@@ -1055,7 +1056,9 @@ function parseCSV(text, noSkip){
     function looksLikeHeader(hdrs){return hdrs.some(function(h){
       var hc=h.toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
       var hn=hc.replace(/[^a-z]/g,'');
-      return knownCols.indexOf(hc)>-1||knownCols.indexOf(hn)>-1;
+      // Also check: single word capitalized columns like 'Nome', 'Requisito', 'Descricao'
+      var singleWordCols=['nome','requisito','descricao','descricao','vantagem','desvantagem'];
+      return knownCols.indexOf(hc)>-1||knownCols.indexOf(hn)>-1||singleWordCols.indexOf(hc)>-1||singleWordCols.indexOf(hn)>-1;
     });}
     var maxSkip=5;
     while(!looksLikeHeader(headers)&&maxSkip-->0&&i<len){headers=pl();headers=headers.map(function(h){return h.replace(/^\"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});}
@@ -1108,6 +1111,26 @@ function distributeData(rows,tab){
   var raw=Object.keys(rows[0]||{}),keys=raw.map(function(k){return k.toLowerCase();}),norm=raw.map(normalizeKey);
   // VD sub-categories
   // Remove linhas fantasma onde o valor da coluna de nome é igual ao próprio nome da coluna (cabeçalho duplicado)
+  // Se os cabeçalhos reais estão na primeira linha de dados, reorganiza
+  function fixVdHeaders(rows){
+    if(!rows.length) return rows;
+    var keys=Object.keys(rows[0]);
+    // Verifica se o primeiro valor da primeira linha é "Nome" (cabeçalho misturado com dados)
+    var firstVal=(rows[0][keys[0]]||'').trim();
+    if(firstVal==='Nome'){
+      // A primeira linha É o cabeçalho real - usa seus valores como chaves
+      var headerRow=rows[0];
+      var newKeys=keys.map(function(k){return(headerRow[k]||k).trim();});
+      var result=[];
+      for(var i=1;i<rows.length;i++){
+        var oldRow=rows[i],newRow={};
+        for(var j=0;j<keys.length;j++){newRow[newKeys[j]]=oldRow[keys[j]]||'';}
+        result.push(newRow);
+      }
+      return result;
+    }
+    return rows;
+  }
   function cleanVdRows(rows){
     return rows.filter(function(r){
       var keys=Object.keys(r);
@@ -1124,13 +1147,17 @@ function distributeData(rows,tab){
     });
   }
 
-  if(tab==='vd_versateis'){VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;}
-  if(tab==='vd_combate'){VD.combate=cleanVdRows(rows);VD_STATUS.combate='ok';updateVdBadge('combate',VD.combate.length);return;}
-  if(tab==='vd_magicas'){VD.magicas=cleanVdRows(rows);VD_STATUS.magicas='ok';updateVdBadge('magicas',VD.magicas.length);return;}
-  if(tab==='vd_ataques'){VD.ataques=cleanVdRows(rows);VD_STATUS.ataques='ok';updateVdBadge('ataques',VD.ataques.length);return;}
-  if(tab==='vd_superpoderes'){VD.superpoderes=cleanVdRows(rows);VD_STATUS.superpoderes='ok';updateVdBadge('superpoderes',VD.superpoderes.length);return;}
-  if(tab==='vd_desvantagens'){VD.desvantagens=cleanVdRows(rows);VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',VD.desvantagens.length);return;}
-  if(tab==='vd_maldicoes'){VD.maldicoes=cleanVdRows(rows);VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',VD.maldicoes.length);return;}
+  if(tab==='vd_versateis'){
+    rows=fixVdHeaders(rows);
+    if(rows.length){var dbg=document.getElementById('vd-debug-info');if(dbg){var k=Object.keys(rows[0]);dbg.style.display='block';dbg.innerHTML='Keys: '+k.map(function(x){return JSON.stringify(x);}).join(' | ')+'<br>Row0: '+k.map(function(x){return x+'='+JSON.stringify((rows[0][x]||'').substring(0,20));}).join(' | ');}}
+    VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;
+  }
+  if(tab==='vd_combate'){rows=fixVdHeaders(rows);VD.combate=cleanVdRows(rows);VD_STATUS.combate='ok';updateVdBadge('combate',VD.combate.length);return;}
+  if(tab==='vd_magicas'){rows=fixVdHeaders(rows);VD.magicas=cleanVdRows(rows);VD_STATUS.magicas='ok';updateVdBadge('magicas',VD.magicas.length);return;}
+  if(tab==='vd_ataques'){rows=fixVdHeaders(rows);VD.ataques=cleanVdRows(rows);VD_STATUS.ataques='ok';updateVdBadge('ataques',VD.ataques.length);return;}
+  if(tab==='vd_superpoderes'){rows=fixVdHeaders(rows);VD.superpoderes=cleanVdRows(rows);VD_STATUS.superpoderes='ok';updateVdBadge('superpoderes',VD.superpoderes.length);return;}
+  if(tab==='vd_desvantagens'){rows=fixVdHeaders(rows);VD.desvantagens=cleanVdRows(rows);VD_STATUS.desvantagens='ok';updateVdBadge('desvantagens',VD.desvantagens.length);return;}
+  if(tab==='vd_maldicoes'){rows=fixVdHeaders(rows);VD.maldicoes=cleanVdRows(rows);VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',VD.maldicoes.length);return;}
   // Legacy vantagens (fallback)
   if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();return;}
   if(tab==='racas_detail'){DB.racas=rows;renderRacas();return;}
@@ -1578,7 +1605,7 @@ function renderVantagens(){
     var n    = vdNome(r);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;rCopy['_vd_cat']=cat;r=rCopy;
     var custo= vdCusto(r);
-    var pre  = vdPrereq(r);
+    var pre  = vdPrereq(r)||(r['Requisito']||'').trim()||(r['requisito']||'').trim();
     var d    = vdDesc(r);
     var tipo = gf(r,'Tipo','tipo');
     var escola= gf(r,'Escola','escola');
@@ -1754,13 +1781,21 @@ function openModalIdx(idx){openModal(_modalStore[idx]);}
 
 function formatDesc(text){
   if(!text) return '';
-  var lines=text.split(/\n/);
+  var paras=text.split(/\n\n+/);
   var html='';
-  lines.forEach(function(line){
-    line=line.trim();if(!line)return;
-    var m=line.match(/^([A-Z\xC0-\xD6\xD8-\xDE][A-Za-z\xC0-\xFF][^:]{1,50}):\s*([\s\S]+)/);
+  paras.forEach(function(para){
+    para=para.trim();if(!para)return;
+    var prereqMatch=para.match(/^Pr\u00e9-requisito:\s*([\s\S]+)$/i);
+    if(prereqMatch){
+      html+='<div class="modal-sub" style="border-left-color:var(--gold-light);margin-top:0.75rem;">'+
+        '<span class="modal-sub-title" style="color:var(--gold-light);">Pr\u00e9-requisito</span>'+
+        '<span class="modal-sub-body">'+prereqMatch[1].trim()+'</span>'+
+      '</div>';
+      return;
+    }
+    var m=para.match(/^([A-Z\xC0-\xD6\xD8-\xDE][A-Za-z\xC0-\xFF][^:]{1,50}):\s*([\s\S]+)/);
     if(m) html+='<div class="modal-sub"><span class="modal-sub-title">'+m[1]+'</span><span class="modal-sub-body">'+m[2].trim()+'</span></div>';
-    else html+='<p>'+line+'</p>';
+    else html+='<p>'+para.replace(/\n/g,'<br>')+'</p>';
   });
   return html;
 }
@@ -1793,7 +1828,7 @@ function openModal(rowOrStr){
   html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
   // Para vantagens: mostra custo e pré-requisito de forma elegante
   if(isVantagem){
-    var vCusto=vdCusto(row),vPrereq=vdPrereq(row),vExtra=gf(row,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
+    var vCusto=vdCusto(row),vPrereq=vdPrereq(row)||(row['Requisito']||'').trim()||(row['requisito']||'').trim(),vExtra=gf(row,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
     var vIsNeg=!!(row['_vd_cat']&&(row['_vd_cat']==='desvantagens'||row['_vd_cat']==='maldicoes'));
     if(vCusto||vPrereq||vExtra){
       html+='<hr class="modal-divider"><div style="display:flex;flex-wrap:wrap;gap:0.75rem;">';
