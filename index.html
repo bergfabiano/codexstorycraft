@@ -1312,9 +1312,14 @@ function updateVdBadge(cat,count){
 }
 
 function updateStats(){
-  var m={racas:'racas',classes:'classes',grimorio:'grimorio',itens:'itens',deuses:'deuses',estigmas:'estigmas'};
+  var m={racas:'racas',classes:'classes',grimorio:'grimorio',deuses:'deuses',estigmas:'estigmas'};
   for(var k in m){var el=document.getElementById('stat-'+m[k]);if(el)el.textContent=DB[k].length||'—';}
-  // Vantagens = sum of all VD categories
+  // Itens = soma de todos os arrays da LOJA
+  var totalItens=0;
+  for(var lk in LOJA) totalItens+=(LOJA[lk]||[]).length;
+  var elIt=document.getElementById('stat-itens');
+  if(elIt) elIt.textContent=totalItens||'—';
+  // Vantagens = soma de todas as categorias VD
   var totalVd=0;
   for(var vc in VD) totalVd+=VD[vc].length;
   var elVd=document.getElementById('stat-vantagens');
@@ -2263,9 +2268,9 @@ function cntUpdate(){
     var rbC=rb>0?'var(--green)':(rb<0?'var(--blood)':'var(--text-faint)'),rbT=rb>0?'+'+rb:String(rb);
     rows+='<tr>';
     rows+='<td><div style="display:flex;align-items:center;gap:0.6rem;"><span style="font-size:1.1rem;color:var(--violet-bright);opacity:0.7;">'+a.sym+'</span><div><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--violet-bright);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></div></div></td>';
-    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange("+a.id+",-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange("+a.id+",1)"':'disabled')+'>+</button></div></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
     var rbCanUp=(rb<maxA),rbCanDown=(rb>-maxA);
-    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(rbCanDown?'onclick="cntRbChange(""+a.id+",−1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+rbC+';">'+rb+'</span><button class="attr-btn" '+(rbCanUp?'onclick="cntRbChange("+a.id+",1)"':'disabled')+'>+</button></div></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(rbCanDown?'onclick="cntRbChange(\''+a.id+'\',-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+rbC+';">'+rb+'</span><button class="attr-btn" '+(rbCanUp?'onclick="cntRbChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
     rows+='<td style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
     rows+='</tr>';
