@@ -1590,17 +1590,84 @@ async function autoLoadTab(tabKey,url){
   }
 }
 
-// Parser para planilhas de continentes: pula linhas de título até encontrar o cabeçalho real
+// Parser para planilhas de continentes Velkarion.
+// Estrutura da planilha: cada COLUNA é uma região/local.
+// A primeira coluna contém os nomes dos campos (CAMPO/CAPITAL, RESUMO GERAL, DESTAQUES, CENARIO).
+// As demais colunas contêm os valores de cada campo para cada região.
+// Retorna um array de objetos {CAMPO/CAPITAL:..., RESUMO GERAL:..., DESTAQUES:..., CENARIO:...}
 function parseCSVVelCont(text){
+  // 1. Parse o CSV inteiro em matriz bruta (array de arrays)
+  var matrix=[];
   var lines=text.split(/\r?\n/);
-  var headerIdx=-1;
-  var velCols=['campo/capital','campo','resumo geral','resumo','destaques','cenario','cenário'];
   for(var li=0;li<lines.length;li++){
-    var low=lines[li].toLowerCase().replace(/[\uFEFF\u200B\u00A0"]/g,'');
-    if(velCols.some(function(c){return low.indexOf(c)>-1;})){headerIdx=li;break;}
+    var row=parseCsvLine(lines[li]);
+    if(row.length>0) matrix.push(row);
   }
-  if(headerIdx===-1) return parseCSV(text,false);
-  return parseCSV(lines.slice(headerIdx).join('\n'),true);
+  if(!matrix.length) return [];
+
+  // 2. Encontra a linha onde a primeira célula é um dos nomes de campo conhecidos
+  //    (ex: "CAMPO/CAPITAL"). Linhas antes disso são títulos/metadados — ignora.
+  var dataStart=-1;
+  var velFieldNames=['campo/capital','campo','resumo geral','resumo','destaques','cenario','cenário','resumo geral'];
+  for(var ri=0;ri<matrix.length;ri++){
+    var cell=(matrix[ri][0]||'').toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
+    if(velFieldNames.indexOf(cell)>-1){dataStart=ri;break;}
+  }
+  if(dataStart===-1){
+    // Fallback: usa parseCSV normal
+    return parseCSV(text,false);
+  }
+
+  // 3. Extrai os dados a partir de dataStart.
+  //    Cada linha = um campo. Cada coluna (a partir da col 1) = uma região.
+  //    Coluna 0 = nome do campo.
+  var fieldRows=matrix.slice(dataStart);
+  if(!fieldRows.length) return [];
+
+  // Quantas regiões existem = número máximo de colunas - 1
+  var maxCols=0;
+  for(var ri=0;ri<fieldRows.length;ri++){
+    if(fieldRows[ri].length>maxCols) maxCols=fieldRows[ri].length;
+  }
+  var numRegions=maxCols-1;
+  if(numRegions<=0) return [];
+
+  // 4. Constrói um objeto por região (coluna)
+  var results=[];
+  for(var ci=1;ci<=numRegions;ci++){
+    var obj={};
+    for(var fi=0;fi<fieldRows.length;fi++){
+      var fieldName=(fieldRows[fi][0]||'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
+      var val=(fieldRows[fi][ci]||'').trim();
+      if(fieldName) obj[fieldName]=val;
+    }
+    // Só inclui se tiver algum valor não-vazio além do campo/capital
+    var hasContent=Object.values(obj).some(function(v){return v.length>0;});
+    if(hasContent) results.push(obj);
+  }
+  return results;
+}
+
+// Parse de uma linha CSV respeitando aspas
+function parseCsvLine(line){
+  var fields=[];
+  var i=0,len=line.length,cur='';
+  while(i<len){
+    if(line[i]==='"'){
+      i++;
+      while(i<len){
+        if(line[i]==='"'&&i+1<len&&line[i+1]==='"'){cur+='"';i+=2;}
+        else if(line[i]==='"'){i++;break;}
+        else{cur+=line[i++];}
+      }
+    } else if(line[i]===','){
+      fields.push(cur.trim());cur='';i++;
+    } else {
+      cur+=line[i++];
+    }
+  }
+  fields.push(cur.trim());
+  return fields;
 }
 
 function showDebug(k,msg){
@@ -2939,22 +3006,15 @@ function renderVelkarionCont(){
     return;
   }
 
+  var accentMap={ignaria:'#ff6b35',murazuma:'#7ecff5',khemet:'#e8c56a',vekashia:'#c084fc',wintara:'#6dffb3',exparktar:'#f72585',lunox:'#00d4ff',sharandor:'#bb86fc'};
+  var accent=accentMap[cont.id]||'#c9a44a';
+
   var data=rows.filter(function(r){
-    // Filtra linhas onde o campo/capital é literalmente o nome da coluna (cabeçalho duplicado)
-    var campoKey=velFindKey(r,['CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo']);
-    if(!campoKey) return false;
-    var v=(r[campoKey]||'').trim();
-    if(!v) return false;
-    // Descarta se o valor é o próprio nome da coluna (cabeçalho vazando)
-    if(v.toLowerCase()==='campo/capital'||v.toLowerCase()==='campo') return false;
-    // Descarta linhas completamente vazias
-    var vals=Object.values(r).filter(function(x){return (x||'').trim();});
-    if(!vals.length) return false;
-    // Filtro de busca
-    if(s){
-      var flat=Object.values(r).join(' ').toLowerCase();
-      return flat.indexOf(s)>-1;
-    }
+    var nome=velGetField(r,'CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo');
+    if(!nome) return false;
+    var nomeLow=nome.toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
+    if(nomeLow==='campo/capital'||nomeLow==='campo') return false;
+    if(s){ return Object.values(r).join(' ').toLowerCase().indexOf(s)>-1; }
     return true;
   });
 
@@ -2966,20 +3026,28 @@ function renderVelkarionCont(){
   }
 
   grid.innerHTML=data.map(function(r){
-    // Nome: valor da coluna CAMPO/CAPITAL
-    var campoKey=velFindKey(r,['CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo']);
-    var nome=(campoKey?r[campoKey]:'').trim();
-    // Remove prefixos de formatação tipo ">> " ou "Capital: "
-    var nomeClean=nome.replace(/^>+\s*/,'').replace(/^Capital:\s*/i,'');
+    var nome=velGetField(r,'CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo');
+    var nomeClean=nome.replace(/^>+\s*/,'').replace(/^[Cc]apital[:\s]+/,'').trim();
 
     var resumo=velGetField(r,'RESUMO GERAL','Resumo Geral','resumo');
     var dest=velGetField(r,'DESTAQUES','Destaques','destaques');
     var cenario=velGetField(r,'CENARIO','Cenário','cenario','CÉNARIO');
 
-    // Determina tipo: se o valor tem ">> " na frente = entrada/região principal; se "Capital:" = capital
     var typeLabel='Região';
     if(/^>+\s*/.test(nome)) typeLabel='Entrada';
-    else if(/^capital:/i.test(nome)) typeLabel='Capital';
+    else if(/^[Cc]apital[:\s]/.test(nome)) typeLabel='Capital';
+
+    // Preview: primeira frase do resumo
+    var preview='';
+    if(resumo) preview=resumo;
+    else if(cenario) preview=cenario;
+
+    // Destaques: pega primeiro item
+    var destLine='';
+    if(dest){
+      var first=dest.split(/[•\n]/)[0].replace(/^[-–·>]+\s*/,'').trim();
+      if(first) destLine='· '+first;
+    }
 
     var storeObj={};
     Object.keys(r).forEach(function(k){storeObj[k]=r[k];});
@@ -2989,26 +3057,25 @@ function renderVelkarionCont(){
     storeObj['_vel_sym']=cont.sym;
     storeObj['_vel_type']=typeLabel;
 
-    return '<div class="vel-region-card '+cont.accentClass+'" onclick="openVelRegionModal('+_storeModal(storeObj)+')">'+
+    return '<div class="vel-region-card '+cont.accentClass+'" style="--region-accent:'+accent+'" onclick="openVelRegionModal('+_storeModal(storeObj)+')">' +
       '<div class="vel-region-type">'+cont.sym+' '+cont.label+' · '+typeLabel+'</div>'+
       '<div class="vel-region-name">'+(nomeClean||nome)+'</div>'+
-      (resumo?'<div class="vel-region-desc">'+resumo+'</div>':'')+
-      (dest?'<div class="vel-region-highlights">'+dest+'</div>':'')+
-      '<div class="vel-region-tags">'+
-        (cenario?'<span class="tag tag-gray">'+cenario.substring(0,35)+'</span>':'')+
-      '</div>'+
+      (preview?'<div class="vel-region-desc">'+preview+'</div>':'')+
+      (destLine?'<div class="vel-region-highlights">'+destLine+'</div>':'')+
     '</div>';
   }).join('');
 }
 
-// Helper: encontra a primeira chave que bate com qualquer dos nomes dados
+// Helper: encontra a chave do objeto que bate (case-insensitive, ignora acentos e espaços invisíveis)
 function velFindKey(r, names){
   var keys=Object.keys(r);
+  var cleanedKeys=keys.map(function(k){
+    return k.replace(/[\uFEFF\u200B\u00A0]/g,'').trim().toLowerCase();
+  });
   for(var ni=0;ni<names.length;ni++){
     var nl=names[ni].toLowerCase();
-    for(var ki=0;ki<keys.length;ki++){
-      if(keys[ki].toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim()===nl) return keys[ki];
-    }
+    var idx=cleanedKeys.indexOf(nl);
+    if(idx>-1) return keys[idx];
   }
   return null;
 }
