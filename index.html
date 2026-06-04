@@ -849,7 +849,7 @@ main{
       <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')">   &#x2615; Gastronomia</button>
       <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')">  &#x2302; Base (Melhorias)</button>
       <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')">  &#x2302; Base (Estruturas)</button>
-      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Ibu&#xED;dos</button>
+      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Imbu&#xED;dos</button>
       <button class="vd-cat-btn" data-lcat="pocoes"     onclick="switchLoja('pocoes')">    &#x2697; Po&#xE7;&#xF5;es</button>
       <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')">&#x2736; Alqu&#xED;micos</button>
       <button class="vd-cat-btn vd-cat-neg" data-lcat="venenos"    onclick="switchLoja('venenos')">   &#x2620; Venenos</button>
@@ -1986,6 +1986,19 @@ function lojaGroupAccent(cat,grpName){
   return lojaCardAccent(cat);
 }
 
+// Cor por tipo de imbuído (Categoria: Relicário, Místico, etc.)
+function imbuTipoAccent(tipo){
+  var t=(tipo||'').toLowerCase()
+    .replace(/[àáâã]/g,'a').replace(/[éê]/g,'e').replace(/[íî]/g,'i')
+    .replace(/[óôõ]/g,'o').replace(/[úû]/g,'u').replace(/[ç]/g,'c');
+  if(t.indexOf('relicario')>-1||t.indexOf('relicário')>-1) return '#e8c56a';   // dourado
+  if(t.indexOf('mistico')>-1||t.indexOf('místico')>-1)     return '#c084fc';   // lilás
+  if(t.indexOf('arcano')>-1)   return '#7ecff5';
+  if(t.indexOf('profano')>-1)  return '#f72585';
+  if(t.indexOf('elemental')>-1)return '#ff8c42';
+  return '#bb86fc'; // fallback violeta
+}
+
 // Deterministic palette color from group name
 var _grpPaletteCache={};
 function _grpPaletteColor(name, palette){
@@ -2130,11 +2143,12 @@ function renderLoja(){
         var desc=lojaGetDesc(r,cat);
         var tags=lojaGetTags(r,cat);
         var tipo=r['Categoria']||'Imbu\u00eddo'; // Relicário, Místico, etc.
+        var tipoAccent=imbuTipoAccent(tipo);      // cor do tipo
         var rCopy={};for(var k in r)rCopy[k]=r[k];
-        rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=scaleAccent;
-        html+='<div class="card" style="--card-accent:'+scaleAccent+';--card-accent-faint:'+scaleAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+        rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=tipoAccent;
+        html+='<div class="card" style="--card-accent:'+tipoAccent+';--card-accent-faint:'+tipoAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
           '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
-            '<div class="card-type" style="color:'+scaleAccent+';">'+tipo+'</div>'+
+            '<div class="card-type" style="color:'+tipoAccent+';">'+tipo+'</div>'+
             (lojaGetPreco(r,cat)?priceSpan(lojaGetPreco(r,cat),'0.85rem'):'')+
           '</div>'+
           '<div class="card-name">'+n+'</div>'+
