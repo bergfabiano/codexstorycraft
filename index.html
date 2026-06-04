@@ -690,14 +690,11 @@ main{
         <div><span class="cnt-lbl">Raça</span><select class="cnt-select" id="cnt-raca"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select></div>
         <button class="cnt-btn" onclick="cntReset()">Resetar</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;align-items:flex-end;">
-        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;width:100%;">○ Bônus Racial</span>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
+      <!-- Hidden rb inputs - managed by racial choice system -->
+      <div style="display:none;">
+        <input type="number" id="rb-for" value="0"><input type="number" id="rb-des" value="0">
+        <input type="number" id="rb-con" value="0"><input type="number" id="rb-int" value="0">
+        <input type="number" id="rb-sab" value="0"><input type="number" id="rb-car" value="0">
       </div>
       <!-- Escolhas raciais dinâmicas -->
       <div id="cnt-racial-choices" style="display:none;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid rgba(201,164,74,0.25);border-radius:8px;border-left:3px solid var(--gold-light);"></div>
@@ -1885,213 +1882,163 @@ function cntChange(atrib,delta){
 }
 function cntReset(){
   cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
-  RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
   RACIAL_CHOICES=[];
   ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=0;});
   document.getElementById('cnt-nivel').value=1;
   document.getElementById('cnt-raca').value='';
-  renderRacialChoices([]);
+  renderRacialChoices();
   cntUpdate();
 }
 // ── RACIAL BONUS SYSTEM ──
-// Bônus raciais fixos atualmente aplicados
-var RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
-// Bônus de escolha pendentes [{points:N, options:['for','des',...] or 'any', chosen:null}]
 var RACIAL_CHOICES=[];
 
-var ATTR_NAMES={
-  'força':'for','forca':'for','for':'for',
-  'destreza':'des','des':'des',
-  'constituição':'con','constituicao':'con','con':'con',
-  'inteligência':'int','inteligencia':'int','int':'int',
-  'sabedoria':'sab','sab':'sab',
-  'carisma':'car','car':'car'
+var ATTR_MAP={
+  'força':'for','forca':'for',
+  'destreza':'des',
+  'constituição':'con','constituicao':'con',
+  'inteligência':'int','inteligencia':'int',
+  'inteligencia':'int',
+  'sabedoria':'sab',
+  'carisma':'car'
 };
+var ATTR_LABELS={for:'Força',des:'Destreza',con:'Constituição',int:'Inteligência',sab:'Sabedoria',car:'Carisma'};
+var ALL_ATTRS=['for','des','con','int','sab','car'];
 
-function parseAttrName(s){
-  var sl=s.toLowerCase().trim()
+function cleanAttr(s){
+  return (s||'').toLowerCase()
     .replace(/[àáâã]/g,'a').replace(/[éê]/g,'e').replace(/[íî]/g,'i')
-    .replace(/[óôõ]/g,'o').replace(/[úû]/g,'u').replace(/[ç]/g,'c');
-  return ATTR_NAMES[sl]||null;
+    .replace(/[óôõ]/g,'o').replace(/[úû]/g,'u').replace(/[ç]/g,'c').trim();
 }
+function toAttrId(s){return ATTR_MAP[cleanAttr(s)]||null;}
 
 function parseRacialBonus(text){
-  // Returns {fixed:{for,des,con,int,sab,car}, choices:[{points,options}]}
-  var fixed={for:0,des:0,con:0,int:0,sab:0,car:0};
-  var choices=[];
-  if(!text) return {fixed:fixed,choices:choices};
+  // Returns array of {points, options:['for',...] or 'any', fixed:bool, neg:bool}
+  if(!text) return [];
+  var entries=[];
+  var t=text;
 
-  // Penalidades fixas: -1 em Força
-  var penRegex=/[−\-](\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)/g;
-  var pm;
-  while((pm=penRegex.exec(text))!==null){
-    var pa=parseAttrName(pm[2]);
-    if(pa) fixed[pa]-=parseInt(pm[1]);
+  // Penalidades: -1 em X
+  var penRe=/[-−](\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)/g, pm;
+  while((pm=penRe.exec(t))!==null){
+    var pa=toAttrId(pm[2]);
+    if(pa) entries.push({points:-parseInt(pm[1]),options:[pa],fixed:true,neg:true});
   }
 
-  // +N em X e +N em Y (fixo)
-  var fixedPairs=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)(?:\s+e\s+\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+))?(?:\s+e\s+\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+))?/g;
-  var fm;
-  while((fm=fixedPairs.exec(text))!==null){
-    // Check it's not "X ou Y" (choice)
-    var afterMatch=text.substring(fm.index+fm[0].length,fm.index+fm[0].length+8);
-    if(afterMatch.indexOf('ou')>-1||afterMatch.indexOf('OU')>-1) continue;
-    // Check context - is there 'à escolha' nearby?
-    var context=text.substring(fm.index,fm.index+fm[0].length+30);
-    if(context.indexOf('escolha')>-1||context.indexOf('livre')>-1) continue;
-    var a1=parseAttrName(fm[2]);
-    if(a1) fixed[a1]+=parseInt(fm[1]);
-    if(fm[3]&&fm[4]){var a2=parseAttrName(fm[4]);if(a2)fixed[a2]+=parseInt(fm[3]);}
-    if(fm[5]&&fm[6]){var a3=parseAttrName(fm[6]);if(a3)fixed[a3]+=parseInt(fm[5]);}
+  // +N em X ou Y (escolha entre dois)
+  var orRe=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)\s+ou\s+([A-ZÀ-Úa-zà-ú]+)/g, om;
+  while((om=orRe.exec(t))!==null){
+    var oa=toAttrId(om[2]),ob=toAttrId(om[3]);
+    var opts=(oa&&ob)?[oa,ob]:(oa||ob)?[(oa||ob)]:null;
+    if(opts) entries.push({points:parseInt(om[1]),options:opts,fixed:false,neg:false});
+    // Mark this range as consumed
+    t=t.substring(0,om.index)+'_'.repeat(om[0].length)+t.substring(om.index+om[0].length);
   }
 
-  // +N em X ou Y (escolha entre dois atributos)
-  var orRegex=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)\s+ou\s+([A-ZÀ-Úa-zà-ú]+)/g;
-  var om;
-  while((om=orRegex.exec(text))!==null){
-    var oa=parseAttrName(om[2]),ob=parseAttrName(om[3]);
-    if(oa&&ob) choices.push({points:parseInt(om[1]),options:[oa,ob]});
-    else if(oa||ob) choices.push({points:parseInt(om[1]),options:'any'});
-  }
-
-  // "+1 em três atributos diferentes à escolha" / "+N em outro atributo à escolha" / "+N a escolha"
-  var anyRegex=/\+(\d+)\s+(?:pontos\s+)?(?:em\s+(?:outro\s+)?(?:atributo|atributos)[^à]*)?à\s+escolha/gi;
-  var am;
-  while((am=anyRegex.exec(text))!==null){
-    var pts=parseInt(am[1]);
-    // "três atributos" = 3x+1
-    if(text.indexOf('três atributos')>-1||text.indexOf('tres atributos')>-1){
-      choices.push({points:1,options:'any'});
-      choices.push({points:1,options:'any'});
-      choices.push({points:1,options:'any'});
-      break;
+  // +N em X e +N em Y (fixos, sem "escolha" próximo)
+  var fixRe=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)/g, fm;
+  t=text; // reset to original for second pass
+  while((fm=fixRe.exec(t))!==null){
+    var ctx=t.substring(fm.index,fm.index+fm[0].length+40);
+    // Skip if followed by "ou" (already handled) or near "escolha"/"livre"
+    var after=t.substring(fm.index+fm[0].length,fm.index+fm[0].length+10);
+    if(after.match(/^\s+ou\s/i)) continue;
+    if(ctx.match(/escolha|livre/i)) continue;
+    var fa=toAttrId(fm[2]);
+    if(fa){
+      // Avoid duplicates from penalty pass
+      var isDupe=entries.some(function(e){return e.options.length===1&&e.options[0]===fa&&e.points===parseInt(fm[1]);});
+      if(!isDupe) entries.push({points:parseInt(fm[1]),options:[fa],fixed:true,neg:false});
     }
-    choices.push({points:pts,options:'any'});
   }
 
-  // "+2 pontos para distribuir em atributos diferentes"
-  var distRegex=/\+(\d+)\s+pontos\s+para\s+distribuir/gi;
-  var dm;
-  while((dm=distRegex.exec(text))!==null){
-    var dp=parseInt(dm[1]);
-    choices.push({points:1,options:'any'});
-    choices.push({points:1,options:'any'});
-    if(dp>=2){/* already pushed 2 */}
+  // "três atributos diferentes à escolha" -> 3x +1 any
+  if(text.match(/tr[eê]s\s+atributos/i)){
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+  } else {
+    // "+N em outro atributo à escolha" / "+N pontos para distribuir" / "+N a escolha"
+    var anyRe=/\+(\d+)\s+(?:pontos\s+)?(?:em\s+(?:outro\s+)?(?:atributo|atributos)[^,\.]*)?[àa]\s+escolha/gi, am;
+    while((am=anyRe.exec(text))!==null){
+      entries.push({points:parseInt(am[1]),options:'any',fixed:false,neg:false});
+    }
+    // "+2 pontos para distribuir"
+    var distRe=/\+(\d+)\s+pontos\s+para\s+distribuir/gi, dm;
+    while((dm=distRe.exec(text))!==null){
+      entries.push({points:1,options:'any',fixed:false,neg:false});
+      entries.push({points:1,options:'any',fixed:false,neg:false});
+    }
   }
 
-  return {fixed:fixed,choices:choices};
+  return entries;
 }
 
 function cntApplyRace(){
   var sel=document.getElementById('cnt-raca');
-  if(!sel||!sel.value||sel.value==='custom'){renderRacialChoices([]);return;}
+  RACIAL_CHOICES=[];
+  if(!sel||!sel.value||sel.value==='custom'){renderRacialChoices();cntSyncRbFromChoices();cntUpdate();return;}
   var raca=null;
   for(var i=0;i<DB.racas.length;i++){if(racaNome(DB.racas[i])===sel.value){raca=DB.racas[i];break;}}
-  if(!raca){renderRacialChoices([]);return;}
-
+  if(!raca){renderRacialChoices();cntSyncRbFromChoices();cntUpdate();return;}
   var hab=racaHab1(raca)||'';
   var parsed=parseRacialBonus(hab);
-
-  // Apply fixed bonuses
-  RACIAL_FIXED=parsed.fixed;
-  ['for','des','con','int','sab','car'].forEach(function(c){
-    var el=document.getElementById('rb-'+c);
-    if(el)el.value=RACIAL_FIXED[c]||0;
-  });
-
-  // Setup choices
-  RACIAL_CHOICES=parsed.choices.map(function(ch){return{points:ch.points,options:ch.options,chosen:null};});
-  renderRacialChoices(RACIAL_CHOICES);
+  RACIAL_CHOICES=parsed.map(function(e){return{points:e.points,options:e.options,fixed:e.fixed,neg:e.neg,chosen:e.fixed?(e.options==='any'?null:e.options[0]):null};});
+  renderRacialChoices();
+  cntSyncRbFromChoices();
   cntUpdate();
 }
 
+function cntSyncRbFromChoices(){
+  var r={for:0,des:0,con:0,int:0,sab:0,car:0};
+  RACIAL_CHOICES.forEach(function(ch){
+    if(ch.chosen) r[ch.chosen]=(r[ch.chosen]||0)+ch.points;
+  });
+  ['for','des','con','int','sab','car'].forEach(function(c){
+    var el=document.getElementById('rb-'+c);if(el)el.value=r[c]||0;
+  });
+}
+
 function cntGetRacial(){
-  // Fixed + resolved choices
   var r={for:0,des:0,con:0,int:0,sab:0,car:0};
   ['for','des','con','int','sab','car'].forEach(function(c){
     var el=document.getElementById('rb-'+c);
-    r[c]=(el?parseInt(el.value)||0:0);
-  });
-  // Add chosen bonuses
-  RACIAL_CHOICES.forEach(function(ch){
-    if(ch.chosen) r[ch.chosen]=(r[ch.chosen]||0)+ch.points;
+    r[c]=el?parseInt(el.value)||0:0;
   });
   return r;
 }
 
-function renderRacialChoices(choices){
+function renderRacialChoices(){
   var el=document.getElementById('cnt-racial-choices');
   if(!el) return;
-  if(!choices||!choices.length){el.style.display='none';el.innerHTML='';return;}
-  var ATTR_LABELS={for:'Força',des:'Destreza',con:'Constituição',int:'Inteligência',sab:'Sabedoria',car:'Carisma'};
-  var ALL_ATTRS=['for','des','con','int','sab','car'];
-  var html='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold-light);opacity:0.85;text-transform:uppercase;margin-bottom:0.6rem;">✦ Escolhas Raciais</div>';
-  choices.forEach(function(ch,i){
-    var opts=ch.options==='any'?ALL_ATTRS:ch.options;
-    html+='<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">';
-    html+='<span style="font-family:Cinzel,serif;font-size:0.8rem;color:var(--gold-light);min-width:28px;">+'+ch.points+'</span>';
-    html+='<select class="cnt-select" style="min-width:140px;" onchange="cntChoiceSelect('+i+',this.value)">';
-    html+='<option value="">— escolher —</option>';
-    opts.forEach(function(a){
-      html+='<option value="'+a+'"'+(ch.chosen===a?' selected':'')+'>'+ATTR_LABELS[a]+'</option>';
-    });
-    html+='</select></div>';
-  });
+  var hasFree=RACIAL_CHOICES.some(function(ch){return !ch.fixed;});
+  if(!RACIAL_CHOICES.length){el.style.display='none';el.innerHTML='';return;}
   el.style.display='block';
+  var html='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold-light);opacity:0.85;text-transform:uppercase;margin-bottom:0.6rem;">✦ Bônus Racial</div>';
+  RACIAL_CHOICES.forEach(function(ch,i){
+    var sign=ch.points>0?'+':'';
+    var color=ch.neg?'var(--cat-desvantagem)':'var(--gold-light)';
+    html+='<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">';
+    html+='<span style="font-family:Cinzel,serif;font-size:0.85rem;font-weight:700;color:'+color+';min-width:32px;">'+sign+ch.points+'</span>';
+    if(ch.fixed){
+      // Show as locked badge
+      var lbl=ch.options==='any'?'?':(ATTR_LABELS[ch.options[0]]||ch.options[0]);
+      html+='<span style="font-family:Raleway,sans-serif;font-size:0.82rem;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:0.25rem 0.65rem;">'+lbl+'</span>';
+    } else {
+      var opts=ch.options==='any'?ALL_ATTRS:ch.options;
+      html+='<select class="cnt-select" style="min-width:150px;" onchange="cntChoiceSelect('+i+',this.value)">';
+      html+='<option value="">— escolher —</option>';
+      opts.forEach(function(a){html+='<option value="'+a+'"'+(ch.chosen===a?' selected':'')+'>'+ATTR_LABELS[a]+'</option>';});
+      html+='</select>';
+    }
+    html+='</div>';
+  });
   el.innerHTML=html;
 }
 
 function cntChoiceSelect(idx,val){
   if(RACIAL_CHOICES[idx]) RACIAL_CHOICES[idx].chosen=val||null;
-  // Update rb inputs to reflect choices
-  var fixed={for:0,des:0,con:0,int:0,sab:0,car:0};
-  ['for','des','con','int','sab','car'].forEach(function(c){fixed[c]=RACIAL_FIXED[c]||0;});
-  RACIAL_CHOICES.forEach(function(ch){if(ch.chosen)fixed[ch.chosen]=(fixed[ch.chosen]||0)+ch.points;});
-  ['for','des','con','int','sab','car'].forEach(function(c){
-    var el=document.getElementById('rb-'+c);if(el)el.value=fixed[c]||0;
-  });
+  cntSyncRbFromChoices();
   cntUpdate();
 }
-function cntPopulateRaces(){
-  var sel=document.getElementById('cnt-raca');if(!sel)return;
-  sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
-  DB.racas.forEach(function(r){
-    var n=racaNome(r);if(!n||n==='(sem nome)')return;
-    var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
-  });
-}
-document.getElementById('cnt-nivel').addEventListener('input',cntUpdate);
-document.getElementById('cnt-raca').addEventListener('change',cntApplyRace);
-['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'].forEach(function(id){document.getElementById(id).addEventListener('input',cntUpdate);});
 
-// ── AUTO-REFRESH ──
-var autoRefreshTimer=null,AUTO_INTERVAL=30000;
-function startAutoRefresh(forceStart){
-  stopAutoRefresh();
-  var url=document.getElementById('sheetUrl').value.trim();
-  var hasFixed=Object.keys(SHEET_URLS).length>0;
-  if(!url&&!forceStart&&!hasFixed)return;
-  autoRefreshTimer=setInterval(function(){silentLoad(document.getElementById('sheetUrl').value.trim());},AUTO_INTERVAL);
-}
-function stopAutoRefresh(){if(autoRefreshTimer){clearInterval(autoRefreshTimer);autoRefreshTimer=null;}}
-async function silentLoad(rawUrl){
-  if(rawUrl){
-    try{var res=await fetch(buildCSVUrl(rawUrl)+'&t='+Date.now());if(!res.ok)return;var text=await res.text();var rows=parseCSV(text);if(!rows.length)return;distributeData(rows,document.getElementById('sheetTab').value.toLowerCase());}catch(e){}
-  }
-  for(var key in SHEET_URLS)await autoLoadTab(key,SHEET_URLS[key]);
-  updateStats();renderAll();cntPopulateRaces();
-  var now=new Date();
-  document.getElementById('statusMsg').textContent='Sync '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-  document.getElementById('statusDot').className='status-dot ok';
-}
-document.getElementById('sheetUrl').addEventListener('input',function(){stopAutoRefresh();if(this.value.trim())startAutoRefresh();});
-var _origLoadSheet=window.loadSheet;
-window.loadSheet=async function(){await _origLoadSheet();startAutoRefresh();};
-window.addEventListener('load',function(){
-  var saved=localStorage.getItem('rpg_sheet_url');
-  if(saved&&saved.trim())document.getElementById('sheetUrl').value=saved;
-  startAutoRefresh(true);
-});
-</script>
-</body>
-</html>
+
