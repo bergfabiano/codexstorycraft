@@ -1789,6 +1789,9 @@ function lojaGetField(r){
     r['Minério']||r['Auxiliar']||r['Gema']||r['Joia']||r[Object.keys(r)[0]]||'(sem nome)';
 }
 function lojaGetPreco(r,cat){
+  // Minérios, Gemas e Imbuídos têm múltiplos valores por tipo de uso —
+  // não existe um preço único universal. Os valores ficam nos campos do modal.
+  if(cat==='minerios'||cat==='gemas'||cat==='imbuidos') return '';
   return r['Preço']||r['Custo']||r['Valor']||r['Valor Armas']||r['Armas']||'';
 }
 function lojaGetCat(r,cat){
@@ -1812,7 +1815,7 @@ function lojaGetDesc(r,cat){
 function lojaGetTags(r,cat){
   var tags=[];
   var p=lojaGetPreco(r,cat);
-  if(p) tags.push({label:p+' fl',cls:'tag-gold'});
+  if(p) tags.push({label:p,cls:'tag-gold'});
   if(cat==='armas'||cat==='focus'){
     var dmg=r['Dano']||'';var tipo=r['Tipo do Dano']||r['Tipo de Dano']||'';
     if(dmg) tags.push({label:dmg,cls:'tag-danger'});
@@ -1964,7 +1967,7 @@ function renderLoja(){
       html+='<div class="card" style="--card-accent:'+accent+';--card-accent-faint:'+accent.replace(')',',0.1)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
           '<div class="card-type" style="color:'+accent+';">'+LOJA_LABELS[cat]+'</div>'+
-          (lojaGetPreco(r,cat)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r,cat)+' fl</span>':'')+
+          (lojaGetPreco(r,cat)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r,cat)+'</span>':'')+
         '</div>'+
         '<div class="card-name">'+n+'</div>'+
         (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
@@ -2018,7 +2021,7 @@ function openLojaModal(idx){
   if(preco){
     html+='<div style="margin-top:1rem;padding:0.6rem 0.9rem;background:rgba(201,164,74,0.08);border:1px solid rgba(201,164,74,0.25);border-radius:6px;display:flex;align-items:center;gap:0.6rem;">'+
       '<span style="font-family:Cinzel,serif;font-size:0.65rem;font-weight:700;color:var(--gold-light);opacity:0.7;text-transform:uppercase;letter-spacing:0.12em;">Pre\u00e7o</span>'+
-      '<span style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:var(--gold-light);">'+preco+' florins</span>'+
+      '<span style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:var(--gold-light);">'+preco+'</span>'+
     '</div>';
   }
 
