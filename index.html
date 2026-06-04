@@ -699,6 +699,8 @@ main{
         <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5"></div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5"></div>
       </div>
+      <!-- Escolhas raciais dinâmicas -->
+      <div id="cnt-racial-choices" style="display:none;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid rgba(201,164,74,0.25);border-radius:8px;border-left:3px solid var(--gold-light);"></div>
       <div class="cnt-pts-bar">
         <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
         <span class="cnt-pts-num" id="cnt-pts">10</span>
@@ -1844,7 +1846,7 @@ var cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
 var CNT_ATTRS=[{id:'for',nome:'FOR',full:'Força'},{id:'des',nome:'DES',full:'Destreza'},{id:'con',nome:'CON',full:'Constituição'},{id:'int',nome:'INT',full:'Inteligência'},{id:'sab',nome:'SAB',full:'Sabedoria'},{id:'car',nome:'CAR',full:'Carisma'}];
 function cntGetLevel(){return Math.min(50,Math.max(1,parseInt(document.getElementById('cnt-nivel').value)||1));}
 function cntGetMax(n){if(n<=9)return 5;if(n<=19)return 6;if(n<=29)return 7;if(n<=39)return 8;if(n<=49)return 9;return 10;}
-function cntGetRacial(){return{for:parseInt(document.getElementById('rb-for').value)||0,des:parseInt(document.getElementById('rb-des').value)||0,con:parseInt(document.getElementById('rb-con').value)||0,int:parseInt(document.getElementById('rb-int').value)||0,sab:parseInt(document.getElementById('rb-sab').value)||0,car:parseInt(document.getElementById('rb-car').value)||0};}
+// cntGetRacial now defined in cntApplyRace block
 function cntCusto(v){if(v<=0)return 0;var c=0;for(var i=1;i<=v;i++){if(i<=2)c+=1;else if(i===3)c+=2;else c+=3;}return c;}
 function cntTotalGasto(){var t=0;for(var i=0;i<CNT_ATTRS.length;i++){var v=cntBase[CNT_ATTRS[i].id];if(v>0)t+=cntCusto(v);else if(v<0)t+=v;}return t;}
 function cntUpdate(){
@@ -1883,20 +1885,170 @@ function cntChange(atrib,delta){
 }
 function cntReset(){
   cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
+  RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
+  RACIAL_CHOICES=[];
   ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=0;});
   document.getElementById('cnt-nivel').value=1;
   document.getElementById('cnt-raca').value='';
+  renderRacialChoices([]);
   cntUpdate();
 }
+// ── RACIAL BONUS SYSTEM ──
+// Bônus raciais fixos atualmente aplicados
+var RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
+// Bônus de escolha pendentes [{points:N, options:['for','des',...] or 'any', chosen:null}]
+var RACIAL_CHOICES=[];
+
+var ATTR_NAMES={
+  'força':'for','forca':'for','for':'for',
+  'destreza':'des','des':'des',
+  'constituição':'con','constituicao':'con','con':'con',
+  'inteligência':'int','inteligencia':'int','int':'int',
+  'sabedoria':'sab','sab':'sab',
+  'carisma':'car','car':'car'
+};
+
+function parseAttrName(s){
+  var sl=s.toLowerCase().trim()
+    .replace(/[àáâã]/g,'a').replace(/[éê]/g,'e').replace(/[íî]/g,'i')
+    .replace(/[óôõ]/g,'o').replace(/[úû]/g,'u').replace(/[ç]/g,'c');
+  return ATTR_NAMES[sl]||null;
+}
+
+function parseRacialBonus(text){
+  // Returns {fixed:{for,des,con,int,sab,car}, choices:[{points,options}]}
+  var fixed={for:0,des:0,con:0,int:0,sab:0,car:0};
+  var choices=[];
+  if(!text) return {fixed:fixed,choices:choices};
+
+  // Penalidades fixas: -1 em Força
+  var penRegex=/[−\-](\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)/g;
+  var pm;
+  while((pm=penRegex.exec(text))!==null){
+    var pa=parseAttrName(pm[2]);
+    if(pa) fixed[pa]-=parseInt(pm[1]);
+  }
+
+  // +N em X e +N em Y (fixo)
+  var fixedPairs=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)(?:\s+e\s+\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+))?(?:\s+e\s+\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+))?/g;
+  var fm;
+  while((fm=fixedPairs.exec(text))!==null){
+    // Check it's not "X ou Y" (choice)
+    var afterMatch=text.substring(fm.index+fm[0].length,fm.index+fm[0].length+8);
+    if(afterMatch.indexOf('ou')>-1||afterMatch.indexOf('OU')>-1) continue;
+    // Check context - is there 'à escolha' nearby?
+    var context=text.substring(fm.index,fm.index+fm[0].length+30);
+    if(context.indexOf('escolha')>-1||context.indexOf('livre')>-1) continue;
+    var a1=parseAttrName(fm[2]);
+    if(a1) fixed[a1]+=parseInt(fm[1]);
+    if(fm[3]&&fm[4]){var a2=parseAttrName(fm[4]);if(a2)fixed[a2]+=parseInt(fm[3]);}
+    if(fm[5]&&fm[6]){var a3=parseAttrName(fm[6]);if(a3)fixed[a3]+=parseInt(fm[5]);}
+  }
+
+  // +N em X ou Y (escolha entre dois atributos)
+  var orRegex=/\+(\d+)\s+em\s+([A-ZÀ-Úa-zà-ú]+)\s+ou\s+([A-ZÀ-Úa-zà-ú]+)/g;
+  var om;
+  while((om=orRegex.exec(text))!==null){
+    var oa=parseAttrName(om[2]),ob=parseAttrName(om[3]);
+    if(oa&&ob) choices.push({points:parseInt(om[1]),options:[oa,ob]});
+    else if(oa||ob) choices.push({points:parseInt(om[1]),options:'any'});
+  }
+
+  // "+1 em três atributos diferentes à escolha" / "+N em outro atributo à escolha" / "+N a escolha"
+  var anyRegex=/\+(\d+)\s+(?:pontos\s+)?(?:em\s+(?:outro\s+)?(?:atributo|atributos)[^à]*)?à\s+escolha/gi;
+  var am;
+  while((am=anyRegex.exec(text))!==null){
+    var pts=parseInt(am[1]);
+    // "três atributos" = 3x+1
+    if(text.indexOf('três atributos')>-1||text.indexOf('tres atributos')>-1){
+      choices.push({points:1,options:'any'});
+      choices.push({points:1,options:'any'});
+      choices.push({points:1,options:'any'});
+      break;
+    }
+    choices.push({points:pts,options:'any'});
+  }
+
+  // "+2 pontos para distribuir em atributos diferentes"
+  var distRegex=/\+(\d+)\s+pontos\s+para\s+distribuir/gi;
+  var dm;
+  while((dm=distRegex.exec(text))!==null){
+    var dp=parseInt(dm[1]);
+    choices.push({points:1,options:'any'});
+    choices.push({points:1,options:'any'});
+    if(dp>=2){/* already pushed 2 */}
+  }
+
+  return {fixed:fixed,choices:choices};
+}
+
 function cntApplyRace(){
-  var sel=document.getElementById('cnt-raca');if(!sel||!sel.value||sel.value==='custom')return;
+  var sel=document.getElementById('cnt-raca');
+  if(!sel||!sel.value||sel.value==='custom'){renderRacialChoices([]);return;}
   var raca=null;
-  for(var i=0;i<DB.racas.length;i++){if((DB.racas[i].Nome||DB.racas[i].nome||'')===sel.value){raca=DB.racas[i];break;}}
-  if(!raca)return;
+  for(var i=0;i<DB.racas.length;i++){if(racaNome(DB.racas[i])===sel.value){raca=DB.racas[i];break;}}
+  if(!raca){renderRacialChoices([]);return;}
+
+  var hab=racaHab1(raca)||'';
+  var parsed=parseRacialBonus(hab);
+
+  // Apply fixed bonuses
+  RACIAL_FIXED=parsed.fixed;
   ['for','des','con','int','sab','car'].forEach(function(c){
-    var el=document.getElementById('rb-'+c),val=0;
-    [c.toUpperCase(),c,c.charAt(0).toUpperCase()+c.slice(1)].forEach(function(k){if(raca[k]!==undefined)val=parseInt(raca[k])||0;});
-    if(el)el.value=val;
+    var el=document.getElementById('rb-'+c);
+    if(el)el.value=RACIAL_FIXED[c]||0;
+  });
+
+  // Setup choices
+  RACIAL_CHOICES=parsed.choices.map(function(ch){return{points:ch.points,options:ch.options,chosen:null};});
+  renderRacialChoices(RACIAL_CHOICES);
+  cntUpdate();
+}
+
+function cntGetRacial(){
+  // Fixed + resolved choices
+  var r={for:0,des:0,con:0,int:0,sab:0,car:0};
+  ['for','des','con','int','sab','car'].forEach(function(c){
+    var el=document.getElementById('rb-'+c);
+    r[c]=(el?parseInt(el.value)||0:0);
+  });
+  // Add chosen bonuses
+  RACIAL_CHOICES.forEach(function(ch){
+    if(ch.chosen) r[ch.chosen]=(r[ch.chosen]||0)+ch.points;
+  });
+  return r;
+}
+
+function renderRacialChoices(choices){
+  var el=document.getElementById('cnt-racial-choices');
+  if(!el) return;
+  if(!choices||!choices.length){el.style.display='none';el.innerHTML='';return;}
+  var ATTR_LABELS={for:'Força',des:'Destreza',con:'Constituição',int:'Inteligência',sab:'Sabedoria',car:'Carisma'};
+  var ALL_ATTRS=['for','des','con','int','sab','car'];
+  var html='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold-light);opacity:0.85;text-transform:uppercase;margin-bottom:0.6rem;">✦ Escolhas Raciais</div>';
+  choices.forEach(function(ch,i){
+    var opts=ch.options==='any'?ALL_ATTRS:ch.options;
+    html+='<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">';
+    html+='<span style="font-family:Cinzel,serif;font-size:0.8rem;color:var(--gold-light);min-width:28px;">+'+ch.points+'</span>';
+    html+='<select class="cnt-select" style="min-width:140px;" onchange="cntChoiceSelect('+i+',this.value)">';
+    html+='<option value="">— escolher —</option>';
+    opts.forEach(function(a){
+      html+='<option value="'+a+'"'+(ch.chosen===a?' selected':'')+'>'+ATTR_LABELS[a]+'</option>';
+    });
+    html+='</select></div>';
+  });
+  el.style.display='block';
+  el.innerHTML=html;
+}
+
+function cntChoiceSelect(idx,val){
+  if(RACIAL_CHOICES[idx]) RACIAL_CHOICES[idx].chosen=val||null;
+  // Update rb inputs to reflect choices
+  var fixed={for:0,des:0,con:0,int:0,sab:0,car:0};
+  ['for','des','con','int','sab','car'].forEach(function(c){fixed[c]=RACIAL_FIXED[c]||0;});
+  RACIAL_CHOICES.forEach(function(ch){if(ch.chosen)fixed[ch.chosen]=(fixed[ch.chosen]||0)+ch.points;});
+  ['for','des','con','int','sab','car'].forEach(function(c){
+    var el=document.getElementById('rb-'+c);if(el)el.value=fixed[c]||0;
   });
   cntUpdate();
 }
