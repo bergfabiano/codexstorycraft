@@ -998,8 +998,7 @@ var SHEET_URLS={
   vd_ataques:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=358878802&single=true&output=csv",
   vd_superpoderes: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=899034162&single=true&output=csv",
   vd_desvantagens: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1465549294&single=true&output=csv",
-  vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1580295224&single=true&output=csv"
-};
+  vd_maldicoes:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=1580295224&single=true&output=csv",
   loja_armas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=0&single=true&output=csv",
   loja_municao:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1139815210&single=true&output=csv",
   loja_focus:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1978615584&single=true&output=csv",
@@ -1023,6 +1022,7 @@ var SHEET_URLS={
   loja_aprimor:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1730917400&single=true&output=csv",
   loja_encant:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1996414926&single=true&output=csv"
 };
+
 
 // Imagens
 var CLASS_IMGS={};
@@ -1368,7 +1368,7 @@ function renderRacasCatPills(){
     }
   }
   if(!catOrder.length){el.innerHTML='';return;}
-  var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')"><span>◈</span> Todas</button>';
+  var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat("")"><span>◈</span> Todas</button>';
   for(var i=0;i<catOrder.length;i++){
     var cn=catOrder[i];
     var active=(RACA_ACTIVE_CAT.trim().toLowerCase()===cn.trim().toLowerCase())?' active':'';
@@ -1548,7 +1548,7 @@ function renderClasses(){
     var n=gf(r,'Classe','classe')||'(sem nome)',cat=gf(r,'Categoria','categoria'),atb=gf(r,'Atributo de Classe','atributo de classe'),pv=gf(r,'PV Inicial','pv inicial'),pm=gf(r,'PM Inicial','pm inicial'),ind=gf(r,'Individualidade','individualidade');
     var cc=classCardClass(cat);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
-    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getClassImg(n),'⚔')+'<div class="card-type">'+(cat||'classe')+'</div><div class="card-name">'+n+'</div>'+(ind?'<div class="card-desc">'+ind+'</div>':'')+'<div class="card-tags">'+(atb?tag(atb,cc?'tag-'+cc.replace('card-',''):'tag-class'):'')+(pv?tag('PV '+pv,'tag-gold'):'')+(pm?tag('PM '+pm,'tag-rare'):'')+'</div><button class="btn-ver-dons" onclick=\'event.stopPropagation();verDonsClasse("'+n.replace(/"/g,'&quot;')+'")\'>✦ Ver Dons desta Classe</button></div>';
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getClassImg(n),'⚔')+'<div class="card-type">'+(cat||'classe')+'</div><div class="card-name">'+n+'</div>'+(ind?'<div class="card-desc">'+ind+'</div>':'')+'<div class="card-tags">'+(atb?tag(atb,cc?'tag-'+cc.replace('card-',''):'tag-class'):'')+(pv?tag('PV '+pv,'tag-gold'):'')+(pm?tag('PM '+pm,'tag-rare'):'')+'</div><button class="btn-ver-dons" onclick="event.stopPropagation();verDonsClasse(&quot;'+n.replace(/\"/g,'&quot;')+'&quot;)">✦ Ver Dons desta Classe</button></div>';
   }).join('');
 }
 
@@ -1726,7 +1726,7 @@ function renderVantagens(){
 
     var costBadge='';
     if(custo){
-      costBadge='<span style="font-family:\'Cinzel\',serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+(isNeg?' pts':' pts')+'</span>';
+      costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+(isNeg?' pts':' pts')+'</span>';
     }
 
     return '<div class="card '+cardCls+'" onclick="openModalIdx('+_storeModal(r)+')">'+
@@ -1866,7 +1866,7 @@ function renderLoja(){
 
   if(!rows.length){
     statusEl.textContent=LOJA_STATUS[cat]?'':'Carregando...';
-    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+LOJA_SYMS[cat]+'</span><h3>'+(!LOJA_STATUS[cat]?'Carregando '+LOJA_LABELS[cat]+'...':\'Nenhum item carregado')+'</h3></div>';
+    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+LOJA_SYMS[cat]+'</span><h3>'+(!LOJA_STATUS[cat]?'Carregando '+LOJA_LABELS[cat]+'...':'Nenhum item carregado')+'</h3></div>';
     return;
   }
   statusEl.textContent='';
@@ -1894,10 +1894,10 @@ function renderLoja(){
     return true;
   });
 
-  document.getElementById('count-loja').textContent=data.length+' item'+(data.length===1?'':\'s')+' em '+LOJA_LABELS[cat];
+  document.getElementById('count-loja').textContent=data.length+' item'+(data.length===1?'':'s')+' em '+LOJA_LABELS[cat];
 
   if(!data.length){
-    g.innerHTML=emptyMsg(LOJA_SYMS[cat],rows.length?'Nenhum resultado':\'Nenhum item carregado');
+    g.innerHTML=emptyMsg(LOJA_SYMS[cat],rows.length?'Nenhum resultado':'Nenhum item carregado');
     return;
   }
 
@@ -1938,7 +1938,7 @@ function renderLoja(){
       html+='<div class="card" style="--card-accent:'+accent+';--card-accent-faint:'+accent.replace(')',',0.1)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
           '<div class="card-type" style="color:'+accent+';">'+LOJA_LABELS[cat]+'</div>'+
-          (lojaGetPreco(r)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r)+' fl</span>':\'')+
+          (lojaGetPreco(r)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r)+' fl</span>':'')+
         '</div>'+
         '<div class="card-name">'+n+'</div>'+
         (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
@@ -2036,7 +2036,7 @@ function renderDeuses(){
     var cc=deusCardClass(pol);
     var polTag=pol==='Positiva'?'tag-positiva':pol==='Negativa'?'tag-negativa':'tag-neutra';
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
-    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getDeusImg(n),'☀')+'<div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(pol,polTag)+tag(ars,'tag-gold')+'</div><button class="btn-ver-dons" onclick=\'event.stopPropagation();verGracasDeus("'+n.replace(/"/g,'&quot;')+'")\'>☀ Ver Graças desta Divindade</button></div>';
+    return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+imgBox(getDeusImg(n),'☀')+'<div class="card-type">divindade</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(pol,polTag)+tag(ars,'tag-gold')+'</div><button class="btn-ver-dons" onclick="event.stopPropagation();verGracasDeus(&quot;'+n.replace(/\"/g,'&quot;')+'&quot;)">☀ Ver Graças desta Divindade</button></div>';
   }).join('');
 }
 
@@ -2071,7 +2071,7 @@ function verGracasDeus(nomeDeus){
       var g=gracas[gi];
       var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||''};
       var gracaIdx=_storeModal(gracaObj);
-      html+='<div class="don-item" style="cursor:pointer;transition:all 0.2s;" onclick="openModalIdx('+gracaIdx+')" onmouseenter="this.style.borderColor=\'var(--violet-dim)\'" onmouseleave="this.style.borderColor=\'\'">'+
+      html+='<div class="don-item" style="cursor:pointer;transition:all 0.2s;" onclick="openModalIdx('+gracaIdx+')" onmouseenter="this.style.borderColor=&apos;var(--violet-dim)&apos;" onmouseleave="this.style.borderColor=&apos;&apos;">'+
         '<div class="don-header"><span class="don-nome">'+(g.titulo||'Graça '+(gi+1))+'</span><span class="don-grau">Graça '+(gi+1)+'</span></div>'+
         (g.desc?'<div class="don-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+g.desc+'</div>':'')+
         '<div style="margin-top:0.6rem;font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--cat-deus-positiva);opacity:0.7;text-transform:uppercase;">☀ Ver detalhes →</div>'+
@@ -2234,9 +2234,9 @@ function cntUpdate(){
     var rbC=rb>0?'var(--green)':(rb<0?'var(--blood)':'var(--text-faint)'),rbT=rb>0?'+'+rb:String(rb);
     rows+='<tr>';
     rows+='<td><div style="display:flex;align-items:center;gap:0.6rem;"><span style="font-size:1.1rem;color:var(--violet-bright);opacity:0.7;">'+a.sym+'</span><div><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--violet-bright);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></div></div></td>';
-    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange("+a.id+",-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange("+a.id+",1)"':'disabled')+'>+</button></div></td>';
     var rbCanUp=(rb<maxA),rbCanDown=(rb>-maxA);
-    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(rbCanDown?'onclick="cntRbChange(\''+a.id+'\',−1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+rbC+';">'+rb+'</span><button class="attr-btn" '+(rbCanUp?'onclick="cntRbChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(rbCanDown?'onclick="cntRbChange(""+a.id+",−1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+rbC+';">'+rb+'</span><button class="attr-btn" '+(rbCanUp?'onclick="cntRbChange("+a.id+",1)"':'disabled')+'>+</button></div></td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
     rows+='<td style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
     rows+='</tr>';
@@ -2355,14 +2355,6 @@ function parseRacialBonus(text){
   return entries;
 }
 
-function cntPopulateRaces(){
-  var sel=document.getElementById('cnt-raca');if(!sel)return;
-  sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
-  DB.racas.forEach(function(r){
-    var n=racaNome(r);if(!n||n==='(sem nome)')return;
-    var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
-  });
-}
 function toAttrId(s){
   var sl=(s||'').toLowerCase()
     .replace(/[\u00e0\u00e1\u00e2\u00e3]/g,'a').replace(/[\u00e9\u00ea]/g,'e')
@@ -2409,54 +2401,6 @@ function parseRacialBonus(text){
   }
   return entries;
 }
-function cntApplyRace(){
-  var sel=document.getElementById('cnt-raca');
-  RACIAL_CHOICES=[];RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
-  if(!sel||!sel.value||sel.value==='custom'){
-    ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=0;});
-    renderRacialChoices();cntUpdate();return;
-  }
-  var raca=null;
-  for(var i=0;i<DB.racas.length;i++){if(racaNome(DB.racas[i])===sel.value){raca=DB.racas[i];break;}}
-  if(!raca){renderRacialChoices();cntUpdate();return;}
-  var parsed=parseRacialBonus(racaHab1(raca)||'');
-  parsed.forEach(function(e){
-    if(e.fixed&&e.options!=='any'&&e.options.length===1) RACIAL_FIXED[e.options[0]]=(RACIAL_FIXED[e.options[0]]||0)+e.points;
-    else RACIAL_CHOICES.push({points:e.points,options:e.options,fixed:false,neg:e.neg,chosen:null});
-  });
-  cntSyncRbFromChoices();
-  renderRacialChoices();
-  cntUpdate();
-}
-function cntSyncRbFromChoices(){
-  var r={for:0,des:0,con:0,int:0,sab:0,car:0};
-  ['for','des','con','int','sab','car'].forEach(function(c){r[c]=RACIAL_FIXED[c]||0;});
-  RACIAL_CHOICES.forEach(function(ch){if(ch.chosen)r[ch.chosen]=(r[ch.chosen]||0)+ch.points;});
-  ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=r[c]||0;});
-}
-function renderRacialChoices(){
-  var el=document.getElementById('cnt-racial-choices');if(!el)return;
-  if(!RACIAL_CHOICES.length){el.style.display='none';el.innerHTML='';return;}
-  el.style.display='block';
-  var html='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold-light);opacity:0.85;text-transform:uppercase;margin-bottom:0.6rem;">❖ Escolhas Raciais</div>';
-  RACIAL_CHOICES.forEach(function(ch,i){
-    var opts=ch.options==='any'?ALL_ATTRS:ch.options;
-    var sign=ch.points>0?'+':'';
-    var color=ch.neg?'var(--cat-desvantagem)':'var(--gold-light)';
-    html+='<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">';
-    html+='<span style="font-family:Cinzel,serif;font-size:0.85rem;font-weight:700;color:'+color+';min-width:32px;">'+sign+ch.points+'</span>';
-    html+='<select class="cnt-select" style="min-width:150px;" onchange="cntChoiceSelect('+i+',this.value)">';
-    html+='<option value="">— escolher —</option>';
-    opts.forEach(function(a){html+='<option value="'+a+'"'+(ch.chosen===a?' selected':'')+'>'+ATTR_LABELS[a]+'</option>';});
-    html+='</select></div>';
-  });
-  el.innerHTML=html;
-}
-function cntChoiceSelect(idx,val){
-  if(RACIAL_CHOICES[idx])RACIAL_CHOICES[idx].chosen=val||null;
-  cntSyncRbFromChoices();cntUpdate();
-}
-
 function cntPopulateRaces(){
   var sel=document.getElementById('cnt-raca');if(!sel)return;
   sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
