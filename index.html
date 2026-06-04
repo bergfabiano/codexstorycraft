@@ -1820,7 +1820,7 @@ function lojaGetPreco(r,cat){
 }
 function lojaGetCat(r,cat){
   // Imbuídos: agrupa por Sub-categoria (Lendário, Colossal, Titânico, Mítico, Épico)
-  if(cat==='imbuidos') return r['Sub-categoria']||'';
+  if(cat==='imbuidos') return r['Categoria']||'';
   // Minérios e Gemas: Categoria/Complexidade
   if(cat==='minerios'||cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
   // Munição: sem agrupamento (tudo junto)
@@ -2108,7 +2108,8 @@ function renderLoja(){
   var accent=lojaCardAccent(cat);
   var grouped={};
   data.forEach(function(r){
-    var gc=lojaGetCat(r,cat)||'Geral';
+    // Imbuídos: agrupa visualmente por Sub-categoria (escala)
+    var gc=cat==='imbuidos'?(r['Sub-categoria']||'Geral'):lojaGetCat(r,cat)||'Geral';
     if(!grouped[gc])grouped[gc]=[];
     grouped[gc].push(r);
   });
