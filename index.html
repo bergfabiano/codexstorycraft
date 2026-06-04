@@ -1416,6 +1416,7 @@ function showPage(name) {
   document.getElementById('page-'+name).classList.add('active');
   var tab=document.querySelector('[data-page="'+name+'"]');
   if(tab) tab.classList.add('active');
+
 }
 
 // ── DATABASE ──
@@ -1591,61 +1592,64 @@ async function autoLoadTab(tabKey,url){
 }
 
 // Parser para planilhas de continentes Velkarion.
-// Estrutura da planilha: cada COLUNA é uma região/local.
-// A primeira coluna contém os nomes dos campos (CAMPO/CAPITAL, RESUMO GERAL, DESTAQUES, CENARIO).
-// As demais colunas contêm os valores de cada campo para cada região.
-// Retorna um array de objetos {CAMPO/CAPITAL:..., RESUMO GERAL:..., DESTAQUES:..., CENARIO:...}
+//
+// ESTRUTURA REAL:
+//   Linha 1:  >> NOME DO CONTINENTE  (título — ignorar)
+//   Linha 2:  CAMPO/CAPITAL | RESUMO GERAL | DESTAQUES | CENARIO   ← cabeçalho
+//   Linha 3:  Kaezan        | texto...     | texto...  | texto...  ← região
+//   Linha 4:  Shimizugawa   | texto...     | texto...  | texto...  ← região
+//   ...
+//
+// Cada LINHA = uma região. Cada COLUNA = um campo.
+// Precisa pular linhas de título até achar a linha de cabeçalho real.
 function parseCSVVelCont(text){
-  // 1. Parse o CSV inteiro em matriz bruta (array de arrays)
-  var matrix=[];
   var lines=text.split(/\r?\n/);
-  for(var li=0;li<lines.length;li++){
-    var row=parseCsvLine(lines[li]);
-    if(row.length>0) matrix.push(row);
-  }
-  if(!matrix.length) return [];
+  var headerIdx=-1;
 
-  // 2. Encontra a linha onde a primeira célula é um dos nomes de campo conhecidos
-  //    (ex: "CAMPO/CAPITAL"). Linhas antes disso são títulos/metadados — ignora.
-  var dataStart=-1;
-  var velFieldNames=['campo/capital','campo','resumo geral','resumo','destaques','cenario','cenário','resumo geral'];
-  for(var ri=0;ri<matrix.length;ri++){
-    var cell=(matrix[ri][0]||'').toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
-    if(velFieldNames.indexOf(cell)>-1){dataStart=ri;break;}
+  // Procura a linha cujas células contêm os nomes dos campos conhecidos
+  var fieldNames=['campo/capital','campo','resumo geral','resumo','destaques','cenario','cenário'];
+  for(var li=0;li<lines.length;li++){
+    var cells=parseCsvLine(lines[li]);
+    // Normaliza para comparar
+    var norm=cells.map(function(c){
+      return c.replace(/[\uFEFF\u200B\u00A0"]/g,'').trim().toLowerCase();
+    });
+    // É o cabeçalho se tiver pelo menos 2 células que batem com nomes de campo
+    var matches=norm.filter(function(n){return fieldNames.indexOf(n)>-1;}).length;
+    if(matches>=2){headerIdx=li;break;}
+    // Também aceita se a primeira célula for exatamente campo/capital
+    if(norm[0]==='campo/capital'||norm[0]==='campo'){headerIdx=li;break;}
   }
-  if(dataStart===-1){
-    // Fallback: usa parseCSV normal
+
+  if(headerIdx===-1){
+    // Sem cabeçalho reconhecível: usa parse padrão sem skip
     return parseCSV(text,false);
   }
 
-  // 3. Extrai os dados a partir de dataStart.
-  //    Cada linha = um campo. Cada coluna (a partir da col 1) = uma região.
-  //    Coluna 0 = nome do campo.
-  var fieldRows=matrix.slice(dataStart);
-  if(!fieldRows.length) return [];
+  // Reconstrói o CSV a partir da linha de cabeçalho
+  var trimmedText=lines.slice(headerIdx).join('\n');
+  var rows=parseCSV(trimmedText,true);
 
-  // Quantas regiões existem = número máximo de colunas - 1
-  var maxCols=0;
-  for(var ri=0;ri<fieldRows.length;ri++){
-    if(fieldRows[ri].length>maxCols) maxCols=fieldRows[ri].length;
-  }
-  var numRegions=maxCols-1;
-  if(numRegions<=0) return [];
+  // Filtra linhas onde CAMPO/CAPITAL é vazio ou é o próprio nome da coluna
+  return rows.filter(function(r){
+    var nome=velGetFieldRaw(r);
+    if(!nome) return false;
+    var nl=nome.toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
+    return nl!=='campo/capital'&&nl!=='campo'&&nome.length>1;
+  });
+}
 
-  // 4. Constrói um objeto por região (coluna)
-  var results=[];
-  for(var ci=1;ci<=numRegions;ci++){
-    var obj={};
-    for(var fi=0;fi<fieldRows.length;fi++){
-      var fieldName=(fieldRows[fi][0]||'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
-      var val=(fieldRows[fi][ci]||'').trim();
-      if(fieldName) obj[fieldName]=val;
+// Extrai o nome da região de um row (campo CAMPO/CAPITAL ou variações)
+function velGetFieldRaw(r){
+  var keys=Object.keys(r);
+  for(var i=0;i<keys.length;i++){
+    var kl=keys[i].replace(/[\uFEFF\u200B\u00A0]/g,'').trim().toLowerCase();
+    if(kl==='campo/capital'||kl==='campo'||(kl.indexOf('campo')>-1&&kl.indexOf('capital')>-1)){
+      return (r[keys[i]]||'').trim();
     }
-    // Só inclui se tiver algum valor não-vazio além do campo/capital
-    var hasContent=Object.values(obj).some(function(v){return v.length>0;});
-    if(hasContent) results.push(obj);
   }
-  return results;
+  // Fallback: primeira coluna
+  return (r[keys[0]]||'').trim();
 }
 
 // Parse de uma linha CSV respeitando aspas
@@ -3010,10 +3014,10 @@ function renderVelkarionCont(){
   var accent=accentMap[cont.id]||'#c9a44a';
 
   var data=rows.filter(function(r){
-    var nome=velGetField(r,'CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo');
+    var nome=velGetFieldRaw(r);
     if(!nome) return false;
-    var nomeLow=nome.toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
-    if(nomeLow==='campo/capital'||nomeLow==='campo') return false;
+    var nl=nome.toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim();
+    if(nl==='campo/capital'||nl==='campo') return false;
     if(s){ return Object.values(r).join(' ').toLowerCase().indexOf(s)>-1; }
     return true;
   });
@@ -3026,7 +3030,7 @@ function renderVelkarionCont(){
   }
 
   grid.innerHTML=data.map(function(r){
-    var nome=velGetField(r,'CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo');
+    var nome=velGetFieldRaw(r);
     var nomeClean=nome.replace(/^>+\s*/,'').replace(/^[Cc]apital[:\s]+/,'').trim();
 
     var resumo=velGetField(r,'RESUMO GERAL','Resumo Geral','resumo');
