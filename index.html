@@ -1257,28 +1257,28 @@ function distributeData(rows,tab){
   if(tab==='dons'){DB.dons=rows;return;}
   if(tab==='vantagensdesvantagens'||tab==='vantagens'){DB.vantagens=rows;return;}
   if(tab==='itensloja'||tab==='itens'){DB.itens=rows;return;}
-  if(tab==='loja_armas'){LOJA.armas=rows;LOJA_STATUS.armas='ok';renderLoja();return;}
-  if(tab==='loja_municao'){LOJA.municao=rows;LOJA_STATUS.municao='ok';renderLoja();return;}
-  if(tab==='loja_focus'){LOJA.focus=rows;LOJA_STATUS.focus='ok';renderLoja();return;}
-  if(tab==='loja_armadura'){LOJA.armadura=rows;LOJA_STATUS.armadura='ok';renderLoja();return;}
-  if(tab==='loja_itens'){LOJA.itens=rows;LOJA_STATUS.itens='ok';renderLoja();return;}
-  if(tab==='loja_montarias'){LOJA.montarias=rows;LOJA_STATUS.montarias='ok';renderLoja();return;}
-  if(tab==='loja_veiculos'){LOJA.veiculos=rows;LOJA_STATUS.veiculos='ok';renderLoja();return;}
-  if(tab==='loja_servicos'){LOJA.servicos=rows;LOJA_STATUS.servicos='ok';renderLoja();return;}
-  if(tab==='loja_aliment'){LOJA.aliment=rows;LOJA_STATUS.aliment='ok';renderLoja();return;}
-  if(tab==='loja_base_mel'){LOJA.base_mel=rows;LOJA_STATUS.base_mel='ok';renderLoja();return;}
-  if(tab==='loja_base_est'){LOJA.base_est=rows;LOJA_STATUS.base_est='ok';renderLoja();return;}
-  if(tab==='loja_imbuidos'){LOJA.imbuidos=rows;LOJA_STATUS.imbuidos='ok';renderLoja();return;}
-  if(tab==='loja_pocoes'){LOJA.pocoes=rows;LOJA_STATUS.pocoes='ok';renderLoja();return;}
-  if(tab==='loja_alquimicos'){LOJA.alquimicos=rows;LOJA_STATUS.alquimicos='ok';renderLoja();return;}
-  if(tab==='loja_venenos'){LOJA.venenos=rows;LOJA_STATUS.venenos='ok';renderLoja();return;}
-  if(tab==='loja_sicario'){LOJA.sicario=rows;LOJA_STATUS.sicario='ok';renderLoja();return;}
-  if(tab==='loja_minerios'){LOJA.minerios=rows;LOJA_STATUS.minerios='ok';renderLoja();return;}
-  if(tab==='loja_auxiliares'){LOJA.auxiliares=rows;LOJA_STATUS.auxiliares='ok';renderLoja();return;}
-  if(tab==='loja_gemas'){LOJA.gemas=rows;LOJA_STATUS.gemas='ok';renderLoja();return;}
-  if(tab==='loja_joias'){LOJA.joias=rows;LOJA_STATUS.joias='ok';renderLoja();return;}
-  if(tab==='loja_aprimor'){LOJA.aprimor=rows;LOJA_STATUS.aprimor='ok';renderLoja();return;}
-  if(tab==='loja_encant'){LOJA.encant=rows;LOJA_STATUS.encant='ok';renderLoja();return;}
+  if(tab==='loja_armas'){LOJA.armas=rows;LOJA_STATUS.armas='ok';if(LOJA_ACTIVE==='armas')renderLoja();return;}
+  if(tab==='loja_municao'){LOJA.municao=rows;LOJA_STATUS.municao='ok';if(LOJA_ACTIVE==='municao')renderLoja();return;}
+  if(tab==='loja_focus'){LOJA.focus=rows;LOJA_STATUS.focus='ok';if(LOJA_ACTIVE==='focus')renderLoja();return;}
+  if(tab==='loja_armadura'){LOJA.armadura=rows;LOJA_STATUS.armadura='ok';if(LOJA_ACTIVE==='armadura')renderLoja();return;}
+  if(tab==='loja_itens'){LOJA.itens=rows;LOJA_STATUS.itens='ok';if(LOJA_ACTIVE==='itens')renderLoja();return;}
+  if(tab==='loja_montarias'){LOJA.montarias=rows;LOJA_STATUS.montarias='ok';if(LOJA_ACTIVE==='montarias')renderLoja();return;}
+  if(tab==='loja_veiculos'){LOJA.veiculos=rows;LOJA_STATUS.veiculos='ok';if(LOJA_ACTIVE==='veiculos')renderLoja();return;}
+  if(tab==='loja_servicos'){LOJA.servicos=rows;LOJA_STATUS.servicos='ok';if(LOJA_ACTIVE==='servicos')renderLoja();return;}
+  if(tab==='loja_aliment'){LOJA.aliment=rows;LOJA_STATUS.aliment='ok';if(LOJA_ACTIVE==='aliment')renderLoja();return;}
+  if(tab==='loja_base_mel'){LOJA.base_mel=rows;LOJA_STATUS.base_mel='ok';if(LOJA_ACTIVE==='base_mel')renderLoja();return;}
+  if(tab==='loja_base_est'){LOJA.base_est=rows;LOJA_STATUS.base_est='ok';if(LOJA_ACTIVE==='base_est')renderLoja();return;}
+  if(tab==='loja_imbuidos'){LOJA.imbuidos=rows;LOJA_STATUS.imbuidos='ok';if(LOJA_ACTIVE==='imbuidos')renderLoja();return;}
+  if(tab==='loja_pocoes'){LOJA.pocoes=rows;LOJA_STATUS.pocoes='ok';if(LOJA_ACTIVE==='pocoes')renderLoja();return;}
+  if(tab==='loja_alquimicos'){LOJA.alquimicos=rows;LOJA_STATUS.alquimicos='ok';if(LOJA_ACTIVE==='alquimicos')renderLoja();return;}
+  if(tab==='loja_venenos'){LOJA.venenos=rows;LOJA_STATUS.venenos='ok';if(LOJA_ACTIVE==='venenos')renderLoja();return;}
+  if(tab==='loja_sicario'){LOJA.sicario=rows;LOJA_STATUS.sicario='ok';if(LOJA_ACTIVE==='sicario')renderLoja();return;}
+  if(tab==='loja_minerios'){LOJA.minerios=rows;LOJA_STATUS.minerios='ok';if(LOJA_ACTIVE==='minerios')renderLoja();return;}
+  if(tab==='loja_auxiliares'){LOJA.auxiliares=rows;LOJA_STATUS.auxiliares='ok';if(LOJA_ACTIVE==='auxiliares')renderLoja();return;}
+  if(tab==='loja_gemas'){LOJA.gemas=rows;LOJA_STATUS.gemas='ok';if(LOJA_ACTIVE==='gemas')renderLoja();return;}
+  if(tab==='loja_joias'){LOJA.joias=rows;LOJA_STATUS.joias='ok';if(LOJA_ACTIVE==='joias')renderLoja();return;}
+  if(tab==='loja_aprimor'){LOJA.aprimor=rows;LOJA_STATUS.aprimor='ok';if(LOJA_ACTIVE==='aprimor')renderLoja();return;}
+  if(tab==='loja_encant'){LOJA.encant=rows;LOJA_STATUS.encant='ok';if(LOJA_ACTIVE==='encant')renderLoja();return;}
   if(tab==='deuses'){DB.deuses=rows;return;}
   if(tab==='velkarion'){DB.velkarion=rows;return;}
   if(tab==='estigmas'){DB.estigmas=rows;return;}
@@ -1794,6 +1794,24 @@ function lojaGetField(r){
     r['Nome']||r['Imbuído']||r['Poção']||r['Veneno']||r['Veneno Sicário']||
     r['Minério']||r['Auxiliar']||r['Gema']||r['Joia']||r[Object.keys(r)[0]]||'(sem nome)';
 }
+// Detecta o tipo de moeda e retorna cor e símbolo
+function currencyColor(val){
+  if(!val) return null;
+  // Ƒ$ = ouro (dourado)
+  if(val.indexOf('\u0192')>-1||val.indexOf('F$')>-1||val.indexOf('Ƒ')>-1) return 'var(--gold-light)';
+  // ₣$ = prata
+  if(val.indexOf('\u20a3')>-1||val.indexOf('₣')>-1) return '#c0c8d8';
+  // 𝔽$ = cobre/bronze
+  if(val.indexOf('\ud835\udd3d')>-1||val.indexOf('\u{1d53d}')>-1||val.indexOf('𝔽')>-1) return '#b87333';
+  // fallback F$ dourado
+  return 'var(--gold-light)';
+}
+function priceSpan(val,size){
+  var col=currencyColor(val)||'var(--gold-light)';
+  var fs=size||'0.85rem';
+  return '<span style="font-family:Cinzel,serif;font-weight:700;font-size:'+fs+';color:'+col+';">'+val+'</span>';
+}
+
 function lojaGetPreco(r,cat){
   // Minérios, Gemas e Imbuídos têm múltiplos valores por tipo de uso —
   // não existe um preço único universal. Os valores ficam nos campos do modal.
@@ -1828,7 +1846,7 @@ function lojaGetDesc(r,cat){
 function lojaGetTags(r,cat){
   var tags=[];
   var p=lojaGetPreco(r,cat);
-  if(p) tags.push({label:p,cls:'tag-gold'});
+  if(p) tags.push({label:p,cls:'tag-gold',color:currencyColor(p)});
   if(cat==='armas'||cat==='focus'){
     var dmg=r['Dano']||'';var tipo=r['Tipo do Dano']||r['Tipo de Dano']||'';
     if(dmg) tags.push({label:dmg,cls:'tag-danger'});
@@ -1940,7 +1958,7 @@ function lojaGroupAccent(cat,grpName){
       'roxo':'#c084fc','roxa':'#c084fc','amétista':'#c084fc','ametista':'#c084fc','violeta':'#9b5de5',
       'rosa':'#f48fb1','pink':'#f48fb1',
       'branco':'#d8dae8','branca':'#d8dae8','diamante':'#d8dae8','cristal':'#d8dae8',
-      'preto':'#bb86fc','preta':'#bb86fc','obsidiana':'#bb86fc','ônix':'#bb86fc','onix':'#bb86fc',
+      'preto':'#8b1a2f','preta':'#8b1a2f','obsidiana':'#8b1a2f','ônix':'#8b1a2f','onix':'#8b1a2f',
       'cinza':'#aaa','prata':'#c0c0c0','prateado':'#c0c0c0','prateada':'#c0c0c0'
     };
     for(var k in corMap){ if(g.indexOf(k)>-1) return corMap[k]; }
@@ -1987,6 +2005,8 @@ function switchLoja(cat){
   });
   document.getElementById('f-loja-search').value='';
   document.getElementById('f-loja-cat').value='';
+  var sc=document.getElementById('f-loja-subcat');if(sc)sc.value='';
+  var p=document.getElementById('f-loja-preco');if(p)p.value='';
   renderLoja();
 }
 
@@ -2090,9 +2110,8 @@ function renderLoja(){
       if(ia===-1)ia=999;if(ib===-1)ib=999;
       return ia-ib||a.localeCompare(b,'pt');
     });
-  } else {
-    groupKeys.sort(function(a,b){return a.localeCompare(b,'pt');});
   }
+  // Mantém a ordem de inserção (ordem da planilha) para todas as outras categorias
 
   var html='';
   groupKeys.forEach(function(grpName){
@@ -2123,11 +2142,11 @@ function renderLoja(){
       html+='<div class="card" style="--card-accent:'+grpAccent+';--card-accent-faint:'+grpAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
           '<div class="card-type" style="color:'+grpAccent+';">'+LOJA_LABELS[cat]+'</div>'+
-          (lojaGetPreco(r,cat)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r,cat)+'</span>':'')+
+          (lojaGetPreco(r,cat)?priceSpan(lojaGetPreco(r,cat),'0.85rem'):'')+
         '</div>'+
         '<div class="card-name">'+n+'</div>'+
         (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
-        '<div class="card-tags">'+tags.map(function(t){return tag(t.label,t.cls);}).join('')+subcatBadge+'</div>'+
+        '<div class="card-tags">'+tags.map(function(t){return t.color?'<span class="tag tag-gold" style="color:'+t.color+';border-color:'+t.color.replace('var(--','rgba(').replace(')',',0.4)')+';">'+t.label+'</span>':tag(t.label,t.cls);}).join('')+subcatBadge+'</div>'+
       '</div>';
     });
   });
@@ -2150,7 +2169,7 @@ function openLojaModal(idx){
   if(desc) html+='<div class="modal-desc">'+formatDesc(desc.replace(/<br>/g,'\n'))+'</div>';
 
   // Structured fields
-  var skip=['_nome_display','_loja_cat','_vd_cat','_modal_fields'];
+  var skip=['_nome_display','_loja_cat','_vd_cat','_modal_fields','_grp_accent'];
   var skipLower=['categoria','sub-categoria','n\u00edvel','nivel','cor','complexidade'];
   var nameVal=n;
   var fields=Object.keys(row).filter(function(k){
@@ -2177,7 +2196,7 @@ function openLojaModal(idx){
   if(preco){
     html+='<div style="margin-top:1rem;padding:0.6rem 0.9rem;background:rgba(201,164,74,0.08);border:1px solid rgba(201,164,74,0.25);border-radius:6px;display:flex;align-items:center;gap:0.6rem;">'+
       '<span style="font-family:Cinzel,serif;font-size:0.65rem;font-weight:700;color:var(--gold-light);opacity:0.7;text-transform:uppercase;letter-spacing:0.12em;">Pre\u00e7o</span>'+
-      '<span style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:var(--gold-light);">'+preco+'</span>'+
+      priceSpan(preco,'1.2rem')+
     '</div>';
   }
 
