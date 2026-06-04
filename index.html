@@ -1016,6 +1016,7 @@ main{
       <!-- Meta do continente -->
       <div class="vel-cont-meta" id="vel-cont-meta"></div>
       <!-- Filtro de regiões -->
+      <div class="debug-banner" id="vel-debug"></div>
       <div class="vel-regions-filter">
         <input type="text" id="vel-region-search" placeholder="Buscar região, capital..." oninput="velFilterRegions()">
       </div>
@@ -2468,13 +2469,31 @@ var VEL_CONTS=[
   {key:'sharandor', name:'Sharandor',    cls:'vel-sharandor', sym:'◎', n:'VIII'}
 ];
 
-// Pega valor de uma row pelo cabeçalho (flexível)
-function velGet(row, ...keys){
-  for(var k of keys){
-    var v=gf(row,k);
+// Pega valor de uma row pelo cabeçalho (flexível) - usa gf existente
+function velGet(row){
+  var keys=Array.prototype.slice.call(arguments,1);
+  return gf.apply(null,[row].concat(keys));
+}
+
+// Pega o primeiro valor não-vazio de qualquer coluna da row
+function velFirstValue(row){
+  var keys=Object.keys(row);
+  for(var i=0;i<keys.length;i++){
+    var v=(row[keys[i]]||'').trim();
     if(v) return v;
   }
   return '';
+}
+
+// Pega o nome da região: tenta colunas conhecidas, depois cai no primeiro valor
+function velNome(row){
+  var v=gf(row,'CAMPO/CAPITAL','CAMPO','Campo','Capital','capital','Nome','nome','NOME','LOCAL','Local','local','REGIAO','Regiao','regiao','REGIÃO','Região','região');
+  if(!v){
+    // fallback: primeiro campo não-vazio
+    v=velFirstValue(row)||'(sem nome)';
+  }
+  // Limpar prefixos como ">> ", "> ", "— "
+  return v.replace(/^[>\s\-–—]+/,'').trim()||v;
 }
 
 function renderVelkarion(){
@@ -2546,8 +2565,22 @@ function velRenderRegions(key){
   var conf=VEL_CONTS.find(function(c){return c.key===key;});
   if(!conf) return;
 
-  // Título
-  document.getElementById('vel-regions-breadcrumb').textContent='Velkarion → Continentes';
+  // DEBUG: logar cabeçalhos reais no console
+  var rows=VEL[key]||[];
+  if(rows.length>0){
+    console.log('[VEL DEBUG] Cabeçalhos de '+key+':', Object.keys(rows[0]));
+    console.log('[VEL DEBUG] Primeira row:', rows[0]);
+  }
+
+  // Mostrar debug de headers na interface
+  var dbg=document.getElementById('vel-debug');
+  if(dbg && rows.length>0){
+    var hdrs=Object.keys(rows[0]);
+    dbg.style.display='block';
+    dbg.innerHTML='<strong>Colunas detectadas ('+key+'):</strong> '+hdrs.map(function(h){return '<code style="background:rgba(155,93,229,0.15);padding:1px 5px;border-radius:3px;margin:1px;">'+h+'</code>';}).join(' ');
+  } else if(dbg){
+    dbg.style.display='none';
+  }
   document.getElementById('vel-regions-title').textContent=conf.sym+' '+conf.name;
 
   // Meta do continente (do índice)
@@ -2604,7 +2637,7 @@ function velFilterRegions(){
   }
 
   g.innerHTML=data.map(function(r,i){
-    var nome=velGet(r,'CAMPO/CAPITAL','CAMPO','Campo','Capital','capital','Nome','nome')||'(sem nome)';
+    var nome=velNome(r);
     var resumo=velGet(r,'RESUMO GERAL','Resumo','resumo','RESUMO','descricao','Descricao');
     var destaques=velGet(r,'DESTAQUES','Destaques','destaques');
     var cenario=velGet(r,'CENARIO','Cenário','Cenario','cenario');
@@ -2621,7 +2654,7 @@ function velFilterRegions(){
 function velOpenRegion(idx, contKey){
   var r=_modalStore[idx];
   var conf=VEL_CONTS.find(function(c){return c.key===contKey;})||{name:contKey,sym:'⚐'};
-  var nome=velGet(r,'CAMPO/CAPITAL','CAMPO','Campo','Capital','capital','Nome','nome')||'(sem nome)';
+  var nome=velNome(r);
   var resumo=velGet(r,'RESUMO GERAL','Resumo','resumo','RESUMO');
   var destaques=velGet(r,'DESTAQUES','Destaques','destaques');
   var cenario=velGet(r,'CENARIO','Cenário','Cenario','cenario');
