@@ -624,7 +624,7 @@ main{
     <div class="nav-tab" data-page="racas"     onclick="showPage('racas')">     <span class="tab-sym">☯</span> Raças</div>
     <div class="nav-tab" data-page="classes"   onclick="showPage('classes')">   <span class="tab-sym">⚔</span> Classes</div>
     <div class="nav-tab" data-page="vantagens" onclick="showPage('vantagens')"> <span class="tab-sym">△</span> Vantagens</div>
-    <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">     <span class="tab-sym">✤</span> Itens</div>
+    <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">     <span class="tab-sym">✤</span> Loja</div>
     <div class="nav-tab" data-page="grimorio"  onclick="showPage('grimorio')">  <span class="tab-sym">✦</span> Grimório</div>
     <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">    <span class="tab-sym">☀</span> Deuses</div>
     <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')"> <span class="tab-sym">⚐</span> Velkarion</div>
@@ -846,7 +846,7 @@ main{
       <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"> &#x2665; Montarias</button>
       <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')">  &#x2318; Ve&#xED;culos</button>
       <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')">  &#x2737; Servi&#xE7;os</button>
-      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')">   &#x2615; Alimenta&#xE7;&#xE3;o</button>
+      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')">   &#x2615; Gastronomia</button>
       <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')">  &#x2302; Base (Melhorias)</button>
       <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')">  &#x2302; Base (Estruturas)</button>
       <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Ibu&#xED;dos</button>
@@ -866,6 +866,7 @@ main{
     <div class="filter-bar" style="margin-top:0.5rem;">
       <div class="fg" style="flex:2;"><label>Buscar</label><input type="text" id="f-loja-search" placeholder="Nome, efeito, categoria..." oninput="renderLoja()"></div>
       <div class="fg"><label>Categoria</label><select id="f-loja-cat" onchange="renderLoja()"><option value="">Todas</option></select></div>
+      <div class="fg" id="fg-loja-subcat" style="display:none;"><label>Subcategoria</label><select id="f-loja-subcat" onchange="renderLoja()"><option value="">Todas</option></select></div>
       <div class="fg"><label>Pre&#xE7;o m&#xE1;x.</label><input type="number" id="f-loja-preco" placeholder="Ex: 500" oninput="renderLoja()" style="background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.6rem;font-family:Raleway,sans-serif;font-size:0.85rem;border-radius:4px;outline:none;width:100%;"></div>
       <button class="btn-clear" onclick="clearLojaFilters()">Limpar</button>
     </div>
@@ -1770,7 +1771,7 @@ function renderItens(){
 var LOJA_LABELS={
   armas:'Armas',municao:'Munição',focus:'Fócus',armadura:'Armadura',
   itens:'Itens',montarias:'Montarias & Animais',veiculos:'Veículos',
-  servicos:'Serviços',aliment:'Alimentação',base_mel:'Base (Melhorias)',
+  servicos:'Serviços',aliment:'Gastronomia Regional',base_mel:'Base (Melhorias)',
   base_est:'Base (Estruturas)',imbuidos:'Imbuídos',pocoes:'Poções',
   alquimicos:'Alquímicos',venenos:'Venenos',sicario:'V. Sicário',
   minerios:'Minérios',auxiliares:'Auxiliares',gemas:'Gemas',
@@ -1800,8 +1801,15 @@ function lojaGetPreco(r,cat){
   return r['Preço']||r['Custo']||r['Valor']||r['Valor Armas']||r['Armas']||'';
 }
 function lojaGetCat(r,cat){
-  if(cat==='imbuidos') return r['Escala']||r['Nível']||r['Categoria']||r['Sub-categoria']||'';
+  // Imbuídos: agrupa por Sub-categoria (Lendário, Colossal, Titânico, Mítico, Épico)
+  if(cat==='imbuidos') return r['Sub-categoria']||r['Escala']||r['Nível']||r['Categoria']||'';
+  // Minérios e Gemas: Categoria/Complexidade
   if(cat==='minerios'||cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
+  // Munição: sem agrupamento (tudo junto)
+  if(cat==='municao') return '';
+  // Alquímicos e Venenos: sem agrupamento (tudo junto, usa tags)
+  if(cat==='alquimicos'||cat==='venenos'||cat==='sicario') return '';
+  // Todos os outros: Categoria padrão
   return r['Categoria']||r['Sub-categoria']||r['Nível']||r['Cor']||r['Complexidade']||'';
 }
 function lojaGetDesc(r,cat){
@@ -1832,31 +1840,144 @@ function lojaGetTags(r,cat){
     if(mit) tags.push({label:'MD '+mit,cls:'tag-conjurador'});
     var tip=r['Tipo']||r['Categoria']||''; if(tip) tags.push({label:tip,cls:'tag-gray'});
   }
-  if(cat==='pocoes'||cat==='alquimicos'||cat==='venenos'||cat==='sicario'){
+  if(cat==='pocoes'){
     var niv=r['Nível']||''; if(niv) tags.push({label:'Nv '+niv,cls:'tag-rare'});
+  }
+  if(cat==='alquimicos'||cat==='venenos'||cat==='sicario'){
+    var niv=r['Nível']||''; if(niv) tags.push({label:niv,cls:'tag-rare'});
+    var catV=r['Categoria']||''; if(catV) tags.push({label:catV,cls:'tag-gray'});
   }
   if(cat==='minerios'||cat==='gemas'||cat==='joias'){
     var comp=r['Complexidade']||''; if(comp) tags.push({label:comp,cls:'tag-rare'});
     var cor=r['Cor']||''; if(cor) tags.push({label:cor,cls:'tag-gray'});
   }
   if(cat==='imbuidos'){
-    var escala=r['Escala']||r['Nível']||''; if(escala) tags.push({label:escala,cls:'tag-rare'});
+    var subcat=r['Sub-categoria']||''; if(subcat) tags.push({label:subcat,cls:'tag-rare'});
   }
   var esp=r['Espaços']||''; if(esp&&esp!=='0') tags.push({label:esp+' esp',cls:'tag-gray'});
   return tags;
 }
 
-function lojaCardAccent(cat){
-  var m={
-    armas:'var(--cat-combate)',municao:'var(--cat-combate)',focus:'var(--cat-conjurador)',
-    armadura:'var(--cat-suporte)',itens:'var(--cat-especialista)',montarias:'var(--green)',
-    veiculos:'var(--cyan)',servicos:'var(--gold-light)',aliment:'var(--green)',
-    base_mel:'var(--gold-light)',base_est:'var(--gold)',imbuidos:'var(--violet-bright)',
-    pocoes:'var(--cyan)',alquimicos:'var(--cyan-dim)',venenos:'var(--cat-desvantagem)',
-    sicario:'var(--blood)',minerios:'var(--gold-light)',auxiliares:'var(--violet)',
-    gemas:'var(--cyan)',joias:'var(--magenta)',aprimor:'var(--violet-bright)',encant:'var(--violet)'
-  };
-  return m[cat]||'var(--violet)';
+// Base accent per loja category
+var LOJA_BASE_ACCENT={
+  armas:'var(--cat-combate)',municao:'var(--cat-combate)',focus:'var(--cat-conjurador)',
+  armadura:'var(--cat-suporte)',itens:'var(--cat-especialista)',montarias:'var(--green)',
+  veiculos:'var(--cyan)',servicos:'var(--gold-light)',aliment:'var(--green)',
+  base_mel:'var(--gold-light)',base_est:'var(--gold)',imbuidos:'var(--violet-bright)',
+  pocoes:'var(--cyan)',alquimicos:'var(--cyan-dim)',venenos:'var(--cat-desvantagem)',
+  sicario:'var(--blood)',minerios:'var(--gold-light)',auxiliares:'var(--violet)',
+  gemas:'var(--cyan)',joias:'var(--magenta)',aprimor:'var(--violet-bright)',encant:'var(--violet)'
+};
+function lojaCardAccent(cat){ return LOJA_BASE_ACCENT[cat]||'var(--violet)'; }
+
+// Per-group accent color — varies by category/group combination
+function lojaGroupAccent(cat,grpName){
+  var g=(grpName||'').toLowerCase();
+  // ARMAS: por tipo de arma
+  if(cat==='armas'){
+    if(g.indexOf('simples')>-1)    return '#7ecff5';
+    if(g.indexOf('marcial')>-1)    return 'var(--cat-combate)';
+    if(g.indexOf('exótica')>-1||g.indexOf('exotica')>-1) return '#f72585';
+    if(g.indexOf('arremesso')>-1||g.indexOf('arremess')>-1) return '#e8c56a';
+    if(g.indexOf('distancia')>-1||g.indexOf('distância')>-1||g.indexOf('ranged')>-1) return '#6dffb3';
+    return lojaCardAccent(cat);
+  }
+  // ARMADURA: por tipo
+  if(cat==='armadura'){
+    if(g.indexOf('leve')>-1)       return '#6dffb3';
+    if(g.indexOf('media')>-1||g.indexOf('média')>-1) return '#7ecff5';
+    if(g.indexOf('pesada')>-1)     return '#ff8c42';
+    if(g.indexOf('escudo')>-1)     return '#c084fc';
+    if(g.indexOf('relicario')>-1||g.indexOf('relicário')>-1) return '#e8c56a';
+    return lojaCardAccent(cat);
+  }
+  // ITENS: por categoria
+  if(cat==='itens'){
+    var palette=['#7ecff5','#6dffb3','#c084fc','#ff8c42','#f48fb1','#e8c56a','#00d4ff','#ff6b35','#bb86fc','#64b5f6','#f72585','#ffb347'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // MONTARIAS
+  if(cat==='montarias'){
+    var palette=['#6dffb3','#7ecff5','#e8c56a','#c084fc','#ff8c42','#f48fb1'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // VEÍCULOS
+  if(cat==='veiculos'){
+    var palette=['var(--cyan)','#6dffb3','#e8c56a','#c084fc','#ff8c42'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // GASTRONOMIA: por região
+  if(cat==='aliment'){
+    var palette=['#ff8c42','#6dffb3','#7ecff5','#f48fb1','#e8c56a','#c084fc','#f72585','#00d4ff','#ffb347','#bb86fc'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // POÇÕES
+  if(cat==='pocoes'){
+    if(g.indexOf('cura')>-1)       return '#6dffb3';
+    if(g.indexOf('mana')>-1||g.indexOf('arcana')>-1) return '#c084fc';
+    if(g.indexOf('status')>-1||g.indexOf('apoio')>-1) return '#7ecff5';
+    if(g.indexOf('veneno')>-1||g.indexOf('negat')>-1) return 'var(--cat-desvantagem)';
+    var palette=['#6dffb3','#c084fc','#7ecff5','#ff8c42','#e8c56a','#f48fb1','var(--cyan)','#bb86fc'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // IMBUÍDOS: por escala
+  if(cat==='imbuidos'){
+    if(g.indexOf('lendário')>-1||g.indexOf('lendario')>-1) return '#e8c56a';
+    if(g.indexOf('colossal')>-1)   return '#ff8c42';
+    if(g.indexOf('titânico')>-1||g.indexOf('titanico')>-1) return '#f72585';
+    if(g.indexOf('mítico')>-1||g.indexOf('mitico')>-1)     return '#c084fc';
+    if(g.indexOf('épico')>-1||g.indexOf('epico')>-1)       return 'var(--cyan)';
+    return lojaCardAccent(cat);
+  }
+  // JOIAS: tenta usar a cor do nome do grupo
+  if(cat==='joias'){
+    var corMap={
+      'vermelho':'#ff5c5c','vermelha':'#ff5c5c','ruby':'#ff5c5c','rubi':'#ff5c5c',
+      'laranja':'#ff8c42','âmbar':'#ff8c42','ambar':'#ff8c42',
+      'amarelo':'#e8c56a','amarela':'#e8c56a','gold':'#e8c56a','ouro':'#e8c56a',
+      'verde':'#6dffb3','esmeralda':'#6dffb3','jade':'#6dffb3',
+      'azul':'#7ecff5','safira':'#7ecff5','aqua':'var(--cyan)',
+      'roxo':'#c084fc','roxa':'#c084fc','amétista':'#c084fc','ametista':'#c084fc','violeta':'#9b5de5',
+      'rosa':'#f48fb1','pink':'#f48fb1',
+      'branco':'#d8dae8','branca':'#d8dae8','diamante':'#d8dae8','cristal':'#d8dae8',
+      'preto':'#bb86fc','preta':'#bb86fc','obsidiana':'#bb86fc','ônix':'#bb86fc','onix':'#bb86fc',
+      'cinza':'#aaa','prata':'#c0c0c0','prateado':'#c0c0c0','prateada':'#c0c0c0'
+    };
+    for(var k in corMap){ if(g.indexOf(k)>-1) return corMap[k]; }
+    var palette=['#ff5c5c','#ff8c42','#e8c56a','#6dffb3','#7ecff5','#c084fc','#f48fb1','#d8dae8'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // APRIMORAMENTOS: por subcategoria
+  if(cat==='aprimor'){
+    if(g.indexOf('ofensivo')>-1)   return 'var(--cat-combate)';
+    if(g.indexOf('defensivo')>-1)  return '#7ecff5';
+    if(g.indexOf('utilidade')>-1)  return '#6dffb3';
+    var palette=['var(--cat-combate)','#7ecff5','#6dffb3','#c084fc','#e8c56a'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  // ENCANTAMENTOS: por subcategoria
+  if(cat==='encant'){
+    if(g.indexOf('profano')>-1)    return '#bb86fc';
+    if(g.indexOf('elemental')>-1)  return '#ff8c42';
+    if(g.indexOf('arcano')>-1)     return '#7ecff5';
+    if(g.indexOf('divino')>-1)     return '#e8c56a';
+    if(g.indexOf('pactual')>-1)    return '#f72585';
+    var palette=['#bb86fc','#ff8c42','#7ecff5','#e8c56a','#f72585'];
+    return _grpPaletteColor(grpName, palette);
+  }
+  return lojaCardAccent(cat);
+}
+
+// Deterministic palette color from group name
+var _grpPaletteCache={};
+function _grpPaletteColor(name, palette){
+  if(!name) return palette[0];
+  var key=name+'|'+palette.join(',');
+  if(_grpPaletteCache[key]) return _grpPaletteCache[key];
+  var h=0; for(var i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+  var col=palette[h%palette.length];
+  _grpPaletteCache[key]=col;
+  return col;
 }
 
 function switchLoja(cat){
@@ -1872,6 +1993,7 @@ function switchLoja(cat){
 function clearLojaFilters(){
   document.getElementById('f-loja-search').value='';
   document.getElementById('f-loja-cat').value='';
+  var sc=document.getElementById('f-loja-subcat');if(sc)sc.value='';
   var p=document.getElementById('f-loja-preco');if(p)p.value='';
   renderLoja();
 }
@@ -1882,6 +2004,15 @@ function renderLoja(){
   var s=(document.getElementById('f-loja-search').value||'').toLowerCase();
   var selCat=document.getElementById('f-loja-cat').value||'';
   var maxP=parseFloat(document.getElementById('f-loja-preco').value||'')||0;
+  // Subcategoria filter (aprimor, encant, imbuidos)
+  var HAS_SUBCAT=['aprimor','encant','imbuidos'];
+  var fgSubcat=document.getElementById('fg-loja-subcat');
+  var selSubcat='';
+  if(fgSubcat){
+    fgSubcat.style.display=HAS_SUBCAT.indexOf(cat)>-1?'':'none';
+    var elSubcat=document.getElementById('f-loja-subcat');
+    selSubcat=elSubcat?(elSubcat.value||''):'';
+  }
   var g=document.getElementById('grid-loja');
   var statusEl=document.getElementById('loja-load-status');
   if(!g)return;
@@ -1902,16 +2033,34 @@ function renderLoja(){
     fCat.innerHTML='<option value="">Todas</option>';
     cats.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;if(c===cur)o.selected=true;fCat.appendChild(o);});
   }
+  // Populate subcategory filter (aprimor, encant, imbuidos)
+  var elSubcatSel=document.getElementById('f-loja-subcat');
+  if(elSubcatSel&&HAS_SUBCAT.indexOf(cat)>-1){
+    var subcats=[];
+    rows.forEach(function(r){var sc=(r['Sub-categoria']||'').trim();if(sc&&subcats.indexOf(sc)===-1)subcats.push(sc);});
+    // Sort imbuidos by scale order
+    if(cat==='imbuidos'){
+      var SO=['Lend\u00e1rio','Colossal','Tit\u00e2nico','M\u00edtico','\u00c9pico','Raro','Incomum','Comum'];
+      subcats.sort(function(a,b){
+        var ia=SO.findIndex(function(s){return a.toLowerCase().indexOf(s.toLowerCase())>-1;});
+        var ib=SO.findIndex(function(s){return b.toLowerCase().indexOf(s.toLowerCase())>-1;});
+        if(ia===-1)ia=999;if(ib===-1)ib=999;return ia-ib;
+      });
+    } else { subcats.sort(); }
+    var curSC=elSubcatSel.value;
+    elSubcatSel.innerHTML='<option value="">Todas</option>';
+    subcats.forEach(function(sc){var o=document.createElement('option');o.value=sc;o.textContent=sc;if(sc===curSC)o.selected=true;elSubcatSel.appendChild(o);});
+  }
 
   // Filter rows - skip header rows
   var data=rows.filter(function(r){
     var n=lojaGetField(r)||'';
     var keys=Object.keys(r);
-    // Skip rows where first value equals its column name (header leak)
     if(keys.length&&keys[0].trim()===n.trim()) return false;
     if(!n||n==='(sem nome)') return false;
-    if(s&&(n+' '+lojaGetDesc(r,cat)+' '+lojaGetCat(r,cat)).toLowerCase().indexOf(s)===-1) return false;
+    if(s&&(n+' '+lojaGetDesc(r,cat)+' '+lojaGetCat(r,cat)+' '+(r['Sub-categoria']||'')).toLowerCase().indexOf(s)===-1) return false;
     if(selCat&&lojaGetCat(r,cat)!==selCat) return false;
+    if(selSubcat&&(r['Sub-categoria']||'').trim()!==selSubcat) return false;
     if(maxP){var p=parseFloat((lojaGetPreco(r,cat)||'0').replace(/[^\d.]/g,''));if(p&&p>maxP)return false;}
     return true;
   });
@@ -1926,57 +2075,59 @@ function renderLoja(){
   var accent=lojaCardAccent(cat);
   var grouped={};
   data.forEach(function(r){
-    var c=lojaGetCat(r,cat)||'Geral';
-    if(!grouped[c])grouped[c]=[];
-    grouped[c].push(r);
+    var gc=lojaGetCat(r,cat)||'Geral';
+    if(!grouped[gc])grouped[gc]=[];
+    grouped[gc].push(r);
   });
 
-  // Para imbuidos: ordena grupos pela escala de poder
+  // Ordena grupos
   var groupKeys=Object.keys(grouped);
+  var SCALE_ORDER=['Lend\u00e1rio','Colossal','Tit\u00e2nico','M\u00edtico','\u00c9pico','Raro','Incomum','Comum'];
   if(cat==='imbuidos'){
-    var scaleOrder=['Comum','Incomum','Raro','Lendário','Colossal','Titânico','Épico','Primordial','Divino','Mítico'];
     groupKeys.sort(function(a,b){
-      var ia=scaleOrder.findIndex(function(s){return a.toLowerCase().indexOf(s.toLowerCase())>-1;});
-      var ib=scaleOrder.findIndex(function(s){return b.toLowerCase().indexOf(s.toLowerCase())>-1;});
+      var ia=SCALE_ORDER.findIndex(function(s){return a.toLowerCase().indexOf(s.toLowerCase())>-1;});
+      var ib=SCALE_ORDER.findIndex(function(s){return b.toLowerCase().indexOf(s.toLowerCase())>-1;});
       if(ia===-1)ia=999;if(ib===-1)ib=999;
       return ia-ib||a.localeCompare(b,'pt');
     });
+  } else {
+    groupKeys.sort(function(a,b){return a.localeCompare(b,'pt');});
   }
 
   var html='';
   groupKeys.forEach(function(grpName){
     var grp=grouped[grpName];
+    var grpAccent=lojaGroupAccent(cat,grpName);
     if(groupKeys.length>1){
-      html+='<div style="grid-column:1/-1;margin:0.5rem 0 0.3rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);">'+
-        '<span style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:'+accent+';letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;">'+grpName+'</span>'+
-        '<span style="font-family:Raleway,sans-serif;font-size:0.62rem;color:var(--text-faint);margin-left:0.5rem;">'+grp.length+' item'+(grp.length===1?'':'s')+'</span>'+
+      html+='<div style="grid-column:1/-1;margin:1rem 0 0.4rem;padding:0.45rem 0.75rem;border-left:3px solid '+grpAccent+';background:rgba(0,0,0,0.2);border-radius:0 6px 6px 0;">'+
+        '<span style="font-family:Cinzel,serif;font-size:0.8rem;font-weight:700;color:'+grpAccent+';letter-spacing:0.12em;text-transform:uppercase;">'+grpName+'</span>'+
+        '<span style="font-family:Raleway,sans-serif;font-size:0.62rem;color:var(--text-faint);margin-left:0.6rem;">'+grp.length+' item'+(grp.length===1?'':'s')+'</span>'+
       '</div>';
     }
     grp.forEach(function(r){
       var n=lojaGetField(r);
       var desc=lojaGetDesc(r,cat);
       var tags=lojaGetTags(r,cat);
+      var subcat=r['Sub-categoria']||'';
       var rCopy={};for(var k in r)rCopy[k]=r[k];
       rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';
-      // Build modal desc from all relevant fields
-      var modalFields=[];
-      Object.keys(r).forEach(function(k){
-        var kl=k.toLowerCase();
-        var skip=['categoria','sub-categoria','nivel','n\u00edvel'];
-        var nameKeys=lojaGetField(r);
-        if(r[k]===nameKeys)return;
-        if(r[k]&&r[k].trim()&&skip.indexOf(kl)===-1) modalFields.push(k);
-      });
-      rCopy['_modal_fields']=JSON.stringify(modalFields);
+      rCopy['_grp_accent']=grpAccent;
 
-      html+='<div class="card" style="--card-accent:'+accent+';--card-accent-faint:'+accent.replace(')',',0.1)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+      // Subcategoria badge para aprimor e encant
+      var subcatBadge='';
+      if((cat==='aprimor'||cat==='encant')&&subcat){
+        var sbAcc=lojaGroupAccent(cat,subcat);
+        subcatBadge='<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.08em;padding:0.15rem 0.45rem;border-radius:3px;border:1px solid '+sbAcc+';color:'+sbAcc+';background:rgba(0,0,0,0.3);text-transform:uppercase;">'+subcat+'</span>';
+      }
+
+      html+='<div class="card" style="--card-accent:'+grpAccent+';--card-accent-faint:'+grpAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
         '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
-          '<div class="card-type" style="color:'+accent+';">'+LOJA_LABELS[cat]+'</div>'+
+          '<div class="card-type" style="color:'+grpAccent+';">'+LOJA_LABELS[cat]+'</div>'+
           (lojaGetPreco(r,cat)?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.85rem;color:var(--gold-light);">'+lojaGetPreco(r,cat)+'</span>':'')+
         '</div>'+
         '<div class="card-name">'+n+'</div>'+
         (desc?'<div class="card-desc" style="-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;">'+desc.replace(/<br>/g,' ')+'</div>':'')+
-        '<div class="card-tags">'+tags.map(function(t){return tag(t.label,t.cls);}).join('')+ '</div>'+
+        '<div class="card-tags">'+tags.map(function(t){return tag(t.label,t.cls);}).join('')+subcatBadge+'</div>'+
       '</div>';
     });
   });
