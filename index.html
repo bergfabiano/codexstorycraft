@@ -685,19 +685,25 @@ main{
   <div id="page-contador" class="page">
     <h2 class="section-title"><span class="stitle-sym">◆</span> Contador de Atributos</h2>
     <div class="cnt-wrap">
-      <div style="display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;align-items:flex-end;">
-        <div><span class="cnt-lbl">Nível</span><input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1"></div>
-        <div><span class="cnt-lbl">Raça</span><select class="cnt-select" id="cnt-raca"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select></div>
-        <button class="cnt-btn" onclick="cntReset()">Resetar</button>
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1.5rem;align-items:flex-end;justify-content:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
+          <span class="cnt-lbl" style="text-align:center;">Nível</span>
+          <input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1" style="text-align:center;">
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
+          <span class="cnt-lbl" style="text-align:center;">Raça</span>
+          <select class="cnt-select" id="cnt-raca" style="text-align:center;"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select>
+        </div>
+        <button class="cnt-btn" onclick="cntReset()" style="align-self:flex-end;">Resetar</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;align-items:flex-end;">
-        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;width:100%;">○ Bônus Racial <span id="rb-limit-note" style="color:var(--text-faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:0.58rem;"></span></span>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">FOR</span><input class="cnt-rb-input" type="number" id="rb-for" value="0" min="-5" max="5" oninput="cntClampRb('for',this);cntUpdate()"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">DES</span><input class="cnt-rb-input" type="number" id="rb-des" value="0" min="-5" max="5" oninput="cntClampRb('des',this);cntUpdate()"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CON</span><input class="cnt-rb-input" type="number" id="rb-con" value="0" min="-5" max="5" oninput="cntClampRb('con',this);cntUpdate()"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">INT</span><input class="cnt-rb-input" type="number" id="rb-int" value="0" min="-5" max="5" oninput="cntClampRb('int',this);cntUpdate()"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">SAB</span><input class="cnt-rb-input" type="number" id="rb-sab" value="0" min="-5" max="5" oninput="cntClampRb('sab',this);cntUpdate()"></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.2rem;"><span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;color:var(--text-faint);">CAR</span><input class="cnt-rb-input" type="number" id="rb-car" value="0" min="-5" max="5" oninput="cntClampRb('car',this);cntUpdate()"></div>
+            <div style="display:none;">
+        <input type="number" id="rb-for" value="0">
+        <input type="number" id="rb-des" value="0">
+        <input type="number" id="rb-con" value="0">
+        <input type="number" id="rb-int" value="0">
+        <input type="number" id="rb-sab" value="0">
+        <input type="number" id="rb-car" value="0">
+      </div>
       </div>
       <!-- Escolhas raciais dinâmicas -->
       <div id="cnt-racial-choices" style="display:none;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid rgba(201,164,74,0.25);border-radius:8px;border-left:3px solid var(--gold-light);"></div>
@@ -715,9 +721,30 @@ main{
         </tr></thead>
         <tbody id="cnt-tbody"></tbody>
       </table>
-      <div style="margin-top:1.2rem;padding:0.7rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.83rem;color:var(--text-faint);line-height:1.8;">
-        <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;">Tabela de Custo</span><br>
-        1 e 2 pontos: 1pt cada &bull; 3 pontos: 2pts &bull; 4 pontos: 3pts &bull; Reduzir em -1: <span style="color:var(--gold-light)">+1pt extra</span>
+      <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.85rem;opacity:0.8;">&#x2726; Tabela de Custo de Pontos</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.5rem;">
+          <div style="padding:0.55rem 0.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--gold-light);">1</div>
+            <div style="font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;">1&ordm; ponto &rarr; 1pt</div>
+          </div>
+          <div style="padding:0.55rem 0.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--gold-light);">2</div>
+            <div style="font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;">2&ordm; ponto &rarr; 1pt</div>
+          </div>
+          <div style="padding:0.55rem 0.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--violet-bright);">3</div>
+            <div style="font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;">3&ordm; ponto &rarr; 2pts</div>
+          </div>
+          <div style="padding:0.55rem 0.75rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--ember);">4</div>
+            <div style="font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;">4&ordm; ponto &rarr; 3pts</div>
+          </div>
+          <div style="padding:0.55rem 0.75rem;background:var(--bg3);border:1px solid rgba(201,164,74,0.3);border-radius:6px;text-align:center;">
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;color:var(--green);">-1</div>
+            <div style="font-family:'Raleway',sans-serif;font-size:0.65rem;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem;">Reduzir &rarr; +1pt extra</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
