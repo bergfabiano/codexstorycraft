@@ -1870,7 +1870,7 @@ function lojaGetTags(r,cat){
     var cor=r['Cor']||''; if(cor) tags.push({label:cor,cls:'tag-gray'});
   }
   if(cat==='imbuidos'){
-    var tipo=r['Categoria']||''; if(tipo) tags.push({label:tipo,cls:'tag-rare'});
+    var tipo=r['Categoria']||''; if(tipo) tags.push({label:tipo,cls:'tag-rare',color:imbuTipoAccent(tipo)});
   }
   var esp=r['Espaços']||''; if(esp&&esp!=='0') tags.push({label:esp+' esp',cls:'tag-gray'});
   return tags;
