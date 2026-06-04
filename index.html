@@ -867,6 +867,94 @@ main{
   position:relative;top:-0.08em;
 }
 
+/* ── LIGHTBOX DE MAPA ── */
+#vel-lightbox{
+  display:none;
+  position:fixed;inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,0.92);
+  align-items:center;justify-content:center;
+  cursor:zoom-out;
+  animation:fadeIn 0.18s ease;
+}
+#vel-lightbox.open{display:flex;}
+#vel-lightbox-img{
+  max-width:94vw;
+  max-height:92vh;
+  object-fit:contain;
+  border-radius:6px;
+  box-shadow:0 0 80px rgba(0,0,0,0.9);
+  cursor:default;
+  animation:lbIn 0.22s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes lbIn{from{opacity:0;transform:scale(0.93)}to{opacity:1;transform:scale(1)}}
+#vel-lightbox-close{
+  position:absolute;top:1.1rem;right:1.3rem;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+  color:#fff;width:2.2rem;height:2.2rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;cursor:pointer;transition:background 0.15s;
+  line-height:1;
+}
+#vel-lightbox-close:hover{background:rgba(255,255,255,0.18);}
+#vel-lightbox-caption{
+  position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);
+  font-family:'Cinzel',serif;font-size:0.65rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);white-space:nowrap;
+  pointer-events:none;
+}
+
+/* Cursor de zoom no mapa clicável */
+.vel-map-zoomable{cursor:zoom-in;}
+.vel-map-zoomable:hover{filter:brightness(1.05) saturate(1.15);}
+
+/* Mapa do continente na aba de detalhe */
+.vel-cont-map-wrap{
+  width:100%;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  margin-bottom:1.5rem;
+  position:relative;
+  cursor:zoom-in;
+  box-shadow:0 4px 24px rgba(0,0,0,0.5);
+  transition:box-shadow 0.2s,border-color 0.2s;
+}
+.vel-cont-map-wrap:hover{
+  border-color:var(--vel-det-accent,var(--violet-dim));
+  box-shadow:0 6px 32px rgba(0,0,0,0.65),0 0 0 1px var(--vel-det-accent,rgba(155,93,229,0.2));
+}
+.vel-cont-map-img{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  display:block;
+  transition:filter 0.3s;
+  filter:brightness(0.92) saturate(1.05);
+}
+.vel-cont-map-wrap:hover .vel-cont-map-img{filter:brightness(1) saturate(1.15);}
+.vel-cont-map-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(7,8,14,0.65) 100%);
+  pointer-events:none;
+}
+.vel-cont-map-label{
+  position:absolute;bottom:0.9rem;left:1.1rem;right:1.1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  pointer-events:none;
+}
+.vel-cont-map-name{
+  font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(232,197,106,0.85);
+  text-shadow:0 0 16px rgba(201,164,74,0.5);
+}
+.vel-cont-map-zoom-hint{
+  font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:600;
+  letter-spacing:0.1em;color:rgba(255,255,255,0.35);
+  display:flex;align-items:center;gap:0.3rem;
+}
 </style>
 </head>
 <body>
@@ -1187,12 +1275,12 @@ main{
       <!-- MAPA CENTRAL -->
       <div class="vel-map-wrap">
         <div class="vel-map-inner">
-          <img src="https://i.imgur.com/6VvY9ae.jpeg" alt="Mapa de Velkarion" class="vel-map-img" id="vel-map-img">
+          <img src="https://i.imgur.com/6VvY9ae.jpeg" alt="Mapa de Velkarion" class="vel-map-img vel-map-zoomable" id="vel-map-img" onclick="abrirLightbox('https://i.imgur.com/6VvY9ae.jpeg','Mapa de Velkarion')">
           <div class="vel-map-caption">
             <span class="vel-map-caption-glyph">⚐</span>
-            <span>Mapa de Velkarion</span>
+            <span>Mapa de Velkarion — clique para ampliar</span>
           </div>
-          <div class="vel-map-overlay"></div>
+          <div class="vel-map-overlay" style="pointer-events:none;"></div>
         </div>
       </div>
 
@@ -2651,15 +2739,15 @@ function voltarDeuses(){
 
 // Paleta de cores por continente
 var VEL_ACCENT={
-  'ignaria':    {accent:'#ff6b35',faint:'rgba(255,107,53,0.12)'},
-  'murazuma':   {accent:'#7ecff5',faint:'rgba(126,207,245,0.12)'},
-  'khemet':     {accent:'#e8c56a',faint:'rgba(232,197,106,0.12)'},
-  'vekashia':   {accent:'#6dffb3',faint:'rgba(109,255,179,0.12)'},
-  'wintara falls':{accent:'#c0e8ff',faint:'rgba(192,232,255,0.12)'},
-  'wintara':    {accent:'#c0e8ff',faint:'rgba(192,232,255,0.12)'},
-  'exparktar':  {accent:'#f72585',faint:'rgba(247,37,133,0.12)'},
-  'lunox':      {accent:'#bb86fc',faint:'rgba(187,134,252,0.12)'},
-  'sharandor':  {accent:'#ffd166',faint:'rgba(255,209,102,0.12)'}
+  'ignaria':      {accent:'#ff6b35',faint:'rgba(255,107,53,0.12)',  map:'https://i.imgur.com/Zb0VyR1.jpeg'},
+  'murazuma':     {accent:'#7ecff5',faint:'rgba(126,207,245,0.12)', map:'https://i.imgur.com/iJMbB7u.jpeg'},
+  'khemet':       {accent:'#e8c56a',faint:'rgba(232,197,106,0.12)',map:'https://i.imgur.com/TTWQUXG.jpeg'},
+  'vekashia':     {accent:'#6dffb3',faint:'rgba(109,255,179,0.12)',map:'https://i.imgur.com/8pghf1G.jpeg'},
+  'wintara falls':{accent:'#c0e8ff',faint:'rgba(192,232,255,0.12)',map:'https://i.imgur.com/ndPnMXi.jpeg'},
+  'wintara':      {accent:'#c0e8ff',faint:'rgba(192,232,255,0.12)',map:'https://i.imgur.com/ndPnMXi.jpeg'},
+  'exparktar':    {accent:'#f72585',faint:'rgba(247,37,133,0.12)', map:'https://i.imgur.com/air0LtK.jpeg'},
+  'lunox':        {accent:'#bb86fc',faint:'rgba(187,134,252,0.12)',map:'https://i.imgur.com/pydRxuy.jpeg'},
+  'sharandor':    {accent:'#ffd166',faint:'rgba(255,209,102,0.12)',map:'https://i.imgur.com/D7MChsc.jpeg'}
 };
 
 // Mapeia nome do continente para key das regiões
@@ -2749,6 +2837,18 @@ function abrirDetalheContinente(idx){
   var regioes=key&&VEL_REGIOES[key]?VEL_REGIOES[key]:[];
 
   var html='';
+  // Mapa do continente (clicável para zoom)
+  if(ac.map){
+    var mapNomeEsc=nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    html+='<div class="vel-cont-map-wrap" style="--vel-det-accent:'+ac.accent+';" onclick="abrirLightbox(\''+ac.map+'\',\'Mapa — '+mapNomeEsc+'\')">';
+    html+='<img class="vel-cont-map-img" src="'+ac.map+'" alt="Mapa de '+nome+'" loading="lazy">';
+    html+='<div class="vel-cont-map-overlay"></div>';
+    html+='<div class="vel-cont-map-label">';
+    html+='<span class="vel-cont-map-name">⚐ '+nome+'</span>';
+    html+='<span class="vel-cont-map-zoom-hint">🔍 ampliar</span>';
+    html+='</div>';
+    html+='</div>';
+  }
   // Header
   html+='<div class="vel-det-header" style="--vel-det-accent:'+ac.accent+';">';
   html+='<div class="vel-det-title-block">';
@@ -3267,6 +3367,31 @@ function cntChoiceSelect(idx,val){
 document.getElementById('cnt-nivel').addEventListener('input',function(){cntUpdateRbLimit();cntUpdate();});
 document.getElementById('cnt-raca').addEventListener('change',cntApplyRace);
 ['rb-for','rb-des','rb-con','rb-int','rb-sab','rb-car'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('input',cntUpdate);});
+</script>
+
+<!-- LIGHTBOX DE MAPA -->
+<div id="vel-lightbox" onclick="fecharLightbox()">
+  <button id="vel-lightbox-close" onclick="fecharLightbox()" title="Fechar">✕</button>
+  <img id="vel-lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  <div id="vel-lightbox-caption"></div>
+</div>
+
+<script>
+function abrirLightbox(url, legenda){
+  var lb=document.getElementById('vel-lightbox');
+  var img=document.getElementById('vel-lightbox-img');
+  var cap=document.getElementById('vel-lightbox-caption');
+  img.src=url;
+  img.alt=legenda||'';
+  cap.textContent=legenda||'';
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function fecharLightbox(){
+  document.getElementById('vel-lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightbox();});
 </script>
 </body>
 </html>
