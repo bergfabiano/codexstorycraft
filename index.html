@@ -906,6 +906,118 @@ main{
 .vel-lunox{--region-accent:#00d4ff;}
 .vel-sharandor{--region-accent:#bb86fc;}
 
+/* ── MODAL VELKARION 16:9 ── */
+.modal-vel{
+  background:var(--bg);
+  border:1px solid rgba(201,164,74,0.25);
+  border-radius:12px;
+  width:100%;
+  max-width:900px;
+  max-height:90vh;
+  overflow:hidden;
+  position:relative;
+  animation:modalIn 0.22s ease;
+  box-shadow:0 32px 100px rgba(0,0,0,0.9),0 0 60px rgba(201,164,74,0.06);
+  display:flex;
+  flex-direction:column;
+}
+.modal-vel::before{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.vel-modal-hero{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/5;
+  min-height:140px;
+  max-height:260px;
+  background:var(--surface);
+  overflow:hidden;
+  flex-shrink:0;
+}
+.vel-modal-hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 50% 50%,rgba(201,164,74,0.07) 0%,transparent 70%),
+    linear-gradient(135deg,var(--surface) 0%,var(--bg2) 100%);
+}
+.vel-modal-hero-pattern{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(201,164,74,0.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,164,74,0.035) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.vel-modal-hero-glyph{
+  position:absolute;top:50%;right:5%;
+  transform:translateY(-50%);
+  font-family:'Cinzel',serif;font-size:7rem;line-height:1;
+  color:rgba(201,164,74,0.05);pointer-events:none;user-select:none;
+}
+.vel-modal-hero-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:1.25rem 1.75rem 1rem;
+  background:linear-gradient(to top,rgba(7,8,14,1) 0%,rgba(7,8,14,0.65) 55%,transparent 100%);
+}
+.vel-modal-cont-badge{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--vel-accent,var(--gold-light));opacity:0.8;
+  margin-bottom:0.4rem;
+}
+.vel-modal-hero-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.1rem,2.5vw,1.75rem);
+  font-weight:700;color:var(--gold-light);
+  text-shadow:0 2px 20px rgba(201,164,74,0.5),0 0 40px rgba(0,0,0,1);
+  line-height:1.2;
+}
+.vel-modal-body{
+  padding:1.4rem 1.75rem 1.75rem;
+  overflow-y:auto;flex:1;
+}
+.vel-modal-resumo{
+  font-size:0.91rem;color:var(--text);line-height:1.78;
+  border-left:2px solid var(--vel-accent,var(--gold));
+  padding-left:1rem;margin-bottom:1.25rem;
+}
+.vel-modal-panels{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;
+}
+@media(max-width:580px){.vel-modal-panels{grid-template-columns:1fr;}}
+.vel-modal-panel{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:0.9rem 1rem;
+}
+.vel-modal-panel-label{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.57rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--vel-accent,var(--gold-light));opacity:0.75;
+  margin-bottom:0.55rem;
+}
+.vel-modal-dest-item{
+  display:flex;align-items:flex-start;gap:0.45rem;
+  padding:0.28rem 0;border-bottom:1px solid rgba(140,100,220,0.07);
+  font-size:0.85rem;color:var(--text-dim);line-height:1.5;
+}
+.vel-modal-dest-item:last-child{border-bottom:none;}
+.vel-modal-dest-item::before{
+  content:'◆';font-size:0.42rem;
+  color:var(--vel-accent,var(--gold));
+  flex-shrink:0;margin-top:0.38rem;opacity:0.65;
+}
+.vel-modal-cenario{
+  font-size:0.87rem;color:var(--text-dim);
+  line-height:1.75;font-style:italic;
+}
+.vel-modal-close{
+  position:absolute;top:0.75rem;right:0.85rem;
+  background:rgba(7,8,14,0.75);border:1px solid var(--border);
+  color:var(--text-faint);width:28px;height:28px;border-radius:50%;
+  cursor:pointer;transition:all 0.2s;z-index:10;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.vel-modal-close:hover{color:var(--gold-light);border-color:var(--gold);}
+
 </style>
 </head>
 <body>
@@ -1276,6 +1388,26 @@ main{
   </div>
 </div>
 
+<!-- MODAL VELKARION 16:9 -->
+<div class="modal-overlay" id="velModalOverlay" onclick="if(event.target===this)closeVelModal()">
+  <div class="modal-vel" id="velModal">
+    <button class="vel-modal-close" onclick="closeVelModal()">✕</button>
+    <div class="vel-modal-hero" id="velModalHero">
+      <div class="vel-modal-hero-bg"></div>
+      <div class="vel-modal-hero-pattern"></div>
+      <div class="vel-modal-hero-glyph" id="velModalGlyph">⚐</div>
+      <div class="vel-modal-hero-overlay">
+        <div class="vel-modal-cont-badge" id="velModalBadge"></div>
+        <div class="vel-modal-hero-title" id="velModalTitle"></div>
+      </div>
+    </div>
+    <div class="vel-modal-body">
+      <div class="vel-modal-resumo" id="velModalResumo" style="display:none;"></div>
+      <div class="vel-modal-panels" id="velModalPanels"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ── NAVEGAÇÃO ──
 function showPage(name) {
@@ -1446,7 +1578,9 @@ async function autoLoadTab(tabKey,url){
       showDebug(tabKey,'Bloqueado pelo Google (CORS). Cole a URL e clique Invocar Dados.');
       return false;
     }
-    var rows=parseCSV(text, true); // noSkip: tab já é conhecida, 1ª linha sempre é cabeçalho
+    // Planilhas de continente Velkarion têm linhas de título antes do cabeçalho real
+    var isVelCont=(tabKey.indexOf('vel_')===0&&tabKey!=='vel_velkarion'&&tabKey!=='vel_indice');
+    var rows=isVelCont?parseCSVVelCont(text):parseCSV(text,true);
     if(!rows.length) return false;
     distributeData(rows,tabKey);
     return true;
@@ -1454,6 +1588,19 @@ async function autoLoadTab(tabKey,url){
     showDebug(tabKey,'Erro: '+e.message);
     return false;
   }
+}
+
+// Parser para planilhas de continentes: pula linhas de título até encontrar o cabeçalho real
+function parseCSVVelCont(text){
+  var lines=text.split(/\r?\n/);
+  var headerIdx=-1;
+  var velCols=['campo/capital','campo','resumo geral','resumo','destaques','cenario','cenário'];
+  for(var li=0;li<lines.length;li++){
+    var low=lines[li].toLowerCase().replace(/[\uFEFF\u200B\u00A0"]/g,'');
+    if(velCols.some(function(c){return low.indexOf(c)>-1;})){headerIdx=li;break;}
+  }
+  if(headerIdx===-1) return parseCSV(text,false);
+  return parseCSV(lines.slice(headerIdx).join('\n'),true);
 }
 
 function showDebug(k,msg){
@@ -2793,17 +2940,25 @@ function renderVelkarionCont(){
   }
 
   var data=rows.filter(function(r){
+    // Filtra linhas onde o campo/capital é literalmente o nome da coluna (cabeçalho duplicado)
+    var campoKey=velFindKey(r,['CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo']);
+    if(!campoKey) return false;
+    var v=(r[campoKey]||'').trim();
+    if(!v) return false;
+    // Descarta se o valor é o próprio nome da coluna (cabeçalho vazando)
+    if(v.toLowerCase()==='campo/capital'||v.toLowerCase()==='campo') return false;
+    // Descarta linhas completamente vazias
+    var vals=Object.values(r).filter(function(x){return (x||'').trim();});
+    if(!vals.length) return false;
+    // Filtro de busca
     if(s){
       var flat=Object.values(r).join(' ').toLowerCase();
       return flat.indexOf(s)>-1;
     }
     return true;
-  }).filter(function(r){
-    // Filtra linhas completamente vazias
-    return Object.values(r).some(function(v){return (v||'').trim().length>0;});
   });
 
-  if(countEl) countEl.textContent=data.length+' região'+(data.length===1?'':'regiões')+' em '+cont.label;
+  if(countEl) countEl.textContent=data.length+' entr'+(data.length===1?'ada':'adas')+' em '+cont.label;
 
   if(!data.length){
     grid.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+cont.sym+'</span><h3>Nenhuma região encontrada</h3></div>';
@@ -2811,76 +2966,125 @@ function renderVelkarionCont(){
   }
 
   grid.innerHTML=data.map(function(r){
-    var nome=gf(r,'CAMPO/CAPITAL','Campo/Capital','campo','capital','Nome','nome')||'';
-    if(!nome){
-      // Tenta primeira coluna não-vazia
-      var keys=Object.keys(r);
-      for(var i=0;i<keys.length;i++){if((r[keys[i]]||'').trim()){nome=r[keys[i]].trim();break;}}
-    }
-    if(!nome||nome.length<2) return '';
+    // Nome: valor da coluna CAMPO/CAPITAL
+    var campoKey=velFindKey(r,['CAMPO/CAPITAL','Campo/Capital','campo/capital','CAMPO','campo']);
+    var nome=(campoKey?r[campoKey]:'').trim();
+    // Remove prefixos de formatação tipo ">> " ou "Capital: "
+    var nomeClean=nome.replace(/^>+\s*/,'').replace(/^Capital:\s*/i,'');
 
-    var resumo=gf(r,'RESUMO GERAL','Resumo Geral','resumo','Resumo')||'';
-    var dest=gf(r,'DESTAQUES','Destaques','destaques')||'';
-    var cenario=gf(r,'CENARIO','Cenário','cenario','CÉNARIO')||'';
+    var resumo=velGetField(r,'RESUMO GERAL','Resumo Geral','resumo');
+    var dest=velGetField(r,'DESTAQUES','Destaques','destaques');
+    var cenario=velGetField(r,'CENARIO','Cenário','cenario','CÉNARIO');
 
-    var isCapital=nome.toUpperCase()===nome&&nome.length>2; // detecta se em maiúsculas (capital/campo)
-    var typeLabel=isCapital?'Capital':'Região';
+    // Determina tipo: se o valor tem ">> " na frente = entrada/região principal; se "Capital:" = capital
+    var typeLabel='Região';
+    if(/^>+\s*/.test(nome)) typeLabel='Entrada';
+    else if(/^capital:/i.test(nome)) typeLabel='Capital';
 
     var storeObj={};
     Object.keys(r).forEach(function(k){storeObj[k]=r[k];});
-    storeObj['_nome_display']=nome;
+    storeObj['_nome_display']=nomeClean||nome;
     storeObj['_vel_cont']=cont.label;
+    storeObj['_vel_cont_id']=cont.id;
+    storeObj['_vel_sym']=cont.sym;
+    storeObj['_vel_type']=typeLabel;
 
     return '<div class="vel-region-card '+cont.accentClass+'" onclick="openVelRegionModal('+_storeModal(storeObj)+')">'+
       '<div class="vel-region-type">'+cont.sym+' '+cont.label+' · '+typeLabel+'</div>'+
-      '<div class="vel-region-name">'+nome+'</div>'+
+      '<div class="vel-region-name">'+(nomeClean||nome)+'</div>'+
       (resumo?'<div class="vel-region-desc">'+resumo+'</div>':'')+
       (dest?'<div class="vel-region-highlights">'+dest+'</div>':'')+
       '<div class="vel-region-tags">'+
-        (cenario?'<span class="tag tag-gray">'+cenario.substring(0,30)+'</span>':'')+
+        (cenario?'<span class="tag tag-gray">'+cenario.substring(0,35)+'</span>':'')+
       '</div>'+
     '</div>';
-  }).filter(Boolean).join('');
+  }).join('');
+}
+
+// Helper: encontra a primeira chave que bate com qualquer dos nomes dados
+function velFindKey(r, names){
+  var keys=Object.keys(r);
+  for(var ni=0;ni<names.length;ni++){
+    var nl=names[ni].toLowerCase();
+    for(var ki=0;ki<keys.length;ki++){
+      if(keys[ki].toLowerCase().replace(/[\uFEFF\u200B\u00A0]/g,'').trim()===nl) return keys[ki];
+    }
+  }
+  return null;
+}
+function velGetField(r){
+  var names=Array.prototype.slice.call(arguments,1);
+  var k=velFindKey(r,names);
+  return k?(r[k]||'').trim():'';
+}
+
+function closeVelModal(){
+  document.getElementById('velModalOverlay').classList.remove('open');
 }
 
 function openVelRegionModal(idx){
   var row=_modalStore[idx];
   var nome=row['_nome_display']||'';
   var contLabel=row['_vel_cont']||'';
-  var resumo=gf(row,'RESUMO GERAL','Resumo Geral','resumo')||'';
-  var dest=gf(row,'DESTAQUES','Destaques','destaques')||'';
-  var cenario=gf(row,'CENARIO','Cenário','cenario')||'';
+  var contId=row['_vel_cont_id']||'';
+  var sym=row['_vel_sym']||'⚐';
+  var resumo=velGetField(row,'RESUMO GERAL','Resumo Geral','resumo');
+  var dest=velGetField(row,'DESTAQUES','Destaques','destaques');
+  var cenario=velGetField(row,'CENARIO','Cenário','cenario');
 
-  var html='<div class="modal-type">'+contLabel+'</div>'+
-    '<h2 class="modal-name">'+nome+'</h2>';
+  // Accent color based on continent
+  var accentMap={
+    ignaria:'#ff6b35',murazuma:'#7ecff5',khemet:'#e8c56a',
+    vekashia:'#c084fc',wintara:'#6dffb3',exparktar:'#f72585',
+    lunox:'#00d4ff',sharandor:'#bb86fc'
+  };
+  var accent=accentMap[contId]||'var(--gold-light)';
 
-  if(resumo) html+='<div class="modal-desc">'+formatDesc(resumo)+'</div>';
+  // Apply accent CSS var on modal
+  var modal=document.getElementById('velModal');
+  modal.style.setProperty('--vel-accent',accent);
 
-  if(dest||cenario){
-    html+='<hr class="modal-divider"><div class="modal-fields">';
-    if(dest) html+='<div class="modal-field full"><label>Destaques</label><p>'+dest+'</p></div>';
-    if(cenario) html+='<div class="modal-field full"><label>Cenário</label><p>'+cenario+'</p></div>';
-    html+='</div>';
+  // Hero
+  document.getElementById('velModalGlyph').textContent=sym;
+  document.getElementById('velModalBadge').innerHTML=sym+' '+contLabel;
+  document.getElementById('velModalTitle').textContent=nome;
+
+  // Resumo
+  var resumoEl=document.getElementById('velModalResumo');
+  if(resumo){
+    resumoEl.textContent=resumo;
+    resumoEl.style.display='';
+  } else {
+    resumoEl.style.display='none';
   }
 
-  // Outros campos não mapeados
-  var skip=['_nome_display','_vel_cont'];
-  var skipLow=['campo/capital','campo','capital','resumo geral','resumo','destaques','cenario','cenário'];
-  var extra=Object.keys(row).filter(function(k){
-    if(skip.indexOf(k)>-1) return false;
-    if(skipLow.indexOf(k.toLowerCase().trim())>-1) return false;
-    return (row[k]||'').trim().length>0;
-  });
-  if(extra.length){
-    html+='<hr class="modal-divider"><div class="modal-fields">';
-    extra.forEach(function(k){
-      html+='<div class="modal-field'+(row[k].length>80?' full':'')+'"><label>'+k+'</label><p>'+row[k]+'</p></div>';
-    });
-    html+='</div>';
+  // Panels: Destaques + Cenário
+  var panels='';
+
+  if(dest){
+    // Quebra por • (bullet), \n ou ; para listar destaques individualmente
+    var items=dest.split(/[•\n]+/).map(function(s){return s.trim().replace(/^[-–·]\s*/,'');}).filter(Boolean);
+    panels+='<div class="vel-modal-panel">'+
+      '<div class="vel-modal-panel-label">◆ Destaques</div>'+
+      items.map(function(it){
+        return '<div class="vel-modal-dest-item">'+it+'</div>';
+      }).join('')+
+    '</div>';
   }
 
-  document.getElementById('modalBody').innerHTML=html;
-  document.getElementById('modalOverlay').classList.add('open');
+  if(cenario){
+    panels+='<div class="vel-modal-panel">'+
+      '<div class="vel-modal-panel-label">✦ Cenário</div>'+
+      '<div class="vel-modal-cenario">'+cenario+'</div>'+
+    '</div>';
+  }
+
+  // Se só tem um painel, ocupa largura total
+  var panelsEl=document.getElementById('velModalPanels');
+  panelsEl.innerHTML=panels;
+  panelsEl.style.gridTemplateColumns=(dest&&cenario)?'1fr 1fr':'1fr';
+
+  document.getElementById('velModalOverlay').classList.add('open');
 }
 
 // ── RENDER VELKARION (legacy — kept for renderAll compat) ──
@@ -2982,7 +3186,7 @@ function openModal(rowOrStr){
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeVelModal();}});
 
 // ── CONTADOR ──
 var cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
