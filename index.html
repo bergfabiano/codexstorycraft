@@ -1321,7 +1321,7 @@ function updateStats(){
   if(elVd) elVd.textContent=totalVd||'—';
 }
 
-function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderItens();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
+function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
 
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
@@ -1746,6 +1746,8 @@ function renderVantagens(){
 
 // ── RENDER ITENS ──
 function renderItens(){
+  // Legacy fallback — se a página antiga de itens não existir, delega para renderLoja
+  if(!document.getElementById('f-item-search')){renderLoja();return;}
   var s=document.getElementById('f-item-search').value.toLowerCase(),ra=document.getElementById('f-item-raridade').value,tp=document.getElementById('f-item-tipo').value;
   popSel('f-item-tipo',uniq(DB.itens.map(function(r){return gf(r,'Tipo','tipo');})),tp);
   var data=DB.itens.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ra||gf(r,'Raridade','raridade')===ra)&&(!tp||gf(r,'Tipo','tipo')===tp);});
