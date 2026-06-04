@@ -800,6 +800,73 @@ main{
 .vel-regiao-modal-cap{font-family:'Raleway',sans-serif;font-size:0.85rem;font-weight:600;color:var(--text-dim);margin-bottom:1rem;display:flex;align-items:center;gap:0.4rem;}
 .vel-regiao-modal-cap::before{content:'⚑';color:var(--gold-light);}
 
+/* Imagem 16:9 no card miniatura de região */
+.vel-regiao-thumb{
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:5px 5px 0 0;
+  display:block;
+  border-bottom:1px solid var(--border);
+  transition:filter 0.3s;
+}
+.vel-regiao-card:hover .vel-regiao-thumb{filter:brightness(1.08) saturate(1.1);}
+.vel-regiao-thumb-placeholder{
+  width:100%;
+  aspect-ratio:16/9;
+  background:linear-gradient(135deg,var(--surface2) 0%,var(--bg3) 100%);
+  border-radius:5px 5px 0 0;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;color:rgba(155,93,229,0.12);
+  font-family:'Cinzel',serif;
+}
+.vel-regiao-card-body{padding:1rem 1.1rem 0.9rem;}
+
+/* Imagem 16:9 no modal */
+.vel-regiao-modal-img{
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:8px;
+  display:block;
+  margin-bottom:1.1rem;
+  border:1px solid var(--border);
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+.vel-regiao-modal-img-placeholder{
+  width:100%;
+  aspect-ratio:16/9;
+  background:linear-gradient(135deg,var(--surface) 0%,var(--bg3) 50%,var(--surface2) 100%);
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px dashed rgba(155,93,229,0.2);
+  margin-bottom:1.1rem;
+  font-family:'Cinzel',serif;
+  font-size:0.7rem;letter-spacing:0.12em;
+  color:rgba(155,93,229,0.25);
+  text-transform:uppercase;
+}
+
+/* Destaques com marcadores ◆ */
+.vel-destaques-list{
+  list-style:none;
+  padding:0;margin:0;
+  display:flex;flex-direction:column;gap:0.45rem;
+}
+.vel-destaques-list li{
+  display:flex;align-items:baseline;gap:0.55rem;
+  font-size:0.85rem;color:var(--text-dim);line-height:1.6;
+}
+.vel-destaques-list li::before{
+  content:'◆';
+  font-size:0.42rem;
+  color:var(--vel-bullet-color,var(--violet-bright));
+  flex-shrink:0;
+  opacity:0.7;
+  position:relative;top:-0.08em;
+}
+
 </style>
 </head>
 <body>
@@ -2698,7 +2765,7 @@ function abrirDetalheContinente(idx){
   if(destaques){
     html+='<div class="vel-det-destaques">';
     html+='<div class="vel-det-destaques-label">✦ Destaques</div>';
-    html+=destaques;
+    html+=formatarDestaques(destaques,ac.accent);
     html+='</div>';
   }
 
@@ -2712,15 +2779,22 @@ function abrirDetalheContinente(idx){
       var rresumo=gf(reg,'Resumo Geral','resumo geral','Resumo','resumo','Descrição','descricao','desc')||'';
       var rcenario=gf(reg,'Cenário','Cenario','cenario')||'';
       var rdestaques=gf(reg,'Destaques','destaques')||'';
-      var regCopy={};for(var k in reg)regCopy[k]=k;
+      var rimg=gf(reg,'Imagem','imagem','Image','image','Img','img')||'';
       // Store region for modal
-      var regObj={'_vel_regiao_nome':rn,'_vel_regiao_cap':rcap,'_vel_regiao_resumo':rresumo,'_vel_regiao_cenario':rcenario,'_vel_regiao_destaques':rdestaques,'_vel_det_accent':ac.accent};
+      var regObj={'_vel_regiao_nome':rn,'_vel_regiao_cap':rcap,'_vel_regiao_resumo':rresumo,'_vel_regiao_cenario':rcenario,'_vel_regiao_destaques':rdestaques,'_vel_regiao_img':rimg,'_vel_det_accent':ac.accent};
       var regIdx=_storeModal(regObj);
-      html+='<div class="vel-regiao-card" style="--vel-det-accent:'+ac.accent+';" onclick="abrirRegiaoModal('+regIdx+')">'+
-        '<div class="vel-regiao-nome">'+rn+'</div>'+
-        (rcap?'<div class="vel-regiao-capital">'+rcap+'</div>':'')+
-        (rresumo?'<div class="vel-regiao-resumo">'+rresumo+'</div>':'')+
-        (rcenario?'<div class="vel-regiao-cenario">'+rcenario+'</div>':'')+
+      // Thumbnail 16:9 (imagem real ou placeholder)
+      var thumbHtml=rimg
+        ?'<img class="vel-regiao-thumb" src="'+rimg+'" alt="'+rn+'" loading="lazy">'
+        :'<div class="vel-regiao-thumb-placeholder">◆</div>';
+      html+='<div class="vel-regiao-card" style="--vel-det-accent:'+ac.accent+';padding:0;" onclick="abrirRegiaoModal('+regIdx+')">'+
+        thumbHtml+
+        '<div class="vel-regiao-card-body">'+
+          '<div class="vel-regiao-nome">'+rn+'</div>'+
+          (rcap?'<div class="vel-regiao-capital">'+rcap+'</div>':'')+
+          (rresumo?'<div class="vel-regiao-resumo">'+rresumo+'</div>':'')+
+          (rcenario?'<div class="vel-regiao-cenario">'+rcenario+'</div>':'')+
+        '</div>'+
       '</div>';
     });
     html+='</div>';
@@ -2738,19 +2812,43 @@ function abrirRegiaoModal(idx){
   var r=_modalStore[idx];
   if(!r) return;
   var ac=r['_vel_det_accent']||'var(--violet)';
+  var imgUrl=r['_vel_regiao_img']||'';
   var html='';
+
+  // Imagem 16:9 (ou placeholder)
+  if(imgUrl){
+    html+='<img class="vel-regiao-modal-img" src="'+imgUrl+'" alt="'+r['_vel_regiao_nome']+'">';
+  } else {
+    html+='<div class="vel-regiao-modal-img-placeholder">imagem em breve</div>';
+  }
+
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.2em;color:'+ac+';opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">região</div>';
   html+='<div class="vel-regiao-modal-title">'+r['_vel_regiao_nome']+'</div>';
   if(r['_vel_regiao_cap'])html+='<div class="vel-regiao-modal-cap">'+r['_vel_regiao_cap']+'</div>';
   if(r['_vel_regiao_cenario'])html+='<p style="font-size:0.88rem;color:var(--violet-bright);font-style:italic;opacity:0.8;margin-bottom:0.85rem;line-height:1.65;">'+r['_vel_regiao_cenario']+'</p>';
   if(r['_vel_regiao_resumo'])html+='<p style="font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem;">'+r['_vel_regiao_resumo']+'</p>';
   if(r['_vel_regiao_destaques']){
-    html+='<div style="padding:0.85rem 1.1rem;background:rgba(155,93,229,0.05);border:1px solid rgba(155,93,229,0.15);border-left:3px solid '+ac+';border-radius:0 8px 8px 0;font-size:0.85rem;color:var(--text-dim);line-height:1.7;">';
-    html+='<div style="font-family:Cinzel,serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:'+ac+';text-transform:uppercase;margin-bottom:0.45rem;">✦ Destaques</div>';
-    html+=r['_vel_regiao_destaques'];
+    html+='<div style="padding:0.85rem 1.1rem;background:rgba(155,93,229,0.05);border:1px solid rgba(155,93,229,0.15);border-left:3px solid '+ac+';border-radius:0 8px 8px 0;">';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:'+ac+';text-transform:uppercase;margin-bottom:0.65rem;">✦ Destaques</div>';
+    html+=formatarDestaques(r['_vel_regiao_destaques'],ac);
     html+='</div>';
   }
   openModalBody(html);
+}
+
+// Converte "• item • item" ou "• item\n• item" em lista com marcadores ◆
+function formatarDestaques(texto,accentColor){
+  if(!texto) return '';
+  // Separa por • (com ou sem espaço) ou por \n
+  var items=texto.split(/\s*[•·]\s*|\n+/).map(function(s){return s.trim();}).filter(Boolean);
+  // Se não encontrou marcadores, tenta separar por ponto e vírgula
+  if(items.length<=1) items=texto.split(/\s*;\s*/).map(function(s){return s.trim();}).filter(Boolean);
+  // Se ainda só tem um item longo, retorna como parágrafo normal
+  if(items.length<=1) return '<p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7;">'+texto+'</p>';
+  var color=accentColor||'var(--violet-bright)';
+  return '<ul class="vel-destaques-list" style="--vel-bullet-color:'+color+'">'+
+    items.map(function(it){return '<li>'+it+'</li>';}).join('')+
+  '</ul>';
 }
 
 function openModalBody(html){
