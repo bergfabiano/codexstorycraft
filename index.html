@@ -799,7 +799,6 @@ main{
     </div>
 
     <div class="debug-banner" id="vantagensdesvantagens-debug"></div>
-    <div id="vd-debug-info" style="font-size:0.7rem;color:lime;background:#000;padding:0.5rem;margin-bottom:0.5rem;word-break:break-all;display:none;"></div>
     <div class="cards-grid" id="grid-vantagens">
       <div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando vantagens...</h3></div>
     </div>
@@ -1147,11 +1146,7 @@ function distributeData(rows,tab){
     });
   }
 
-  if(tab==='vd_versateis'){
-    rows=fixVdHeaders(rows);
-    if(rows.length){var dbg=document.getElementById('vd-debug-info');if(dbg){var k=Object.keys(rows[0]);dbg.style.display='block';dbg.innerHTML='Keys: '+k.map(function(x){return JSON.stringify(x);}).join(' | ')+'<br>Row0: '+k.map(function(x){return x+'='+JSON.stringify((rows[0][x]||'').substring(0,20));}).join(' | ');}}
-    VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;
-  }
+  if(tab==='vd_versateis'){rows=fixVdHeaders(rows);VD.versateis=cleanVdRows(rows);VD_STATUS.versateis='ok';updateVdBadge('versateis',VD.versateis.length);return;}
   if(tab==='vd_combate'){rows=fixVdHeaders(rows);VD.combate=cleanVdRows(rows);VD_STATUS.combate='ok';updateVdBadge('combate',VD.combate.length);return;}
   if(tab==='vd_magicas'){rows=fixVdHeaders(rows);VD.magicas=cleanVdRows(rows);VD_STATUS.magicas='ok';updateVdBadge('magicas',VD.magicas.length);return;}
   if(tab==='vd_ataques'){rows=fixVdHeaders(rows);VD.ataques=cleanVdRows(rows);VD_STATUS.ataques='ok';updateVdBadge('ataques',VD.ataques.length);return;}
