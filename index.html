@@ -2055,7 +2055,10 @@ function cntChoiceSelect(idx,val){
 function cntPopulateRaces(){
   var sel=document.getElementById('cnt-raca');if(!sel)return;
   sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
-  DB.racas.forEach(function(r){var n=r.Nome||r.nome||'';if(!n)return;var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);});
+  DB.racas.forEach(function(r){
+    var n=racaNome(r);if(!n||n==='(sem nome)')return;
+    var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
+  });
 }
 document.getElementById('cnt-nivel').addEventListener('input',cntUpdate);
 document.getElementById('cnt-raca').addEventListener('change',cntApplyRace);
