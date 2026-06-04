@@ -1843,7 +1843,19 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
 
 // ── CONTADOR ──
 var cntBase={for:0,des:0,con:0,int:0,sab:0,car:0};
-var CNT_ATTRS=[{id:'for',nome:'FOR',full:'Força'},{id:'des',nome:'DES',full:'Destreza'},{id:'con',nome:'CON',full:'Constituição'},{id:'int',nome:'INT',full:'Inteligência'},{id:'sab',nome:'SAB',full:'Sabedoria'},{id:'car',nome:'CAR',full:'Carisma'}];
+var RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
+var RACIAL_CHOICES=[];
+var ATTR_MAP={
+  'forca':'for','for':'for',
+  'destreza':'des','des':'des',
+  'constituicao':'con','con':'con',
+  'inteligencia':'int','int':'int',
+  'sabedoria':'sab','sab':'sab',
+  'carisma':'car','car':'car'
+};
+var ATTR_LABELS={for:'Força',des:'Destreza',con:'Constituição',int:'Inteligência',sab:'Sabedoria',car:'Carisma'};
+var ALL_ATTRS=['for','des','con','int','sab','car'];
+var CNT_ATTRS=[{id:'for',nome:'FOR',full:'Força',sym:'&#x2694;'},{id:'des',nome:'DES',full:'Destreza',sym:'&#x25C6;'},{id:'con',nome:'CON',full:'Constituição',sym:'&#x2665;'},{id:'int',nome:'INT',full:'Inteligência',sym:'&#x2726;'},{id:'sab',nome:'SAB',full:'Sabedoria',sym:'&#x2609;'},{id:'car',nome:'CAR',full:'Carisma',sym:'&#x2605;'}];
 function cntGetLevel(){return Math.min(50,Math.max(1,parseInt(document.getElementById('cnt-nivel').value)||1));}
 function cntGetMax(n){if(n<=9)return 5;if(n<=19)return 6;if(n<=29)return 7;if(n<=39)return 8;if(n<=49)return 9;return 10;}
 // cntGetRacial now defined in cntApplyRace block
@@ -1866,14 +1878,25 @@ function cntUpdate(){
     var totC=atMax?'var(--ember)':'var(--gold-light)',baseC=bv<0?'var(--blood)':(atMax?'var(--gold-light)':'var(--text)');
     var rbC=rb>0?'var(--green)':(rb<0?'var(--blood)':'var(--text-faint)'),rbT=rb>0?'+'+rb:String(rb);
     rows+='<tr>';
-    rows+='<td><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--violet-bright);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></td>';
+    rows+='<td><div style="display:flex;align-items:center;gap:0.6rem;"><span style="font-size:1.1rem;color:var(--violet-bright);opacity:0.7;">'+a.sym+'</span><div><span style="font-family:Cinzel,serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--violet-bright);">'+a.nome+'</span><span style="font-size:0.7rem;color:var(--text-faint);display:block;">'+a.full+'</span></div></div></td>';
     rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(canDown?'onclick="cntChange(\''+a.id+'\',-1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+baseC+';">'+bv+'</span><button class="attr-btn" '+(canUp?'onclick="cntChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
-    rows+='<td style="font-family:Cinzel,serif;font-size:1rem;font-weight:600;color:'+rbC+';">'+rbT+'</td>';
+    var rbCanUp=(rb<maxA),rbCanDown=(rb>-maxA);
+    rows+='<td><div style="display:inline-flex;align-items:center;"><button class="attr-btn" '+(rbCanDown?'onclick="cntRbChange(\''+a.id+'\',−1)"':'disabled')+'>−</button><span class="attr-val" style="color:'+rbC+';">'+rb+'</span><button class="attr-btn" '+(rbCanUp?'onclick="cntRbChange(\''+a.id+'\',1)"':'disabled')+'>+</button></div></td>';
     rows+='<td style="font-family:Cinzel,serif;font-size:1.2rem;font-weight:700;color:'+totC+';">'+tot+'</td>';
     rows+='<td style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.75rem;color:var(--text-faint);">'+custoTxt+'</td>';
     rows+='</tr>';
   }
   tbody.innerHTML=rows;
+}
+function cntRbChange(atrib,delta){
+  var nivel=cntGetLevel(),maxA=cntGetMax(nivel);
+  var el=document.getElementById('rb-'+atrib);
+  if(!el) return;
+  var cur=parseInt(el.value)||0;
+  var nb=cur+delta;
+  if(nb>maxA||nb<-maxA) return;
+  el.value=nb;
+  cntUpdate();
 }
 function cntChange(atrib,delta){
   var nivel=cntGetLevel(),maxA=cntGetMax(nivel),racial=cntGetRacial();
@@ -1975,6 +1998,108 @@ function parseRacialBonus(text){
   }
 
   return entries;
+}
+
+function cntPopulateRaces(){
+  var sel=document.getElementById('cnt-raca');if(!sel)return;
+  sel.innerHTML='<option value="">Selecionar...</option><option value="custom">Personalizado</option>';
+  DB.racas.forEach(function(r){
+    var n=racaNome(r);if(!n||n==='(sem nome)')return;
+    var o=document.createElement('option');o.value=n;o.textContent=n;sel.appendChild(o);
+  });
+}
+function toAttrId(s){
+  var sl=(s||'').toLowerCase()
+    .replace(/[\u00e0\u00e1\u00e2\u00e3]/g,'a').replace(/[\u00e9\u00ea]/g,'e')
+    .replace(/[\u00ed\u00ee]/g,'i').replace(/[\u00f3\u00f4\u00f5]/g,'o')
+    .replace(/[\u00fa\u00fb]/g,'u').replace(/[\u00e7]/g,'c').trim();
+  return ATTR_MAP[sl]||null;
+}
+function parseRacialBonus(text){
+  if(!text) return [];
+  var entries=[];
+  // Penalidades: -N em X
+  var penRe=/[-](\d+)\s+em\s+([A-Z\u00c0-\u00da-Z\u00e0-\u00fa]+)/g,pm;
+  while((pm=penRe.exec(text))!==null){var pa=toAttrId(pm[2]);if(pa)entries.push({points:-parseInt(pm[1]),options:[pa],fixed:true,neg:true});}
+  // +N em X ou Y
+  var orRe=/\+(\d+)\s+em\s+([A-Z\u00c0-\u00faa-z]+)\s+ou\s+([A-Z\u00c0-\u00faa-z]+)/g,om;
+  var usedRanges=[];
+  while((om=orRe.exec(text))!==null){
+    var oa=toAttrId(om[2]),ob=toAttrId(om[3]);
+    var opts=(oa&&ob)?[oa,ob]:(oa?[oa]:(ob?[ob]:null));
+    if(opts){entries.push({points:parseInt(om[1]),options:opts,fixed:false,neg:false});usedRanges.push([om.index,om.index+om[0].length]);}
+  }
+  // +N em X fixo
+  var fixRe=/\+(\d+)\s+em\s+([A-Z\u00c0-\u00faa-z]+)/g,fm;
+  while((fm=fixRe.exec(text))!==null){
+    var inUsed=usedRanges.some(function(r){return fm.index>=r[0]&&fm.index<r[1];});
+    if(inUsed) continue;
+    var after=text.substring(fm.index+fm[0].length,fm.index+fm[0].length+10);
+    if(/^\s+ou/i.test(after)) continue;
+    var ctx=text.substring(fm.index,fm.index+fm[0].length+30);
+    if(/escolha|livre/i.test(ctx)) continue;
+    var fa=toAttrId(fm[2]);
+    if(fa) entries.push({points:parseInt(fm[1]),options:[fa],fixed:true,neg:false});
+  }
+  // tres atributos a escolha
+  if(/tr[e\u00ea]s\s+atributos/i.test(text)){
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+    entries.push({points:1,options:'any',fixed:false,neg:false});
+  } else {
+    var anyRe=/\+(\d+)\s+(?:pontos\s+)?(?:em\s+(?:outro\s+)?(?:atributo|atributos)[^,\.]*)?[\u00e0a]\s+escolha/gi,am;
+    while((am=anyRe.exec(text))!==null) entries.push({points:parseInt(am[1]),options:'any',fixed:false,neg:false});
+    var distRe=/\+(\d+)\s+pontos\s+para\s+distribuir/gi,dm;
+    while((dm=distRe.exec(text))!==null){entries.push({points:1,options:'any',fixed:false,neg:false});entries.push({points:1,options:'any',fixed:false,neg:false});}
+  }
+  return entries;
+}
+function cntApplyRace(){
+  var sel=document.getElementById('cnt-raca');
+  RACIAL_CHOICES=[];RACIAL_FIXED={for:0,des:0,con:0,int:0,sab:0,car:0};
+  if(!sel||!sel.value||sel.value==='custom'){
+    ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=0;});
+    renderRacialChoices();cntUpdate();return;
+  }
+  var raca=null;
+  for(var i=0;i<DB.racas.length;i++){if(racaNome(DB.racas[i])===sel.value){raca=DB.racas[i];break;}}
+  if(!raca){renderRacialChoices();cntUpdate();return;}
+  var parsed=parseRacialBonus(racaHab1(raca)||'');
+  parsed.forEach(function(e){
+    if(e.fixed&&e.options!=='any'&&e.options.length===1) RACIAL_FIXED[e.options[0]]=(RACIAL_FIXED[e.options[0]]||0)+e.points;
+    else RACIAL_CHOICES.push({points:e.points,options:e.options,fixed:false,neg:e.neg,chosen:null});
+  });
+  cntSyncRbFromChoices();
+  renderRacialChoices();
+  cntUpdate();
+}
+function cntSyncRbFromChoices(){
+  var r={for:0,des:0,con:0,int:0,sab:0,car:0};
+  ['for','des','con','int','sab','car'].forEach(function(c){r[c]=RACIAL_FIXED[c]||0;});
+  RACIAL_CHOICES.forEach(function(ch){if(ch.chosen)r[ch.chosen]=(r[ch.chosen]||0)+ch.points;});
+  ['for','des','con','int','sab','car'].forEach(function(c){var el=document.getElementById('rb-'+c);if(el)el.value=r[c]||0;});
+}
+function renderRacialChoices(){
+  var el=document.getElementById('cnt-racial-choices');if(!el)return;
+  if(!RACIAL_CHOICES.length){el.style.display='none';el.innerHTML='';return;}
+  el.style.display='block';
+  var html='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold-light);opacity:0.85;text-transform:uppercase;margin-bottom:0.6rem;">❖ Escolhas Raciais</div>';
+  RACIAL_CHOICES.forEach(function(ch,i){
+    var opts=ch.options==='any'?ALL_ATTRS:ch.options;
+    var sign=ch.points>0?'+':'';
+    var color=ch.neg?'var(--cat-desvantagem)':'var(--gold-light)';
+    html+='<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">';
+    html+='<span style="font-family:Cinzel,serif;font-size:0.85rem;font-weight:700;color:'+color+';min-width:32px;">'+sign+ch.points+'</span>';
+    html+='<select class="cnt-select" style="min-width:150px;" onchange="cntChoiceSelect('+i+',this.value)">';
+    html+='<option value="">— escolher —</option>';
+    opts.forEach(function(a){html+='<option value="'+a+'"'+(ch.chosen===a?' selected':'')+'>'+ATTR_LABELS[a]+'</option>';});
+    html+='</select></div>';
+  });
+  el.innerHTML=html;
+}
+function cntChoiceSelect(idx,val){
+  if(RACIAL_CHOICES[idx])RACIAL_CHOICES[idx].chosen=val||null;
+  cntSyncRbFromChoices();cntUpdate();
 }
 
 function cntPopulateRaces(){
