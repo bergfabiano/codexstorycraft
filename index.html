@@ -2060,9 +2060,10 @@ function renderLoja(){
     rows.forEach(function(r){var sc=(r['Sub-categoria']||'').trim();if(sc&&subcats.indexOf(sc)===-1)subcats.push(sc);});
     // Sort imbuidos by scale order (Sub-categoria contém exatamente o nome da escala)
     if(cat==='imbuidos'){
-      var SO=['Lend\u00e1rio','Colossal','Tit\u00e2nico','M\u00edtico','\u00c9pico'];
+      var SO=['lendario','colossal','titanico','mitico','epico'];
       subcats.sort(function(a,b){
-        var ia=SO.indexOf(a.trim()),ib=SO.indexOf(b.trim());
+        function nd(s){return s.toLowerCase().replace(/[\u00e0-\u00e5]/g,'a').replace(/[\u00e8-\u00eb]/g,'e').replace(/[\u00ec-\u00ef]/g,'i').replace(/[\u00f2-\u00f6]/g,'o').replace(/[\u00f9-\u00fc]/g,'u').replace(/[^a-z]/g,'');}
+        var ia=SO.indexOf(nd(a)),ib=SO.indexOf(nd(b));
         if(ia===-1)ia=999;if(ib===-1)ib=999;return ia-ib;
       });
     } else { subcats.sort(); }
@@ -2101,10 +2102,11 @@ function renderLoja(){
 
   // Ordena grupos
   var groupKeys=Object.keys(grouped);
-  var SCALE_ORDER=['Lend\u00e1rio','Colossal','Tit\u00e2nico','M\u00edtico','\u00c9pico'];
+  var SCALE_ORDER=['lendario','colossal','titanico','mitico','epico'];
   if(cat==='imbuidos'){
     groupKeys.sort(function(a,b){
-      var ia=SCALE_ORDER.indexOf(a.trim()),ib=SCALE_ORDER.indexOf(b.trim());
+      function nd(s){return s.toLowerCase().replace(/[\u00e0-\u00e5]/g,'a').replace(/[\u00e8-\u00eb]/g,'e').replace(/[\u00ec-\u00ef]/g,'i').replace(/[\u00f2-\u00f6]/g,'o').replace(/[\u00f9-\u00fc]/g,'u').replace(/[^a-z]/g,'');}
+      var ia=SCALE_ORDER.indexOf(nd(a)),ib=SCALE_ORDER.indexOf(nd(b));
       if(ia===-1)ia=999;if(ib===-1)ib=999;
       return ia-ib;
     });
