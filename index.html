@@ -547,7 +547,7 @@ main{
 .cnt-rb-input:focus{border-color:var(--violet);}
 .cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.12em;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.38rem 0.9rem;border-radius:4px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
 .cnt-btn:hover{border-color:var(--violet);color:var(--text);}
-.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;flex-wrap:nowrap;overflow:hidden;}
 .cnt-pts-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
 .cnt-table{width:100%;border-collapse:collapse;}
 .cnt-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.18em;color:var(--violet-bright);opacity:0.65;text-align:center;padding:0.5rem 0.5rem 0.7rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
@@ -685,14 +685,14 @@ main{
   <div id="page-contador" class="page">
     <h2 class="section-title"><span class="stitle-sym">◆</span> Contador de Atributos</h2>
     <div class="cnt-wrap">
-      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1.5rem;align-items:flex-end;justify-content:center;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-          <span class="cnt-lbl" style="text-align:center;">Nível</span>
+      <div style="display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1.5rem;align-items:flex-end;">
+        <div style="display:flex;flex-direction:column;gap:0.3rem;">
+          <span class="cnt-lbl">Nível</span>
           <input class="cnt-input" type="number" id="cnt-nivel" min="1" max="50" value="1" style="text-align:center;">
         </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;">
-          <span class="cnt-lbl" style="text-align:center;">Raça</span>
-          <select class="cnt-select" id="cnt-raca" style="text-align:center;"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select>
+        <div style="display:flex;flex-direction:column;gap:0.3rem;flex:1;min-width:180px;max-width:320px;">
+          <span class="cnt-lbl">Raça</span>
+          <select class="cnt-select" id="cnt-raca" style="width:100%;"><option value="">Selecionar...</option><option value="custom">Personalizado</option></select>
         </div>
         <button class="cnt-btn" onclick="cntReset()" style="align-self:flex-end;">Resetar</button>
       </div>
@@ -712,7 +712,7 @@ main{
         <span style="color:rgba(155,93,229,0.3);font-size:1.2rem;">/</span>
         <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text-faint);">10</span>
         <span id="cnt-warn" style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;color:var(--blood);display:none;">⚠ Pontos excedidos</span>
-        <span id="cnt-escala" style="font-size:0.82rem;color:var(--text-faint);margin-left:auto;">Nível 1-9 — max 5 por atributo</span>
+        <span id="cnt-escala" style="font-size:0.75rem;color:var(--text-faint);margin-left:auto;white-space:nowrap;">Nível 1-9 — max 5 por atributo</span>
       </div>
       <table class="cnt-table">
         <thead><tr>
