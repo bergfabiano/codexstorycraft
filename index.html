@@ -562,66 +562,6 @@ main{
 /* ── DEBUG BANNERS ── */
 .debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
 
-/* ── VELKARION MAP & CONTINENTS ── */
-.vel-map-wrap{width:100%;margin-bottom:2.5rem;border-radius:12px;overflow:hidden;border:1px solid rgba(155,93,229,0.25);box-shadow:0 0 60px rgba(155,93,229,0.08),0 8px 40px rgba(0,0,0,0.6);position:relative;}
-.vel-map-inner{position:relative;width:100%;line-height:0;}
-.vel-map-img{width:100%;max-height:520px;object-fit:cover;object-position:center;display:block;filter:brightness(0.88) saturate(1.05);transition:filter 0.4s;}
-.vel-map-wrap:hover .vel-map-img{filter:brightness(0.95) saturate(1.1);}
-.vel-map-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(7,8,14,0.9) 100%),linear-gradient(to right,rgba(7,8,14,0.15) 0%,transparent 20%,transparent 80%,rgba(7,8,14,0.15) 100%);pointer-events:none;}
-.vel-map-label{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none;}
-.vel-map-title{display:block;font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);letter-spacing:0.25em;text-shadow:0 0 30px rgba(201,164,74,0.6),0 2px 8px rgba(0,0,0,0.8);}
-.vel-map-sub{display:block;font-family:'Raleway',sans-serif;font-weight:600;font-size:0.6rem;letter-spacing:0.35em;color:var(--text-faint);text-transform:uppercase;margin-top:0.3rem;}
-.vel-continents-header{margin-bottom:1.25rem;}
-.vel-cont-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;}
-.vel-cont-sub{font-size:0.8rem;color:var(--text-faint);}
-.vel-continent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:2rem;}
-.vel-cont-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.4rem 1.2rem;cursor:pointer;transition:all 0.22s;position:relative;overflow:hidden;}
-.vel-cont-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--vel-accent,var(--violet)),transparent);opacity:0;transition:opacity 0.22s;}
-.vel-cont-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--vel-accent-glow,rgba(155,93,229,0.04)),transparent 60%);pointer-events:none;}
-.vel-cont-card:hover{border-color:var(--vel-accent,var(--violet-dim));transform:translateY(-3px);background:var(--surface2);box-shadow:0 8px 32px rgba(0,0,0,0.5),0 0 0 1px var(--vel-accent-glow,rgba(155,93,229,0.12));}
-.vel-cont-card:hover::before{opacity:1;}
-.vel-cont-card-num{font-family:'Cinzel',serif;font-size:0.6rem;font-weight:700;color:var(--vel-accent,var(--violet-bright));letter-spacing:0.2em;opacity:0.7;margin-bottom:0.4rem;display:block;text-transform:uppercase;}
-.vel-cont-card-name{font-family:'Cinzel',serif;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;letter-spacing:0.04em;line-height:1.2;}
-.vel-cont-card-capital{font-size:0.75rem;color:var(--text-faint);margin-bottom:0.45rem;font-style:italic;}
-.vel-cont-card-capital strong{color:var(--vel-accent,var(--gold));font-style:normal;}
-.vel-cont-card-atmos{font-size:0.72rem;color:var(--text-dim);margin-bottom:0.75rem;border-left:2px solid var(--vel-accent,var(--violet-dim));padding-left:0.5rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.vel-cont-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--border);}
-.vel-cont-card-regions{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.12em;color:var(--text-faint);text-transform:uppercase;}
-.vel-cont-card-regions span{color:var(--vel-accent,var(--violet-bright));font-family:'Cinzel',serif;font-size:0.85rem;margin-right:0.3rem;}
-.vel-cont-card-arrow{font-size:0.8rem;color:var(--vel-accent,var(--violet-dim));transition:transform 0.18s;}
-.vel-cont-card:hover .vel-cont-card-arrow{transform:translateX(4px);}
-.vel-ignaria{--vel-accent:#e55c2a;--vel-accent-glow:rgba(229,92,42,0.08);}
-.vel-murazuma{--vel-accent:#c084fc;--vel-accent-glow:rgba(192,132,252,0.08);}
-.vel-khemet{--vel-accent:#c9a44a;--vel-accent-glow:rgba(201,164,74,0.08);}
-.vel-vekashia{--vel-accent:#7ecff5;--vel-accent-glow:rgba(126,207,245,0.08);}
-.vel-wintara{--vel-accent:#6dffb3;--vel-accent-glow:rgba(109,255,179,0.08);}
-.vel-exparktar{--vel-accent:#f72585;--vel-accent-glow:rgba(247,37,133,0.08);}
-.vel-lunox{--vel-accent:#bb86fc;--vel-accent-glow:rgba(187,134,252,0.08);}
-.vel-sharandor{--vel-accent:#00d4ff;--vel-accent-glow:rgba(0,212,255,0.08);}
-.vel-regions-panel{animation:fadeIn 0.2s ease;}
-.vel-regions-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:1rem;}
-.vel-regions-breadcrumb{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.15em;color:var(--text-faint);text-transform:uppercase;margin-bottom:0.3rem;}
-.vel-regions-title{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--gold-light);letter-spacing:0.06em;}
-.vel-back-btn{background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.45rem 1.1rem;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.1em;cursor:pointer;border-radius:6px;text-transform:uppercase;transition:all 0.18s;white-space:nowrap;}
-.vel-back-btn:hover{border-color:var(--violet);color:var(--text);}
-.vel-cont-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.6rem;margin-bottom:1.5rem;padding:1rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
-.vel-meta-item label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.18em;color:var(--violet-bright);opacity:0.7;display:block;margin-bottom:0.2rem;text-transform:uppercase;}
-.vel-meta-item p{font-size:0.85rem;color:var(--text);line-height:1.45;}
-.vel-regions-filter{margin-bottom:1rem;}
-.vel-regions-filter input{width:100%;max-width:380px;background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.45rem 0.8rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:6px;outline:none;transition:border-color 0.2s;}
-.vel-regions-filter input:focus{border-color:var(--violet);}
-.vel-regions-filter input::placeholder{color:var(--text-faint);}
-.vel-regions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.85rem;}
-.vel-region-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.1rem 1.1rem 0.9rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
-.vel-region-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--vel-accent,var(--violet)),transparent);opacity:0;transition:opacity 0.2s;}
-.vel-region-card:hover{border-color:var(--vel-accent,var(--violet-dim));transform:translateY(-2px);background:var(--surface2);box-shadow:0 6px 24px rgba(0,0,0,0.45);}
-.vel-region-card:hover::before{opacity:1;}
-.vel-region-card-tag{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.2em;color:var(--vel-accent,var(--violet-bright));margin-bottom:0.35rem;text-transform:uppercase;opacity:0.85;}
-.vel-region-card-name{font-family:'Cinzel',serif;font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.5rem;line-height:1.3;}
-.vel-region-card-resume{font-size:0.81rem;color:var(--text-dim);line-height:1.55;margin-bottom:0.6rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.vel-region-card-highlights{font-size:0.76rem;color:var(--text-faint);padding-top:0.55rem;border-top:1px solid var(--border);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.vel-region-card-highlights strong{color:var(--vel-accent,var(--gold));font-weight:600;}
-
 /* ── VANTAGENS CATEGORY TABS ── */
 .vd-cats{
   display:flex;flex-wrap:wrap;gap:0.45rem;
@@ -980,49 +920,14 @@ main{
   <!-- VELKARION -->
   <div id="page-velkarion" class="page">
     <h2 class="section-title"><span class="stitle-sym">⚐</span> Velkarion — O Mundo</h2>
-
-    <!-- MAPA CENTRAL -->
-    <div class="vel-map-wrap">
-      <div class="vel-map-inner">
-        <img src="https://i.imgur.com/6VvY9ae.jpeg" alt="Mapa de Velkarion" class="vel-map-img" id="vel-map-img">
-        <div class="vel-map-overlay"></div>
-        <div class="vel-map-label">
-          <span class="vel-map-title">VELKARION</span>
-          <span class="vel-map-sub">O Mundo Conhecido</span>
-        </div>
-      </div>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-vel-search" placeholder="Região, cidade..." oninput="renderVelkarion()"></div>
+      <div class="fg"><label>Tipo</label><select id="f-vel-tipo" onchange="renderVelkarion()"><option value="">Todos</option><option>Continente</option><option>Reino</option><option>Cidade</option><option>Regiao</option><option>Ruina</option><option>Masmorra</option></select></div>
+      <div class="fg"><label>Clima</label><select id="f-vel-clima" onchange="renderVelkarion()"><option value="">Todos</option></select></div>
+      <button class="btn-clear" onclick="clearFilters('velkarion')">Limpar</button>
     </div>
-
-    <!-- CONTINENTES TÍTULO -->
-    <div class="vel-continents-header">
-      <h3 class="vel-cont-title"><span style="color:var(--violet-bright);margin-right:0.5rem;">◈</span>Continentes</h3>
-      <p class="vel-cont-sub">Selecione um continente para explorar suas regiões</p>
-    </div>
-
-    <!-- CARDS DOS CONTINENTES (índice) -->
-    <div class="vel-continent-grid" id="vel-continent-grid">
-      <div class="state-msg"><span class="state-sym">⚐</span><h3>Carregando continentes...</h3></div>
-    </div>
-
-    <!-- PAINEL DE REGIÕES (expandido ao clicar num continente) -->
-    <div class="vel-regions-panel" id="vel-regions-panel" style="display:none;">
-      <div class="vel-regions-header">
-        <div>
-          <div class="vel-regions-breadcrumb" id="vel-regions-breadcrumb">← Voltar</div>
-          <h3 class="vel-regions-title" id="vel-regions-title">—</h3>
-        </div>
-        <button class="vel-back-btn" onclick="velBackToContinents()">← Continentes</button>
-      </div>
-      <!-- Meta do continente -->
-      <div class="vel-cont-meta" id="vel-cont-meta"></div>
-      <!-- Filtro de regiões -->
-      <div class="debug-banner" id="vel-debug"></div>
-      <div class="vel-regions-filter">
-        <input type="text" id="vel-region-search" placeholder="Buscar região, capital..." oninput="velFilterRegions()">
-      </div>
-      <p class="result-count" id="vel-region-count"></p>
-      <div class="vel-regions-grid" id="vel-regions-grid"></div>
-    </div>
+    <p class="result-count" id="count-velkarion"></p>
+    <div class="cards-grid" id="grid-velkarion"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">⚐</span><h3>Nenhuma região carregada</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
 
   <!-- ESTIGMAS -->
@@ -1063,13 +968,6 @@ function showPage(name) {
 
 // ── DATABASE ──
 var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[]};
-
-// Velkarion: índice dos continentes e regiões por continente
-var VEL={
-  index:[],  // aba índice: CONTINENTE, CAPITAL, GOVERNANTE/SISTEMA, PRIMORDIAL, FRONTEIRAS, ATMOSFERA/IDENTIDADE
-  ignaria:[],murazuma:[],khemet:[],vekashia:[],wintara:[],exparktar:[],lunox:[],sharandor:[]
-};
-var VEL_ACTIVE=null; // continente atualmente aberto
 var LOJA={
   armas:[],municao:[],focus:[],armadura:[],itens:[],montarias:[],veiculos:[],
   servicos:[],aliment:[],base_mel:[],base_est:[],imbuidos:[],pocoes:[],
@@ -1123,16 +1021,7 @@ var SHEET_URLS={
   loja_gemas:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1725420729&single=true&output=csv",
   loja_joias:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=953411783&single=true&output=csv",
   loja_aprimor:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1730917400&single=true&output=csv",
-  loja_encant:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1996414926&single=true&output=csv",
-  vel_index:       "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?output=csv",
-  vel_ignaria:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1062953344&single=true&output=csv",
-  vel_murazuma:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1297607487&single=true&output=csv",
-  vel_khemet:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1706702492&single=true&output=csv",
-  vel_vekashia:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1619256236&single=true&output=csv",
-  vel_wintara:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=478119728&single=true&output=csv",
-  vel_exparktar:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=872589945&single=true&output=csv",
-  vel_lunox:       "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1228428935&single=true&output=csv",
-  vel_sharandor:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vT92yR33WOMsA4sg4o4DXvMa6_5hlkeLQDbKCrO1RHCF-2LY8ru99EyLrXttq3OiRu1AGZdh7Kci-C0/pub?gid=1422594214&single=true&output=csv"
+  loja_encant:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1996414926&single=true&output=csv"
 };
 
 
@@ -1225,13 +1114,6 @@ async function autoLoadTab(tabKey,url){
       showDebug(tabKey,'Bloqueado pelo Google (CORS). Cole a URL e clique Invocar Dados.');
       return false;
     }
-    // Abas de Velkarion: usar parser especializado que lida com o formato real
-    if(tabKey.indexOf('vel_')===0){
-      var rows=parseVelCSV(text, tabKey);
-      if(!rows.length) return false;
-      distributeData(rows,tabKey);
-      return true;
-    }
     var rows=parseCSV(text, true); // noSkip: tab já é conhecida, 1ª linha sempre é cabeçalho
     if(!rows.length) return false;
     distributeData(rows,tabKey);
@@ -1245,94 +1127,6 @@ async function autoLoadTab(tabKey,url){
 function showDebug(k,msg){
   var el=document.getElementById(k+'-debug');
   if(el){el.style.display='block';el.textContent=msg;}
-}
-
-// ── PARSER ESPECIALIZADO PARA VELKARION ──
-// As abas do Velkarion têm formato de 2+ colunas onde:
-//   - Linha 1: "CONTINENTE: IGNARIA" (título, ignorar como cabeçalho)
-//   - Linha 2: cabeçalhos reais (CAMPO/CAPITAL, RESUMO GERAL, DESTAQUES, CENARIO...)
-//   - Linhas 3+: dados das regiões
-// Para o índice (vel_index): N, CONTINENTE, CAPITAL, GOVERNANTE/SISTEMA, PRIMORDIAL, FRONTEIRAS, ATMOSFERA/IDENTIDADE
-function parseVelCSV(text, tabKey){
-  // Dividir em linhas brutas, preservando campos com aspas/quebras
-  var lines=[];
-  var cur='', inQ=false;
-  for(var i=0;i<text.length;i++){
-    var c=text[i];
-    if(c==='"'){inQ=!inQ;cur+=c;}
-    else if(!inQ&&(c==='\n'||c==='\r')){
-      if(cur.trim()) lines.push(cur);
-      cur='';
-      if(c==='\r'&&i+1<text.length&&text[i+1]==='\n') i++;
-    } else {
-      cur+=c;
-    }
-  }
-  if(cur.trim()) lines.push(cur);
-
-  function splitLine(line){
-    var fields=[],f='',inQl=false;
-    for(var i=0;i<line.length;i++){
-      var c=line[i];
-      if(c==='"'){
-        if(inQl&&i+1<line.length&&line[i+1]==='"'){f+='"';i++;}
-        else inQl=!inQl;
-      } else if(!inQl&&c===','){
-        fields.push(f.trim());f='';
-      } else {f+=c;}
-    }
-    fields.push(f.trim());
-    return fields;
-  }
-
-  if(!lines.length) return [];
-
-  // Detectar linha de cabeçalhos reais
-  // Ignorar linhas que parecem títulos (só 1 campo ou campo com "CONTINENTE:")
-  var headerIdx=-1, headers=[];
-  for(var li=0;li<Math.min(lines.length,5);li++){
-    var flds=splitLine(lines[li]);
-    // Cabeçalho tem pelo menos 2 campos não-vazios E não começa com "CONTINENTE:"
-    var nonEmpty=flds.filter(function(f){return f.trim();});
-    var firstLower=(flds[0]||'').toLowerCase().replace(/[^a-z]/g,'');
-    if(nonEmpty.length>=2 && firstLower!=='continente'){
-      headerIdx=li;
-      headers=flds.map(function(h){return h.replace(/^"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});
-      break;
-    }
-    // Também aceitar se tiver palavras-chave de cabeçalho
-    var lineStr=lines[li].toLowerCase();
-    if(lineStr.indexOf('campo')>-1||lineStr.indexOf('capital')>-1||lineStr.indexOf('resumo')>-1||lineStr.indexOf('destaque')>-1||lineStr.indexOf('cenario')>-1||lineStr.indexOf('cen\u00e1rio')>-1){
-      headerIdx=li;
-      headers=flds.map(function(h){return h.replace(/^"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});
-      break;
-    }
-  }
-
-  // Se não achou cabeçalho adequado, usar primeira linha mesmo
-  if(headerIdx===-1){
-    headers=splitLine(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();});
-    headerIdx=0;
-  }
-
-  var rows=[];
-  for(var li=headerIdx+1;li<lines.length;li++){
-    var vals=splitLine(lines[li]);
-    var obj={};
-    for(var hi=0;hi<headers.length;hi++){
-      var v=(vals[hi]||'').replace(/^"|"$/g,'').trim();
-      obj[headers[hi]]=v;
-    }
-    // Guardar também a linha bruta para fallback
-    obj['__raw']=lines[li];
-    if(Object.keys(obj).some(function(k){return k!=='__raw'&&obj[k];})) rows.push(obj);
-  }
-
-  // Debug: logar o que foi lido
-  console.log('[VEL parseVelCSV] tabKey='+tabKey+', headers=',headers,', rows='+rows.length);
-  if(rows.length>0) console.log('[VEL parseVelCSV] row[0]=',rows[0]);
-
-  return rows;
 }
 
 // ── CSV ──
@@ -1488,15 +1282,6 @@ function distributeData(rows,tab){
   if(tab==='deuses'){DB.deuses=rows;return;}
   if(tab==='velkarion'){DB.velkarion=rows;return;}
   if(tab==='estigmas'){DB.estigmas=rows;return;}
-  if(tab==='vel_index'){VEL.index=rows;return;}
-  if(tab==='vel_ignaria'){VEL.ignaria=rows;return;}
-  if(tab==='vel_murazuma'){VEL.murazuma=rows;return;}
-  if(tab==='vel_khemet'){VEL.khemet=rows;return;}
-  if(tab==='vel_vekashia'){VEL.vekashia=rows;return;}
-  if(tab==='vel_wintara'){VEL.wintara=rows;return;}
-  if(tab==='vel_exparktar'){VEL.exparktar=rows;return;}
-  if(tab==='vel_lunox'){VEL.lunox=rows;return;}
-  if(tab==='vel_sharandor'){VEL.sharandor=rows;return;}
   var hasFeitico=norm.indexOf('feitico')>-1,hasEscola=keys.indexOf('escola')>-1,hasGrau=keys.indexOf('grau')>-1,hasOrigem=keys.indexOf('origem')>-1;
   if(hasFeitico||(hasEscola&&hasGrau)||(hasEscola&&hasOrigem)){DB.grimorio=rows;return;}
   var hasPapel=keys.indexOf('papel')>-1,hasRaridade=keys.indexOf('raridade')>-1,hasRaca=keys.indexOf('raca')>-1||norm.indexOf('raca')>-1,hasDominio=keys.indexOf('dominio')>-1||norm.indexOf('dominio')>-1,hasClasse=keys.indexOf('classe')>-1,hasNomeDeus=norm.indexOf('nomedodeus')>-1||norm.indexOf('nomedeus')>-1;
@@ -2551,236 +2336,17 @@ function voltarDeuses(){
 }
 
 // ── RENDER VELKARION ──
-
-// Config dos continentes
-var VEL_CONTS=[
-  {key:'ignaria',   name:'Ignaria',      cls:'vel-ignaria',   sym:'🜂', n:'I'},
-  {key:'murazuma',  name:'Murazuma',     cls:'vel-murazuma',  sym:'⛩', n:'II'},
-  {key:'khemet',    name:'Khemet',       cls:'vel-khemet',    sym:'☥', n:'III'},
-  {key:'vekashia',  name:'Vekashia',     cls:'vel-vekashia',  sym:'❆', n:'IV'},
-  {key:'wintara',   name:'Wintara Falls',cls:'vel-wintara',   sym:'🌿', n:'V'},
-  {key:'exparktar', name:'Exparktar',    cls:'vel-exparktar', sym:'⚡', n:'VI'},
-  {key:'lunox',     name:'Lunox',        cls:'vel-lunox',     sym:'☽', n:'VII'},
-  {key:'sharandor', name:'Sharandor',    cls:'vel-sharandor', sym:'◎', n:'VIII'}
-];
-
-// Pega valor de uma row pelo cabeçalho (flexível) - usa gf existente
-function velGet(row){
-  var keys=Array.prototype.slice.call(arguments,1);
-  return gf.apply(null,[row].concat(keys));
-}
-
-// Pega o primeiro valor não-vazio de qualquer coluna da row
-function velFirstValue(row){
-  var keys=Object.keys(row).filter(function(k){return k!=='__raw';});
-  for(var i=0;i<keys.length;i++){
-    var v=(row[keys[i]]||'').trim();
-    if(v) return v;
-  }
-  return '';
-}
-
-// Pega o nome da região: tenta colunas conhecidas, depois cai no primeiro valor
-function velNome(row){
-  var v=gf(row,'CAMPO/CAPITAL','CAMPO','Campo','Capital','capital','Nome','nome','NOME','LOCAL','Local','local','REGIAO','Regiao','regiao','REGIÃO','Região','região');
-  if(!v){
-    // fallback: primeiro campo não-vazio
-    v=velFirstValue(row)||'(sem nome)';
-  }
-  // Limpar prefixos como ">> ", "> ", "— "
-  return v.replace(/^[>\s\-–—]+/,'').trim()||v;
-}
-
 function renderVelkarion(){
-  var panel=document.getElementById('vel-regions-panel');
-  var grid=document.getElementById('vel-continent-grid');
-  var contHeader=document.querySelector('.vel-continents-header');
-  // Se há continente ativo, renderizar regiões; senão, renderizar índice
-  if(VEL_ACTIVE){
-    grid.style.display='none';
-    if(contHeader) contHeader.style.display='none';
-    panel.style.display='block';
-    velRenderRegions(VEL_ACTIVE);
-  } else {
-    grid.style.display='grid';
-    if(contHeader) contHeader.style.display='block';
-    panel.style.display='none';
-    velRenderIndex();
-  }
-}
-
-function velRenderIndex(){
-  var g=document.getElementById('vel-continent-grid');
-  // Montar dados do índice por continente
-  // O índice (vel_ignaria gid=1062953344) tem colunas: N CONTINENTE CAPITAL GOVERNANTE/SISTEMA PRIMORDIAL REGIOES LISTADAS
-  // Mas cada continente tem sua própria aba para regiões
-  // Usar VEL.index para metadados e VEL[key] para contar regiões
-  var cards=VEL_CONTS.map(function(c,i){
-    // Tentar achar linha do índice (vel_ignaria é a aba índice)
-    var idxRow=null;
-    if(VEL.index && VEL.index.length){
-      idxRow=VEL.index.find(function(r){
-        var cn=velGet(r,'CONTINENTE','Continente','continente');
-        return cn && cn.toLowerCase().indexOf(c.name.toLowerCase().split(' ')[0].toLowerCase())>-1;
-      });
-    }
-    var capital=idxRow?velGet(idxRow,'CAPITAL','Capital','capital'):'';
-    var gov=idxRow?velGet(idxRow,'GOVERNANTE / SISTEMA POLITICO','GOVERNANTE / SISTEMA','Governante','governante','SISTEMA','sistema'):'';
-    var primordial=idxRow?velGet(idxRow,'PRIMORDIAL','Primordial','primordial'):'';
-    var atmos=idxRow?velGet(idxRow,'ATMOSFERA / IDENTIDADE','ATMOSFERA','Atmosfera','atmosfera','identidade'):'';
-    var fronteiras=idxRow?velGet(idxRow,'FRONTEIRAS','Fronteiras','fronteiras'):'';
-    var regioes=VEL[c.key]?VEL[c.key].length:0;
-
-    return '<div class="vel-cont-card '+c.cls+'" onclick="velOpenContinent(\''+c.key+'\')">'
-      +'<span class="vel-cont-card-num">Continente '+c.n+'</span>'
-      +'<div class="vel-cont-card-name">'+c.sym+' '+c.name+'</div>'
-      +(capital?'<div class="vel-cont-card-capital">Capital: <strong>'+capital+'</strong></div>':'')
-      +(atmos?'<div class="vel-cont-card-atmos">'+atmos+'</div>':'')
-      +'<div class="vel-cont-card-footer">'
-        +'<div class="vel-cont-card-regions"><span>'+(regioes||'—')+'</span>regiões</div>'
-        +'<span class="vel-cont-card-arrow">→</span>'
-      +'</div>'
-    +'</div>';
-  });
-  g.innerHTML=cards.join('');
-}
-
-function velOpenContinent(key){
-  VEL_ACTIVE=key;
-  renderVelkarion();
-}
-
-function velBackToContinents(){
-  VEL_ACTIVE=null;
-  document.getElementById('vel-region-search').value='';
-  renderVelkarion();
-}
-
-function velRenderRegions(key){
-  var conf=VEL_CONTS.find(function(c){return c.key===key;});
-  if(!conf) return;
-
-  // DEBUG: logar cabeçalhos reais no console
-  var rows=VEL[key]||[];
-  if(rows.length>0){
-    console.log('[VEL DEBUG] Cabeçalhos de '+key+':', Object.keys(rows[0]));
-    console.log('[VEL DEBUG] Primeira row:', rows[0]);
-  }
-
-  // Mostrar debug de headers na interface
-  var dbg=document.getElementById('vel-debug');
-  if(dbg && rows.length>0){
-    var hdrs=Object.keys(rows[0]).filter(function(k){return k!=='__raw';});
-    var firstRow=rows[0];
-    dbg.style.display='block';
-    dbg.innerHTML='<strong>Colunas ('+key+'):</strong> '+hdrs.map(function(h){
-      return '<code style="background:rgba(155,93,229,0.15);padding:1px 5px;border-radius:3px;margin:1px;">'+h+' = <em>'+(firstRow[h]||'').substring(0,30)+'</em></code>';
-    }).join(' ');
-  } else if(dbg){
-    dbg.style.display='none';
-  }
-  document.getElementById('vel-regions-title').textContent=conf.sym+' '+conf.name;
-
-  // Meta do continente (do índice)
-  var idxRow=null;
-  if(VEL.index && VEL.index.length){
-    idxRow=VEL.index.find(function(r){
-      var cn=velGet(r,'CONTINENTE','Continente','continente');
-      return cn && cn.toLowerCase().indexOf(conf.name.toLowerCase().split(' ')[0].toLowerCase())>-1;
-    });
-  }
-  var metaEl=document.getElementById('vel-cont-meta');
-  if(idxRow){
-    var capital=velGet(idxRow,'CAPITAL','Capital','capital');
-    var gov=velGet(idxRow,'GOVERNANTE / SISTEMA POLITICO','GOVERNANTE / SISTEMA','Governante','governante');
-    var primordial=velGet(idxRow,'PRIMORDIAL','Primordial','primordial');
-    var fronteiras=velGet(idxRow,'FRONTEIRAS','Fronteiras','fronteiras');
-    var atmos=velGet(idxRow,'ATMOSFERA / IDENTIDADE','ATMOSFERA','Atmosfera','atmosfera');
-    var parts=[];
-    if(capital) parts.push('<div class="vel-meta-item"><label>Capital</label><p>'+capital+'</p></div>');
-    if(gov) parts.push('<div class="vel-meta-item"><label>Governo</label><p>'+gov+'</p></div>');
-    if(primordial) parts.push('<div class="vel-meta-item"><label>Primordial</label><p>'+primordial+'</p></div>');
-    if(fronteiras) parts.push('<div class="vel-meta-item"><label>Fronteiras</label><p>'+fronteiras+'</p></div>');
-    if(atmos) parts.push('<div class="vel-meta-item" style="grid-column:1/-1"><label>Atmosfera & Identidade</label><p>'+atmos+'</p></div>');
-    metaEl.innerHTML=parts.join('');
-    metaEl.style.display=parts.length?'grid':'none';
-  } else {
-    metaEl.style.display='none';
-  }
-
-  // Regiões
-  velFilterRegions();
-}
-
-function velFilterRegions(){
-  if(!VEL_ACTIVE) return;
-  var conf=VEL_CONTS.find(function(c){return c.key===VEL_ACTIVE;});
-  var rows=VEL[VEL_ACTIVE]||[];
-  var s=(document.getElementById('vel-region-search').value||'').toLowerCase();
-
-  // Filtrar — as regiões têm colunas: CAMPO/CAPITAL, RESUMO GERAL, DESTAQUES, CENARIO
-  var data=rows.filter(function(r){
-    if(!s) return true;
-    var all=Object.values(r).join(' ').toLowerCase();
-    return all.indexOf(s)>-1;
-  });
-
-  var countEl=document.getElementById('vel-region-count');
-  countEl.textContent=data.length+' região'+(data.length!==1?'s':'');
-
-  var g=document.getElementById('vel-regions-grid');
-  if(!data.length){
-    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">⚐</span><h3>'+(rows.length?'Nenhum resultado':'Nenhuma região carregada')+'</h3></div>';
-    return;
-  }
-
-  g.innerHTML=data.map(function(r,i){
-    var nome=velNome(r);
-    var resumo=velGet(r,'RESUMO GERAL','Resumo','resumo','RESUMO','descricao','Descricao');
-    var destaques=velGet(r,'DESTAQUES','Destaques','destaques');
-    var cenario=velGet(r,'CENARIO','Cenário','Cenario','cenario');
-    var idx=_storeModal(r);
-    return '<div class="vel-region-card '+conf.cls+'" onclick="velOpenRegion('+idx+',\''+conf.key+'\')">'
-      +'<div class="vel-region-card-tag">'+conf.name+'</div>'
-      +'<div class="vel-region-card-name">'+nome+'</div>'
-      +(resumo?'<div class="vel-region-card-resume">'+resumo+'</div>':'')
-      +(destaques||cenario?'<div class="vel-region-card-highlights"><strong>Destaques:</strong> '+(destaques||cenario)+'</div>':'')
-    +'</div>';
+  var s=document.getElementById('f-vel-search').value.toLowerCase(),tp=document.getElementById('f-vel-tipo').value,cl=document.getElementById('f-vel-clima').value;
+  popSel('f-vel-clima',uniq(DB.velkarion.map(function(r){return gf(r,'Clima','clima');})),cl);
+  var data=DB.velkarion.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!tp||gf(r,'Tipo','tipo')===tp)&&(!cl||gf(r,'Clima','clima')===cl);});
+  var g=document.getElementById('grid-velkarion');
+  document.getElementById('count-velkarion').textContent=data.length+' resultados';
+  if(!data.length){g.innerHTML=emptyMsg('⚐',DB.velkarion.length?'Nenhum resultado':'Nenhuma região carregada');return;}
+  g.innerHTML=data.map(function(r){
+    var n=gf(r,'Nome','nome','Regiao','regiao')||'(sem nome)',tp2=gf(r,'Tipo','tipo'),cl2=gf(r,'Clima','clima'),d=gf(r,'Descricao','descricao','Descrição','Lore','lore','desc');
+    return '<div class="card" onclick="openModalIdx('+_storeModal(r)+')"><div class="card-type">'+(tp2||'região')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+tag(cl2,'tag-conjurador')+'</div></div>';
   }).join('');
-}
-
-function velOpenRegion(idx, contKey){
-  var r=_modalStore[idx];
-  var conf=VEL_CONTS.find(function(c){return c.key===contKey;})||{name:contKey,sym:'⚐'};
-  var nome=velNome(r);
-  var resumo=velGet(r,'RESUMO GERAL','Resumo','resumo','RESUMO');
-  var destaques=velGet(r,'DESTAQUES','Destaques','destaques');
-  var cenario=velGet(r,'CENARIO','Cenário','Cenario','cenario');
-  var html='<div class="modal-type">'+conf.sym+' '+conf.name+'</div>'
-    +'<div class="modal-name">'+nome+'</div>';
-  if(resumo) html+='<blockquote class="modal-desc">'+resumo+'</blockquote>';
-  if(destaques){
-    html+='<div class="modal-sub"><span class="modal-sub-title">✦ Destaques</span>'
-      +'<span class="modal-sub-body">'+destaques+'</span></div>';
-  }
-  if(cenario){
-    html+='<div class="modal-sub"><span class="modal-sub-title">⚑ Cenário</span>'
-      +'<span class="modal-sub-body">'+cenario+'</span></div>';
-  }
-  // Demais campos
-  var skip=['campo/capital','campo','capital','resumo geral','resumo','destaques','cenario','cenário','__raw'];
-  var extras=Object.entries(r).filter(function(e){
-    return e[1] && e[0]!=='__raw' && skip.indexOf(e[0].toLowerCase().trim())===-1;
-  });
-  if(extras.length){
-    html+='<hr class="modal-divider"><div class="modal-fields">';
-    extras.forEach(function(e){
-      html+='<div class="modal-field"><label>'+e[0]+'</label><p>'+e[1]+'</p></div>';
-    });
-    html+='</div>';
-  }
-  document.getElementById('modalBody').innerHTML=html;
-  document.getElementById('modalOverlay').classList.add('open');
 }
 
 // ── RENDER ESTIGMAS ──
@@ -2801,7 +2367,7 @@ function renderEstigmas(){
 
 // ── CLEAR FILTERS ──
 function clearFilters(sec){
-  var m={racas:['f-raca-search'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['vel-region-search'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var m={racas:['f-raca-search'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search','f-vel-tipo','f-vel-clima'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
   var ids=m[sec]||[];for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
