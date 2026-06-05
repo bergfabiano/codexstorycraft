@@ -1013,76 +1013,159 @@ main{
   min-height:1.2em;
   transition:color 0.2s;
 }
-.splash-items{
-  display:flex;
-  flex-wrap:wrap;
-  gap:0.4rem;
-  justify-content:center;
-  margin-bottom:2rem;
-  max-width:420px;
-  min-height:60px;
+/* ── HOURGLASS ── */
+.splash-hourglass-wrap{
+  position:relative;
+  width:80px;height:80px;
+  margin:0 auto 2rem;
+  display:flex;align-items:center;justify-content:center;
 }
-.splash-item{
+.splash-hourglass{
+  font-size:3.2rem;
+  line-height:1;
+  animation:hourglassSpin 2.4s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px var(--violet)) drop-shadow(0 0 36px rgba(155,93,229,0.5));
+  display:block;
+}
+@keyframes hourglassSpin{
+  0%   {transform:rotate(0deg);   filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
+  45%  {transform:rotate(0deg);   filter:drop-shadow(0 0 28px var(--violet)) drop-shadow(0 0 56px rgba(155,93,229,0.7));}
+  50%  {transform:rotate(180deg); filter:drop-shadow(0 0 28px var(--gold))   drop-shadow(0 0 56px rgba(201,164,74,0.6));}
+  95%  {transform:rotate(180deg); filter:drop-shadow(0 0 14px var(--gold))   drop-shadow(0 0 30px rgba(201,164,74,0.35));}
+  100% {transform:rotate(360deg); filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
+}
+.splash-hourglass-ring{
+  position:absolute;inset:0;
+  border-radius:50%;
+  border:1px solid rgba(155,93,229,0.2);
+  animation:ringPulse 2.4s ease-in-out infinite;
+}
+.splash-hourglass-ring2{
+  position:absolute;inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(155,93,229,0.08);
+  animation:ringPulse 2.4s ease-in-out infinite 0.4s;
+}
+@keyframes ringPulse{
+  0%,100%{opacity:0.4;transform:scale(1);}
+  50%{opacity:1;transform:scale(1.06);}
+}
+
+/* ── THEMATIC MESSAGE ── */
+.splash-theme-msg{
   font-family:'Raleway',sans-serif;
-  font-size:0.6rem;
-  font-weight:700;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  padding:0.2rem 0.6rem;
-  border-radius:3px;
-  border:1px solid var(--border);
-  color:var(--text-faint);
-  background:var(--surface);
-  transition:all 0.3s ease;
-  white-space:nowrap;
-}
-.splash-item.loading{
-  border-color:rgba(155,93,229,0.35);
+  font-size:0.72rem;
+  font-weight:500;
+  font-style:italic;
+  letter-spacing:0.06em;
   color:var(--violet-bright);
-  background:rgba(155,93,229,0.08);
-  animation:tagPulse 1s ease-in-out infinite;
+  opacity:0.75;
+  margin-bottom:2rem;
+  min-height:1.4em;
+  transition:opacity 0.4s ease;
+  text-shadow:0 0 12px rgba(192,132,252,0.3);
 }
-@keyframes tagPulse{
-  0%,100%{opacity:1;}
-  50%{opacity:0.5;}
-}
-.splash-item.ok{
-  border-color:rgba(109,255,179,0.35);
-  color:var(--green);
-  background:rgba(109,255,179,0.07);
-  animation:none;
-}
-.splash-item.err{
-  border-color:rgba(192,57,43,0.35);
-  color:var(--blood);
-  background:rgba(192,57,43,0.07);
-  animation:none;
-}
-#splash-enter-btn{
+.splash-theme-msg.fade{opacity:0;}
+
+/* ── NAME INPUT ── */
+.splash-name-wrap{
   display:none;
+  flex-direction:column;
+  align-items:center;
+  gap:0.65rem;
+  width:100%;
+  max-width:320px;
+  animation:btnAppear 0.5s ease forwards;
+}
+.splash-name-label{
+  font-family:'Cinzel',serif;
+  font-size:0.85rem;
+  font-weight:600;
+  letter-spacing:0.14em;
+  color:var(--gold-light);
+  opacity:0.9;
+  text-shadow:0 0 18px rgba(201,164,74,0.4);
+  margin-bottom:0.2rem;
+}
+.splash-name-input{
+  width:100%;
+  background:rgba(155,93,229,0.07);
+  border:1px solid rgba(155,93,229,0.3);
+  border-radius:5px;
+  color:var(--text);
+  padding:0.65rem 1rem;
   font-family:'Cinzel',serif;
   font-size:0.9rem;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#fff;
-  background:linear-gradient(135deg,var(--violet),rgba(192,132,252,0.8));
-  border:none;
-  padding:0.9rem 3rem;
-  border-radius:6px;
-  cursor:pointer;
-  box-shadow:0 0 30px rgba(155,93,229,0.4),0 4px 20px rgba(0,0,0,0.5);
-  transition:all 0.2s;
-  animation:btnAppear 0.5s ease forwards;
+  letter-spacing:0.06em;
+  text-align:center;
+  outline:none;
+  transition:border-color 0.2s, box-shadow 0.2s;
+}
+.splash-name-input:focus{
+  border-color:var(--violet);
+  box-shadow:0 0 18px rgba(155,93,229,0.25);
+}
+.splash-name-input::placeholder{
+  color:var(--text-faint);
+  font-size:0.78rem;
+  letter-spacing:0.04em;
+}
+.splash-name-input.invalid{
+  border-color:var(--magenta);
+  box-shadow:0 0 14px rgba(247,37,133,0.3);
+  animation:shake 0.35s ease;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-6px);}
+  40%{transform:translateX(6px);}
+  60%{transform:translateX(-4px);}
+  80%{transform:translateX(4px);}
 }
 @keyframes btnAppear{
   from{opacity:0;transform:translateY(12px);}
   to{opacity:1;transform:translateY(0);}
 }
+#splash-enter-btn{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:#fff;
+  background:linear-gradient(160deg,rgba(100,55,180,0.95) 0%,rgba(75,30,140,0.98) 100%);
+  border:1px solid rgba(192,132,252,0.45);
+  padding:0.75rem 2.8rem;
+  width:100%;
+  border-radius:3px;
+  cursor:pointer;
+  position:relative;
+  box-shadow:
+    0 0 18px rgba(155,93,229,0.35),
+    0 4px 24px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(192,132,252,0.15);
+  transition:all 0.25s ease;
+  animation:btnAppear 0.5s ease forwards;
+  overflow:hidden;
+}
+#splash-enter-btn::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(192,132,252,0.12) 0%,transparent 60%);
+  opacity:1;
+  transition:opacity 0.25s;
+}
 #splash-enter-btn:hover{
-  background:linear-gradient(135deg,var(--violet-bright),var(--violet));
-  box-shadow:0 0 50px rgba(155,93,229,0.6),0 6px 30px rgba(0,0,0,0.6);
+  background:linear-gradient(160deg,rgba(130,75,220,0.98) 0%,rgba(100,45,180,1) 100%);
+  border-color:rgba(192,132,252,0.75);
+  box-shadow:
+    0 0 35px rgba(155,93,229,0.55),
+    0 0 70px rgba(155,93,229,0.2),
+    0 6px 30px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(192,132,252,0.25);
   transform:translateY(-2px);
+  text-shadow:0 0 10px rgba(255,255,255,0.5);
 }
 #splash-enter-btn:active{transform:translateY(0);}
 .splash-enter-note{
@@ -1148,9 +1231,16 @@ main{
 <!-- SPLASH SCREEN DE LOADING -->
 <div id="splash-screen">
   <div class="splash-inner">
-    <span class="splash-glyph">✦</span>
     <div class="splash-title">Codex StoryCraft</div>
     <div class="splash-sub">Sistema RPG de Mesa</div>
+
+    <div class="splash-hourglass-wrap">
+      <div class="splash-hourglass-ring2"></div>
+      <div class="splash-hourglass-ring"></div>
+      <span class="splash-hourglass">⏳</span>
+    </div>
+
+    <div class="splash-theme-msg" id="splash-theme-msg">Abrindo os portais do conhecimento...</div>
 
     <div class="splash-progress-wrap">
       <div class="splash-progress-bar-bg">
@@ -1159,10 +1249,20 @@ main{
       <div class="splash-status-text" id="splash-status-text">Invocando os dados do mundo...</div>
     </div>
 
-    <div class="splash-items" id="splash-items"></div>
-
-    <button id="splash-enter-btn" onclick="entrarNoCodex()">✦ Entrar no Codex</button>
-    <div class="splash-enter-note" id="splash-enter-note">Todos os dados foram carregados com sucesso</div>
+    <div class="splash-name-wrap" id="splash-name-wrap">
+      <div class="splash-name-label" id="splash-name-label">Quem se aventura hoje?</div>
+      <input
+        class="splash-name-input"
+        id="splash-name-input"
+        type="text"
+        maxlength="40"
+        placeholder="Digite seu nome..."
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter')entrarNoCodex()"
+      />
+      <button id="splash-enter-btn" onclick="entrarNoCodex()">Entrar no Codex</button>
+      <div class="splash-enter-note" id="splash-enter-note">Todos os dados foram carregados com sucesso</div>
+    </div>
   </div>
 </div>
 
@@ -1187,6 +1287,7 @@ main{
     <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">  <span class="tab-sym">✸</span> Estigmas</div>
   </div>
   <div class="sidebar-bottom">
+    <div style="font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.35rem;opacity:0.8;" id="adventurer-greet"></div>
     <div class="status-dot" id="statusDot" style="display:inline-block;margin-right:0.4rem;"></div>
     <span id="statusMsg" style="font-size:0.65rem;color:var(--text-faint);vertical-align:middle;"></span>
   </div>
@@ -1693,10 +1794,70 @@ var SPLASH_LABELS={
   vel_vekashia:'Vekashia',vel_wintara:'Wintara Falls',vel_exparktar:'Exparktar',vel_lunox:'Lunox',vel_sharandor:'Sharandor'
 };
 
-function splashSetItem(key,state){
-  var el=document.getElementById('splash-item-'+key);
-  if(el){el.className='splash-item '+state;}
+var SPLASH_MSGS=[
+  'Decifrando runas proibidas...',
+  'Acordando os deuses adormecidos...',
+  'Catalogando criaturas das sombras...',
+  'Consultando o Grimório Ancestral...',
+  'Forjando espadas nas chamas do Velkarion...',
+  'Traduzindo línguas esquecidas...',
+  'Invocando espíritos do conhecimento...',
+  'Abrindo os portais do Codex...',
+  'Selando pactos com entidades antigas...',
+  'Reunindo relíquias de eras passadas...',
+  'Despertando magias adormecidas...',
+  'Mapeando continentes inexplorados...',
+  'Decifando profecias dos Estigmas...',
+  'Convocando os guardiões do saber...',
+  'Pesquisando nas bibliotecas proibidas...',
+  'Destilando a essência das classes...',
+  'Revelando os segredos das raças antigas...',
+  'Compilando tomos de sabedoria arcana...',
+];
+var _splashMsgIdx=Math.floor(Math.random()*SPLASH_MSGS.length);
+var _splashMsgTimer=null;
+function splashStartMsgs(){
+  var el=document.getElementById('splash-theme-msg');
+  if(!el) return;
+  el.textContent=SPLASH_MSGS[_splashMsgIdx];
+  _splashMsgTimer=setInterval(function(){
+    el.classList.add('fade');
+    setTimeout(function(){
+      _splashMsgIdx=(_splashMsgIdx+1)%SPLASH_MSGS.length;
+      el.textContent=SPLASH_MSGS[_splashMsgIdx];
+      el.classList.remove('fade');
+    },400);
+  },2800);
 }
+var SPLASH_QUESTIONS=[
+  'Quem se aventura hoje?',
+  'Qual o nome do honrado que adentra este Codex?',
+  'Diga seu nome, viajante.',
+  'Como devo te chamar, explorador?',
+  'Quem ousa desvendar os segredos de Velkarion?',
+  'Identifique-se, filho das runas.',
+  'Qual herói desperta nesta hora?',
+  'Quem ergue a tocha nas trevas do Codex?',
+  'Diz-me teu nome e o destino te escutará.',
+  'Quem é o portador desta tocha?',
+];
+function splashStopMsgs(){
+  if(_splashMsgTimer){clearInterval(_splashMsgTimer);_splashMsgTimer=null;}
+  var el=document.getElementById('splash-theme-msg');
+  if(el){
+    el.classList.add('fade');
+    setTimeout(function(){
+      el.textContent='O Codex está pronto. Identifique-se, aventureiro.';
+      el.classList.remove('fade');
+    },400);
+  }
+  // Pick a random thematic question for the label
+  var lbl=document.getElementById('splash-name-label');
+  if(lbl){
+    lbl.textContent=SPLASH_QUESTIONS[Math.floor(Math.random()*SPLASH_QUESTIONS.length)];
+  }
+}
+function splashSetItem(key,state){/* no-op: abas removidas */}
 function splashSetText(t){
   var el=document.getElementById('splash-status-text');
   if(el) el.textContent=t;
@@ -1706,26 +1867,30 @@ function splashSetProgress(pct){
   if(el) el.style.width=pct+'%';
 }
 function entrarNoCodex(){
+  var inp=document.getElementById('splash-name-input');
+  var name=inp?inp.value.trim():'';
+  if(!name){
+    if(inp){
+      inp.classList.add('invalid');
+      inp.focus();
+      setTimeout(function(){inp.classList.remove('invalid');},700);
+    }
+    return;
+  }
+  // Store name for use in the app
+  window.ADVENTURER_NAME=name;
   var sp=document.getElementById('splash-screen');
   if(sp) sp.classList.add('hidden');
+  // Optionally greet in topbar
+  var greet=document.getElementById('adventurer-greet');
+  if(greet) greet.textContent='Bem-vindo, '+name;
 }
 
 window.addEventListener('load',function(){
   var saved=localStorage.getItem('rpg_sheet_url');
   if(saved) document.getElementById('sheetUrl').value=saved;
   cntUpdate();
-  // Build splash item tags
-  var container=document.getElementById('splash-items');
-  if(container){
-    var keys=Object.keys(SHEET_URLS);
-    keys.forEach(function(k){
-      var div=document.createElement('div');
-      div.className='splash-item loading';
-      div.id='splash-item-'+k;
-      div.textContent=SPLASH_LABELS[k]||k;
-      container.appendChild(div);
-    });
-  }
+  splashStartMsgs();
   autoLoadAll();
 });
 
@@ -1751,13 +1916,18 @@ async function autoLoadAll(){
   renderVantagens();
   if(loaded>0) setStatus('ok',loaded+' fontes');
   else setStatus('err','Falha');
-  // Show enter button
+  // Show name input
   var note=loaded>0?'✦ '+loaded+' fontes de dados carregadas com sucesso':'⚠ Alguns dados falharam ao carregar';
   var noteEl=document.getElementById('splash-enter-note');
   if(noteEl) noteEl.textContent=note;
   splashSetText(loaded>0?'Pronto! O Codex aguarda.':'Carregamento concluído com falhas parciais.');
-  var btn=document.getElementById('splash-enter-btn');
-  if(btn) btn.style.display='inline-block';
+  splashStopMsgs();
+  var wrap=document.getElementById('splash-name-wrap');
+  if(wrap){wrap.style.display='flex';}
+  setTimeout(function(){
+    var inp=document.getElementById('splash-name-input');
+    if(inp) inp.focus();
+  },150);
 }
 
 async function autoLoadTab(tabKey,url){
