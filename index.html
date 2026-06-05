@@ -1178,6 +1178,84 @@ main{
   animation:btnAppear 0.5s ease 0.2s forwards;
 }
 
+/* ── GREETING OVERLAY ── */
+#splash-greeting-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:1.2rem;
+  padding:2rem;
+  background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(20,12,40,0.98) 0%,rgba(7,8,14,0.99) 100%);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.55s ease;
+  z-index:5;
+}
+#splash-greeting-overlay.visible{
+  opacity:1;
+  pointer-events:all;
+}
+.greet-rune{
+  font-size:2rem;
+  color:var(--gold);
+  filter:drop-shadow(0 0 16px rgba(201,164,74,0.6));
+  animation:greetRune 1.8s ease-in-out infinite;
+}
+@keyframes greetRune{
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 16px rgba(201,164,74,0.6));}
+  50%{transform:scale(1.12);filter:drop-shadow(0 0 30px rgba(201,164,74,0.9));}
+}
+.greet-line-top{
+  width:120px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-light),transparent);
+  opacity:0.5;
+}
+.greet-name{
+  font-family:'Cinzel',serif;
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--gold-light);
+  letter-spacing:0.18em;
+  text-shadow:0 0 30px rgba(201,164,74,0.5),0 0 60px rgba(201,164,74,0.2);
+  text-align:center;
+}
+.greet-msg{
+  font-family:'Raleway',sans-serif;
+  font-size:0.85rem;
+  font-weight:400;
+  font-style:italic;
+  color:var(--text);
+  opacity:0.85;
+  letter-spacing:0.05em;
+  line-height:1.7;
+  text-align:center;
+  max-width:400px;
+  text-shadow:0 0 20px rgba(155,93,229,0.2);
+}
+.greet-sigil{
+  font-size:0.65rem;
+  letter-spacing:0.35em;
+  color:var(--violet-bright);
+  opacity:0.55;
+  text-transform:uppercase;
+  margin-top:0.4rem;
+}
+@keyframes greetFadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+#splash-greeting-overlay.visible .greet-rune,
+#splash-greeting-overlay.visible .greet-name,
+#splash-greeting-overlay.visible .greet-msg,
+#splash-greeting-overlay.visible .greet-sigil,
+#splash-greeting-overlay.visible .greet-line-top{
+  animation-fill-mode:both;
+}
+#splash-greeting-overlay.visible .greet-rune{animation:greetRune 1.8s ease-in-out infinite,greetFadeIn 0.5s ease 0.1s both;}
+#splash-greeting-overlay.visible .greet-name{animation:greetFadeIn 0.5s ease 0.25s both;}
+#splash-greeting-overlay.visible .greet-msg{animation:greetFadeIn 0.5s ease 0.45s both;}
+#splash-greeting-overlay.visible .greet-sigil{animation:greetFadeIn 0.5s ease 0.65s both;}
+
 /* Mapa do continente na aba de detalhe */
 .vel-cont-map-wrap{
   width:100%;
@@ -1262,6 +1340,15 @@ main{
       />
       <button id="splash-enter-btn" onclick="entrarNoCodex()">Entrar no Codex</button>
       <div class="splash-enter-note" id="splash-enter-note">Todos os dados foram carregados com sucesso</div>
+    </div>
+
+    <!-- GREETING OVERLAY -->
+    <div id="splash-greeting-overlay">
+      <div class="greet-rune">✦</div>
+      <div class="greet-line-top"></div>
+      <div class="greet-name" id="greet-name-display"></div>
+      <div class="greet-msg" id="greet-msg-display"></div>
+      <div class="greet-sigil" id="greet-sigil-display"></div>
     </div>
   </div>
 </div>
@@ -1866,6 +1953,22 @@ function splashSetProgress(pct){
   var el=document.getElementById('splash-progress');
   if(el) el.style.width=pct+'%';
 }
+var CODEX_GREETINGS=[
+  {msg:'O Codex reconhece teu espírito, {nome}. Que as runas de Velkarion iluminem teu caminho nesta hora de sombras.',sigil:'✦ porta dos arcanos aberta ✦'},
+  {msg:'Ah, {nome}... os oráculos já sussurravam teu nome. Entra. O conhecimento proibido te aguarda nas páginas mais fundas.',sigil:'⚔ que a lâmina do saber te guie ⚔'},
+  {msg:'Os antigos deuses ouviram teu chamado, {nome}. O Codex se abre diante de ti — lê com sabedoria, pois o poder corrompe o impaciente.',sigil:'◈ velkarion registra tua presença ◈'},
+  {msg:'Bem-vindo ao Codex, {nome}. Inúmeros aventureiros antes de ti folhearam estes tomos e nunca mais voltaram os mesmos. Prepara-se.',sigil:'✧ o grimório desperta ✧'},
+  {msg:'{nome}. O nome reverbera nas câmaras esquecidas do Codex como um sino de bronze ao amanhecer. Adentra. O destino não espera.',sigil:'◆ portões do saber destrancados ◆'},
+  {msg:'Teus passos eram esperados, {nome}. A tinta dos mapas ainda não secou, as histórias ainda não foram escritas. Caberá a ti continuar.',sigil:'✦ o mundo aguarda tua saga ✦'},
+  {msg:'O Estigma do Conhecimento marca todo aquele que cruza esta soleira, {nome}. Não há retorno — só a sede insaciável de saber mais.',sigil:'⚗ estigma concedido ⚗'},
+  {msg:'Que os ventos de Murazuma te favoreçam, {nome}. O Codex guarda segredos de oito continentes — e hoje, eles são teus.',sigil:'◈ oito continentes, um codex ◈'},
+  {msg:'O Codex registra: {nome} adentrou os portais no momento em que as estrelas alinharam. Coincidência? Em Velkarion, não existe tal coisa.',sigil:'✧ os astros testemunharam ✧'},
+  {msg:'Saudações, {nome}. Guardiões caíram, reinos se ergueram e foram consumidos — mas o Codex permanece. Agora, ele é teu aliado.',sigil:'⚔ aliança selada com sangue de tinta ⚔'},
+  {msg:'Há um brilho nos teus olhos, {nome}, que os sábios do Codex reconhecem bem. É a chama da curiosidade. Não a deixes apagar.',sigil:'◆ a chama do saber arde ◆'},
+  {msg:'{nome}. Nome simples. Destino, quem sabe, grandioso. O Codex não julga quem entra — apenas registra o que fazem enquanto estão aqui.',sigil:'✦ toda saga começa com um nome ✦'},
+];
+var CODEX_SIGILS=['✦','◈','◆','⚔','✧','⚗','☽','⚡'];
+
 function entrarNoCodex(){
   var inp=document.getElementById('splash-name-input');
   var name=inp?inp.value.trim():'';
@@ -1877,13 +1980,34 @@ function entrarNoCodex(){
     }
     return;
   }
-  // Store name for use in the app
+  // Store name
   window.ADVENTURER_NAME=name;
-  var sp=document.getElementById('splash-screen');
-  if(sp) sp.classList.add('hidden');
-  // Optionally greet in topbar
-  var greet=document.getElementById('adventurer-greet');
-  if(greet) greet.textContent='Bem-vindo, '+name;
+
+  // Pick a random greeting
+  var g=CODEX_GREETINGS[Math.floor(Math.random()*CODEX_GREETINGS.length)];
+  var msg=g.msg.replace('{nome}',name);
+
+  // Populate overlay
+  var nameEl=document.getElementById('greet-name-display');
+  var msgEl=document.getElementById('greet-msg-display');
+  var sigilEl=document.getElementById('greet-sigil-display');
+  if(nameEl) nameEl.textContent=name;
+  if(msgEl) msgEl.textContent=msg;
+  if(sigilEl) sigilEl.textContent=g.sigil;
+
+  // Hide name-wrap, show overlay
+  var wrap=document.getElementById('splash-name-wrap');
+  if(wrap) wrap.style.display='none';
+  var overlay=document.getElementById('splash-greeting-overlay');
+  if(overlay) overlay.classList.add('visible');
+
+  // After 2.8s, close splash and enter the app
+  setTimeout(function(){
+    var sp=document.getElementById('splash-screen');
+    if(sp) sp.classList.add('hidden');
+    var greet=document.getElementById('adventurer-greet');
+    if(greet) greet.textContent='Bem-vindo, '+name;
+  },2800);
 }
 
 window.addEventListener('load',function(){
