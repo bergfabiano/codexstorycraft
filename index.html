@@ -909,6 +909,192 @@ main{
 .vel-map-zoomable{cursor:zoom-in;}
 .vel-map-zoomable:hover{filter:brightness(1.05) saturate(1.15);}
 
+/* ── SPLASH SCREEN ── */
+#splash-screen{
+  position:fixed;inset:0;
+  z-index:99999;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+  transition:opacity 0.5s ease, visibility 0.5s ease;
+}
+#splash-screen.hidden{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+#splash-screen::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(140,100,220,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(140,100,220,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  pointer-events:none;
+}
+#splash-screen::after{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(0,212,255,0.05) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(247,37,133,0.05) 0%,transparent 60%);
+  pointer-events:none;
+}
+.splash-inner{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  max-width:480px;
+  width:100%;
+  text-align:center;
+}
+.splash-glyph{
+  font-family:'Cinzel',serif;
+  font-size:3rem;
+  color:var(--violet);
+  filter:drop-shadow(0 0 30px var(--violet)) drop-shadow(0 0 60px rgba(155,93,229,0.4));
+  margin-bottom:1.25rem;
+  animation:splashPulse 2.5s ease-in-out infinite;
+}
+@keyframes splashPulse{
+  0%,100%{filter:drop-shadow(0 0 20px var(--violet)) drop-shadow(0 0 40px rgba(155,93,229,0.3));}
+  50%{filter:drop-shadow(0 0 40px var(--violet)) drop-shadow(0 0 80px rgba(155,93,229,0.6));}
+}
+.splash-title{
+  font-family:'Cinzel',serif;
+  font-size:2rem;
+  font-weight:700;
+  color:var(--gold-light);
+  letter-spacing:0.06em;
+  margin-bottom:0.4rem;
+  text-shadow:0 0 40px var(--gold-glow);
+}
+.splash-sub{
+  font-family:'Raleway',sans-serif;
+  font-size:0.7rem;
+  font-weight:600;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin-bottom:2.5rem;
+}
+.splash-progress-wrap{
+  width:100%;
+  max-width:360px;
+  margin-bottom:1.5rem;
+}
+.splash-progress-bar-bg{
+  height:3px;
+  background:rgba(155,93,229,0.12);
+  border-radius:2px;
+  overflow:hidden;
+  margin-bottom:1rem;
+}
+.splash-progress-bar-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--violet),var(--violet-bright),var(--cyan));
+  border-radius:2px;
+  transition:width 0.3s ease;
+  box-shadow:0 0 10px rgba(155,93,229,0.6);
+}
+.splash-status-text{
+  font-family:'Raleway',sans-serif;
+  font-size:0.7rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  color:var(--text-faint);
+  min-height:1.2em;
+  transition:color 0.2s;
+}
+.splash-items{
+  display:flex;
+  flex-wrap:wrap;
+  gap:0.4rem;
+  justify-content:center;
+  margin-bottom:2rem;
+  max-width:420px;
+  min-height:60px;
+}
+.splash-item{
+  font-family:'Raleway',sans-serif;
+  font-size:0.6rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:0.2rem 0.6rem;
+  border-radius:3px;
+  border:1px solid var(--border);
+  color:var(--text-faint);
+  background:var(--surface);
+  transition:all 0.3s ease;
+  white-space:nowrap;
+}
+.splash-item.loading{
+  border-color:rgba(155,93,229,0.35);
+  color:var(--violet-bright);
+  background:rgba(155,93,229,0.08);
+  animation:tagPulse 1s ease-in-out infinite;
+}
+@keyframes tagPulse{
+  0%,100%{opacity:1;}
+  50%{opacity:0.5;}
+}
+.splash-item.ok{
+  border-color:rgba(109,255,179,0.35);
+  color:var(--green);
+  background:rgba(109,255,179,0.07);
+  animation:none;
+}
+.splash-item.err{
+  border-color:rgba(192,57,43,0.35);
+  color:var(--blood);
+  background:rgba(192,57,43,0.07);
+  animation:none;
+}
+#splash-enter-btn{
+  display:none;
+  font-family:'Cinzel',serif;
+  font-size:0.9rem;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:#fff;
+  background:linear-gradient(135deg,var(--violet),rgba(192,132,252,0.8));
+  border:none;
+  padding:0.9rem 3rem;
+  border-radius:6px;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(155,93,229,0.4),0 4px 20px rgba(0,0,0,0.5);
+  transition:all 0.2s;
+  animation:btnAppear 0.5s ease forwards;
+}
+@keyframes btnAppear{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+#splash-enter-btn:hover{
+  background:linear-gradient(135deg,var(--violet-bright),var(--violet));
+  box-shadow:0 0 50px rgba(155,93,229,0.6),0 6px 30px rgba(0,0,0,0.6);
+  transform:translateY(-2px);
+}
+#splash-enter-btn:active{transform:translateY(0);}
+.splash-enter-note{
+  font-family:'Raleway',sans-serif;
+  font-size:0.62rem;
+  color:var(--text-faint);
+  letter-spacing:0.08em;
+  margin-top:0.75rem;
+  opacity:0;
+  animation:btnAppear 0.5s ease 0.2s forwards;
+}
+
 /* Mapa do continente na aba de detalhe */
 .vel-cont-map-wrap{
   width:100%;
@@ -958,6 +1144,27 @@ main{
 </style>
 </head>
 <body>
+
+<!-- SPLASH SCREEN DE LOADING -->
+<div id="splash-screen">
+  <div class="splash-inner">
+    <span class="splash-glyph">✦</span>
+    <div class="splash-title">Codex StoryCraft</div>
+    <div class="splash-sub">Sistema RPG de Mesa</div>
+
+    <div class="splash-progress-wrap">
+      <div class="splash-progress-bar-bg">
+        <div class="splash-progress-bar-fill" id="splash-progress"></div>
+      </div>
+      <div class="splash-status-text" id="splash-status-text">Invocando os dados do mundo...</div>
+    </div>
+
+    <div class="splash-items" id="splash-items"></div>
+
+    <button id="splash-enter-btn" onclick="entrarNoCodex()">✦ Entrar no Codex</button>
+    <div class="splash-enter-note" id="splash-enter-note">Todos os dados foram carregados com sucesso</div>
+  </div>
+</div>
 
 <div id="app-shell">
 
@@ -1469,30 +1676,88 @@ function vdCardClass(cat){
   return 'card-vantagem';
 }
 
+// ── SPLASH SCREEN ──
+var SPLASH_LABELS={
+  racas_cats:'Raças (Categorias)',racas_detail:'Raças',grimorio:'Grimório',
+  classes:'Classes',dons:'Dons',estigmas:'Estigmas',deuses:'Deuses',
+  vd_versateis:'Vant. Versáteis',vd_combate:'Vant. Combate',vd_magicas:'Vant. Mágicas',
+  vd_ataques:'Vant. Ataques',vd_superpoderes:'Superpoderes',vd_desvantagens:'Desvantagens',vd_maldicoes:'Maldições',
+  loja_armas:'Loja: Armas',loja_municao:'Loja: Munição',loja_focus:'Loja: Focus',
+  loja_armadura:'Loja: Armadura',loja_itens:'Loja: Itens',loja_montarias:'Loja: Montarias',
+  loja_veiculos:'Loja: Veículos',loja_servicos:'Loja: Serviços',loja_aliment:'Loja: Gastronomia',
+  loja_base_mel:'Loja: Base Mel.',loja_base_est:'Loja: Base Est.',loja_imbuidos:'Loja: Imbuídos',
+  loja_pocoes:'Loja: Poções',loja_alquimicos:'Loja: Alquímicos',loja_venenos:'Loja: Venenos',
+  loja_sicario:'Loja: Sicário',loja_minerios:'Loja: Minérios',loja_auxiliares:'Loja: Auxiliares',
+  loja_gemas:'Loja: Gemas',loja_joias:'Loja: Joias',loja_aprimor:'Loja: Aprimoramento',loja_encant:'Loja: Encantamento',
+  vel_continentes:'Velkarion',vel_ignaria:'Ignaria',vel_murazuma:'Murazuma',vel_khemet:'Khemet',
+  vel_vekashia:'Vekashia',vel_wintara:'Wintara Falls',vel_exparktar:'Exparktar',vel_lunox:'Lunox',vel_sharandor:'Sharandor'
+};
+
+function splashSetItem(key,state){
+  var el=document.getElementById('splash-item-'+key);
+  if(el){el.className='splash-item '+state;}
+}
+function splashSetText(t){
+  var el=document.getElementById('splash-status-text');
+  if(el) el.textContent=t;
+}
+function splashSetProgress(pct){
+  var el=document.getElementById('splash-progress');
+  if(el) el.style.width=pct+'%';
+}
+function entrarNoCodex(){
+  var sp=document.getElementById('splash-screen');
+  if(sp) sp.classList.add('hidden');
+}
+
 window.addEventListener('load',function(){
   var saved=localStorage.getItem('rpg_sheet_url');
   if(saved) document.getElementById('sheetUrl').value=saved;
   cntUpdate();
+  // Build splash item tags
+  var container=document.getElementById('splash-items');
+  if(container){
+    var keys=Object.keys(SHEET_URLS);
+    keys.forEach(function(k){
+      var div=document.createElement('div');
+      div.className='splash-item loading';
+      div.id='splash-item-'+k;
+      div.textContent=SPLASH_LABELS[k]||k;
+      container.appendChild(div);
+    });
+  }
   autoLoadAll();
 });
 
 async function autoLoadAll(){
   setStatus('loading','Carregando...');
-  // Pre-mark all VD as loading
   for(var vc in VD_STATUS) VD_STATUS[vc]='loading';
-  var loaded=0;
-  for(var key in SHEET_URLS){
+  var keys=Object.keys(SHEET_URLS);
+  var total=keys.length,loaded=0,done=0;
+  for(var i=0;i<keys.length;i++){
+    var key=keys[i];
+    splashSetItem(key,'loading');
+    splashSetText('Carregando: '+(SPLASH_LABELS[key]||key)+'…');
     var ok=await autoLoadTab(key,SHEET_URLS[key]);
+    done++;
+    splashSetItem(key,ok?'ok':'err');
+    splashSetProgress(Math.round((done/total)*100));
     if(ok) loaded++;
   }
-  // Any that failed remain 'loading' → treat as empty
   for(var vc in VD_STATUS){
-    if(VD_STATUS[vc]==='loading'){VD_STATUS[vc]='ok';} // mark done even if empty
+    if(VD_STATUS[vc]==='loading') VD_STATUS[vc]='ok';
   }
   updateStats();renderAll();cntPopulateRaces();
-  renderVantagens(); // ensure active VD tab renders
+  renderVantagens();
   if(loaded>0) setStatus('ok',loaded+' fontes');
   else setStatus('err','Falha');
+  // Show enter button
+  var note=loaded>0?'✦ '+loaded+' fontes de dados carregadas com sucesso':'⚠ Alguns dados falharam ao carregar';
+  var noteEl=document.getElementById('splash-enter-note');
+  if(noteEl) noteEl.textContent=note;
+  splashSetText(loaded>0?'Pronto! O Codex aguarda.':'Carregamento concluído com falhas parciais.');
+  var btn=document.getElementById('splash-enter-btn');
+  if(btn) btn.style.display='inline-block';
 }
 
 async function autoLoadTab(tabKey,url){
