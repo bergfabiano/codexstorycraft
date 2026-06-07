@@ -4256,13 +4256,11 @@ function oraculo_enviar(){
   // Monta o histórico para a API (últimas 6 mensagens para contexto)
   var msgs = ORACULO_HISTORY.slice(-7).map(function(m){ return m; });
 
-  // Chama a API
-  fetch('https://api.anthropic.com/v1/messages', {
+  // Chama o endpoint serverless do Vercel (que repassa para a API da Anthropic)
+  fetch('/api/oraculo', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
       system: systemPrompt,
       messages: msgs
     })
