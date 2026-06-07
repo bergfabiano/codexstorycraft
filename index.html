@@ -1372,6 +1372,7 @@ main{
     <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">    <span class="tab-sym">☀</span> Deuses</div>
     <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')"> <span class="tab-sym">⚐</span> Velkarion</div>
     <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">  <span class="tab-sym">✸</span> Estigmas</div>
+    <div class="nav-tab" data-page="oraculo"   onclick="showPage('oraculo');oraculo_init()">  <span class="tab-sym">◈</span> Oráculo</div>
   </div>
   <div class="sidebar-bottom">
     <div style="font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.35rem;opacity:0.8;" id="adventurer-greet"></div>
@@ -1713,6 +1714,80 @@ main{
     <p class="result-count" id="count-estigmas"></p>
     <div class="debug-banner" id="estigmas-debug"></div>
     <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✸</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+  </div>
+
+  <!-- ORÁCULO IA -->
+  <div id="page-oraculo" class="page">
+    <h2 class="section-title"><span class="stitle-sym">◈</span> Oráculo — Consultor de Regras</h2>
+    <div style="max-width:860px;margin:0 auto;">
+
+      <!-- Intro banner -->
+      <div style="padding:1rem 1.25rem;background:var(--surface);border:1px solid rgba(155,93,229,0.25);border-radius:8px;margin-bottom:1.25rem;border-left:3px solid var(--violet);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);"></div>
+        <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem;">◈ Oráculo do Storycraft</p>
+        <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.6;">Consulte as regras do Manual do Jogador em linguagem natural. Pergunte sobre mecânicas, perícias, combate, magias, escalas ou qualquer regra do sistema.</p>
+      </div>
+
+      <!-- Chat container -->
+      <div id="oraculo-chat" style="
+        min-height:360px;max-height:520px;overflow-y:auto;
+        background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+        padding:1.1rem 1.25rem;margin-bottom:1rem;
+        display:flex;flex-direction:column;gap:0.9rem;
+        scroll-behavior:smooth;
+      ">
+        <!-- Mensagem inicial -->
+        <div class="ora-msg ora-msg-ai">
+          <div class="ora-avatar">◈</div>
+          <div class="ora-bubble">
+            <p>Saudações, aventureiro. Sou o Oráculo do Codex — fui forjado com o conhecimento do Manual do Jogador Storycraft 3ª Edição.</p>
+            <p style="margin-top:0.5rem;">Pergunte sobre qualquer regra: combate, perícias, escalas, magias, condições... Estou pronto para responder.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sugestões rápidas -->
+      <div id="oraculo-sugestoes" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem;">
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('Como funciona a Vanguarda (VG)?')">Como funciona a VG?</button>
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('Quais são os tipos de ações em combate?')">Tipos de ações</button>
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('Como funciona o sistema de morte e PV zero?')">Sistema de morte</button>
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('Como calcular a CD de um feitiço?')">CD de feitiços</button>
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('O que são escalas de poder?')">Escalas de poder</button>
+        <button class="ora-sug" onclick="oraculo_pergunta_rapida('Quais são as condições de combate?')">Condições</button>
+      </div>
+
+      <!-- Input -->
+      <div style="display:flex;gap:0.6rem;align-items:flex-end;">
+        <textarea
+          id="oraculo-input"
+          rows="2"
+          placeholder="Digite sua pergunta sobre as regras do Storycraft..."
+          style="
+            flex:1;resize:none;
+            background:rgba(155,93,229,0.06);
+            border:1px solid var(--border);
+            color:var(--text);
+            padding:0.65rem 0.85rem;
+            font-family:'Raleway',sans-serif;font-size:0.88rem;
+            border-radius:6px;outline:none;
+            transition:border-color 0.2s;line-height:1.5;
+          "
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();oraculo_enviar();}"
+          oninput="this.style.borderColor='var(--violet)'"
+          onblur="this.style.borderColor='var(--border)'"
+        ></textarea>
+        <button onclick="oraculo_enviar()" id="oraculo-btn" style="
+          background:var(--violet);border:none;color:#fff;
+          padding:0.65rem 1.3rem;font-family:'Cinzel',serif;
+          font-size:0.65rem;letter-spacing:0.12em;cursor:pointer;
+          border-radius:6px;text-transform:uppercase;
+          transition:all 0.2s;white-space:nowrap;
+          box-shadow:0 0 14px rgba(155,93,229,0.35);
+          align-self:stretch;
+        ">Consultar</button>
+      </div>
+      <p style="font-size:0.68rem;color:var(--text-faint);margin-top:0.5rem;text-align:center;">Enter para enviar · Shift+Enter para nova linha</p>
+    </div>
   </div>
 
   </main>
@@ -3952,5 +4027,276 @@ function fecharLightbox(){
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightbox();});
 </script>
+<!-- ═══════════════════════════════════════════════
+     ORÁCULO — CSS + JS
+═══════════════════════════════════════════════ -->
+<style>
+/* ── Mensagens do chat ── */
+.ora-msg{display:flex;gap:0.75rem;align-items:flex-start;animation:fadeIn 0.22s ease;}
+.ora-msg-user{flex-direction:row-reverse;}
+.ora-avatar{
+  width:32px;height:32px;flex-shrink:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.95rem;font-weight:700;
+}
+.ora-msg-ai   .ora-avatar{background:rgba(155,93,229,0.2);border:1px solid var(--violet-dim);color:var(--violet-bright);}
+.ora-msg-user .ora-avatar{background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);font-family:'Cinzel',serif;font-size:0.7rem;}
+
+.ora-bubble{
+  max-width:82%;padding:0.75rem 1rem;border-radius:8px;
+  font-size:0.87rem;line-height:1.7;
+}
+.ora-msg-ai   .ora-bubble{
+  background:var(--surface);border:1px solid var(--border);
+  color:var(--text);border-top-left-radius:2px;
+}
+.ora-msg-user .ora-bubble{
+  background:rgba(155,93,229,0.12);border:1px solid rgba(155,93,229,0.25);
+  color:var(--text);border-top-right-radius:2px;text-align:right;
+}
+.ora-bubble p{margin:0;}
+.ora-bubble p+p{margin-top:0.45rem;}
+
+/* Loader dots */
+.ora-loader{display:inline-flex;gap:4px;align-items:center;padding:0.3rem 0;}
+.ora-loader span{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--violet-dim);
+  animation:oraDot 1.2s infinite ease-in-out;
+}
+.ora-loader span:nth-child(2){animation-delay:0.2s;}
+.ora-loader span:nth-child(3){animation-delay:0.4s;}
+@keyframes oraDot{0%,80%,100%{transform:scale(0.7);opacity:0.4}40%{transform:scale(1);opacity:1}}
+
+/* Sugestões */
+.ora-sug{
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-dim);padding:0.32rem 0.75rem;
+  font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;
+  border-radius:20px;cursor:pointer;transition:all 0.18s;
+  letter-spacing:0.05em;
+}
+.ora-sug:hover{border-color:var(--violet-dim);color:var(--violet-bright);background:rgba(155,93,229,0.08);}
+
+/* Highlight de termos de regra na resposta */
+.ora-rule-term{color:var(--violet-bright);font-weight:600;}
+.ora-section-ref{color:var(--gold-light);font-style:italic;font-size:0.8rem;}
+</style>
+
+<script>
+// ═══════════════════════════════════════════════
+// ORÁCULO — Motor de consulta de regras
+// ═══════════════════════════════════════════════
+
+var MANUAL_JSON = null;
+var ORACULO_READY = false;
+var ORACULO_LOADING = false;
+
+// URL raw do JSON no GitHub — troque pelo seu repositório
+// Fallback: tenta carregar do mesmo diretório
+var MANUAL_URL = 'storycraft_manual.json';
+
+function oraculo_init(){
+  if(ORACULO_READY || ORACULO_LOADING) return;
+  ORACULO_LOADING = true;
+  // Tenta carregar o JSON
+  fetch(MANUAL_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      MANUAL_JSON = data;
+      ORACULO_READY = true;
+      ORACULO_LOADING = false;
+    })
+    .catch(function(){
+      // Se não encontrar arquivo externo, usa o JSON embutido
+      ORACULO_LOADING = false;
+      ORACULO_READY = true;
+      // MANUAL_JSON permanece null — o sistema vai avisar ao tentar usar
+    });
+}
+
+// ── Busca por relevância nos tópicos do manual ──
+function oraculo_buscar_topicos(pergunta){
+  if(!MANUAL_JSON) return [];
+  var q = pergunta.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  var resultados = [];
+
+  MANUAL_JSON.capitulos.forEach(function(cap){
+    cap.topicos.forEach(function(top){
+      var score = 0;
+
+      // Verifica nas tags
+      (top.tags||[]).forEach(function(tag){
+        var t = tag.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        if(q.indexOf(t) > -1 || t.indexOf(q) > -1) score += 3;
+        // Match parcial por palavras
+        q.split(' ').forEach(function(w){
+          if(w.length > 2 && t.indexOf(w) > -1) score += 1;
+        });
+      });
+
+      // Verifica no título
+      var titulo = top.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      if(q.indexOf(titulo) > -1 || titulo.indexOf(q) > -1) score += 4;
+      q.split(' ').forEach(function(w){
+        if(w.length > 2 && titulo.indexOf(w) > -1) score += 2;
+      });
+
+      // Verifica no conteúdo (match mais leve)
+      var conteudo = top.conteudo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      q.split(' ').forEach(function(w){
+        if(w.length > 3){
+          var idx = 0, count = 0;
+          while((idx = conteudo.indexOf(w, idx)) > -1){ count++; idx++; }
+          score += Math.min(count, 3);
+        }
+      });
+
+      if(score > 0){
+        resultados.push({ score: score, top: top, cap: cap });
+      }
+    });
+  });
+
+  // Ordena por score e retorna os 5 mais relevantes
+  resultados.sort(function(a,b){ return b.score - a.score; });
+  return resultados.slice(0, 5);
+}
+
+// ── Monta o contexto para enviar à API ──
+function oraculo_montar_contexto(topicos){
+  if(!topicos.length) return '';
+  var ctx = '=== TRECHOS RELEVANTES DO MANUAL STORYCRAFT ===\n\n';
+  topicos.forEach(function(r){
+    ctx += '[ ' + r.cap.titulo + ' → ' + r.top.titulo + ' ]\n';
+    ctx += r.top.conteudo + '\n\n';
+  });
+  return ctx;
+}
+
+// ── Histórico de mensagens do chat ──
+var ORACULO_HISTORY = [];
+
+// ── Adiciona mensagem no chat ──
+function oraculo_add_msg(texto, tipo, isLoader){
+  var chat = document.getElementById('oraculo-chat');
+  var div = document.createElement('div');
+  div.className = 'ora-msg ora-msg-' + tipo;
+  if(isLoader) div.id = 'ora-loader-msg';
+
+  var avatar = document.createElement('div');
+  avatar.className = 'ora-avatar';
+  avatar.textContent = tipo === 'ai' ? '◈' : '✦';
+
+  var bubble = document.createElement('div');
+  bubble.className = 'ora-bubble';
+
+  if(isLoader){
+    bubble.innerHTML = '<div class="ora-loader"><span></span><span></span><span></span></div>';
+  } else {
+    // Formata o texto: quebras de linha, termos em negrito
+    var html = texto
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');
+    bubble.innerHTML = '<p>' + html + '</p>';
+  }
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return div;
+}
+
+// ── Remove o loader ──
+function oraculo_remove_loader(){
+  var el = document.getElementById('ora-loader-msg');
+  if(el) el.remove();
+}
+
+// ── Enviar pergunta ──
+function oraculo_enviar(){
+  var input = document.getElementById('oraculo-input');
+  var pergunta = (input.value || '').trim();
+  if(!pergunta) return;
+
+  // Adiciona mensagem do usuário
+  oraculo_add_msg(pergunta, 'user');
+  ORACULO_HISTORY.push({ role: 'user', content: pergunta });
+  input.value = '';
+  input.style.borderColor = 'var(--border)';
+
+  // Esconde sugestões após primeira pergunta
+  var sug = document.getElementById('oraculo-sugestoes');
+  if(sug) sug.style.display = 'none';
+
+  // Mostra loader
+  oraculo_add_msg('', 'ai', true);
+
+  // Desabilita botão
+  var btn = document.getElementById('oraculo-btn');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+
+  // Busca tópicos relevantes
+  var topicos = oraculo_buscar_topicos(pergunta);
+  var contexto = oraculo_montar_contexto(topicos);
+
+  // Monta o prompt de sistema
+  var systemPrompt = 'Você é o Oráculo do Codex StoryCraft — um assistente especialista nas regras do sistema de RPG de mesa Storycraft 3ª Edição, desenvolvido por Berg. ' +
+    'Responda perguntas sobre as regras com precisão, usando os trechos do manual fornecidos como contexto. ' +
+    'Use linguagem clara e objetiva. Quando citar valores numéricos ou mecânicas específicas, seja exato. ' +
+    'Se o contexto não cobrir totalmente a pergunta, diga que a informação pode estar em outro manual do sistema (como o Manual das Raças ou Manual das Classes). ' +
+    'Responda sempre em português brasileiro. Não use markdown com # ou ## — use texto simples com negrito (**termo**) quando necessário. ' +
+    'Seja conciso mas completo.\n\n' + contexto;
+
+  // Monta o histórico para a API (últimas 6 mensagens para contexto)
+  var msgs = ORACULO_HISTORY.slice(-7).map(function(m){ return m; });
+
+  // Chama a API
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: msgs
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    oraculo_remove_loader();
+    var resposta = '';
+    if(data.content && data.content[0] && data.content[0].text){
+      resposta = data.content[0].text;
+    } else if(data.error){
+      resposta = 'Erro ao consultar o Oráculo: ' + (data.error.message || 'erro desconhecido');
+    } else {
+      resposta = 'O Oráculo não conseguiu formular uma resposta. Tente novamente.';
+    }
+    oraculo_add_msg(resposta, 'ai');
+    ORACULO_HISTORY.push({ role: 'assistant', content: resposta });
+  })
+  .catch(function(err){
+    oraculo_remove_loader();
+    oraculo_add_msg('O Oráculo está temporariamente inacessível. Verifique sua conexão e tente novamente.', 'ai');
+  })
+  .finally(function(){
+    btn.disabled = false;
+    btn.style.opacity = '1';
+  });
+}
+
+// ── Pergunta rápida pelos botões de sugestão ──
+function oraculo_pergunta_rapida(texto){
+  document.getElementById('oraculo-input').value = texto;
+  oraculo_enviar();
+}
+</script>
+
 </body>
 </html>
