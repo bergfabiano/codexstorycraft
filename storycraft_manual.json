@@ -1,0 +1,644 @@
+{
+  "sistema": "Storycraft",
+  "edicao": "3ª Edição",
+  "documento": "Manual do Jogador",
+  "capitulos": [
+    {
+      "id": "introducao",
+      "numero": "I",
+      "titulo": "Introdução",
+      "topicos": [
+        {
+          "id": "o_que_e_rpg",
+          "titulo": "O que é RPG?",
+          "tags": ["rpg", "introdução", "regras básicas", "dados", "mestre", "jogador", "NPC"],
+          "conteudo": "O RPG (Role Playing Game) é um jogo em grupo no qual cada participante cria um personagem e vive aventuras com ele, como um ator em um filme ou série. Um dos jogadores assume o papel de mestre, responsável pela história, pelo mundo e pelos personagens que não pertencem aos jogadores (os chamados NPCs). Os demais controlam seus próprios personagens, decidindo como agem, falam, lutam, pensam ou até mesmo causam confusão. É como contar uma história juntos, com regras, dados e muita imaginação. Não tem tabuleiro fixo nem final certo. Tudo muda de acordo com as escolhas do grupo e o resultado dos testes e ações. Os dados dizem se as ações funcionam ou não e as regras mantêm o jogo justo e divertido."
+        },
+        {
+          "id": "criando_personagem",
+          "titulo": "Criando o seu Personagem",
+          "tags": ["criação de personagem", "pontos", "nível 1", "escala comum", "atributos", "custo de atributo"],
+          "conteudo": "No início de cada campanha, você começará nível 1 na escala Comum e possuirá 10 pontos ao todo. Um personagem do tipo Comum utiliza os 10 pontos iniciais exclusivamente para distribuir entre os seus atributos, podendo investir no máximo 4 pontos em um único atributo no início da campanha. Bônus raciais podem elevar temporariamente esse valor, mas nunca além de 5 pontos totais. O jogador pode optar por reduzir um atributo em até -1 para ganhar 1 ponto extra. Custos por valor de atributo: 1 a 2 pontos = 1 por ponto; 3 pontos = 2 por ponto; 4 pontos = 3 por ponto. A cada dois níveis o personagem escolhe adquirir 1 Vantagem ou +1 em um Atributo. A cada 10 níveis o personagem recebe +1 em um Atributo de forma adicional."
+        },
+        {
+          "id": "raca",
+          "titulo": "Raça",
+          "tags": ["raça", "raças", "espécie", "habilidades raciais", "bônus racial"],
+          "conteudo": "Ao criar seu personagem, você deve escolher uma raça, um grupo ao qual ele pertence e que define suas características e habilidades únicas. As raças estão disponíveis no Manual das Raças - Storycraft. Elas são obrigatórias, pois se tornam parte essencial da identidade do seu personagem. A raça é gratuita e será importante na montagem do seu combo. Algumas raças são mais ligadas à magia, outras brilham no combate ou na furtividade."
+        },
+        {
+          "id": "classe",
+          "titulo": "Classe",
+          "tags": ["classe", "classes", "combatente", "especialista", "conjurador", "suporte", "multiclasse"],
+          "conteudo": "A classe mostra do que seu personagem realmente é capaz — sua verdadeira essência. Enquanto a raça define o que ele é, a classe define o que ele faz. A classe é gratuita e fornecerá vantagens, talvez pontos, poderes e individualidades. Vantagens de classe não se acumulam — se sua raça e classe fornecerem a mesma vantagem, você apenas mantém a original. As classes se dividem em quatro categorias: Combatentes (guerreiros, cavaleiros, lutadores — pilares da linha de frente), Especialistas (sagazes e adaptáveis — espiões, inventores, ladinos, estrategistas), Conjuradores (versados no arcano e espiritual — moldam elementos, luz ou trevas), Suporte (cuidam, fortalecem e guiam aliados — curandeiros e líderes)."
+        },
+        {
+          "id": "atributos",
+          "titulo": "Atributos",
+          "tags": ["atributos", "força", "destreza", "constituição", "inteligência", "sabedoria", "carisma", "FOR", "DES", "CON", "INT", "SAB", "CAR"],
+          "conteudo": "Os atributos representam as principais qualidades do herói e influenciam diretamente suas ações, testes, combates e interações com o mundo. FORÇA: usada por personagens de combate físico. Mede o quanto o personagem pode carregar, o impacto de socos e chutes e facilidade para escalar. Não afeta arremessos ou ataques a distância. DESTREZA: rapidez, movimentação, velocidade. Quanto mais destreza, mais ágil o personagem — esquiva melhor, corre mais rápido. Também ajuda na precisão. CONSTITUIÇÃO: saúde do personagem — vitalidade, vigor físico e capacidade de resistir a golpes. Define Pontos de Vida (PV), dá resistência contra venenos, sede, fome, cansaço e é responsável pela Mitigação de Dano (MD). INTELIGÊNCIA: ligada ao conhecimento teórico e estudos. Entra no cálculo do dano de várias magias. SABEDORIA: força espiritual e conexão com a energia mágica interior, resultante de vivências. Personagem sábio suporta melhor maldições, ilusões e efeitos mágicos negativos. CARISMA: presença e influência do personagem — capacidade de liderar, convencer, inspirar ou intimidar. Afeta interações sociais, negociações, persuasão, blefe, intimidação e controle de seguidores."
+        },
+        {
+          "id": "teto_de_escala",
+          "titulo": "Teto de Escala",
+          "tags": ["teto de escala", "limite de atributo", "nível máximo atributo"],
+          "conteudo": "O valor máximo de qualquer característica no início do jogo é 5. Esse limite pode ser ultrapassado a cada 10 níveis. Tabela de progressão: Níveis 1-9 = limite máximo 5; Níveis 10-19 = limite 6; Níveis 20-29 = limite 7; Níveis 30-39 = limite 8; Níveis 40-49 = limite 9; Nível 50 = limite 10."
+        },
+        {
+          "id": "pontos_de_vida",
+          "titulo": "Pontos de Vida (PV)",
+          "tags": ["pontos de vida", "PV", "vida", "saúde", "descanso", "recuperação"],
+          "conteudo": "Os Pontos de Vida (PV) representam a vitalidade do personagem. O PV Máximo é o total de vida quando está 100% saudável. O PV Atual vai diminuindo conforme recebe dano. Se o PV chegar a 0, o personagem pode ficar inconsciente, entrar em estado crítico ou morrer. Para recuperar PVs naturalmente, é necessário ter uma boa noite de sono em local apropriado durante 8 horas no mínimo. Descansar em locais difíceis recupera apenas 1/4 do valor total. Tipos de descanso e recuperação: Descanso Completo (8h) = recupera metade do nível para mais em PV e PM; Dificuldades = recupera 1/4 do nível; Estalagem Confortável = metade do nível x2; Estalagem de Luxo = metade do nível x3; Poções de Cura; Magias de Cura e Revitalização."
+        },
+        {
+          "id": "pontos_de_magia",
+          "titulo": "Pontos de Magia (PM)",
+          "tags": ["pontos de magia", "PM", "mana", "energia mágica", "chi", "chakra"],
+          "conteudo": "Pontos de Magia (PM) são a reserva de energia mística para lançar magias, usar técnicas especiais ou ativar habilidades sobrenaturais. O PM Máximo indica quanto de energia mágica o personagem pode acumular. Magias mais poderosas consomem mais PM. O PM pode ser recuperado com descanso, meditação, magias ou itens mágicos. Até personagens que não usam magia tradicional podem ter PM, caso suas habilidades dependam de energia interior como chi, chakra, poder psíquico ou tecnologia avançada."
+        },
+        {
+          "id": "vantagens",
+          "titulo": "Vantagens",
+          "tags": ["vantagens", "habilidades especiais", "vantagem"],
+          "conteudo": "Vantagens são habilidades especiais que deixam o personagem mais único e poderoso. Não há teto para a quantidade de vantagens que se pode adquirir, apenas o número de níveis disponíveis. A cada dois níveis, o jogador pode adquirir uma vantagem à escolha. Algumas vantagens podem ser treinadas ou adquiridas dentro da campanha, de acordo com as decisões e conquistas do personagem. A lista completa está no Manual de Vantagens e Desvantagens Storycraft."
+        },
+        {
+          "id": "desvantagens",
+          "titulo": "Desvantagens",
+          "tags": ["desvantagens", "infortúnio", "penalidade"],
+          "conteudo": "Desvantagens são pequenos infortúnios que humanizam o personagem. Não existe desvantagem boa — elas fornecem vantagens extras em troca de efeitos negativos. O personagem pode pegar no máximo 2 desvantagens no início da campanha (desvantagens de classe ou raça entram nessa contagem). Se o personagem pegar desvantagens extras apenas para complementar a história ou desafio, sem ganhar vantagens extras por isso."
+        },
+        {
+          "id": "inspiracao",
+          "titulo": "Inspiração",
+          "tags": ["inspiração", "re-rolar dado", "lampejos"],
+          "conteudo": "A Inspiração representa lampejos de coragem, astúcia ou intuição em momentos decisivos. Cada personagem pode acumular no máximo 2 pontos de Inspiração ao mesmo tempo. São concedidos pelo mestre por interpretações marcantes, planos criativos ou feitos heroicos. Um ponto de inspiração pode ser gasto a qualquer momento antes do resultado final para re-rolar um dado e ficar com o melhor valor, ou transferido para um aliado. A Inspiração não pode anular ou re-rolar falhas críticas, nem ser utilizada em testes de acerto ou em dados de morte."
+        },
+        {
+          "id": "experiencia",
+          "titulo": "Experiência (XP)",
+          "tags": ["experiência", "XP", "pontos de experiência", "nível", "subir de nível"],
+          "conteudo": "Experiência (XP) é o que faz o personagem evoluir. Ganha-se XP de várias formas definidas pelo mestre, não apenas em batalhas. Missões investigativas, estratégias criativas, trabalho em equipe e boas interações podem render tanto ou mais XP que um combate. Escala de XP por nível: Níveis 1-10 = 10 XP por nível; Níveis 11-20 = 20 XP por nível; Níveis 21-30 = 30 XP por nível; Níveis 31-40 = 40 XP por nível; Níveis 41-50 = 50 XP por nível."
+        },
+        {
+          "id": "pontos_de_protagonismo",
+          "titulo": "Pontos de Protagonismo (PP)",
+          "tags": ["protagonismo", "PP", "força narrativa", "ações heroicas", "sobrevivência dramática"],
+          "conteudo": "O Ponto de Protagonismo (PP) representa a força narrativa do personagem. É mais raro e poderoso que a Inspiração, sendo concedido ao final de uma aventura, arco ou temporada. O PP é cumulativo, não possui limite máximo e não pode ser transferido. Cada personagem só pode gastar 1 PP por sessão. Usos do PP: Ações Heroicas (+1d10 a um teste de perícia, exceto ataques e resistência); Refazer Rolagens (inclusive falha crítica); Sobrevivência Dramática (evita morte ou nocaute, fica com 1 PV); Influência Narrativa (introduz um detalhe plausível na cena); Quebra de Limite (ignora condição como Exausto, Atordoado); Ação Decisiva (ação adicional simples fora do seu turno, sem ataques ou magias ofensivas); Prioridade Narrativa (age antes de qualquer outro na cena, independente da iniciativa); Proteção do Destino (anula efeito negativo contínuo como sangramento, veneno, maldição); Conversão de Recurso (recupera 2d6 +1d6 por escala de PM ou PV)."
+        },
+        {
+          "id": "idiomas",
+          "titulo": "Idiomas",
+          "tags": ["idiomas", "línguas", "velkarin", "élfico", "orquico", "dracônico", "abissal", "celestial"],
+          "conteudo": "Todos os personagens conhecem o Idioma Velkarin (idioma universal de Velkarion). Os idiomas adicionais são determinados pelo Estigma do personagem. Idiomas Gerais: Velkarin (humanos, civilizações centrais), Anúrico (anões, gnomos), Élfico (elfos), Orquico (orcs, meio-orcs) — bônus +1 Intimidação ao Assustar/Coagir e +1 em Guerra ao usar Plano de Ação, Goblínico (goblins) — bônus +1 Armadilhas e +1 Ofício ao Fabricar mecanismos, Thalven (mercadores) — bônus +1 Diplomacia Barganha e +1 Enganação Intriga, Feérico (fadas, pixies), Silvestre (dríades, ninfas, animais), Aquan (criaturas aquáticas), Sszaryth (nagahs, serpentes). Idiomas Exóticos: Dracônico — bônus +1 Misticismo Identificar Magia e +1 Conhecimento arcano; Infernal — bônus +1 Enganação Mentir e +1 Intimidação Assustar; Abissal — bônus +1 Misticismo Identificar Criatura e +1 Intuição perceber anomalias; Celestial — bônus +1 Religião Rito/Profecias e +1 Cura Diagnose; Profano — bônus +1 Misticismo identificar morto-vivo e +1 Religião Rito funerário; Umbral — bônus +1 Furtividade Seguir e +1 Percepção Ouvir em baixa luminosidade; Espiritual — bônus +1 Misticismo Ritual espiritual e +1 Religião Profecias espirituais; Bestial — bônus +1 Adestramento Manejar/Domar Animal e +1 Sobrevivência Identificar criatura animal; Yokai (oni, tengu, kitsune) — bônus +1 Misticismo Analisar Fenômenos Arcanos e +1 Intuição Pressentimento."
+        },
+        {
+          "id": "destino_dos_dados",
+          "titulo": "Destino dos Dados",
+          "tags": ["destino dos dados", "aleatoriedade", "1d6", "resultado narrativo"],
+          "conteudo": "O Destino dos Dados representa momentos em que o próprio jogo decide o rumo dos acontecimentos, sem influência do mestre ou dos jogadores. Usa-se 1d6 para definir o resultado. Tabela: 1 = Excelente/Perfeito; 2 = Ótimo/Bom; 3 = Mediano (Bom); 4 = Mediano (Ruim); 5 = Péssimo/Ruim; 6 = Horrível/Catastrófico."
+        },
+        {
+          "id": "grupo_de_aventura",
+          "titulo": "O Grupo da Aventura",
+          "tags": ["grupo", "nome do grupo", "líder", "iniciativa em grupo", "bônus de grupo"],
+          "conteudo": "Grupos podem possuir um nome, símbolos, lema ou líder reconhecido. Nome do Grupo: enquanto atuarem como grupo, ações de apoio entre membros concedem +1 adicional no bônus fornecido. Líder do Grupo: membros recebem bônus em testes de Iniciativa igual ao número total de integrantes. Esse bônus pode ser dividido livremente entre os membros. Exemplo: grupo com 5 integrantes concede +5 em bônus total de Iniciativa."
+        }
+      ]
+    },
+    {
+      "id": "pericias",
+      "numero": "II",
+      "titulo": "Perícias",
+      "topicos": [
+        {
+          "id": "regras_pericias",
+          "titulo": "Regras de Perícias",
+          "tags": ["perícias", "treinamento", "valor de perícia", "classe de dificuldade", "CD", "teste de perícia"],
+          "conteudo": "As perícias no RPG Storycraft são escolhidas individualmente e representam as especialidades e conhecimentos do personagem. Cada teste de perícia soma o atributo principal + bônus por treinamento + proficiência (bônus extras). A perícia treinada começa em +1 no início da campanha e aumenta em +1 extra a cada 10 níveis. Perícias não treinadas recebem apenas +1 a cada 10 níveis sem bônus adicionais. Fórmula: Atributo + 1 a cada 10 níveis + Treino (se possuir) + Bônus. Tabela de CDs: Fácil = 5; Média = 10; Difícil = 15; Desafiadora = 20; Formidável = 25; Heróica = 30; Quase impossível = 40. Perícias vs Perícia: quando dois personagens competem diretamente, ambos rolam a mesma perícia e quem obtiver o maior resultado vence. Em alguns casos uma perícia serve como dificuldade para outra (ex: Enganação vs Intuição, Furtividade vs Percepção). Desafios Progressivos: o objetivo é acumular sucessos antes de atingir três falhas."
+        },
+        {
+          "id": "acrobacia",
+          "titulo": "Acrobacia (DES)",
+          "tags": ["acrobacia", "destreza", "equilíbrio", "queda", "salto", "escapar"],
+          "conteudo": "Acrobacia representa a capacidade de realizar movimentos ágeis e precisos. Usada para saltar, rolar, equilibrar em superfícies instáveis, evitar quedas perigosas e executar manobras rápidas. Usos principais: *Amortecer Queda CD 15 — quando sofre uma queda pode gastar uma reação para reduzir dano em 1d6 +1d6 a cada 5 pontos acima da CD; Equilíbrio CD variável — mover sobre superfícies instáveis (piso escorregadio CD 10, topo de muro CD 15, corda esticada CD 20); Escapar CD variável — escapar de amarras (cordas CD igual ao teste de Destreza de quem amarrou +10, redes CD 20, algemas CD 30); *Levantar-se Rapidamente CD 20 — levantar como ação livre; *Passar por Espaço Apertado CD 25 — criaturas uma categoria menor; Passar por Inimigo CD variável — teste oposto de Acrobacia, Iniciativa ou Luta do oponente."
+        },
+        {
+          "id": "adestramento",
+          "titulo": "Adestramento (CAR)*",
+          "tags": ["adestramento", "carisma", "animais", "montaria", "domar", "treinar animal"],
+          "conteudo": "Adestramento representa a habilidade de lidar com animais comuns ou criaturas fantásticas. Usada para treinar, domar, acalmar, controlar e criar vínculos. Usos: Acalmar Animal CD 25 — acalmar animal nervoso/agressivo (ação completa); Manejar Animal CD 15 — fazer animal executar tarefa treinada, pode substituir Pilotagem ao conduzir veículos de tração animal (ação de movimento); Treinar Animal CD 15+ — ensinar nova tarefa. Tarefas simples CD 15, complexas CD 20+; Domar Animal CD 20-30 — domar animal selvagem. Animais comuns CD 20, predadores CD 25-30. Processo leva dias ou semanas."
+        },
+        {
+          "id": "armadilhas",
+          "titulo": "Armadilhas (INT)*",
+          "tags": ["armadilhas", "inteligência", "identificar armadilha", "desarmar armadilha", "criar armadilha"],
+          "conteudo": "Armadilhas representa a capacidade de lidar com mecanismos perigosos e dispositivos ocultos. Usos: Identificar Armadilha CD variável — analisar área em busca de armadilhas (simples CD 15, complexas/mágicas CD 20+); Criar e Montar Armadilha CD variável — cria e instala armadilha com ferramentas e materiais (CD mínima 15); Desarmar Armadilha CD variável — neutralizar armadilha sem ativá-la. CD igual ou superior à CD usada para criar/ocultar. Em caso de falha pode ser ativada imediatamente."
+        },
+        {
+          "id": "atletismo",
+          "titulo": "Atletismo (FOR)",
+          "tags": ["atletismo", "força", "correr", "escalar", "nadar", "saltar", "natação"],
+          "conteudo": "Atletismo representa vigor, resistência e força física. Usada para correr, saltar, nadar, escalar e realizar esforços intensos. Usos: Corrida — ação completa, avança quadrados de 1,5m igual ao resultado do teste. Pode correr por rodadas igual a 1 + Constituição, depois Fortitude CD 15; Escalar CD variável — ação de movimento, avança metade do deslocamento. Falhar por 5+ = cai. Penalidade -5 para avançar deslocamento total; Natação CD variável — ação de movimento. Falhar por 5+ afunda. Prender respiração por 1 + Constituição rodadas, depois Fortitude; Saltar CD variável — parte do movimento, precisa de 6m de corrida para impulso (sem isso CD +10)."
+        },
+        {
+          "id": "atuacao",
+          "titulo": "Atuação (CAR)*",
+          "tags": ["atuação", "carisma", "cantar", "tocar instrumento", "apresentação", "impressionar"],
+          "conteudo": "Atuação abrange cantar, tocar instrumentos, declamar, contar histórias e interpretar papéis. Usos: Apresentação CD 20 — ganhar dinheiro: F$ 1d6 +1d6 por cada 5 pontos acima da CD; Impressionar CD variável — causar forte impressão (teste oposto ao Vontade do alvo). Sucesso = +2 em perícias de Carisma contra essa pessoa até fim do dia; Encenação CD variável — participar de rituais artísticos, contar histórias; Cantar ou Tocar Instrumento CD variável — execução musical competente."
+        },
+        {
+          "id": "cavalgar",
+          "titulo": "Cavalgar (DES)",
+          "tags": ["cavalgar", "destreza", "montaria", "montaria", "conduzir", "galopar"],
+          "conteudo": "Cavalgar é usada para montar, conduzir e manobrar cavalos ou montarias exóticas. Usos: Conduzir CD variável — terreno ruim CD 15, terreno perigoso CD 25. Falha = cai, sofre 1d6 dano; Galopar CD variável — ação completa, avança quadrados de 1,5m igual ao resultado; Montar Rapidamente CD 20 — montar/desmontar como ação livre (sem isso é ação de movimento). Falhar por 5+ = cai. Exige sela, sem ela -5."
+        },
+        {
+          "id": "cirurgia",
+          "titulo": "Cirurgia (INT)*",
+          "tags": ["cirurgia", "inteligência", "ferimentos graves", "operações", "médico"],
+          "conteudo": "Cirurgia representa conhecimento técnico e precisão para lidar com ferimentos graves. Sempre requer treinamento. Usos: Tratar Ferimentos Graves CD variável — tratar ferimentos profundos, hemorragias, infecções severas. Exige tempo, ambiente adequado e ferramentas; Operações CD variável — extração de projéteis, reconstrução de tecidos, amputações. Leva dezenas de minutos ou horas. Geralmente não pode ser feita em combate."
+        },
+        {
+          "id": "conhecimento",
+          "titulo": "Conhecimento (INT)*",
+          "tags": ["conhecimento", "inteligência", "história", "geografia", "idiomas", "informação", "lendas"],
+          "conteudo": "Conhecimento representa estudo, memória e erudição sobre o mundo. Usada para lembrar fatos históricos, interpretar textos antigos, compreender culturas, reconhecer símbolos. Usos: Idiomas CD 20 — compreender idioma desconhecido. Idiomas exóticos/arcaicos CD 30; Informação CD variável — questões simples sem teste, complexas CD 20, mistérios profundos CD 30; História Mitos e Lendas CD variável — eventos, guerras, figuras lendárias; Geografia CD variável — mapas, regiões, fronteiras, rotas; Física/Matemática/Química/Biologia CD variável — princípios científicos."
+        },
+        {
+          "id": "cura",
+          "titulo": "Cura (SAB)",
+          "tags": ["cura", "sabedoria", "primeiros socorros", "diagnose", "tratamento", "veneno", "doença"],
+          "conteudo": "Cura representa o conhecimento prático para tratar ferimentos, doenças e condições físicas adversas. Usos: *Cuidados Prolongados CD variável — 1 hora de dedicação, alvo recupera +1 PV adicional por nível; *Diagnose CD variável — avalia estado físico identificando doenças, envenenamentos, ferimentos internos; *Necropsia CD variável — examina cadáver para determinar causa da morte. Causas sobrenaturais CD 30. Leva cerca de dez minutos; Primeiros Socorros CD variável — ação padrão, estabiliza criatura sangrando ou à beira da morte; *Tratamento CD variável — auxilia criatura afetada por doença ou veneno contínuo. Teste de Cura vs CD do efeito. Exige maleta de medicamentos (sem ela -5). Pode usar em si mesmo mas -5."
+        },
+        {
+          "id": "diplomacia",
+          "titulo": "Diplomacia (CAR)",
+          "tags": ["diplomacia", "carisma", "barganha", "persuasão", "negociação", "mudar atitude"],
+          "conteudo": "Diplomacia representa a capacidade de negociar, dialogar e resolver conflitos pacificamente. Usos: Barganha CD variável — negociar preço. Sucesso = preço muda 10% a seu favor. Superar por 10+ = 20%. Falhar por 5+ = ofende o negociante por pelo menos uma semana; Mudar Atitude CD variável — alterar atitude de NPC (teste oposto ao Vontade). Sucesso = muda uma categoria. Superar por 10+ = duas categorias. Falhar por 5+ = muda na direção oposta. Uma vez por dia por alvo; Persuasão CD 20 — convencer alguém a realizar ação razoável. Pedidos custosos -5, perigosos -10."
+        },
+        {
+          "id": "disfarce",
+          "titulo": "Disfarce (CAR)*",
+          "tags": ["disfarce", "carisma", "infiltração", "aparência", "identidade falsa"],
+          "conteudo": "Disfarce representa a habilidade de alterar a aparência de forma convincente, usando roupas, maquiagem e acessórios. Usos: Mascarar Aparência CD variável — teste de Disfarce oposto ao Percepção do observador. Disfarces complexos (imitar outra raça) -5. Se imitar pessoa específica, quem a conhece bem recebe +10 em Percepção. Criar disfarce = cerca de dez minutos + estojo de disfarces (sem ele -5)."
+        },
+        {
+          "id": "enganacao",
+          "titulo": "Enganação (CAR)",
+          "tags": ["enganação", "carisma", "mentir", "falsificação", "fintar", "blefar", "intriga"],
+          "conteudo": "Enganação representa a capacidade de mentir, blefar, manipular informações e desviar a atenção. Usos: Falsificação CD variável — criar documento falso (teste oposto ao Percepção). Documentos com assinaturas/selos específicos -10; Fintar CD variável — enganar inimigo em combate (ação padrão, teste oposto ao Reflexos em alcance curto). Sucesso = alvo fica desprevenido contra próximo ataque; Insinuação CD 20 — transmitir mensagem oculta em conversa normal; Intriga CD 20 — espalhar boatos. Improváveis CD 30. Falhar por 5+ alvo descobre quem está por trás; Mentir CD variável — teste oposto ao Intuição da vítima. Mentiras improváveis -10."
+        },
+        {
+          "id": "furtividade",
+          "titulo": "Furtividade (DES)",
+          "tags": ["furtividade", "destreza", "esconder", "seguir", "emboscada", "sombras"],
+          "conteudo": "Furtividade representa a capacidade de se mover sem ser percebido. Usos: Esconder-se CD variável — teste oposto ao Percepção. É ação livre realizada ao final do turno. Deve terminar em local adequado (sombras, atrás de objetos, vegetação). Se moveu durante o turno -5. Movimento até metade do deslocamento evita essa penalidade. Se atacou ou realizou ação chamativa -20; Seguir CD variável — teste oposto ao Percepção do alvo. Em local sem esconderijos -5. Alvo atento recebe +5 em Percepção."
+        },
+        {
+          "id": "guerra",
+          "titulo": "Guerra (INT)*",
+          "tags": ["guerra", "inteligência", "tática", "estratégia", "campo de batalha", "plano de ação"],
+          "conteudo": "Guerra representa o conhecimento tático e estratégico sobre conflitos armados. Usos: Analisar Terreno CD 20 — ação de movimento, identifica vantagem tática (pontos de cobertura, rotas seguras, terreno elevado); Plano de Ação CD 20 — ação padrão, orienta aliado em alcance médio. Sucesso = aliado recebe +5 em Iniciativa."
+        },
+        {
+          "id": "intimidacao",
+          "titulo": "Intimidação (CAR)",
+          "tags": ["intimidação", "carisma", "assustar", "coagir", "medo", "pressão"],
+          "conteudo": "Intimidação representa a capacidade de impor medo por meio de palavras, gestos, postura ou presença ameaçadora. Usos: Assustar CD variável — ação padrão, teste oposto ao Vontade em alcance curto. Sucesso = alvo fica abalado até fim da cena. Superar por 10+ = fica apavorado por uma rodada depois abalado; Coagir CD variável — forçar criatura inteligente a obedecer por medo (adjacente, INT -3 ou maior). Sucesso = obedece uma ordem simples. Ordens perigosas +5 na Vontade do alvo. Após tentativa o alvo fica hostil independente do resultado. Exige um minuto ou mais."
+        },
+        {
+          "id": "intuicao",
+          "titulo": "Intuição (SAB)",
+          "tags": ["intuição", "sabedoria", "perceber mentira", "pressentimento", "detectar perigo"],
+          "conteudo": "Intuição representa a sensibilidade para perceber emoções, intenções e perigos sutis. Usos: Perceber Mentira CD variável — teste oposto ao Enganação do alvo. Sucesso = percebe que a pessoa não é sincera (não revela a verdade, apenas indica falsidade); *Pressentimento CD 20 — analisa pessoa ou situação em busca de sinais anormais ou perigos ocultos. Sucesso = percebe que há algo errado ou fora do comum (não revela a causa)."
+        },
+        {
+          "id": "investigacao",
+          "titulo": "Investigação (INT)",
+          "tags": ["investigação", "inteligência", "procurar", "interrogar", "pistas", "examinar"],
+          "conteudo": "Investigação representa a capacidade de analisar cenários, reunir pistas e conectar informações. Usos: Interrogar CD variável — obter informações por perguntas. Informações comuns sem teste, restritas CD 20, confidenciais CD 30. Exige cerca de uma hora e gasto médio de F$ 3d6; Procurar CD variável — examinar local em busca de objetos/pistas. Itens visíveis/bagunça CD 15, escondidos intencionalmente CD 20, muito bem escondidos CD 30. Também pode localizar armadilhas (CD da armadilha) ou identificar rastros (seguir rastros requer Sobrevivência)."
+        },
+        {
+          "id": "jogatina",
+          "titulo": "Jogatina (CAR)*",
+          "tags": ["jogatina", "carisma", "jogos de azar", "dados", "cartas", "apostas", "blefar"],
+          "conteudo": "Jogatina representa o conhecimento de jogos de azar, cartas, dados e apostas. Usos: Apostar CD variável — paga aposta inicial (padrão F$ 1d10). Resultado no teste determina o ganho: 9 ou menos = nenhum ganho; 10-14 = metade da aposta; 15-19 = valor da aposta; 20-29 = dobro; 30-39 = triplo; 40+ = quíntuplo; Blefar CD variável — teste oposto ao Intuição dos oponentes; Trapacear CD variável — teste oposto ao Percepção de quem está atento à mesa; Avaliar Probabilidade CD variável — avaliar se situação está favorável, neutra ou arriscada."
+        },
+        {
+          "id": "ladinagem",
+          "titulo": "Ladinagem (DES)*",
+          "tags": ["ladinagem", "destreza", "abrir fechadura", "gazua", "punga", "ocultar", "sabotar"],
+          "conteudo": "Ladinagem representa a habilidade manual refinada para lidar com mecanismos delicados e ações furtivas. Usos: Abrir Fechadura CD variável — ação completa + gazua. Fechaduras simples CD 20, médias CD 25, superiores CD 30. Sem gazua -5; Ocultar CD variável — esconde objeto no próprio corpo (ação padrão, teste oposto ao Percepção). Objetos pequenos +5, grandes -5. Quem revistar recebe +10; Punga CD 20 — furtar ou plantar objeto em outra pessoa (ação padrão). Vítima pode notar com Percepção CD = resultado do teste de Ladinagem; Sabotar CD variável — desativar dispositivo mecânico. Simples CD 20, complexos CD 30. Falhar por 5+ algo dá errado."
+        },
+        {
+          "id": "luta",
+          "titulo": "Luta (FOR)",
+          "tags": ["luta", "força", "corpo a corpo", "manobras", "agarrar", "combate"],
+          "conteudo": "Luta representa o domínio do combate corpo a corpo por meio de força, técnica e controle físico. Usada para trocar golpes, realizar manobras, agarrar, imobilizar, empurrar ou dominar adversários. Aplicar Golpes e Manobras CD variável — testes de Luta são usados para realizar ataques conforme regras de combate. Para acertar um golpe é vencer a VG (Vanguarda) do inimigo, somando a margem de acerto."
+        },
+        {
+          "id": "misticismo",
+          "titulo": "Misticismo (INT)*",
+          "tags": ["misticismo", "inteligência", "detectar magia", "identificar criatura", "identificar item mágico", "acerto mágico", "ritual arcano"],
+          "conteudo": "Misticismo representa o entendimento profundo das forças arcanas, espirituais e sobrenaturais. Também é usado como acerto mágico. Usos: Detectar Magia CD 15 — ação completa, detecta auras mágicas em alcance curto. Madeira/pedra -5, ferro/chumbo -10; Identificar Criatura CD 15+ND da criatura — analisa criatura mágica. Cada 5 pontos acima da CD revela característica adicional; Identificar Item Mágico CD variável — menores CD 20, médios CD 25, maiores CD 30. Normalmente exige uma hora (-10 para reduzir a ação completa); Identificar Magia CD 15+PM da magia — quando alguém lança magia. Usa reação; Lançar Magia Usando Armadura CD 20+PM — com penalidade de armadura. Falha = magia perdida e PM gastos; Acerto Mágico CD variável — quando magia exige precisão; Analisar Ritual CD variável — observa ritual/conjuração para entender funcionamento."
+        },
+        {
+          "id": "nobreza",
+          "titulo": "Nobreza (INT)*",
+          "tags": ["nobreza", "inteligência", "aristocracia", "heráldica", "etiqueta", "leis", "cortes"],
+          "conteudo": "Nobreza representa o conhecimento das estruturas aristocráticas do mundo. Usos: Etiqueta CD 15 — comportar-se adequadamente em ambientes aristocráticos; Informação CD variável — leis, costumes, títulos, linhagens, brasões; Conselho CD variável — aconselhar líder/nobre sobre decisões políticas, militares ou diplomáticas; Negociar CD variável — conduzir negociações formais entre nobres usando precedentes e protocolos."
+        },
+        {
+          "id": "oficio",
+          "titulo": "Ofício (INT)",
+          "tags": ["ofício", "inteligência", "fabricar", "consertar", "ferraria", "alquimia", "carpintaria", "artesanato"],
+          "conteudo": "Ofício representa habilidades em diversas profissões e artes manuais. Especializações: Armeiro, Artesão, Alquimista, Cozinheiro, Alfaiate e outras criadas com aval do mestre. Usos: Consertar CD variável — mesma CD de fabricar. Cada tentativa leva uma hora e um décimo do valor original; Fabricar CD variável — matéria-prima = 1/3 do valor. Tempo: consumíveis = 1 dia por unidade; itens comuns = 1 semana; itens superiores/mágicos = 1 mês. CD 15 para itens simples, CD 20 para itens complexos. Penalidade -5 para fabricar duas unidades ao mesmo tempo; Identificar CD variável — identificar itens raros (ação completa); Sustento CD 15 — ganhar F$ 1 +F$ 1 por ponto acima da CD por semana de trabalho."
+        },
+        {
+          "id": "percepcao",
+          "titulo": "Percepção (SAB)",
+          "tags": ["percepção", "sabedoria", "observar", "ouvir", "detectar", "sentidos"],
+          "conteudo": "Percepção representa a capacidade de notar detalhes sutis do ambiente. Usos: Observar CD variável — percebe algo discreto/escondido. Difícil de ver CD 15, quase imperceptível CD 30. Para criaturas/objetos escondidos CD = resultado do teste de Furtividade/Ladinagem. Ler lábios CD 20 com visão clara da boca; Ouvir CD variável — pessoas sussurrando CD 15, através de porta/parede +10, dormindo -10. Perceber criaturas invisíveis CD 20 ou CD = Furtividade da criatura +10."
+        },
+        {
+          "id": "pilotagem",
+          "titulo": "Pilotagem (DES)*",
+          "tags": ["pilotagem", "destreza", "navegar", "conduzir veículo", "embarcações", "dirigíveis"],
+          "conteudo": "Pilotagem representa a habilidade de conduzir veículos de grande porte como embarcações, carroças, dirigíveis. Usos: Conduzir CD variável — controla veículo em condições normais. Situações adversas aumentam a CD; Navegar CD variável — usa mapas e instrumentos para guiar veículo marítimo; Manobras CD variável — curvas bruscas, frenagens rápidas, evasões."
+        },
+        {
+          "id": "pontaria",
+          "titulo": "Pontaria (DES)",
+          "tags": ["pontaria", "destreza", "ataques à distância", "arco", "besta", "funda", "arremesso"],
+          "conteudo": "Pontaria representa precisão ao atacar alvos à distância. Usada como teste de acerto para ataques com arcos, bestas, fundas, armas de arremesso e ataques mágicos que exijam mira física. Ataques à Distância CD variável — teste de Pontaria contra VG do alvo. Penalidades por distância, vento, cobertura, movimentação ou visibilidade reduzida. Dobrar distância = -5 em Acerto. Disparo Cuidadoso/Mira — quando tem tempo para mirar o mestre pode conceder bônus circunstanciais."
+        },
+        {
+          "id": "prestidigitacao",
+          "titulo": "Prestidigitação (DES)",
+          "tags": ["prestidigitação", "destreza", "furtos menores", "truques", "distrair", "ilusionismo"],
+          "conteudo": "Prestidigitação representa agilidade, precisão e controle manual extremo. Usos: Furtos Menores CD variável — pegar/plantar objetos pequenos (moedas, chaves, anéis) sem chamar atenção (teste oposto ao Percepção); Ilusionismo Prático CD variável — truques visuais simples sem magia; Distrair CD variável — desviar atenção de alguém (teste oposto ao Intuição ou Percepção). Sucesso = alvo fica distraído por um breve momento; Truques Rápidos CD variável — sacar/guardar/trocar objetos sem gastar ações adicionais; Manipular Objetos Roubados CD variável — ocultar objetos furtados."
+        },
+        {
+          "id": "religiao",
+          "titulo": "Religião (SAB)*",
+          "tags": ["religião", "sabedoria", "deuses", "ritos", "profecias", "cultos", "dogmas"],
+          "conteudo": "Religião representa o conhecimento sobre deuses, cultos, ritos sagrados, dogmas e práticas religiosas. Usos: Identificar Criatura CD 15+ND — criaturas de origem divina (mesmas regras do Misticismo); Identificar Item Mágico CD variável — itens de origem divina; Informação CD variável — deuses, cultos, dogmas, profecias. Simples sem teste, complexas CD 20, mistérios CD 30; Rito CD 20 — conduz cerimônia religiosa formal. Penitência = F$ 100 por nível do devoto ou missão sagrada; Profecias e Fenômenos Divinos CD variável — interpreta sinais divinos, visões, presságios."
+        },
+        {
+          "id": "seducao",
+          "titulo": "Sedução (CAR)",
+          "tags": ["sedução", "carisma", "charme", "romance", "influenciar", "distrair"],
+          "conteudo": "Sedução representa o uso consciente de charme, carisma e linguagem corporal para despertar interesse, criar conexões ou influenciar reações. Usos: Manipular ou Mudar Atitudes CD variável — influencia emoções do alvo de forma indireta. Teste oposto ao Intuição ou Vontade; Seduzir ou performar romanticamente CD variável — despertar interesse romântico. Teste oposto ao Vontade; Inspirar Simpatia ou Empatia CD variável — parecer agradável e acessível. Melhora disposição do alvo; Distrair CD variável — usar charme para desviar atenção. Teste oposto ao Percepção ou Intuição."
+        },
+        {
+          "id": "sobrevivencia",
+          "titulo": "Sobrevivência (SAB)",
+          "tags": ["sobrevivência", "sabedoria", "acampamento", "orientar", "rastrear", "ambiente selvagem"],
+          "conteudo": "Sobrevivência representa a capacidade de viver e se orientar em ambientes hostis ou selvagens. Usos: Identificar Criatura CD 15+ND — animais ou monstros não mágicos; Acampamento CD variável — abrigo e alimento para o grupo por um dia. Planícies/colinas CD 15, florestas/pântanos CD 20, desertos/montanhas CD 25, regiões planares CD 30. Ambientes extremos -5 cumulativo. Exige equipamento de viagem (sem ele -5); *Navegação CD variável — orientar em diferentes terrenos usando mapas, bússolas, estrelas; Orientar-se CD variável — guiar o grupo em jornadas. Falha = avança metade do deslocamento. Falhar por 5+ = grupo se perde."
+        },
+        {
+          "id": "treinamento",
+          "titulo": "Treinamento",
+          "tags": ["treinamento", "aprender perícia", "evoluir habilidade", "complexidade", "mentor"],
+          "conteudo": "O treinamento representa o esforço real para evoluir. Serve para aprimorar técnicas, melhorar habilidades, aprofundar estilos e até criar novas magias. Para treinar, o personagem usa uma perícia treinada relacionada e precisa superar três testes. CD = 10 + Nível de Escala + Complexidade. Não é possível fazer dois treinos ao mesmo tempo. Após terminar um treino, o personagem precisa de 3 dias de descanso. Um mentor pode ajudar oferecendo bônus de Apoio de Perícia. Tabela de graus: 1° Grau +5 complexidade, 7-10 dias; 2° Grau +10, 14-20 dias; 3° Grau +15, 21-30 dias; 4° Grau +20, 30-45 dias; 5° Grau +25, 45-60 dias. O que NÃO pode ser treinado: pontos de atributos, traços raciais, vantagens novas, poderes biológicos, bênçãos divinas, habilidades únicas de outras classes. Aprendendo nova perícia: 3 testes do atributo associado CD 15 ao longo de 7 dias de treino, 3 sucessos antes de 3 falhas."
+        },
+        {
+          "id": "deslocamento_viagem",
+          "titulo": "Deslocamento e Viagem",
+          "tags": ["deslocamento", "viagem", "passos narrativos", "terreno", "transporte", "fadiga"],
+          "conteudo": "O deslocamento em Storycraft é medido em Passos Narrativos (PN), equivalendo a quilômetros por hora. Personagens comuns caminham a 5 km/h (~40 km/dia). Montarias rápidas chegam a 15 km/h (~120 km/dia). Tipos de deslocamento: caminhada 5 km/h (40 km/dia), montaria 10-15 km/h (80-120 km/dia), montaria rápida 15-20 km/h (120-160 km/dia), criatura aérea 20-30 km/h (160-240 km/dia), navio 8-12 km/h (64-96 km/dia), carroça 6-10 km/h (48-80 km/dia). Redutores de terreno: planície/estrada 0; colinas suaves -1; floresta clara -1; floresta densa -2; montanhas -4; pântano -4; deserto -4; gelo/neve -4; rio -3; regiões instáveis -5. Cada hora de viagem gera 1 ponto de fadiga (limite 8). Toda viagem é guiada por um personagem principal que realiza teste de Sobrevivência. CD = 10 + modificador de complexidade baseado na distância."
+        }
+      ]
+    },
+    {
+      "id": "dinheiro",
+      "numero": "III",
+      "titulo": "Dinheiro",
+      "topicos": [
+        {
+          "id": "sistema_monetario",
+          "titulo": "Sistema Monetário — Moedas Flor",
+          "tags": ["dinheiro", "moedas", "florel", "florão", "florin", "câmbio", "riqueza"],
+          "conteudo": "O sistema Storycraft usa as moedas Flor: Florel (F$) de Bronze como moeda comum, Florão (₣$) de Prata como moeda intermediária, e Florin (Ƒ$) de Ouro como moeda de maior valor. 10 Floreis = 1 Florão; 10 Florões = 1 Florin. Moedas possuem peso e a cada 1000 moedas (independente do tipo) ocupam 1 espaço. Valor inicial: 2D10 Floreis. Rolagem por classe: Conjurador 1D4×10 F$; Combatente 1D6×10 F$; Especialista 1D8×10 F$; Suporte 1D4×10 F$. Câmbios (para grandes quantias): 1.000 Florins = 1 Flor Platina (0,5 espaço); 10.000 Florins = 1 Flor Esmeralda (1 espaço); 100.000 Florins = 1 Flor Rubi (1 espaço); 1.000.000 Florins = 1 Flor Diamante (1 espaço). Converter 1.000 Florins leva 1 dia, cada etapa superior exige uma semana adicional."
+        }
+      ]
+    },
+    {
+      "id": "combate",
+      "numero": "IV",
+      "titulo": "O Combate",
+      "topicos": [
+        {
+          "id": "iniciativa",
+          "titulo": "Iniciativa",
+          "tags": ["iniciativa", "ordem de turno", "1d20", "destreza", "combate", "rodada"],
+          "conteudo": "Antes de qualquer batalha, todos os personagens — jogadores e NPCs — jogam 1D20 e somam o resultado com sua Destreza + vantagens. A ordem de ação vai do maior para o menor valor. Rodada Preparativa: acontece antes da iniciativa e permite uma ação básica e limitada. Pode fazer: discurso, mover na velocidade normal, tomar poção, ativar buff. NÃO pode: executar combos completos, atacar, controlar inimigo ou qualquer ação ofensiva."
+        },
+        {
+          "id": "movimentacao",
+          "titulo": "Movimentação",
+          "tags": ["movimentação", "deslocamento", "9 metros", "terreno difícil", "escalar", "nadar", "voar"],
+          "conteudo": "Cada personagem pode se deslocar até 9 metros em seu turno (valor base). Modificadores de atributos, vantagens ou efeitos mágicos podem alterar isso. Personagens podem sacrificar sua ação completa para mover o dobro da distância. Deslocamento: cada metro conta como parte da ação de movimento. Espaços ocupados: pode atravessar espaço de aliado, não de inimigo (exceto se caído, indefeso, ou 3+ categorias de tamanho de diferença, ou com teste de Acrobacia). Carga e peso: sobrecarga = -3 metros de deslocamento e -2 em Reflexos e VG. Subir/nadar para cima = dobro do deslocamento. Descer = metade. Diagonal para cima = triplo. Terreno Difícil: move metade do deslocamento normal."
+        },
+        {
+          "id": "tipos_de_acoes",
+          "titulo": "Tipos de Ações",
+          "tags": ["ação de movimento", "ação padrão", "ação completa", "ação livre", "reação", "turno"],
+          "conteudo": "AÇÃO DE MOVIMENTO: deslocar-se, levantar-se, manipular objeto, mirar, sacar/guardar equipamento. AÇÃO LIVRE: gestos, falas curtas, soltar item, mudar empunhadura. Um personagem pode executar várias ações livres por turno. AÇÃO PADRÃO: Atacar (corpo a corpo ou distância), Atropelar, Fintar, Conjurar magia (normalmente), Preparar ação (reage fora do turno declarando condição). AÇÃO COMPLETA: Corrida (mover além do deslocamento normal), Ataque de Execução (crítico automático contra alvo indefeso, ignora MD e VG), Investida (até 2x o deslocamento em linha reta + ataque, +2 Acerto, -2 VG até próximo turno), Lançar Feitiços de tempo maior. REAÇÃO: acontece em resposta a algo (ataque de oportunidade, magias reativas). Uma reação por turno. Composição do turno em ação completa: 1 ação de movimento + 1 ação principal/padrão + ações livres."
+        },
+        {
+          "id": "fa_fm",
+          "titulo": "FA e FM",
+          "tags": ["FA", "FM", "força de ataque", "força de magia", "bônus de dano", "equipamento"],
+          "conteudo": "FA (Força de Ataque) e FM (Força de Magia) são bônus adquiridos por equipamento, buffs, poções e encantamentos que adicionam ao dano final ou efeitos mágicos. Exemplo: samurai com katana dano 1d8, melhoria de +2 e Força +3 soma: 1D8 (katana) +3 (Força) +2 (FA) = 1D8+5 no dano final."
+        },
+        {
+          "id": "vg_md_acerto",
+          "titulo": "Ataque, VG, MD e Acerto",
+          "tags": ["VG", "vanguarda", "MD", "mitigação de dano", "acerto", "BEV", "BPR", "defesa"],
+          "conteudo": "VANGUARDA (VG): mede a dificuldade de ser acertado. Calculada como 10 + Destreza + BEV (Bônus de Esquiva). O BEV inclui todos os bônus à VG de vantagens, características de classe, magias ou equipamentos específicos. Armaduras pesadas reduzem a VG pois comprometem a mobilidade. ACERTO: determinado pela Perícia adequada ao tipo de ataque: Luta (corpo a corpo), Pontaria (distância), Misticismo (mágicos). Rolagem: 1d20 + Perícia + BPR (Bônus de Precisão). Resultado deve superar a VG do alvo. Quando VG é usada: qualquer ataque de alvo único (físico ou mágico mirado) que possa ser esquivado. Magias e ataques em área NÃO usam VG — nesse caso o alvo faz teste de Reflexos. MITIGAÇÃO DE DANO (MD): reduz o dano depois que um acerto ocorre. Defesa Padrão = Armadura/Escudo + Constituição + MD (Bônus). Fontes que declarem 'ignora MD' não têm seu dano reduzido. Itens/efeitos com mesmo nome de BEV ou BPR não acumulam entre si (use o maior), mas fontes diferentes se somam."
+        },
+        {
+          "id": "dano_de_ataque",
+          "titulo": "Dano de Ataque",
+          "tags": ["dano", "ataque", "crítico", "corpo a corpo", "à distância", "bônus de dano"],
+          "conteudo": "Ataques normais são realizados sem técnicas especiais. O dano só é aplicado se o ataque vencer a VG do alvo. Fórmula: Corpo a Corpo = Dano da Arma + ACC da arma; À Distância = Dano da Arma + ACC da arma. Em caso de acerto crítico, o bônus da arma é duplicado na soma do dano."
+        },
+        {
+          "id": "acertos_criticos",
+          "titulo": "Acertos Críticos e Margem de Crítico",
+          "tags": ["acerto crítico", "crítico", "margem de crítico", "20 natural", "MC"],
+          "conteudo": "O Acerto Crítico representa um golpe preciso e bem executado. Para o crítico ser efetivo, o ataque ainda precisa superar a VG do alvo. Um resultado de 20 natural = Sucesso Automático. Quando confirmado, o crítico duplica somente o dano base da arma. Atributos, bônus fixos, vantagens, dons, magias ou danos adicionais NÃO são multiplicados (exceto se a descrição declarar o contrário). A MD do alvo é aplicada normalmente. Margem de Crítico (MC): define os resultados no dado que geram acerto crítico. Exemplo: katana MC 19-20, arco curto MC 20. Vantagens e dons podem expandir a MC. Falha Crítica (1 natural) = Falha Automática independente de modificadores."
+        },
+        {
+          "id": "teste_de_resistencia",
+          "titulo": "Teste de Resistência",
+          "tags": ["teste de resistência", "vontade", "fortitude", "reflexos", "salvaguarda"],
+          "conteudo": "As Resistências representam a capacidade natural do personagem de suportar perigos além do confronto físico. VONTADE (baseada em Sabedoria): mede força mental e espiritual — protege contra medo, ilusões, encantamentos e controle da mente. FORTITUDE (baseada em Constituição): robustez do corpo — resiste a venenos, doenças, exaustão ou golpes que afetam a vitalidade. REFLEXOS (baseada em Destreza): agilidade e rapidez de reação — crucial para evitar armadilhas, explosões, quedas e ataques dependentes de movimento instantâneo. Cálculo: Atributo-chave + bônus por nível (+1 a cada 10 níveis) + bônus extras. Personagem recebe +1 inicial em todas as resistências. A cada múltiplo de 10 níveis pode escolher uma resistência para receber +1 adicional permanente. CD de feitiços, dons e vantagens = 10 + Atributo Chave + Nível de Escala + Bônus."
+        },
+        {
+          "id": "dano_continuo",
+          "titulo": "Dano Contínuo",
+          "tags": ["dano contínuo", "sangramento", "veneno", "queimadura", "maldição", "efeito persistente"],
+          "conteudo": "Dano contínuo é qualquer dano que se repete por rodada: queimaduras, sangramentos, venenos, maldições, corrosão, danos elementais. Ignora Mitigação de Dano, proteções físicas e barreiras mágicas. Mas ainda afeta PV ou PM temporários. Se o alvo falha no teste inicial, o efeito persiste até o fim da duração sem novos testes. Perícias como Cura, tratamentos ou poções específicas podem removê-lo. Feitiços de cura normalmente NÃO removem dano contínuo (exceto se descrito). Personagens sob dano contínuo devem realizar testes para conjurar feitiços. O dano é sempre aplicado no início do turno da criatura afetada."
+        },
+        {
+          "id": "ataque_execucao",
+          "titulo": "Ataque de Execução",
+          "tags": ["ataque de execução", "alvo indefeso", "crítico automático", "assassinato"],
+          "conteudo": "Um alvo indefeso é aquele completamente paralisado, inconsciente, dormindo ou em coma. Ele não pode usar a VG para evitar golpes. O atacante não faz teste de acerto e obtém um crítico automático. O Ataque de Execução ignora qualquer Mitigação de Dano (MD) passiva. Se o dano reduzir os PVs a zero, o inimigo é considerado morto instantaneamente. Contra personagens principais ou chefes, o mestre pode conceder uma última resistência com teste de Constituição CD 20. Exige que o alvo esteja indefeso/inconsciente e o atacante esteja corpo a corpo."
+        },
+        {
+          "id": "flanquear",
+          "titulo": "Flanquear",
+          "tags": ["flanquear", "flanqueamento", "tática", "bônus de ataque", "cercar inimigo"],
+          "conteudo": "Flanquear é cercar um inimigo em combate corpo a corpo, obrigando-o a dividir sua atenção. Quando dois ou mais aliados atacam o mesmo inimigo por direções opostas ou laterais, este é considerado flanqueado. Efeitos: todos os aliados envolvidos recebem +2 em testes de Acerto e +3 de FA nas rolagens de dano contra o inimigo flanqueado. A VG e MD do inimigo permanecem inalteradas. Requisitos: pelo menos dois aliados conscientes posicionados em lados opostos ou diagonais adjacentes. Flanqueamento não se aplica a ataques à distância nem lançamento de magias. Criaturas mágicas, parceiros ou montarias não contribuem para criar um flanco."
+        },
+        {
+          "id": "ataque_de_oportunidade",
+          "titulo": "Ataque de Oportunidade",
+          "tags": ["ataque de oportunidade", "reação", "sair da área de ameaça", "desengajar"],
+          "conteudo": "Ataques de oportunidade são reações exclusivas para ataques corpo a corpo. Cada criatura possui uma área de ameaça definida pelo alcance de suas armas. Mover-se dentro da área ou cercar o inimigo NÃO provoca ataque de oportunidade. Sair da área de ameaça SEM usar a ação Desengajar ATIVA o ataque. O ataque é resolvido como um ataque comum, sem vantagens ou habilidades passivas. Pode ser feito apenas uma vez por turno. Desengajar: consume a ação padrão do turno, mas o movimento não provoca Ataques de Oportunidade. Magias de teleporte não geram ataques de oportunidade. Manobras físicas (empurrar) e técnicas que movam o alvo também não."
+        },
+        {
+          "id": "camuflagem_cobertura",
+          "titulo": "Camuflagem e Cobertura",
+          "tags": ["camuflagem", "cobertura", "proteção", "invisibilidade", "escuridão"],
+          "conteudo": "CAMUFLAGEM: neblina, fumaça, sombras, escuridão parcial ou ilusões dificultam a percepção do alvo. Camuflagem Parcial: 25% de chance de evitar ataque (rola 1d10 junto ao Acerto, resultado 1-2 = ataque falha). Camuflagem Total: 50% de chance (falha com resultados 1-5 no d10). COBERTURA: proteção física atrás de obstáculo sólido. Cobertura Parcial: +5 em MD contra ataques físicos e mágicos de linha reta. Cobertura Total: personagem está completamente protegido e é inalvejável por ataques diretos."
+        },
+        {
+          "id": "alvo_surpreso",
+          "titulo": "Alvo Surpreso",
+          "tags": ["surpresa", "ataque surpreso", "emboscada", "desprevenido", "primeiro turno"],
+          "conteudo": "Um personagem é considerado surpreso quando: não percebe a aproximação do atacante (distraído, de costas, dormindo, visibilidade limitada); é atacado no primeiro turno de combate em que não estava ciente; falha em teste de Percepção; está sob efeito de magias que inibem seus sentidos (Cegueira, Silêncio mágico, Confusão). Um personagem surpreso no início do combate não pode agir e está desprevenido durante a primeira rodada."
+        },
+        {
+          "id": "dano_por_queda",
+          "titulo": "Dano por Queda",
+          "tags": ["dano por queda", "altura", "impacto", "queda"],
+          "conteudo": "Para cada 10 metros de altura que um personagem cai, ele sofre 1D6 de dano direto aos PV. Esse dano ignora Constituição e Mitigações de Dano — é dano físico bruto. Opcionalmente o mestre pode permitir teste de Reflexos, Acrobacia ou uso de magia (Levitação, Teleporte, etc.) para reduzir o dano pela metade ou evitar a queda. Quedas Extremas: quedas de 100 metros ou mais são quase sempre letais. Limite máximo de 10D6 de dano, ou morte instantânea sem justificativa narrativa."
+        },
+        {
+          "id": "fuga_dramatica",
+          "titulo": "Fuga Dramática",
+          "tags": ["fuga", "perseguição", "desafio progressivo", "fuga dramática"],
+          "conteudo": "Diante de perseguições, desmoronamentos ou catástrofes, use a Fuga Dramática — um desafio prolongado que exige 3 sucessos antes de 5 falhas. A cada rodada, o jogador pode escolher entre Reflexos, Acrobacia ou Atletismo, conforme a narrativa. CD base = 12 + (Destreza média dos perseguidores ou do evento + Escala). Falhas parciais geram consequências como perda de terreno, quedas ou dano leve. Em grupo, o personagem mais lento realiza o teste, enquanto os demais podem auxiliar."
+        },
+        {
+          "id": "ataques_desarmados",
+          "titulo": "Ataques Desarmados e Armas Naturais",
+          "tags": ["ataque desarmado", "soco", "chute", "armas naturais", "garras", "presas", "dano de impacto"],
+          "conteudo": "ATAQUES DESARMADOS: qualquer golpe com o próprio corpo (soco, chute, cotovelada). Tratado como arma leve corpo a corpo, dano físico (Impacto). Dano Base: 1D4 + Força. Por padrão são não letais. Para causar dano letal = -2 no teste de ataque. Criaturas Grandes = 1D6; Enormes = 1D8; Colossais = 1D10; Pequenas = 1D3. ARMAS NATURAIS: partes específicas do corpo (garras, chifres, presas, caudas). Tratadas como armas leves corpo a corpo. Após acertar um ataque causando dano além da VG e MD do inimigo, pode realizar um golpe adicional imediato com a arma natural, causando dano direto sem aplicar novamente a Mitigação. Quantidade de golpes por rodada e custo em PM definidos na descrição racial."
+        },
+        {
+          "id": "ataque_nao_letal",
+          "titulo": "Ataque Não Letal",
+          "tags": ["ataque não letal", "nocautear", "incapacitar", "arma de treino"],
+          "conteudo": "Um ataque não letal é realizado com intenção de incapacitar o alvo sem causar sua morte. Armas de treino, golpes controlados, magias de contenção ou ataques desarmados podem ser usados. Ao declarar ataque não letal com arma que normalmente causa dano letal = -5 no teste de ataque. Se o total de dano não letal igualar ou ultrapassar os PV totais = derrubado inconsciente por 1D4 horas (ou até receber primeiros socorros ou cura). Dano não letal não mata e não acumula com dano letal."
+        },
+        {
+          "id": "vulnerabilidade_fortificado_imunidade",
+          "titulo": "Vulnerabilidade, Fortificado e Imunidade",
+          "tags": ["vulnerabilidade", "fortifcado", "imunidade", "resistência elemental", "fraqueza"],
+          "conteudo": "VULNERÁVEL: contra a fonte de vulnerabilidade — MD reduzida pela metade e -2 cumulativo em testes de resistência relacionados. FORTIFICADO: contra a fonte de fortificação — MD duplicada e +2 em testes de resistência relacionados. IMUNE: ignora completamente aquele tipo de dano; não sofre efeitos secundários; não realiza testes de resistência. Além disso, ao receber esse tipo de dano, recupera 1d6 PV cumulativos para cada 10 pontos de dano originalmente causados. Se uma habilidade permite 'ignorar imunidades', a imunidade é reduzida em um passo, tornando-se apenas Fortificada."
+        },
+        {
+          "id": "armas_mortais",
+          "titulo": "Armas ou Ataques Mortais",
+          "tags": ["arma mortal", "ataque mortal", "vorpal", "perfuração", "esmagamento", "amputação", "dado de aleatoriedade"],
+          "conteudo": "Existe diferença entre ataques letais e mortais. Ataque/arma letal: pode matar normalmente reduzindo a 0 PV. Ataque/arma mortal: pode matar ANTES de chegar a 0 PV (extremamente afiadas, refinadas ou fortalecidas por vantagens/magia). Quando ataque físico mortal confirma crítico, o alvo realiza teste de Fortitude contra CD baseada no atributo utilizado. Em caso de falha, rola dado de aleatoriedade (1d6): 1 = Braço Direito (-1D6 PV/R); 2 = Braço Esquerdo (-1D6 PV/R); 3 = Perna Direita (-1D6 PV/R); 4 = Perna Esquerda (-1D6 PV/R); 5 = Ponto Vital Leve (-2D6 PV/R); 6 = Ponto Vital Fatal = Morte. Resultado por perda de membro: 1-2 = -2 DES em ataques e esquivas; 3-4 = -3 DES e movimentação pela metade; 5 = equivalente a tirar 5 em dado de morte (1d6 rodadas de vida); 6 = executado."
+        },
+        {
+          "id": "escala_de_cds",
+          "titulo": "CDs em Feitiços, Dons e Vantagens",
+          "tags": ["CD", "classe de dificuldade", "feitiços", "escalas de CD", "fórmula CD"],
+          "conteudo": "Fórmula de CD de habilidades: CD = 10 + Atributo Chave + Nível de Escala + Bônus. O bônus de escala aumenta conforme o personagem evolui: Nível 1 (Comum) = +1; Nível 10 (Lendário) = +2; Nível 20 (Colossal) = +3; Nível 30 (Titânico) = +4; Nível 40 (Mítico) = +5; Nível 50 (Épico) = +6. Grau de Dons e Feitiços NÃO interfere na CD — é a Escala atual que fornece o bônus."
+        }
+      ]
+    },
+    {
+      "id": "magias",
+      "numero": "V",
+      "titulo": "Feitiços e Magias no RPG",
+      "topicos": [
+        {
+          "id": "tipos_de_magia",
+          "titulo": "Tipos de Magia",
+          "tags": ["tipos de magia", "elemental", "branco", "negro", "neutro", "espiritual", "conjurador", "PM"],
+          "conteudo": "São considerados conjuradores todos os personagens com vantagens: Magia Elemental, Espiritual, Branca ou Negra. Tipos de feitiço: ELEMENTAL — força bruta da natureza, molda fogo, água, ar, terra e outros elementos. BRANCO — fluxo da pureza, da cura e da restauração. Canaliza energia vital para curar, dissipar corrupções e proteger. NEGRO — nasce da ambição e conhecimento proibido. Corrompe o corpo e a alma, manipula medo, morte e sofrimento. NEUTRO — sem afinidade fixa, pode ser canalizado como elemental, branco, negro ou espiritual. ESPIRITUAL — elo entre o mundo físico e o plano dos espíritos. Invoca forças ancestrais, guias etéreos e entidades invisíveis. MAGIA SAGRADA — manifestação da fé, canaliza poder divino. Devotos podem lançar mesmo vestindo armaduras. MAGIA PROFANA — sombra de orações esquecidas e pactos rompidos. Nasce da dor e manipula azar, corrupção e ruína. MAGIA ARCANA — universal, transcende origem ou doutrina. Qualquer conjurador capaz de utilizá-la desde que atenda aos requisitos."
+        },
+        {
+          "id": "atributos_chave_magia",
+          "titulo": "Atributos-Chave para Magia",
+          "tags": ["atributo chave", "inteligência mago", "sabedoria clérigo", "carisma feiticeiro", "conjuração"],
+          "conteudo": "Cada conjurador manifesta o feitiço de uma forma diferente. INTELIGÊNCIA: atributo dos estudiosos e eruditos arcanos. Magos, bruxos e pesquisadores que tratam a magia como ciência exata. SABEDORIA: atributo dos sacerdotes, monges e druidas. Conexão espiritual — não controlam a magia, apenas a compreendem e permitem que flua. CARISMA: atributo dos inspirados e instintivos. Bardos, feiticeiros e canalizadores natos — extraem poder de dentro de si. O atributo-chave determina a CD de seus feitiços."
+        },
+        {
+          "id": "escolas_de_feitico",
+          "titulo": "Escolas de Feitiço",
+          "tags": ["escolas de feitiço", "abjuração", "adivinhação", "convocação", "encantamento", "evocação", "ilusão", "necromancia", "transmutação"],
+          "conteudo": "ABJURAÇÃO: defesa, proteção e banimento. Cria barreiras, anula efeitos, sela forças malignas. ADIVINHAÇÃO: percepção e conhecimento oculto. Enxerga o invisível, interpreta sinais, antecipa eventos. CONVOCAÇÃO: traz à existência seres, armas ou fenômenos de outros planos. ENCANTAMENTO: manipula emoções, pensamentos e vontades. Dominação do comportamento alheio. EVOCAÇÃO: destruição e energia pura. Molda fogo, gelo, trovão para causar dano e devastação. ILUSÃO: cria enganos, distorções e aparências falsas. Manipula a mente e os sentidos. NECROMANCIA: comanda a morte, decadência e o ciclo da alma. Drena energia vital, reanima cadáveres. TRANSMUTAÇÃO: escola da mudança e adaptação. Altera forma, peso, velocidade ou composição das coisas."
+        },
+        {
+          "id": "evocando_feiticos",
+          "titulo": "Evocando Feitiços — Regras de Conjuração",
+          "tags": ["conjurar", "conjuração", "concentração", "armadura e magia", "feitiço", "vontade", "PM"],
+          "conteudo": "Lançar um feitiço exige foco, gestos precisos e palavras de poder. O conjurador deve ser capaz de falar claramente e possuir ao menos uma mão livre. Personagem amordaçado, silenciado ou incapaz de mover as mãos NÃO pode lançar feitiços. Conjurar em meio ao perigo exige teste de Vontade. Em caso de falha, o feitiço é perdido mas os PM são consumidos. Se o conjurador sofrer dano durante a execução, a CD do teste de Vontade = dano recebido. Condições difíceis (cavalgar em alta velocidade, caído, chuva intensa) exigem Vontade CD 15 + PM do feitiço. Situações extremas (terremoto, agarrado, soterrado) exigem Vontade CD 20 + PM do feitiço. ARMADURAS E CONJURAÇÃO: feitiços lançados livremente com armaduras leves. Armaduras médias ou pesadas impedem a conjuração (a menos que seja proficiente) e exigem teste de Misticismo CD 20+PM, com penalidade de armadura. FEITIÇO SEM VISÃO DIRETA: teste de Misticismo CD 20 + nível da magia. Referência parcial do alvo (ouvir voz, ver silhueta) = +2 no teste. Completamente fora do alcance = -5."
+        },
+        {
+          "id": "ataques_magicos",
+          "titulo": "Ataques Mágicos Básicos",
+          "tags": ["ataque mágico", "básico", "energia", "1 PM", "arma mágica"],
+          "conteudo": "Os ataques básicos do conjurador são feitos usando energia (corpo a corpo, distância ou elemental). O conjurador ainda precisa quebrar a VG do inimigo para acertar e gastar 1 PM para lançá-lo. Fórmula: Arma Mágica + Atributo Chave de Classe + FM (Bônus)."
+        },
+        {
+          "id": "tipos_de_alcance",
+          "titulo": "Tipos de Alcance",
+          "tags": ["alcance", "pessoal", "contato", "curto", "médio", "longo", "ilimitado"],
+          "conteudo": "PESSOAL: afeta apenas o próprio usuário e os itens que porta. CONTATO: precisa tocar o alvo dentro do alcance corporal. CURTO: até 9 metros de distância. MÉDIO: até 30 metros. LONGO: até 90 metros. ILIMITADO: atinge qualquer ponto do mesmo mundo ou plano. Normalmente o usuário precisa conhecer o local de destino."
+        },
+        {
+          "id": "alvos_areas_de_efeito",
+          "titulo": "Alvos e Áreas de Efeito",
+          "tags": ["área de efeito", "cone", "esfera", "linha", "cilindro", "cubo", "alvo", "linha de alcance"],
+          "conteudo": "Linha de alcance: deve existir trajeto direto e desobstruído entre o usuário e o ponto do efeito. Qualquer obstáculo sólido interrompe a linha de alcance. Formas de área mais comuns: CILINDRO — parte da interseção de quatro espaços, estendendo-se verticalmente; CONE — parte da frente do usuário, expande em formato de leque; ESFERA — parte de um ponto central, expande igualmente em todas as direções; LINHA — avança em linha reta com largura padrão de 1,5 metro; QUADRADO/CUBO — afeta diretamente o solo ou espaço cúbico selecionado."
+        },
+        {
+          "id": "poder_replicado_habilidades",
+          "titulo": "Poder Replicado e Poderes de Habilidades",
+          "tags": ["poder replicado", "poder de habilidade", "técnica física", "não mágico", "dom de classe"],
+          "conteudo": "PODER REPLICADO: habilidade que reproduz efeitos de um feitiço mas não é de origem mágica. Pode surgir de talento, treinamento, engenhocas ou fenômenos sobrenaturais. Segue as mesmas mecânicas dos feitiços normais (alcance, área, tempo de conjuração). NÃO conta como feitiço — não se beneficia de itens, vantagens ou efeitos que alterem feitiços. NÃO exige testes de Concentração. PODERES DE HABILIDADE: técnicas físicas avançadas concedidas por dons de classe. Funcionam como feitiços mas não possuem natureza mágica. Não exigem teste de acerto (mas podem exigir testes de resistência). Após utilizar um Poder de Habilidade, o personagem NÃO pode realizar ataques adicionais nem ativar outras vantagens na mesma rodada."
+        }
+      ]
+    },
+    {
+      "id": "elementos",
+      "numero": "VI",
+      "titulo": "Regras Opcionais: Elementos",
+      "topicos": [
+        {
+          "id": "elementos",
+          "titulo": "Elementos e Interações",
+          "tags": ["elementos", "fogo", "água", "terra", "ar", "luz", "trevas", "gelo", "raio", "elemental", "fraqueza elemental"],
+          "conteudo": "Os elementos interagem de formas únicas. Fogo: efeito queimação/lentidão, vantagem sobre ar, desvantagem contra água. Água: efeito queimação/lentidão, vantagem sobre fogo, desvantagem contra terra. Terra: efeito petrificar/esmagamento, vantagem sobre água, desvantagem contra ar. Ar: efeito vorpal/asfixia/push, vantagem sobre terra, desvantagem contra fogo. Luz: efeito cegueira/paralisia, vantagem sobre trevas, desvantagem contra trevas. Trevas: efeito medo/maldições, vantagem sobre luz, desvantagem contra luz. Vantagens por ambiente: Fogo +2 em áreas secas/áridas (+20% dano), -2 em locais úmidos/submersos. Água +2 em ambientes úmidos/costeiros, -2 em desertos. Terra +2 com contato com o solo. Ar +2 em áreas abertas/ventosas, -2 em locais subterrâneos. Raio +2 em ambientes metálicos/molhados. Gelo +2 em locais frios, -2 sob calor extremo. Luz +2 em locais sagrados/iluminados. Trevas +2 em locais escuros/subterrâneos."
+        }
+      ]
+    },
+    {
+      "id": "tamanhos",
+      "numero": "VII",
+      "titulo": "Tamanhos",
+      "topicos": [
+        {
+          "id": "categorias_tamanho",
+          "titulo": "Categorias de Tamanho",
+          "tags": ["tamanho", "minúsculo", "pequeno", "médio", "grande", "enorme", "gigantesco", "espaço ocupado", "furtividade por tamanho"],
+          "conteudo": "O tamanho de uma criatura influencia alcance, área de ocupação, manobras de combate, furtividade e equipamentos. Tabela: MINÚSCULO (rato, sprite) — espaço 1,5m, Furtividade +5, Manobra -5. PEQUENO (goblin) — espaço 1,5m, Furtividade +2, Manobra -2. MÉDIO (humano) — espaço 1,5m, sem modificador (padrão). GRANDE (ogro, cavalo) — espaço 3,0m, Furtividade -2, Manobra +2. ENORME (ente) — espaço 4,5m, Furtividade -5, Manobra +5. GIGANTESCO (dragão, titã) — espaço 9,0m, Furtividade -10, Manobra +10. Armas e equipamentos: cada categoria abaixo do Médio reduz o dano das armas em um passo, cada categoria acima aumenta em um passo. Usar arma de tamanho errado = -5 em testes de acerto. Armaduras de tamanho incorreto reduzem eficiência em 50% e causam penalidades em VG."
+        }
+      ]
+    },
+    {
+      "id": "morte",
+      "numero": "VIII",
+      "titulo": "Morte",
+      "topicos": [
+        {
+          "id": "sistema_de_morte",
+          "titulo": "Sistema de Morte e Perto da Morte",
+          "tags": ["morte", "zero PV", "estado crítico", "sangramento", "estabilizar", "inconsciente", "PV negativos"],
+          "conteudo": "PERTO DA MORTE: quando atinge 1/4 dos PV totais. O personagem é considerado fragilizado: -1 em testes de Resistência e -2 em Vanguarda (VG). SISTEMA DE MORTE: quando PV chegam a 0 ou menos, o personagem cai inconsciente e entra em estado crítico, começando a sangrar. No início de cada turno, deve realizar teste de Constituição CD 15. Sucesso = sangramento controlado, personagem estabilizado. Falha = perde 1d6 PV adicionais. Um personagem em estado crítico pode ser estabilizado por outra criatura com teste de Cura CD 15 ou por qualquer efeito que restaure ao menos 1 PV. A morte ocorre quando os PV chegam a -10 OU a um valor negativo igual à metade dos PV máximos (prevalece o que for maior). DADO DE MORTE (opcional para NPCs): o mestre rola 1d6 quando NPC chega a 0 PV: 1 = Muito Fraco (consciente mas incapaz de agir); 2 = Inconsciente (desperta após 1d8 horas); 3 = Muito Ferido (precisa descansar 1d12 horas); 4 = Gravemente Ferido (morrerá em 1d4 horas sem ajuda); 5 = Quase Morto (morrerá em 1d6 rodadas); 6 = Morto."
+        }
+      ]
+    },
+    {
+      "id": "parceiros_montarias",
+      "numero": "IX",
+      "titulo": "Parceiros de Montarias",
+      "topicos": [
+        {
+          "id": "regras_parceiros",
+          "titulo": "Parceiros — Regras",
+          "tags": ["parceiros", "aliados", "NPCs aliados", "espíritos", "vinculo", "lendário", "titânico", "mítico"],
+          "conteudo": "Parceiros são aliados especiais que se ligam espiritualmente ao herói. Eles NÃO possuem turno próprio e não realizam ações no campo de batalha — fornecem bônus e efeitos ao personagem que os invoca. Somente personagens Lendários podem ter parceiros. Quantidade por escala: Lendário = 1 parceiro; Titânico = 2 parceiros; Mítico = até 3 parceiros. O máximo que um parceiro pode evoluir é escala Mítica. Montarias e familiares entram na contagem limite. No início do turno, o herói pode gastar uma ação de movimento para transferir um parceiro a outro aliado em alcance padrão. Parceiros não podem ser alvos de ataques ou magias."
+        },
+        {
+          "id": "tipos_de_parceiros",
+          "titulo": "Tipos de Parceiros",
+          "tags": ["parceiro atacante", "parceiro arcano", "parceiro protetor", "parceiro curandeiro", "parceiro sombra", "tipos de parceiro"],
+          "conteudo": "Tipos de parceiros e seus bônus por escala: PARCEIRO ATACANTE — Lendário: +1d6 FA e +1 Acerto; Titânico: +1D8 FA e +2 Acerto; Mítico: +1D10 FA, +3 Acerto e +1 VG. PARCEIRO ARCANO — Lendário: -1 PM em magias 1° grau e +1d4 dano extra; Titânico: -2 PM em 2°/3° grau e +1d6 dano; Mítico: -3 PM em 4°/5° grau e +1d8 dano. PARCEIRO SOMBRA — Lendário: +2 em duas perícias; Titânico: +2 em três perícias; Mítico: +4 em três perícias. PARCEIRO PROTETOR — Lendário: +1 MD e +2 VG; Titânico: +2 MD e +3 VG; Mítico: +3 MD e +4 VG. PARCEIRO CURANDEIRO — Lendário: cura 2d4 PV uma vez por cena e +1d6 em feitiços de cura; Titânico: cura 2d6 PV, +1d8 e remove um efeito debilitante; Mítico: cura 3d8 PV, +1d10 e remove dois efeitos. PARCEIRO MURALHA — Lendário: +2 MD; Titânico: +3 MD e +1 Fortitude; Mítico: +5 MD e +1 em qualquer resistência. Outros tipos: Mercenário, Rastreador, Oráculo, Alquimista, Encantador, Demolidor, Elemental, Maldito, Enigma, Firme, Sábio."
+        },
+        {
+          "id": "regras_montarias",
+          "titulo": "Montarias — Regras",
+          "tags": ["montaria", "cavalgar", "cavaleiro", "montar", "bônus de montaria", "teste cavalgar"],
+          "conteudo": "Para usar uma montaria, o personagem precisa montá-la (ação de movimento). Deve gastar uma ação de movimento a cada turno para conduzir a montaria com teste de Cavalgar CD 10. Sucesso = recebe os benefícios. Falha = perde a ação. Falhar por 5+ = cai, sofre 1d6 de dano. Personagens treinados em Cavalgar não precisam gastar a ação nem realizar o teste. Sempre que sofrer dano enquanto montado, deve realizar novo teste de Cavalgar (CD = dano recebido). Falha = cai, sofre 1d6 dano. Enquanto montado, sofre -2 em testes de ataque à distância e o movimento da criatura é condição ruim para lançar magias (exceto com vantagem Cavaleiro). Montarias disponíveis: Cavalo Grande, Coiote, Chaval Trovejante, Hipogrifo, Urokan Selvagem, Chocobo (cada um com bônus por escala Lendário/Titânico/Mítico)."
+        }
+      ]
+    },
+    {
+      "id": "condicoes",
+      "numero": "X",
+      "titulo": "Condições",
+      "topicos": [
+        {
+          "id": "lista_condicoes",
+          "titulo": "Lista de Condições",
+          "tags": ["condições", "abalado", "apavorado", "atordoado", "caído", "cego", "confuso", "congelamento", "debilitado", "exausto", "envenenamento", "paralisado", "sangrando", "inconsciente"],
+          "conteudo": "ABALADO: -2 em testes de perícia e Vanguarda. Se ficar abalado novamente = apavorado. ALQUEBRADO: custo em PM de habilidades aumenta em 50%. APAVORADO: foge da fonte do medo, sofre -4 em perícia e VG. APAIXONADO: deve obedecer comandos do alvo, não pode atacá-lo. ARREFECIDO: -2 em testes de ataque e Reflexos, -4 em VG, -3m de deslocamento. ASFIXIA: teste de Fortitude por rodada. Falha = 1d6 dano por rodada. ATORDOADO: não consegue realizar nenhuma ação até o fim da condição. CAÍDO: gasta uma ação de movimento para se levantar. Penalidade em ataques corpo a corpo, inimigos adjacentes recebem bônus. CEGO: -5 em ataques a distância (-3 se corpo a corpo), testes de percepção e Vanguarda. CONFUSO: rola 1d6 a cada turno — 1-2 ataca normalmente; 3-4 erra o ataque; 5-6 ataca a si mesmo ou aliado. CONGELAMENTO: mesmas condições de paralisado + +10 MD contra ataque físico + vulnerabilidade a fogo e trovão. DEBILITADO: -4 pontos em um ou mais atributos. DESPREVENIDO: VG reduzida pela metade (mínimo 10). DISSOLVER: dano contínuo de 1d10 por rodada, equipamentos podem ser destruídos. ESMORECIDO: -5 em testes de INT, SAB e CAR. ENJOADO: só pode realizar uma ação padrão OU uma de movimento (não ambas). ENREDADO: movimento e Destreza reduzidos pela metade, -4 em ataques e manobras. EXAUSTO: -6 em Força e Destreza, move metade da velocidade, gasta o dobro de PM para tudo. FASCINADO: não pode realizar outras ações além de observar, -5 em percepção. FATIGADO: -3 em Força e Destreza, não pode correr nem investir. Se ficar fatigado novamente = exausto. FRUSTRADO: -2 em atributos mentais (INT, SAB, CAR) e perícias relacionadas. HEMORRAGIA: dobro do dano do Sangramento por rodada, não pode ser contida por curas simples. INCONSCIENTE: totalmente indefeso, incapaz de qualquer ação. INDEFESO: extrema vulnerabilidade, apto a receber ataques de execução. LENTO: apenas uma ação por rodada, -5 em VG e Reflexos. NEUTRALIZADO: cancela sentidos especiais, feitiços ou gasto de PM. PARALISADO: não pode se mover nem agir fisicamente. PASMO: chocado, incapaz de realizar ações por efeito mental. PETRIFICAÇÃO: sofre efeitos de Lento, depois Congelado. A 0 PV = morre, corpo se desfaz em pó. PROVOCADO: deve priorizar ações contra um alvo específico. QUEIMADURA: dano contínuo por fogo. SANGRANDO: dano contínuo no início de cada turno (ignora MD) até ser tratado com Primeiros Socorros CD 15. SILÊNCIO: não pode emitir sons nem conjurar feitiços com componente verbal. SURDO: -5 em iniciativa, percepção auditiva, precisa rolar Misticismo para conjurar feitiços verbais. SURPREENDIDO: no início do combate, não pode agir e está desprevenido na primeira rodada. MORTAL: pode decapitar/destruir instantaneamente em caso de crítico (criaturas imunes a críticos não sofrem). VULNERÁVEL: MD reduzida pela metade, -2 nos testes contra aquele tipo de dano."
+        }
+      ]
+    },
+    {
+      "id": "manobras_combate",
+      "numero": "XI",
+      "titulo": "Manobras de Combate",
+      "topicos": [
+        {
+          "id": "tipos_manobras",
+          "titulo": "Tipos de Manobras de Combate",
+          "tags": ["manobras de combate", "agarrar", "desarmar", "derrubar", "empurrar", "fintar", "atropelar", "quebrar agarrão"],
+          "conteudo": "Para executar uma manobra, o atacante deve gastar uma ação padrão e declarar intenção antes da rolagem. O teste sempre é feito contra a VG do inimigo. O defensor pode resistir com teste apropriado (Força, Destreza, Luta ou Acrobacia). AGARRAR: alvo fica incapaz de se locomover. Para escapar = Acrobacia ou Atletismo contra a manobra do agressor. ATROPELAR: avançar sobre o espaço do inimigo, tentando derrubá-lo. Sucesso = alvo Caído. Resiste com Força ou Destreza. DESARMAR: forçar inimigo a soltar a arma. Alvo resiste com Força ou Acrobacia. DERRUBAR: jogar inimigo ao chão por rasteira/investida. Sucesso = Caído. Resiste com Reflexos ou Acrobacia. DESTRUIR ITEM: danificar equipamento do inimigo, aplicando dano considerando MD e pontos de resistência. EMPURRAR: deslocar inimigo para trás. Resiste com Força. Ser empurrado não gera ataques de oportunidade. FINTAR: enganar inimigo com movimentos falsos. Alvo fica Desprevenido contra próximo ataque. Resiste com Vontade ou Percepção. QUEBRAR AGARRÃO: libertar-se da condição Agarrado com Força ou Acrobacia. SOBREPOR: forçar passagem pelo espaço do inimigo. Resiste com Força ou Reflexos. USAR DESARMADO: atacar sem armas."
+        }
+      ]
+    },
+    {
+      "id": "escalas_de_poder",
+      "numero": "XII",
+      "titulo": "Escalas de Poder",
+      "topicos": [
+        {
+          "id": "escalas",
+          "titulo": "Escalas de Poder",
+          "tags": ["escalas de poder", "comum", "lendário", "colossal", "titânico", "mítico", "épico", "nível 10", "nível 20", "nível 30", "nível 40", "nível 50"],
+          "conteudo": "Uma escala de poder é alcançada a cada 10 níveis. Ao atingir nova escala (exceto a Comum), o personagem recebe gratuitamente uma vantagem ou dom de classe do grau anterior (mínimo grau 1). Tabela de escalas: COMUM (1-9) — iniciantes forjando seus primeiros feitos; LENDÁRIO (10-19) — heróis que começam a deixar sua marca; COLOSSAL (20-29) — poder que desafia limites comuns; TITÂNICO (30-39) — força e domínio que impõem respeito absoluto; MÍTICO (40-49) — quase lendas vivas, capazes de dobrar a realidade; ÉPICO (50) — ápice do poder, transcendendo limites. Exemplos de criaturas por escala: Comum = Poring, Slime, Goblin, Zumbi; Lendária = Ogro, Troll, Manticora; Colossal = Dragão jovem, Gigantes, Quimera; Titânico = Dragão ancião, Lich pleno, Kraken; Mítico = Deus caído, Espírito primordial; Épico = Deus pleno, Encarnação cósmica."
+        },
+        {
+          "id": "personagens_elite",
+          "titulo": "Personagens Elite",
+          "tags": ["elite", "diferença de nível", "elite bronze", "elite prata", "elite ouro", "elite esmeralda", "elite rubi", "elite diamante"],
+          "conteudo": "O Sistema de Elite representa o abismo de poder entre personagens quando há grande diferença de níveis. ELITE BRONZE (+5 níveis acima): demonstra clara superioridade — mais precisão, domínio tático e resistência. ELITE PRATA (+10 níveis): sofre 25% menos dano e causa 25% mais dano. ELITE OURO (+15 níveis): o mais fraco causa 50% menos dano, Elite Ouro causa 50% a mais. ELITE ESMERALDA (+20 níveis): impacto sofrido reduzido em 75%, causa 75% mais domínio. ELITE RUBI (+25 níveis): ataques contra ele não causam dano, suas ações ofensivas têm dano dobrado. ELITE DIAMANTE (+50 níveis): tratados como semideuses, deuses ou forças absolutas."
+        },
+        {
+          "id": "nde_mvp",
+          "titulo": "NDE e MVP (Monstro de Valor Primordial)",
+          "tags": ["NDE", "nível de desafio", "MVP", "monstro de valor primordial", "chefe", "tabuleta primordial", "recompensas"],
+          "conteudo": "NDE (Nível de Desafio de Escala): representa o quanto um monstro é perigoso levando em conta nível e Escala de Poder. Se NDE do monstro = nível médio do grupo = confronto equilibrado. Diferenças de 1-2 = difícil; 3-5 = letal; acima disso = praticamente impossível. MVP (Monstro de Valor Primordial): tipo especial de chefe que representa a criatura dominante ou líder de um território. Raramente aparece imediatamente — pode exigir condições específicas (eliminar criaturas menores, cumprir desafio). Ao ser derrotado, um MVP concede: três tesouros (um de mesma escala, um menor e um maior), equipamento refinado exclusivo, e uma Tabuleta Primordial. TABULETA PRIMORDIAL: pequena placa de pedra ancestral com essência da criatura vencida. Pode ser equipada em um equipamento sem consumir ranhuras, concedendo bonificação e propriedade associadas ao monstro. Um equipamento só pode ter uma única tabuleta. Instalação custa Ƒ$ 3.000. Com Ofício Encantador = 1/3 do valor (1 dia de trabalho, Ofício Encantador CD 30)."
+        }
+      ]
+    },
+    {
+      "id": "tendencias",
+      "numero": "XIII",
+      "titulo": "Tendências",
+      "topicos": [
+        {
+          "id": "sistema_tendencias",
+          "titulo": "Sistema de Tendências (9 Tendências)",
+          "tags": ["tendências", "alinhamento", "bondoso", "maligno", "neutro", "leal", "caótico", "moralidade", "personalidade"],
+          "conteudo": "Tendências representam o código moral e filosófico de um personagem. Sistema clássico 3x3: Eixo Moral (Bondoso – Neutro – Maligno) × Eixo de Ordem (Leal – Neutro – Caótico). As 9 tendências: LEAL E BONDOSO (O Herói Honrado) — age com honra, disciplina e empatia, segue regras para fazer o bem. NEUTRO E BONDOSO (O Sábio Compassivo) — ajuda sem se prender a leis ou rebeldia. CAÓTICO E BONDOSO (O Rebelde do Bem) — faz o bem mas despreza regras opressoras. LEAL E NEUTRO (O Guardião da Ordem) — segue regras e leis, não é especialmente bom ou mau. PURO NEUTRO (O Equilibrado) — busca equilíbrio, sobrevivência ou se recusa a tomar partido. CAÓTICO E NEUTRO (O Espírito Livre) — valoriza a liberdade acima de tudo. LEAL E MALIGNO (O Tirano/Fanático) — usa a ordem para controlar, oprimir ou se beneficiar. NEUTRO E MALIGNO (O Egoísta Calculista) — pensa apenas em si mesmo, age com pragmatismo frio. CAÓTICO E MALIGNO (O Insano/Destruidor) — ama o caos, a dor ou a destruição. Sistema de 3 Tendências aprofundado: Moralidade (Bondoso/Neutro/Maligno) + Ordem (Leal/Neutro/Caótico) + Motivação (Altruísta/Egoísta/Fatalista)."
+        }
+      ]
+    }
+  ]
+}
