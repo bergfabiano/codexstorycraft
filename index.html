@@ -579,6 +579,44 @@ main{
   color:rgba(155,93,229,0.15);user-select:none;
 }
 .result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
+/* ── CHECKBOX FILTER DROPDOWN ── */
+.chk-filter-wrap{position:relative;display:inline-block;}
+.chk-filter-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.42rem 0.75rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.7rem;
+  letter-spacing:0.06em;text-transform:uppercase;
+  border:1px solid var(--border);border-radius:4px;
+  color:var(--text-faint);background:var(--surface);
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;user-select:none;
+}
+.chk-filter-btn:hover,.chk-filter-btn.has-sel{color:var(--text);border-color:var(--violet-dim);}
+.chk-filter-btn.has-sel{background:rgba(155,93,229,0.08);}
+.chk-filter-btn .chk-arrow{font-size:0.55rem;opacity:0.5;transition:transform 0.15s;}
+.chk-filter-btn.open .chk-arrow{transform:rotate(180deg);}
+.chk-filter-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:16px;height:16px;padding:0 4px;border-radius:8px;
+  background:var(--violet);color:#fff;font-size:0.58rem;font-weight:700;
+}
+.chk-filter-panel{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:200;
+  min-width:200px;max-width:280px;
+  background:var(--bg3);border:1px solid rgba(155,93,229,0.3);
+  border-radius:6px;padding:0.5rem 0;
+  box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  max-height:260px;overflow-y:auto;
+}
+.chk-filter-panel.open{display:block;}
+.chk-filter-panel label{
+  display:flex;align-items:center;gap:0.6rem;
+  padding:0.4rem 0.85rem;cursor:pointer;
+  font-family:'Raleway',sans-serif;font-size:0.8rem;color:var(--text-dim);
+  transition:background 0.12s;
+}
+.chk-filter-panel label:hover{background:rgba(155,93,229,0.08);color:var(--text);}
+.chk-filter-panel input[type=checkbox]{accent-color:var(--violet);width:13px;height:13px;cursor:pointer;flex-shrink:0;}
+
 .section-title{font-family:'Cinzel',serif;font-size:0.98rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
 .stitle-sym{color:var(--violet-bright);opacity:0.7;font-size:0.9rem;}
 
@@ -1611,10 +1649,19 @@ main{
   <div id="page-classes" class="page">
     <div id="classes-lista">
       <h2 class="section-title"><span class="stitle-sym">⚔</span> Classes &amp; Dons</h2>
-      <div class="filter-bar">
+      <div class="filter-bar" style="align-items:flex-end;">
         <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
-        <div class="fg"><label>Categoria</label><select id="f-class-papel" onchange="renderClasses()"><option value="">Todas</option></select></div>
-        <div class="fg"><label>Dons da Classe</label><select id="f-class-filtro" onchange="renderClasses()"><option value="">Todas as classes</option></select></div>
+        <div class="fg" style="flex:0 0 auto;">
+          <label>Categoria</label>
+          <div class="chk-filter-wrap" id="chk-wrap-class-cat">
+            <div class="chk-filter-btn" id="chk-btn-class-cat" onclick="toggleChkPanel('class-cat')">
+              <span id="chk-lbl-class-cat">Todas</span>
+              <span id="chk-badge-class-cat" class="chk-filter-badge" style="display:none;"></span>
+              <span class="chk-arrow">▼</span>
+            </div>
+            <div class="chk-filter-panel" id="chk-panel-class-cat"></div>
+          </div>
+        </div>
         <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
       </div>
       <p class="result-count" id="count-classes"></p>
@@ -1667,25 +1714,24 @@ main{
     <h2 class="section-title"><span class="stitle-sym">✤</span> Loja de Velkarion</h2>
 
     <!-- Categoria tabs -->
-    <div class="vd-cats" id="loja-cats" style="margin-bottom:0.75rem;flex-wrap:wrap;">
-      <button class="vd-cat-btn active" data-lcat="armas"      onclick="switchLoja('armas')">      &#x2694; Armas</button>
-      <button class="vd-cat-btn" data-lcat="municao"    onclick="switchLoja('municao')">   &#x25C6; Muni&#xE7;&#xE3;o</button>
-      <button class="vd-cat-btn" data-lcat="focus"      onclick="switchLoja('focus')">     &#x2726; F&#xF3;cus</button>
-      <button class="vd-cat-btn" data-lcat="armadura"   onclick="switchLoja('armadura')">  &#x25A0; Armadura</button>
-      <button class="vd-cat-btn" data-lcat="itens"      onclick="switchLoja('itens')">     &#x2736; Itens</button>
-      <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"> &#x2665; Montarias</button>
-      <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')">  &#x2318; Ve&#xED;culos</button>
-      <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')">  &#x2737; Servi&#xE7;os</button>
-      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')">   &#x2615; Gastronomia</button>
-      <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')">  &#x2302; Base (Melhorias)</button>
-      <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')">  &#x2302; Base (Estruturas)</button>
-      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Imbu&#xED;dos</button>
-      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')">&#x2697; Alqu&#xED;micos</button>
-      <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')">  &#x25C8; Min&#xE9;rios</button>
-      <button class="vd-cat-btn" data-lcat="auxiliares" onclick="switchLoja('auxiliares')">&#x25B6; Auxiliares</button>
-      <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')">     &#x25C6; Gemas</button>
-      <button class="vd-cat-btn" data-lcat="joias"      onclick="switchLoja('joias')">     &#x2605; J&#xF3;ias</button>
-      <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')">   &#x21AF; Aprimoramentos</button>
+    <div id="loja-cats" style="margin-bottom:0.75rem;display:grid;grid-template-columns:repeat(9,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+      <button class="vd-cat-btn active" data-lcat="armas"      onclick="switchLoja('armas')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2694; Armas</button>
+      <button class="vd-cat-btn" data-lcat="municao"    onclick="switchLoja('municao')"    style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x25C6; Muni&#xE7;&#xE3;o</button>
+      <button class="vd-cat-btn" data-lcat="focus"      onclick="switchLoja('focus')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2726; F&#xF3;cus</button>
+      <button class="vd-cat-btn" data-lcat="armadura"   onclick="switchLoja('armadura')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x25A0; Armadura</button>
+      <button class="vd-cat-btn" data-lcat="itens"      onclick="switchLoja('itens')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2736; Itens</button>
+      <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"  style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2665; Montarias</button>
+      <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2318; Ve&#xED;culos</button>
+      <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2737; Servi&#xE7;os</button>
+      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')"    style="border-bottom:1px solid var(--border);">&#x2615; Gastronomia</button>
+      <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')"   style="border-right:1px solid var(--border);">&#x2302; Base (Mel.)</button>
+      <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')"   style="border-right:1px solid var(--border);">&#x2302; Base (Est.)</button>
+      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')"   style="border-right:1px solid var(--border);">&#x2747; Imbu&#xED;dos</button>
+      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')" style="border-right:1px solid var(--border);">&#x2697; Alqu&#xED;micos</button>
+      <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')"   style="border-right:1px solid var(--border);">&#x25C8; Min&#xE9;rios &amp; Aux.</button>
+      <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')"      style="border-right:1px solid var(--border);">&#x25C6; Gemas</button>
+      <button class="vd-cat-btn" data-lcat="joias"      onclick="switchLoja('joias')"      style="border-right:1px solid var(--border);">&#x2605; J&#xF3;ias</button>
+      <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')"    style="border-right:1px solid var(--border);">&#x21AF; Aprimoramentos</button>
       <button class="vd-cat-btn" data-lcat="encant"     onclick="switchLoja('encant')">    &#x2604; Encantamentos</button>
     </div>
 
@@ -1711,12 +1757,52 @@ main{
   <!-- GRIMÓRIO -->
   <div id="page-grimorio" class="page">
     <h2 class="section-title"><span class="stitle-sym">✦</span> Grimório</h2>
-    <div class="filter-bar">
+    <div class="filter-bar" style="align-items:flex-end;flex-wrap:wrap;">
       <div class="fg"><label>Buscar</label><input type="text" id="f-mag-search" placeholder="Nome, efeito, escola..." oninput="renderGrimorio()"></div>
-      <div class="fg"><label>Escola</label><select id="f-mag-escola" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
-      <div class="fg"><label>Grau</label><select id="f-mag-circulo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
-      <div class="fg"><label>Origem</label><select id="f-mag-classe" onchange="renderGrimorio()"><option value="">Todas</option></select></div>
-      <div class="fg"><label>Tipo</label><select id="f-mag-tipo" onchange="renderGrimorio()"><option value="">Todos</option></select></div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Escola</label>
+        <div class="chk-filter-wrap" id="chk-wrap-mag-escola">
+          <div class="chk-filter-btn" id="chk-btn-mag-escola" onclick="toggleChkPanel('mag-escola')">
+            <span id="chk-lbl-mag-escola">Todas</span>
+            <span id="chk-badge-mag-escola" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">▼</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-mag-escola"></div>
+        </div>
+      </div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Grau</label>
+        <div class="chk-filter-wrap" id="chk-wrap-mag-grau">
+          <div class="chk-filter-btn" id="chk-btn-mag-grau" onclick="toggleChkPanel('mag-grau')">
+            <span id="chk-lbl-mag-grau">Todos</span>
+            <span id="chk-badge-mag-grau" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">▼</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-mag-grau"></div>
+        </div>
+      </div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Origem</label>
+        <div class="chk-filter-wrap" id="chk-wrap-mag-origem">
+          <div class="chk-filter-btn" id="chk-btn-mag-origem" onclick="toggleChkPanel('mag-origem')">
+            <span id="chk-lbl-mag-origem">Todas</span>
+            <span id="chk-badge-mag-origem" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">▼</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-mag-origem"></div>
+        </div>
+      </div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Tipo</label>
+        <div class="chk-filter-wrap" id="chk-wrap-mag-tipo">
+          <div class="chk-filter-btn" id="chk-btn-mag-tipo" onclick="toggleChkPanel('mag-tipo')">
+            <span id="chk-lbl-mag-tipo">Todos</span>
+            <span id="chk-badge-mag-tipo" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">▼</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-mag-tipo"></div>
+        </div>
+      </div>
       <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
     </div>
     <p class="result-count" id="count-grimorio"></p>
@@ -2421,8 +2507,24 @@ function distributeData(rows,tab){
   if(tab==='loja_alquimicos'){LOJA.alquimicos=rows;LOJA_STATUS.alquimicos='ok';if(LOJA_ACTIVE==='alquimicos')renderLoja();return;}
   if(tab==='loja_venenos'){LOJA.venenos=rows;LOJA_STATUS.venenos='ok';if(LOJA_ACTIVE==='venenos')renderLoja();return;}
   if(tab==='loja_sicario'){LOJA.sicario=rows;LOJA_STATUS.sicario='ok';if(LOJA_ACTIVE==='sicario')renderLoja();return;}
-  if(tab==='loja_minerios'){LOJA.minerios=rows;LOJA_STATUS.minerios='ok';if(LOJA_ACTIVE==='minerios')renderLoja();return;}
-  if(tab==='loja_auxiliares'){LOJA.auxiliares=rows;LOJA_STATUS.auxiliares='ok';if(LOJA_ACTIVE==='auxiliares')renderLoja();return;}
+  if(tab==='loja_minerios'){
+    rows.forEach(function(r){ r._fonte='Minério'; });
+    LOJA.minerios=rows;
+    LOJA_STATUS.minerios='ok';
+    // Se auxiliares já carregou, mescla
+    if(LOJA_STATUS.auxiliares==='ok') _mesclarAuxNasMinerios();
+    if(LOJA_ACTIVE==='minerios') renderLoja();
+    return;
+  }
+  if(tab==='loja_auxiliares'){
+    rows.forEach(function(r){ r._fonte='Auxiliar'; });
+    LOJA.auxiliares=rows;
+    LOJA_STATUS.auxiliares='ok';
+    // Mescla dentro de minerios
+    _mesclarAuxNasMinerios();
+    if(LOJA_ACTIVE==='minerios') renderLoja();
+    return;
+  }
   if(tab==='loja_gemas'){LOJA.gemas=rows;LOJA_STATUS.gemas='ok';if(LOJA_ACTIVE==='gemas')renderLoja();return;}
   if(tab==='loja_joias'){LOJA.joias=rows;LOJA_STATUS.joias='ok';if(LOJA_ACTIVE==='joias')renderLoja();return;}
   if(tab==='loja_aprimor'){LOJA.aprimor=rows;LOJA_STATUS.aprimor='ok';if(LOJA_ACTIVE==='aprimor')renderLoja();return;}
@@ -2482,6 +2584,12 @@ function updateStats(){
   for(var vc in VD) totalVd+=VD[vc].length;
   var elVd=document.getElementById('stat-vantagens');
   if(elVd) elVd.textContent=totalVd||'—';
+}
+
+function _mesclarAuxNasMinerios(){
+  var min=(LOJA.minerios||[]).filter(function(r){ return r._fonte==='Minério'; });
+  var aux=(LOJA.auxiliares||[]);
+  LOJA.minerios = min.concat(aux);
 }
 
 function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
@@ -2697,13 +2805,98 @@ function voltarRacas(){
   document.getElementById('racas-detalhe').classList.remove('active');
 }
 
+// ── CHECKBOX FILTER SYSTEM ──
+var _chkState = {}; // { 'mag-escola': Set, 'mag-grau': Set, ... }
+
+function chkGet(id){ return _chkState[id] || (_chkState[id] = new Set()); }
+
+function chkPopulate(id, values){
+  var panel = document.getElementById('chk-panel-'+id);
+  if(!panel) return;
+  var current = chkGet(id);
+  // Keep existing selections that are still valid
+  var valid = new Set(values);
+  current.forEach(function(v){ if(!valid.has(v)) current.delete(v); });
+  panel.innerHTML = values.map(function(v){
+    var checked = current.has(v) ? 'checked' : '';
+    return '<label><input type="checkbox" value="'+v+'" '+checked+' onchange="chkToggle(\''+id+'\',this)">'+v+'</label>';
+  }).join('');
+  chkUpdateBtn(id);
+}
+
+function chkToggle(id, el){
+  var s = chkGet(id);
+  if(el.checked) s.add(el.value); else s.delete(el.value);
+  chkUpdateBtn(id);
+  // trigger render
+  if(id.indexOf('mag-')===0) renderGrimorio();
+  if(id==='class-cat') renderClasses();
+}
+
+function chkUpdateBtn(id){
+  var s = chkGet(id);
+  var btn = document.getElementById('chk-btn-'+id);
+  var lbl = document.getElementById('chk-lbl-'+id);
+  var badge = document.getElementById('chk-badge-'+id);
+  if(!btn) return;
+  var n = s.size;
+  if(n===0){
+    lbl.textContent = 'Todas';
+    badge.style.display='none';
+    btn.classList.remove('has-sel');
+  } else {
+    lbl.textContent = n===1 ? Array.from(s)[0].substring(0,14) : n+' selecion.';
+    badge.textContent = n;
+    badge.style.display='inline-flex';
+    btn.classList.add('has-sel');
+  }
+}
+
+function chkGetActive(id){
+  return Array.from(chkGet(id));
+}
+
+function toggleChkPanel(id){
+  // Close all others
+  document.querySelectorAll('.chk-filter-panel.open').forEach(function(p){
+    if(p.id !== 'chk-panel-'+id){ p.classList.remove('open'); document.getElementById(p.id.replace('chk-panel-','chk-btn-')).classList.remove('open'); }
+  });
+  var panel = document.getElementById('chk-panel-'+id);
+  var btn = document.getElementById('chk-btn-'+id);
+  if(!panel||!btn) return;
+  var isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+// Close panels when clicking outside
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.chk-filter-wrap')){
+    document.querySelectorAll('.chk-filter-panel.open').forEach(function(p){
+      p.classList.remove('open');
+      var btn = document.getElementById(p.id.replace('chk-panel-','chk-btn-'));
+      if(btn) btn.classList.remove('open');
+    });
+  }
+});
+
+function chkClear(id){
+  chkGet(id).clear();
+  var panel = document.getElementById('chk-panel-'+id);
+  if(panel) panel.querySelectorAll('input[type=checkbox]').forEach(function(c){ c.checked=false; });
+  chkUpdateBtn(id);
+}
+
 // ── RENDER CLASSES ──
 function renderClasses(){
-  var s=document.getElementById('f-class-search').value.toLowerCase(),ca=document.getElementById('f-class-papel').value,cl=document.getElementById('f-class-filtro').value;
-  popSel('f-class-papel',uniq(DB.classes.map(function(r){return gf(r,'Categoria','categoria');})),ca);
-  popSel('f-class-filtro',uniq(DB.dons.map(function(r){return gf(r,'Classe','classe');})),cl);
-  if(cl){verDonsClasse(cl);return;}
-  var dataC=DB.classes.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Categoria','categoria')===ca);});
+  var s=document.getElementById('f-class-search').value.toLowerCase();
+  var cats=chkGetActive('class-cat');
+  // Populate checkbox options
+  var allCats=uniq(DB.classes.map(function(r){return gf(r,'Categoria','categoria');})).filter(Boolean).sort();
+  chkPopulate('class-cat', allCats);
+  var dataC=DB.classes.filter(function(r){
+    return(!s||fstr(r).indexOf(s)>-1)&&(!cats.length||cats.indexOf(gf(r,'Categoria','categoria'))>-1);
+  });
   var g=document.getElementById('grid-classes');
   document.getElementById('count-classes').textContent=dataC.length+' classe(s)';
   if(!dataC.length){g.innerHTML=emptyMsg('⚔',DB.classes.length?'Nenhum resultado':'Nenhuma classe carregada');return;}
@@ -2922,7 +3115,7 @@ var LOJA_LABELS={
   servicos:'Serviços',aliment:'Gastronomia Regional',base_mel:'Base (Melhorias)',
   base_est:'Base (Estruturas)',imbuidos:'Imbuídos',pocoes:'Poções',
   alquimicos:'Alquímicos',venenos:'Venenos',sicario:'V. Sicário',
-  minerios:'Minérios',auxiliares:'Auxiliares',gemas:'Gemas',
+  minerios:'Minérios & Auxiliares',auxiliares:'Auxiliares',gemas:'Gemas',
   joias:'Jóias',aprimor:'Aprimoramentos',encant:'Encantamentos'
 };
 var LOJA_SYMS={
@@ -2969,8 +3162,10 @@ function lojaGetPreco(r,cat){
 function lojaGetCat(r,cat){
   // Imbuídos: agrupa por Sub-categoria (Lendário, Colossal, Titânico, Mítico, Épico)
   if(cat==='imbuidos') return r['Categoria']||'';
-  // Minérios e Gemas: Categoria/Complexidade
-  if(cat==='minerios'||cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
+  // Minérios: agrupa por fonte (Minério vs Auxiliar), depois Categoria
+  if(cat==='minerios') return r._fonte||r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
+  // Gemas: Categoria/Complexidade
+  if(cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
   // Munição: sem agrupamento (tudo junto)
   if(cat==='municao') return '';
   // Alquímicos: agrupa por Categoria (nova planilha unificada)
@@ -3410,12 +3605,25 @@ function openLojaModal(idx){
 
 // ── RENDER GRIMÓRIO ──
 function renderGrimorio(){
-  var s=document.getElementById('f-mag-search').value.toLowerCase(),es=document.getElementById('f-mag-escola').value,ci=document.getElementById('f-mag-circulo').value,cl=document.getElementById('f-mag-classe').value,tp=document.getElementById('f-mag-tipo').value;
-  popSel('f-mag-escola',uniq(DB.grimorio.map(function(r){return gf(r,'Escola','escola');})),es);
-  popSel('f-mag-circulo',uniq(DB.grimorio.map(function(r){return gf(r,'Grau','grau');})),ci);
-  popSel('f-mag-classe',uniq(DB.grimorio.map(function(r){return gf(r,'Origem','origem');})),cl);
-  popSel('f-mag-tipo',uniq(DB.grimorio.map(function(r){return gf(r,'Tipo','tipo');})),tp);
-  var data=DB.grimorio.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!es||gf(r,'Escola','escola')===es)&&(!ci||gf(r,'Grau','grau')===ci)&&(!cl||gf(r,'Origem','origem')===cl)&&(!tp||gf(r,'Tipo','tipo')===tp);});
+  var s=document.getElementById('f-mag-search').value.toLowerCase();
+  var escolas=chkGetActive('mag-escola');
+  var graus=chkGetActive('mag-grau');
+  var origens=chkGetActive('mag-origem');
+  var tipos=chkGetActive('mag-tipo');
+
+  // Populate checkbox panels
+  chkPopulate('mag-escola', uniq(DB.grimorio.map(function(r){return gf(r,'Escola','escola');})).filter(Boolean).sort());
+  chkPopulate('mag-grau',   uniq(DB.grimorio.map(function(r){return gf(r,'Grau','grau');})).filter(Boolean).sort());
+  chkPopulate('mag-origem', uniq(DB.grimorio.map(function(r){return gf(r,'Origem','origem');})).filter(Boolean).sort());
+  chkPopulate('mag-tipo',   uniq(DB.grimorio.map(function(r){return gf(r,'Tipo','tipo');})).filter(Boolean).sort());
+
+  var data=DB.grimorio.filter(function(r){
+    return(!s||fstr(r).indexOf(s)>-1)
+      &&(!escolas.length||escolas.indexOf(gf(r,'Escola','escola'))>-1)
+      &&(!graus.length||graus.indexOf(gf(r,'Grau','grau'))>-1)
+      &&(!origens.length||origens.indexOf(gf(r,'Origem','origem'))>-1)
+      &&(!tipos.length||tipos.indexOf(gf(r,'Tipo','tipo'))>-1);
+  });
   var g=document.getElementById('grid-grimorio');
   document.getElementById('count-grimorio').textContent=data.length+' resultado'+(data.length===1?'':'s');
   if(!data.length){g.innerHTML=emptyMsg('✦',DB.grimorio.length?'Nenhum resultado':'Nenhuma magia carregada');return;}
@@ -3744,8 +3952,11 @@ function renderEstigmas(){
 
 // ── CLEAR FILTERS ──
 function clearFilters(sec){
-  var m={racas:['f-raca-search'],classes:['f-class-search','f-class-papel','f-class-filtro'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search','f-mag-escola','f-mag-circulo','f-mag-classe','f-mag-tipo'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
+  var m={racas:['f-raca-search'],classes:['f-class-search'],vantagens:['f-vd-search','f-vd-custo','f-vd-prereq'],itens:['f-item-search','f-item-raridade','f-item-tipo'],grimorio:['f-mag-search'],deuses:['f-deus-search','f-deus-align','f-deus-dominio'],velkarion:['f-vel-search'],estigmas:['f-est-search','f-est-cat','f-est-atrib']};
   var ids=m[sec]||[];for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el)el.value='';}
+  // Clear checkbox filters
+  if(sec==='classes') chkClear('class-cat');
+  if(sec==='grimorio'){ chkClear('mag-escola');chkClear('mag-grau');chkClear('mag-origem');chkClear('mag-tipo'); }
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
 }
