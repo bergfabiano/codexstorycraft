@@ -1865,7 +1865,7 @@ var SHEET_URLS={
   loja_base_est:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=878526036&single=true&output=csv",
   loja_imbuidos:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1270176649&single=true&output=csv",
   loja_pocoes:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1780383104&single=true&output=csv",
-  loja_alquimicos: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=692269012&single=true&output=csv",
+  loja_alquimicos: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1780383104&single=true&output=csv",
   loja_venenos:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=2046406320&single=true&output=csv",
   loja_sicario:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=203269519&single=true&output=csv",
   loja_minerios:   "https://docs.google.com/spreadsheets/d/e/2PACX-1vSzA6Z0v_LzNgIrMq0KAk_7isukd_ws0sphYTivqERtwyAs2i9FxxNgDCIKwKomI6uBOeMHc_cz4nTX/pub?gid=1252698681&single=true&output=csv",
@@ -2859,14 +2859,18 @@ function lojaGetCat(r,cat){
   if(cat==='minerios'||cat==='gemas') return r['Categoria']||r['Sub-categoria']||r['Tipo']||r['Complexidade']||'';
   // Munição: sem agrupamento (tudo junto)
   if(cat==='municao') return '';
-  // Alquímicos e Venenos: sem agrupamento (tudo junto, usa tags)
-  if(cat==='alquimicos'||cat==='venenos'||cat==='sicario') return '';
+  // Alquímicos: agrupa por Categoria (nova planilha unificada)
+  if(cat==='alquimicos') return r['Categoria']||'';
+  // Venenos: sem agrupamento (tudo junto, usa tags)
+  if(cat==='venenos'||cat==='sicario') return '';
   // Todos os outros: Categoria padrão
   return r['Categoria']||r['Sub-categoria']||r['Nível']||r['Cor']||r['Complexidade']||'';
 }
 function lojaGetDesc(r,cat){
   var d='';
-  if(cat==='focus'){
+  if(cat==='alquimicos'){
+    d=r['Descrição']||r['Efeito']||'';
+  } else if(cat==='focus'){
     d=r['Descrição']||r['Efeito']||r['Uso / Descrição']||r['Descrição do Fócus']||'';
   } else if(cat==='armadura'){
     d=r['Descrição']||r['Propriedades']||r['Propriedades e Observações']||r['Efeito']||'';
@@ -2895,7 +2899,12 @@ function lojaGetTags(r,cat){
   if(cat==='pocoes'){
     var niv=r['Nível']||''; if(niv) tags.push({label:'Nv '+niv,cls:'tag-rare'});
   }
-  if(cat==='alquimicos'||cat==='venenos'||cat==='sicario'){
+  if(cat==='alquimicos'){
+    var catV=r['Categoria']||''; if(catV) tags.push({label:catV,cls:'tag-rare'});
+    var esp=r['Espaços']||''; if(esp&&esp!=='0'&&esp!=='-') tags.push({label:esp+' esp',cls:'tag-gray'});
+    return tags;
+  }
+  if(cat==='venenos'||cat==='sicario'){
     var niv=r['Nível']||''; if(niv) tags.push({label:niv,cls:'tag-rare'});
     var catV=r['Categoria']||''; if(catV) tags.push({label:catV,cls:'tag-gray'});
   }
@@ -4088,89 +4097,94 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
 // ORÁCULO — Motor de consulta de regras
 // ═══════════════════════════════════════════════
 
-var MANUAL_JSON = null;
+var ORACULO_JSONS = [];   // será preenchido após o carregamento
 var ORACULO_READY = false;
 var ORACULO_LOADING = false;
 
-// URL raw do JSON no GitHub — troque pelo seu repositório
-// Fallback: tenta carregar do mesmo diretório
-var MANUAL_URL = 'storycraft_manual.json';
+// ── Adicione aqui novos JSONs quando criar ──
+var ORACULO_URLS = [
+  { url: 'storycraft_manual.json', nome: 'Manual do Jogador'  },
+  { url: 'storycraft_racas.json',  nome: 'Manual das Raças'   },
+  // { url: 'storycraft_classes.json', nome: 'Manual das Classes' },
+  // { url: 'storycraft_itens.json',   nome: 'Itens Mágicos'      },
+];
 
 function oraculo_init(){
   if(ORACULO_READY || ORACULO_LOADING) return;
   ORACULO_LOADING = true;
-  // Tenta carregar o JSON
-  fetch(MANUAL_URL)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      MANUAL_JSON = data;
-      ORACULO_READY = true;
-      ORACULO_LOADING = false;
-    })
-    .catch(function(){
-      // Se não encontrar arquivo externo, usa o JSON embutido
-      ORACULO_LOADING = false;
-      ORACULO_READY = true;
-      // MANUAL_JSON permanece null — o sistema vai avisar ao tentar usar
-    });
+
+  var promises = ORACULO_URLS.map(function(entry){
+    return fetch(entry.url)
+      .then(function(r){ return r.json(); })
+      .then(function(data){ return { data: data, nome: entry.nome }; })
+      .catch(function(){ return null; }); // JSON ausente não quebra nada
+  });
+
+  Promise.all(promises).then(function(results){
+    ORACULO_JSONS = results.filter(function(r){ return r !== null; });
+    ORACULO_READY = true;
+    ORACULO_LOADING = false;
+  });
 }
 
-// ── Busca por relevância nos tópicos do manual ──
+// ── Busca por relevância nos tópicos de todos os manuais carregados ──
 function oraculo_buscar_topicos(pergunta){
-  if(!MANUAL_JSON) return [];
   var q = pergunta.toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
   var resultados = [];
 
-  MANUAL_JSON.capitulos.forEach(function(cap){
-    cap.topicos.forEach(function(top){
-      var score = 0;
+  function buscarNoJSON(json, fonte){
+    if(!json) return;
+    (json.capitulos||[]).forEach(function(cap){
+      (cap.topicos||[]).forEach(function(top){
+        var score = 0;
 
-      // Verifica nas tags
-      (top.tags||[]).forEach(function(tag){
-        var t = tag.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-        if(q.indexOf(t) > -1 || t.indexOf(q) > -1) score += 3;
-        // Match parcial por palavras
-        q.split(' ').forEach(function(w){
-          if(w.length > 2 && t.indexOf(w) > -1) score += 1;
+        (top.tags||[]).forEach(function(tag){
+          var t = tag.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+          if(q.indexOf(t) > -1 || t.indexOf(q) > -1) score += 3;
+          q.split(' ').forEach(function(w){
+            if(w.length > 2 && t.indexOf(w) > -1) score += 1;
+          });
         });
-      });
 
-      // Verifica no título
-      var titulo = top.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-      if(q.indexOf(titulo) > -1 || titulo.indexOf(q) > -1) score += 4;
-      q.split(' ').forEach(function(w){
-        if(w.length > 2 && titulo.indexOf(w) > -1) score += 2;
-      });
+        var titulo = top.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        if(q.indexOf(titulo) > -1 || titulo.indexOf(q) > -1) score += 4;
+        q.split(' ').forEach(function(w){
+          if(w.length > 2 && titulo.indexOf(w) > -1) score += 2;
+        });
 
-      // Verifica no conteúdo (match mais leve)
-      var conteudo = top.conteudo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-      q.split(' ').forEach(function(w){
-        if(w.length > 3){
-          var idx = 0, count = 0;
-          while((idx = conteudo.indexOf(w, idx)) > -1){ count++; idx++; }
-          score += Math.min(count, 3);
+        var conteudo = top.conteudo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        q.split(' ').forEach(function(w){
+          if(w.length > 3){
+            var idx = 0, count = 0;
+            while((idx = conteudo.indexOf(w, idx)) > -1){ count++; idx++; }
+            score += Math.min(count, 3);
+          }
+        });
+
+        if(score > 0){
+          resultados.push({ score: score, top: top, cap: cap, fonte: fonte });
         }
       });
-
-      if(score > 0){
-        resultados.push({ score: score, top: top, cap: cap });
-      }
     });
+  }
+
+  // Percorre todos os JSONs carregados
+  ORACULO_JSONS.forEach(function(entry){
+    buscarNoJSON(entry.data, entry.nome);
   });
 
-  // Ordena por score e retorna os 5 mais relevantes
   resultados.sort(function(a,b){ return b.score - a.score; });
-  return resultados.slice(0, 5);
+  return resultados.slice(0, 6);
 }
 
 // ── Monta o contexto para enviar à API ──
 function oraculo_montar_contexto(topicos){
   if(!topicos.length) return '';
-  var ctx = '=== TRECHOS RELEVANTES DO MANUAL STORYCRAFT ===\n\n';
+  var ctx = '=== TRECHOS RELEVANTES DOS MANUAIS STORYCRAFT ===\n\n';
   topicos.forEach(function(r){
-    ctx += '[ ' + r.cap.titulo + ' → ' + r.top.titulo + ' ]\n';
+    ctx += '[ ' + (r.fonte||'Manual') + ' → ' + r.cap.titulo + ' → ' + r.top.titulo + ' ]\n';
     ctx += r.top.conteudo + '\n\n';
   });
   return ctx;
@@ -4247,9 +4261,10 @@ function oraculo_enviar(){
 
   // Monta o prompt de sistema
   var systemPrompt = 'Você é o Oráculo do Codex StoryCraft — um assistente especialista nas regras do sistema de RPG de mesa Storycraft 3ª Edição, desenvolvido por Berg. ' +
-    'Responda perguntas sobre as regras com precisão, usando os trechos do manual fornecidos como contexto. ' +
+    'Responda perguntas sobre as regras com precisão, usando os trechos dos manuais fornecidos como contexto. ' +
+    'Você tem acesso ao Manual do Jogador (regras, combate, perícias, etc.) e ao Manual das Raças (todas as raças de Velkarion com habilidades, Fardo e Linhagem). ' +
     'Use linguagem clara e objetiva. Quando citar valores numéricos ou mecânicas específicas, seja exato. ' +
-    'Se o contexto não cobrir totalmente a pergunta, diga que a informação pode estar em outro manual do sistema (como o Manual das Raças ou Manual das Classes). ' +
+    'Se o contexto não cobrir totalmente a pergunta, diga que a informação pode estar em outro manual do sistema (como o Manual das Classes). ' +
     'Responda sempre em português brasileiro. Não use markdown com # ou ## — use texto simples com negrito (**termo**) quando necessário. ' +
     'Seja conciso mas completo.\n\n' + contexto;
 

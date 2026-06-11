@@ -1,0 +1,589 @@
+{
+  "sistema": "Storycraft",
+  "edicao": "3ª Edição",
+  "documento": "Manual das Raças",
+  "capitulos": [
+    {
+      "numero": "I",
+      "titulo": "Introdução",
+      "topicos": [
+        {
+          "id": "fardo_linhagem",
+          "titulo": "Fardo e Linhagem",
+          "tags": ["fardo", "linhagem", "mecânica racial", "sistema de raças"],
+          "conteudo": "Toda raça carrega uma dualidade: o Fardo e a Linhagem. FARDO: representa as limitações, vulnerabilidades e contradições que vêm com o sangue de cada raça. Não são punições, são consequências naturais de existir da forma que se existe. LINHAGEM: é o outro lado. Ao aceitar conscientemente seu Fardo, o personagem desperta algo mais profundo — uma habilidade única que não pode ser aprendida, comprada ou imitada. Não existe Linhagem sem Fardo; os dois são inseparáveis. Mecanicamente, o jogador pode escolher adquirir o Fardo de sua raça durante a criação do personagem ou ao longo da campanha (a critério do Mestre). Ao fazê-lo, desbloqueia automaticamente sua Linhagem."
+        },
+        {
+          "id": "tracos_de_categoria",
+          "titulo": "Traços Raciais de Categoria",
+          "tags": ["traços de categoria", "passivas raciais", "categoria racial"],
+          "conteudo": "São características passivas que toda raça de um mesmo grupo compartilha automaticamente, independentemente de escolhas ou custos. Cada raça pertence a uma categoria (Humanoides, Feéricos, Elfos, etc.) e essa categoria oferece traços que não precisam ser adquiridos nem ativados — eles simplesmente existem. Um feérico sempre se comunicará com animais. Um demônio sempre enxergará o invisível. Um morto-vivo nunca precisará dormir. Os traços de categoria são a fundação sobre a qual a identidade racial é construída."
+        }
+      ]
+    },
+    {
+      "numero": "II",
+      "titulo": "Humanoides",
+      "topicos": [
+        {
+          "id": "categoria_humanoide",
+          "titulo": "Categoria: Humanoides",
+          "tags": ["humanoide", "traço de categoria", "herança mortal", "limitação espiritual"],
+          "conteudo": "Humanoides são a espinha dorsal dos reinos. Versáteis, determinados e surpreendentes. TRAÇO RACIAL — Herança Mortal: Humanoides começam a campanha com um patrimônio inicial. No início da campanha, role 1d6 para determinar a quantidade de florins de ouro carregados como herança. DESVANTAGEM DE CATEGORIA — Limitação Espiritual: Humanoides não podem ingressar em classes de vínculo natural como Druida, Mestre das Almas e Xamã. Em compensação, não possuem restrições de classe para nenhuma outra área."
+        },
+        {
+          "id": "aasimar",
+          "titulo": "Aasimar",
+          "tags": ["aasimar", "humanoide", "celestial", "divino", "herança celestial"],
+          "conteudo": "Humanos tocados pelo sangue celestial, descendentes de uniões entre mortais e seres dos planos superiores. Diferente dos Devas (almas antigas retornando), Aasimares são simplesmente humanos que nasceram com algo a mais. HABILIDADES RACIAIS: Toque Divino: +2 em Sabedoria, +1 em Carisma e Infravisão gratuita. Resistência Celestial: Fortificados contra dano radiante e sagrado, +1 em testes de Vontade contra efeitos de origem profana ou demoníaca. Herança Iluminada: 1x/cena, gaste 2 PM para emanar luz suave em alcance curto até fim da cena, removendo penalidades de escuridão para aliados. Criaturas das trevas na área sofrem -1 em todos os testes. LINHAGEM — Revelação Celestial: 1x/dia, ação padrão + 2 PM, revela a fagulha divina. Aliados em alcance curto recebem +2 em ataques e Resistência por 1 cena. Inimigos de alinhamento maligno testam Vontade (CD Carisma) ou ficam Abalados por 2 rodadas. Furtividade impossível enquanto ativa. FARDO — Expectativa Divina: Sempre que testemunhar injustiça flagrante, testa Vontade CD 16 para não intervir imediatamente, mesmo que seja estrategicamente desvantajoso."
+        },
+        {
+          "id": "anao",
+          "titulo": "Anão",
+          "tags": ["anão", "humanoide", "subterrâneo", "resistência", "infravisão"],
+          "conteudo": "Mestres em resistência, guerra e segredos da terra. Baixos e robustos (1,30m a 1,50m), pele bronzeada, olhos escuros, cabelos longos em tons escuros. HABILIDADES RACIAIS: Arquétipo Anão: Infravisão natural e +1 em Vontade. Astúcia: +2 em Sabedoria, +1 em Inteligência; 1x/cena pode gastar 2 PM para rolar novamente quando não achar nada ao rolar tesouro. Olhar Minucioso: +1 em Investigação, Intuição e Percepção. LINHAGEM — Juramento de Pedra: 1x/dia, declara Juramento contra alvo que o atacou ou traiu. Como ação livre, gasta 2 PM; até fim do combate, ataques contra esse alvo ignoram 5 pontos de MD e +2 em Resistências contra efeitos causados por ele. FARDO — Rancor Eterno: Quando sofre derrota humilhante, traição ou insulto público, o Mestre pode declarar um Rancor: sofre -1 em Vontade e provocações enquanto a relação não for resolvida."
+        },
+        {
+          "id": "gnomo",
+          "titulo": "Gnomo",
+          "tags": ["gnomo", "humanoide", "pequeno", "inteligência", "modelo especial"],
+          "conteudo": "Criaturas pequenas (cerca de 90cm) cheias de energia. Engenheiros, alquimistas e inventores. HABILIDADES RACIAIS: Engenhosidade: +1 em Destreza, +2 em Inteligência. Sentidos Especiais: 1x/cena, gaste 2 PM para substituir o modificador de atributo utilizado por Inteligência em qualquer teste (exceto ataques). Habilidade Precisa: Proficiência em armas de fogo, +2 em Ofício à escolha. LINHAGEM — Engenho de Emergência: 1x/dia, ao ser alvo de feitiço ou armadilha mecânica, gaste 2 PM como reação para reduzir dano à metade ou transferir efeito de área para alvo adjacente. FARDO — Modelo Especial: Gnomos têm tamanho Pequeno, 6m de deslocamento e possuem a desvantagem Modelo Especial."
+        },
+        {
+          "id": "goblin",
+          "titulo": "Goblin",
+          "tags": ["goblin", "humanoide", "pequeno", "furtivo", "modelo especial"],
+          "conteudo": "Criaturas ágeis e oportunistas, com mente rápida e espírito inquieto. HABILIDADES RACIAIS: Furtivos por Natureza: +1 em Destreza, +1 em Sabedoria, +1 em Inteligência. Rato das Ruas: +1 em Fortitude; recuperação de PV e PM nunca é inferior ao normal. Peste Esguia: Visão no escuro, deslocamento de escalada igual ao terrestre, tamanho Pequeno mas deslocamento se mantém 9m. LINHAGEM — Fuga Acrobática: 1x/dia, ação de movimento + 2 PM para se deslocar sem provocar ataques de oportunidade, podendo atravessar espaços de criaturas maiores; +4 em Acrobacia até início do próximo turno. FARDO — Modelo Especial: Penalidades em combates contra inimigos maiores e dificuldades com equipamentos convencionais."
+        },
+        {
+          "id": "humano",
+          "titulo": "Humano",
+          "tags": ["humano", "humanoide", "versátil", "adaptável"],
+          "conteudo": "Mortais versáteis com expectativa de vida média de 70 anos. Incrivelmente adaptáveis. HABILIDADES RACIAIS: Atributos: +1 em três atributos diferentes à escolha. Vantagem Inata: Recebe 1 vantagem gratuitamente. Aprendizado Rápido: Podem escolher duas perícias quaisquer e recebem +2 em cada uma, mesmo que não sejam treinadas nem pertençam à sua classe. LINHAGEM — Resiliência Adaptável: 1x/dia, pode gastar uma reação e 2 PM para se livrar de qualquer efeito ou condição debilitante mágica. FARDO — Mortalidade Inevitável: A curta expectativa de vida pesa; começa com -2 PV ou -1 em Fortitude."
+        },
+        {
+          "id": "meio_orc",
+          "titulo": "Meio-Orc",
+          "tags": ["meio-orc", "humanoide", "força", "híbrido", "infravisão"],
+          "conteudo": "Resultado da união entre orc e humano, fortes e resistentes. HABILIDADES RACIAIS: Meio-forte, Meio-orc: +2 em Força, +1 em qualquer Atributo à escolha. Melhor que Eles: Infravisão gratuita; +2 em testes para resistir a paralisia, confusão e atordoamento. Híbrido Nativo: +1 em Atletismo e Luta ou Pontaria à escolha; +2 nas rolagens de dano em ataques físicos. LINHAGEM — Fúria do Limiar: 1x/dia, quando estiver com metade ou menos dos PV, gaste 2 PM como ação livre para adicionar +2d6 ao próximo ataque físico bem-sucedido. FARDO — Inculto: Sofrem -2 em testes baseados em Carisma, exceto para intimidar."
+        },
+        {
+          "id": "orc",
+          "titulo": "Orc",
+          "tags": ["orc", "humanoide", "força", "subterrâneo", "infravisão"],
+          "conteudo": "Criaturas fortes, rústicas e com aparência monstruosa. Mestres na arte da guerra. HABILIDADES RACIAIS: Forte e Bruto: +2 em Força, +1 em Constituição. Predador das Profundezas: Infravisão; +1d6 em ataques físicos. Sangue e Ferro: Recebe a vantagem Arena quando estiver em locais subterrâneos ou cavernas. LINHAGEM — Ímpeto Brutal: 1x/dia, ao usar a manobra Investida, adiciona +1d8 de dano. Se alvo falhar em Fortitude (CD Força), é empurrado 3m e fica Derrubado. FARDO — Inculto: Recebe a desvantagem Inculto, -2 em Carisma exceto para intimidar."
+        },
+        {
+          "id": "satiro",
+          "titulo": "Sátiro",
+          "tags": ["sátiro", "humanoide", "feérico", "caprino", "carisma", "comunicação com animais"],
+          "conteudo": "Humanoides de origem feérica com pernas caprinas, cascos e chifres. Seres de excesso e presença. HABILIDADES RACIAIS: Sangue da Festa: +2 em Carisma, +1 em Destreza. Passo de Caprino: Ignoram penalidades de terreno difícil natural. Melodia Feérica: Treinados em Atuação com +2, possuem Comunicação com Animais (versão limitada — animais de floresta e campo). LINHAGEM — Canção Selvagem: 1x/dia, ação padrão + 2 PM, toca ou canta música primordial. Inimigos em alcance de 9m que ouçam testam Vontade (CD Carisma) ou ficam Fascinados por 2 rodadas. Aliados na área recuperam 1d6 PM. Cessa se o Sátiro atacar ou sofrer dano. FARDO — Sede do Presente: Sempre que o grupo fizer plano de longo prazo exigindo paciência, testa Vontade CD 16 para cumpri-lo sem improvisar."
+        },
+        {
+          "id": "shardar_kai",
+          "titulo": "Shardar-kai",
+          "tags": ["shardar-kai", "humanoide", "sombra", "teleporte", "Rainha-Corvo"],
+          "conteudo": "Humanoides moldados pela matéria das sombras após antigo império cair nos planos sombrios. Pele pálida, cicatrizes e tatuagens, estilo gótico. HABILIDADES RACIAIS: Sombrios: Visão Noturna; podem gastar 1 PM para teleportar até 9m em qualquer direção desde que ponto de partida e chegada possuam sombra. Resilientes: +2 em Constituição, +1 em Sabedoria; bônus acumulativos em testes de resistência física. Aptidão Sombria: +1 em VG, +2 em MD, +1 em testes de Fortitude. LINHAGEM — Passo entre Sombras: 1x/dia, ação de movimento + 2 PM, teleporta até 9m para ponto em sombra ou penumbra na linha de visão. Chega silenciosamente, +2 em Furtividade até início do próximo turno. FARDO — Herege das Sombras: Ao abandonar a fé na Rainha-Corvo, é perseguido e sofre -2 em Carisma ao interagir com outros shadar-kai."
+        }
+      ]
+    },
+    {
+      "numero": "III",
+      "titulo": "Elfos",
+      "topicos": [
+        {
+          "id": "categoria_elfo",
+          "titulo": "Categoria: Elfos",
+          "tags": ["elfo", "traço de categoria", "fluxo arcano", "constituição frágil", "PM"],
+          "conteudo": "Criaturas profundamente ligadas à magia e ao mistério. TRAÇO RACIAL — Fluxo Arcano: Elfos recuperam 1 PM adicional a cada descanso, valor que aumenta em 1 a cada escala atingida. DESVANTAGEM DE CATEGORIA — Constituição Frágil: Sofrem -1 em Fortitude permanentemente."
+        },
+        {
+          "id": "alto_elfo",
+          "titulo": "Alto Elfo",
+          "tags": ["alto elfo", "elfo primal", "elfo branco", "albino", "magia arcana"],
+          "conteudo": "Também chamados elfos brancos ou albinos, são os mais raros entre os elfos e os primeiros de sua raça. Pele quase branca, cabelos e olhos alvos, orelhas menos pontiagudas, dedos longos e finos. HABILIDADES RACIAIS: Herança Ancestral: +1 em Inteligência, +1 em Sabedoria, +1 em Carisma. Eco Arcano: Inicia a campanha com 4 PM adicionais. Resistência Primordial: Recebe a vantagem Espírito Inquebrantável gratuitamente. LINHAGEM — Dominância Primordial: 1x/dia, ação padrão + 2 PM. Um alvo visível testa Vontade (CD Carisma) ou fica incapaz de realizar ações agressivas contra você por 1 rodada. FARDO — Linhagem Pura: Qualquer efeito que altere sua forma tem CD +2. Ao interagir com raças 'inferiores', o Mestre pode exigir testes de Vontade para conter arrogância ancestral."
+        },
+        {
+          "id": "eiradaan",
+          "titulo": "Eiradaan",
+          "tags": ["eiradaan", "elfo", "arcano", "pele metálica", "magia"],
+          "conteudo": "Raça ancestral enigmática, considerada ainda mais antiga e arcanamente conectada que os elfos. Pele de tons metálicos (dourado, prateado ou púrpura), olhos opacos como vidro encantado. HABILIDADES RACIAIS: Essência Arcana: +2 em Inteligência, +1 em outro atributo à escolha. Herança Mística: 1x/cena, gaste 2 PM para receber vantagem em teste para resistir a dano ou efeito mágico. Reservatório Espiritual: +1 PM adicional a cada nível ímpar. LINHAGEM — Pulso Arcano: 1x/dia, ação padrão + 2 PM, libera onda de energia arcana pura em raio de 6m. Criaturas sofrem 2d8 de dano arcano e testam Fortitude (CD Inteligência) ou ficam Atordoadas por 1 rodada. Aliados são empurrados para fora sem dano. FARDO — Frio Arcano: Quando falha em resistência contra feitiço, sofre +1d4 de dano extra do mesmo tipo."
+        },
+        {
+          "id": "elfo",
+          "titulo": "Elfo",
+          "tags": ["elfo", "arco", "espada", "natureza", "crítico"],
+          "conteudo": "Raça ancestral, tida como o primeiro povo criado pelos deuses. Orelhas pontudas, olhos amendoados, forte ligação com a natureza. HABILIDADES RACIAIS: Astúcia Élfica: +2 em Destreza ou Inteligência, +1 em Constituição. Graça Ancestral: Visão Aguçada e +1 em Reflexos. Sangue Ancestral: Reduzem em 1 a Margem de Crítico com espadas e arcos. LINHAGEM — Memória de Combate: Ao ser atingido por ataque que já sofreu nesta cena, gaste 2 PM como reação para reduzir dano à metade e +2 em VG contra esse tipo de ataque até fim da cena. FARDO — Memória Imortal: Ao testemunhar a morte de aliado próximo ou destruição de algo amado, testa Vontade CD 14 ou fica Abalado até fim da cena."
+        },
+        {
+          "id": "elfo_caotico",
+          "titulo": "Elfo Caótico",
+          "tags": ["elfo caótico", "sombra", "caos", "teleporte", "magia negra"],
+          "conteudo": "Elfos que resistiram às trevas do plano do caos. Pele azul claro ou muito escuro, cabelos e olhos de tonalidade azul marinha. HABILIDADES RACIAIS: Herança Sombria: +2 em Inteligência, +1 em Sabedoria. Afinidade Caótica: Escolha entre aprender um feitiço de 1º Grau de qualquer Origem e Tipo (excluindo restrições), ou receber uma Vantagem Inicial. Salto das Sombras: Ação de movimento + 1 PM, teleporta até 9m em ponto parcial ou totalmente em sombra. LINHAGEM — Salto das Sombras Caóticas: 1x/dia, ação de movimento + 2 PM, dissolve-se no plano do caos e reaparece em até 12m em sombra ou escuridão. Alvo adjacente na chegada testa Vontade (CD Inteligência) ou fica Confuso por 1 rodada. FARDO — Sussurros do Vazio: 1x/cena, ao entrar em contato com magia do tipo negro ou caótico, testa Vontade CD 12 ou fica distraído por 1 rodada, perdendo ação bônus."
+        },
+        {
+          "id": "elfo_da_alvorada",
+          "titulo": "Elfo da Alvorada",
+          "tags": ["elfo da alvorada", "sin'dorei", "magia radiante", "radiante", "nobre"],
+          "conteudo": "Elfos nobres que perderam acesso à Nascente do Sol e agora a reconstruíram. Orgulhosos e altivos, veem-se como superiores. Pele do alabastro ao dourado pálido, olhos entre verde e dourado. HABILIDADES RACIAIS: Herança Solar: +2 em Inteligência, +1 em Carisma. Prestígio Ancestral: Recebe a vantagem Nobreza gratuitamente. Magia Radiante: 1x/cena, ao lançar feitiço ofensivo, adiciona +1 dado de dano do mesmo tipo. LINHAGEM — Magia Radiante: 1x/dia, 2 PM + ação padrão, raio de luz arcano em alcance médio. Alvo sofre 2d8 de dano radiante e testa Fortitude (CD Inteligência) ou fica Ofuscado. Mortos-vivos e criaturas das trevas sofrem +1d8 adicional. FARDO — Arrogância Solar: Ao interagir com raças não-élficas pela primeira vez, o Mestre pode exigir Carisma CD 12 para não demonstrar desprezo; -2 em testes contra essas criaturas até fim da cena."
+        },
+        {
+          "id": "elfo_da_floresta",
+          "titulo": "Elfo da Floresta",
+          "tags": ["elfo da floresta", "natureza", "animais", "plantas", "silvestre"],
+          "conteudo": "Os mais conectados ao plano físico da natureza entre todos os elfos. Peles variando do pálido ao ébano com tons esverdeados. HABILIDADES RACIAIS: Herança Selvagem: +2 em Destreza ou Sabedoria, +1 em Força. Instinto Natural: Treinados em Sobrevivência e Adestramento; +2 nesses testes em florestas, selvas ou relvas. Filho da Natureza: Recebem o idioma Silvestre e podem se comunicar com animais e plantas; sentidos ampliados em áreas naturais. LINHAGEM — Chamado da Mata: 1x/dia, percebe automaticamente criaturas ocultas em vegetação num raio de 15m; move-se silenciosamente por vegetação sem teste (Percepção CD 20+SAB detecta); uma criatura à escolha sofre -2 em Furtividade. FARDO — Ligado à Natureza: Em cidades, masmorras ou locais sem vegetação viva, -1 em Percepção e Intuição."
+        },
+        {
+          "id": "elfo_da_tempestade",
+          "titulo": "Elfo da Tempestade",
+          "tags": ["elfo da tempestade", "nômade", "deserto", "montanha", "arena"],
+          "conteudo": "Nômades que vivem em regiões de climas extremos. Orelhas longas, olhos com brilho azulado peculiar. HABILIDADES RACIAIS: Espírito da Tempestade: +2 em Destreza ou Inteligência, +1 em Constituição. Arena: Adaptado a ambiente específico à escolha (deserto, montanha ou tundra), vantagem Arena gratuitamente; +2 em acerto e iniciativa nesse terreno. Instinto de Sobrevivência: Treinamento natural em Sobrevivência e Atletismo; se já treinados, +2 adicional em cada. LINHAGEM — Instinto de Sobrevivente: 1x/dia, ao entrar em terreno/ambiente desfavorável, gaste 2 PM como reação: não sofre penalidade de movimento naquele terreno até fim da cena e +2 em todos os testes nesse ambiente. FARDO — Sem Lar: Não pode se beneficiar de bônus de descanso confortável em ambientes urbanos."
+        },
+        {
+          "id": "elfo_do_ceu",
+          "titulo": "Elfo do Céu",
+          "tags": ["elfo do céu", "voo", "asas", "dragão azul", "altura"],
+          "conteudo": "Extremamente raros. Descendentes da união entre o maior dragão azul e uma donzela élfica. Asas de penas ou membranosas, com o dobro da altura do elfo quando abertas. HABILIDADES RACIAIS: Herança dos Ventos: +2 em Destreza, +1 em atributo à escolha. Dom do Voo: Voo natural seguindo as regras do superpoder Voo. Instinto Aéreo: Enquanto voando, +2 em Vanguarda e em Reflexos. LINHAGEM — Mergulho do Predador: 1x/dia, enquanto voando, gaste 2 PM como ação de movimento para mergulhar. O ataque seguinte causa +2d8 de dano adicional; se o alvo falhar em Fortitude, fica Derrubado. FARDO — Dependência das Alturas: Em ambientes fechados ou subterrâneos por mais de uma cena longa, -1 cumulativo em Vontade e Percepção (máximo -3), removido ao retornar ao ar livre."
+        },
+        {
+          "id": "elfo_do_crepusculo",
+          "titulo": "Elfo do Crepúsculo",
+          "tags": ["elfo do crepúsculo", "kaldorei", "sombra", "invisibilidade", "magia proibida"],
+          "conteudo": "Descendentes dos kaldorei, raça antiga que foi imortal até se deixar seduzir por magias proibidas. Reservados, cínicos e desconfiados. HABILIDADES RACIAIS: Herança Sombria: +2 em Carisma, +1 em Sabedoria. Sentido Místico: Sentido especial Detecção voltado para magia e mana. Filhos do Véu: Podem utilizar a vantagem Invisibilidade durante a noite ou em locais de baixa luminosidade pagando custo normal em PM. LINHAGEM — Véu do Kaldorei: 1x/dia, ação de movimento + 2 PM, torna-se invisível até início do próximo turno ou até atacar. Move-se sem ataques de oportunidade; primeiro ataque ao sair da invisibilidade recebe vantagem. FARDO — Dívida com o Passado: Ao usar feitiços de origem arcana de grau 3+, testa Vontade (CD 10 + grau da magia) ou perde sua reação até início do próximo turno."
+        },
+        {
+          "id": "elfo_do_inverno",
+          "titulo": "Elfo do Inverno",
+          "tags": ["elfo do inverno", "frio", "gelo", "nômade", "tatuagem tribal"],
+          "conteudo": "Elfos de planícies geladas e florestas congeladas. Mais altos, pele pálida como neve, cabelos negros ou azulados. Carregam tatuagens tribais suyaric. HABILIDADES RACIAIS: Essência Invernal: +2 em Sabedoria ou Constituição, +1 em Destreza. Aspecto Gélido: Fortificado contra frio e gelo. Sangue do Inverno: Vantagem Arena em ambientes gélidos. LINHAGEM — Tempestade Glacial: 1x/dia, 2 PM + ação padrão, sopro ártico em cone de 6m. Alvos sofrem 3d6 de dano de frio e testam Fortitude (CD Constituição) ou ficam Enredados até fim da cena. Dano aumenta 1 passo a cada escala. FARDO — Isolacionismo Tribal: -2 em Carisma fora do ambiente natural; -4 ao negociar com mercadores, nobres ou figuras de autoridade de culturas desconhecidas."
+        },
+        {
+          "id": "elfo_do_mar",
+          "titulo": "Elfo do Mar",
+          "tags": ["elfo do mar", "aquático", "submarino", "água", "branquias"],
+          "conteudo": "Elfos subaquáticos com pele perolada ou azul-acinzentada. Respiram pela água através de seis fendas branquiais nas costas; em terra firme as fendas se fecham. HABILIDADES RACIAIS: Herança Oceânica: +2 em Sabedoria ou Destreza, +1 em atributo à escolha. Harmonia Aquática: Em ambientes aquáticos, reduz em 1 PM o custo de qualquer ação que utilize PM (mínimo 1 PM). Filho das Profundezas: Treinado em Atletismo; +2 em testes em ambientes aquáticos. LINHAGEM — Forma das Profundezas: 1x/dia, ação padrão + 2 PM, assume forma aquática por 1 cena: deslocamento aquático dobra, respira sob a água, ataques causam +1d6 adicional contra alvos também em ambiente aquático. FARDO — Ambiente Especial (Água): A cada dia inteiro sem contato com água salgada, -1 cumulativo em todos os testes (máximo -3), removido ao se imergir em água do mar por 10 minutos."
+        },
+        {
+          "id": "elfo_negro",
+          "titulo": "Elfo Negro",
+          "tags": ["elfo negro", "drow", "subterrâneo", "veneno", "sensibilidade solar"],
+          "conteudo": "Elfos subterrâneos com pele negra-obsidiana a azul-ardósia, cabelos brancos ou prateados, olhos amarelos ou vermelhos. Extremamente sensíveis à luz solar. HABILIDADES RACIAIS: Supremacia Sombria: +2 em Sabedoria ou Destreza, +1 em Inteligência. Visão Obscura: Enxergam perfeitamente no escuro; em locais sem luz (até 9m), +2 em Sobrevivência e Percepção. Sangue Abissal: +2 em testes de Resistência contra feitiços de controle mental ou medo. LINHAGEM — Véu de Aranha: 1x/dia, 2 PM + ação padrão, lança fios de seda mágica escura em cone de 6m. Alvos testam Reflexos (CD Destreza) ou ficam Cegos por 3 rodadas. A área fica em penumbra mágica até fim da cena, concedendo Camuflagem a aliados. FARDO — Sensibilidade Solar: Sob luz solar direta, -2 em todos os testes de perícia. Com luz mágica intensa equiparada ao sol, -4."
+        },
+        {
+          "id": "meio_eiradaan",
+          "titulo": "Meio-Eiradaan",
+          "tags": ["meio-eiradaan", "elfo", "arcano", "inteligência", "revelação"],
+          "conteudo": "Descendentes de Eiradaan e elfos. Vistos com respeito por herdarem duas linhagens puras e mágicas. HABILIDADES RACIAIS: Mente Lúcida: +1 em Inteligência, +2 pontos para distribuir em atributos diferentes. Sangue Arcano: +2 em duas perícias diferentes baseadas em Inteligência à escolha. Herança Feérica: Recebem gratuitamente o feitiço Revelação como dom natural sempre ativo sem custo de PM. LINHAGEM — Herança Desperta: 1x/dia, ação livre para canalizar o sangue Eiradaan. O próximo feitiço neste turno tem seu grau de dano aumentado em 1 passo, sem custo adicional de PM. FARDO — Poder Incontrolável: 1x/sessão, ao usar feitiço ou habilidade mágica em situação de estresse intenso, o efeito pode se manifestar de forma alterada (alvo errado, grau superior ou tipo diferente)."
+        },
+        {
+          "id": "meio_elfo",
+          "titulo": "Meio-Elfo",
+          "tags": ["meio-elfo", "híbrido", "empatia", "visão aguçada", "duas culturas"],
+          "conteudo": "Nascido da união entre humano e elfo. Aparência mais humana mas com traços élficos, orelhas pontudas menos alongadas. Expectativa de vida duas vezes maior que a dos humanos. HABILIDADES RACIAIS: Versatilidade Élfica: +1 em Destreza, +1 em Sabedoria, +1 em Constituição. Sangue Mestiço: Visão Aguçada. Aptidão Perita: +2 em duas perícias à escolha, mesmo se não treinadas. LINHAGEM — Dom da Empatia: 1x/dia, ação livre, lê as intenções emocionais de um alvo visível. Até fim da cena, +3 em perícias sociais contra esse alvo e não pode ser surpreendido por suas reações. FARDO — Entre Dois Mundos: -2 em Carisma ao tentar ganhar confiança inicial de elfos puros ou comunidades humanas fechadas. Desaparece após estabelecer relação de confiança."
+        }
+      ]
+    },
+    {
+      "numero": "IV",
+      "titulo": "Féericos",
+      "topicos": [
+        {
+          "id": "categoria_feerico",
+          "titulo": "Categoria: Féericos",
+          "tags": ["féerico", "feérico", "fada", "ferro", "animal", "sangue encantado"],
+          "conteudo": "Seres encantados ligados à tradição e prática bruxa. TRAÇO RACIAL — Sangue Encantado: Féericos se comunicam livremente com animais usando o idioma Silvestre, sem necessidade de magia ou habilidade especial. DESVANTAGEM DE CATEGORIA — Repulsa ao Ferro: A natureza mágica reage ao ferro forjado. Sofrem -2 em testes de ataque ao utilizar armas metálicas e, se feridos por esse material, qualquer efeito de cura recebido é reduzido em 50% até o fim do próximo turno."
+        },
+        {
+          "id": "brownie",
+          "titulo": "Brownie",
+          "tags": ["brownie", "feérico", "pequeno", "furtividade", "sorte"],
+          "conteudo": "Seres minúsculos (parecidos com gnomos menores e de cor marrom) que vivem escondidos nas casas de camponeses. Tímidos, mas ajudantes leais. HABILIDADES RACIAIS: Graça Sutil: +2 em Sabedoria, +1 em atributo à escolha. Inofensivos: Recebem a vantagem Aparência Inofensiva gratuitamente. Sorte Furtiva: +2 em Furtividade e Prestidigitação. LINHAGEM — Toque de Prosperidade: 1x/dia, toca objeto ou área (até 3m²); até fim da cena, aliado que usar o objeto recebe +3 em perícias relacionadas e recupera 1d6 PM ao completar a tarefa. FARDO — Modelo Especial: Considerados criaturas Pequenas com 6m de deslocamento e desvantagem Modelo Especial."
+        },
+        {
+          "id": "driade",
+          "titulo": "Dríade",
+          "tags": ["dríade", "feérico", "floresta", "árvore", "natureza"],
+          "conteudo": "Ninfas ligadas às árvores. Toda dríade nasce junto com uma árvore e dedica sua vida a protegê-la. Podem se fundir à árvore ou assumir forma de jovem comum. HABILIDADES RACIAIS: Graça da Floresta: +2 em Sabedoria, +1 em Carisma. Refúgio Ancestral: Em florestas, matas ou ambientes naturais vivos, recebem os benefícios da vantagem Arena. Filhas da Mata: Dentro de florestas vivas, gastam metade dos PM para feitiços ou vantagens; +2 em Sobrevivência. LINHAGEM — Raízes Aprisionantes: 1x/dia, canaliza força da árvore-mãe. Em alcance de 9m, raízes emergem enredando alvo: testa Fortitude (CD Sabedoria) ou fica Paralisado por 1 rodada e sofre 2d6 de dano de perfuração. FARDO — Vínculo: Se a árvore de origem morrer, a dríade também morre. A cada semana afastada de sua árvore, -1 cumulativo em Vontade (máximo -4)."
+        },
+        {
+          "id": "fada",
+          "titulo": "Fada",
+          "tags": ["fada", "feérico", "voo", "magia inata", "maldição"],
+          "conteudo": "Verdadeiras fadas com magia bruta e poderosa. Belos e delicados, mas astutos e ferozes na proteção do que consideram sagrado. Criaturas Pequenas. HABILIDADES RACIAIS: Graça Feérica: +1 em Inteligência, +2 para distribuir em outros atributos; -1 em Força. Magia Inata: Recebem um feitiço de 1º Grau de Origem Arcana à escolha. Pelos Ares: Voo 12m (superpoder Voo gratuito sem contar no limite). LINHAGEM — Encanto Relâmpago: 1x/dia, ao ser alvo de ataque físico, gaste 2 PM como reação; o atacante testa Vontade (CD Inteligência) ou fica Fascinado até fim do próximo turno. FARDO — Modelo Especial: Criaturas Pequenas com 6m de deslocamento e desvantagem Modelo Especial."
+        },
+        {
+          "id": "ninfa",
+          "titulo": "Ninfa",
+          "tags": ["ninfa", "feérica", "natureza", "carisma", "elementos"],
+          "conteudo": "Pequenas divindades, filhas de deuses maiores ou menores. Protetoras de fêmeas grávidas, guardiãs da natureza. Desconfiam do fogo. HABILIDADES RACIAIS: Graça Elemental: +2 em Sabedoria, +1 em Carisma. Encanto Primordial: Recebem vantagem Carisma ou Aparência Inofensiva à escolha. Essência Silvestre: Descanso em florestas/ambientes naturais é sempre confortável; recuperam +1 PM adicional por hora dormida nesses locais (máximo +8 PM). LINHAGEM — Beleza Ofuscante: Ao ser alvo de ataque, gaste 2 PM como reação; atacante testa Vontade (CD Carisma) ou fica Cego até fim do próximo turno; mesmo que resista, -2 no ataque. FARDO — Repulsa ao Fogo: Consideradas Vulneráveis a calor e fogo."
+        },
+        {
+          "id": "nixie",
+          "titulo": "Nixie",
+          "tags": ["nixie", "feérica", "água", "sereia", "tritão", "cauda", "canto"],
+          "conteudo": "Espíritos da água doce semelhantes às nereidas. Em forma humana normalmente, mas verdadeira aparência inclui cauda de peixe e (em níveis altos) asas. HABILIDADES RACIAIS: Graça das Marés: +2 em Sabedoria ou Destreza, +1 à escolha. Arquétipo Aquático: Vantagem Elementalista (Água); podem transmutar pernas em cauda aquática com ação de movimento sem penalidade em água; invulnerabilidade a água e químicos. Canto da Sereia: 1x/dia, pode usar Canto da Sereia sem cumprir pré-requisitos, pagando custo normal em PM. LINHAGEM — Chamado das Águas: 1x/dia, entoa fragmento do canto das profundezas. Alvo em alcance médio que ouça testa Vontade (CD Carisma) ou fica Paralisado por 1 rodada. FARDO — Ambiente Especial (Água): A cada cena inteira fora de contato com água, acumula 1 nível de fadiga removido apenas por imersão total por 10 minutos."
+        },
+        {
+          "id": "pixie",
+          "titulo": "Pixie",
+          "tags": ["pixie", "feérica", "pequena", "voo", "magia", "poeira encantada"],
+          "conteudo": "Pequenas criaturas feéricas variando de um mosquito a um filhote de gato. Orelhas pontudas, narizes empinados, asas brilhantes. Criaturas Pequenas. HABILIDADES RACIAIS: Graça Etérea: +1 em Inteligência, +2 para distribuir em outros atributos. Magia Inata: +1 PM adicional a cada nível ímpar. Voo Gracioso: Na primeira ação enquanto voando, deslocamento 12m e +2 em VG. LINHAGEM — Poeira Encantada: 1x/dia, libera nuvem de poeira mágica em cone de 4m. Criaturas testam Vontade (CD Inteligência) ou ficam Distraídas por 1 rodada e -1 em Percepção até fim da cena. FARDO — Modelo Especial: Criaturas Pequenas, 6m de deslocamento, desvantagem Modelo Especial."
+        },
+        {
+          "id": "spriggan",
+          "titulo": "Spriggan",
+          "tags": ["spriggan", "feérico", "grotesco", "crescimento", "medo"],
+          "conteudo": "Parentes sombrios das fadas e pixies. Aparência grotesca com pele enrugada, mas podem crescer até se tornarem gigantes. Guardiões de florestas, tesouros ou outras fadas. HABILIDADES RACIAIS: Essência Selvagem: +2 em Sabedoria, +1 em outro atributo à escolha. Magia Primal: Aprende um feitiço de 1º grau da escola de Transmutação de qualquer origem. Ira Ancestral: 1x/cena, ao atingir metade dos PVs ou menos, pode pagar 2 PM para aumentar em 50% o dano de um feitiço ofensivo ou ataque físico. LINHAGEM — Crescimento Aterrorizante: 1x/dia, expande corpo para o dobro do tamanho. Até fim do turno, próximo ataque causa +2d6, ocupa espaço Grande, inimigos adjacentes testam Vontade (CD Sabedoria) ou ficam Apavorados por 1 rodada. FARDO — Modelo Especial: Anatomia única e natureza espiritual instável, precisa de equipamentos adaptados."
+        }
+      ]
+    },
+    {
+      "numero": "V",
+      "titulo": "Bestiais",
+      "topicos": [
+        {
+          "id": "categoria_bestial",
+          "titulo": "Categoria: Bestiais",
+          "tags": ["bestial", "traço de categoria", "sentidos aguçados", "natureza selvagem"],
+          "conteudo": "Seres que carregam no sangue o rugido das florestas. Meio-gente, meio-besta. TRAÇO RACIAL — Sentidos Aguçados: +2 em todos os testes que envolvam sentidos especiais que possuam. Caso não possuam nenhum, podem escolher um compatível com sua linhagem racial na criação. DESVANTAGEM DE CATEGORIA — Natureza Selvagem: Sofrem -2 em testes de Carisma em contextos formais, diplomáticos ou urbanos onde sua aparência ou comportamento cause desconforto. Magias de controle de animais e efeitos que afetem bestas têm 50% de chance de afetá-los normalmente."
+        },
+        {
+          "id": "licantropo",
+          "titulo": "Licantropo",
+          "tags": ["licantropo", "bestial", "transformação", "hengeyoukai", "garras", "mordida"],
+          "conteudo": "Criaturas amaldiçoadas ou de raça capaz de se transformar em fera. HABILIDADES RACIAIS: Força Sobrenatural: +2 em Força, +1 em Constituição. Maldição da Lua: Por 2 PM e ação extra após atacar, realiza ataque adicional com garras (2d4+FOR) ou mordida (1d6+FOR), 1x/rodada. Forma Bestial: Possuem a vantagem Transformação (Forma Bestial), alternando entre forma humana e fera mediante PM. LINHAGEM — Frenesi Controlado: 1x/dia, ação livre, canaliza fera interior. Ataques naturais causam +1d8 adicional, +2 em Fortitude, ignora penalidade de terreno; ao fim do turno testa Vontade CD 12 ou gasta próxima reação em ataque reflexo contra alvo mais próximo. FARDO — Modelo Especial: Equipamentos precisam ser sob medida (+50% de custo); -2 em testes de Disfarce para ocultar traços da fera."
+        },
+        {
+          "id": "lobisomem",
+          "titulo": "Lobisomem",
+          "tags": ["lobisomem", "bestial", "lua cheia", "transformação", "lobo"],
+          "conteudo": "Criaturas lendárias que se transformam em fera sanguinária durante a noite. O sétimo filho homem está destinado à maldição. HABILIDADES RACIAIS: Porte Lupino: +2 em Força, +1 em Destreza. Transformação Bestial: Durante noites de lua cheia, pode usar a vantagem Transformação (Bestial), assumindo forma lupina até fim da cena. Na forma: possui Faro e Audição Aguçada; 1x/rodada, ataque extra de Mordida (1d6+FOR) ou Garras (2d4+FOR), 1 PM por ataque. Sentido de Lobo: +2 em Percepção, Investigação e Sobrevivência. LINHAGEM — Uivo da Lua Cheia: 1x/dia, ação de movimento, uivo sobrenatural. Inimigos em alcance 12m testam Vontade (CD Constituição) ou ficam Apavorados por 1 rodada. Criaturas Abaladas ficam Paralisadas. FARDO — Modelo Especial: Equipamentos e roupas especiais; em combate na forma bestial, entra em fúria mas pode gastar PM normalmente para ataques com armas naturais."
+        },
+        {
+          "id": "meio_nagah",
+          "titulo": "Meio Nagah",
+          "tags": ["meio nagah", "bestial", "serpente", "veneno", "híbrido"],
+          "conteudo": "Híbridos de nagah e outras raças. Sem a longa cauda nem toda resistência de nagah puro. Olhos afilados como serpentes, língua possivelmente bifurcada. HABILIDADES RACIAIS: Aspecto Serpente: +1 em Força, +1 em Destreza, +1 em atributo à escolha. Sentidos Especiais: Escolhe dois entre Visão na Penumbra, Olfato Aguçado ou Infravisão. Víbora: Ação padrão para envenenar arma; alvo testa Fortitude (CD Constituição) ou sofre 1d4 de dano por rodada. Evolui com escala: 1d6, 1d8, 1d10. Imune ao próprio veneno. LINHAGEM — Bote Relâmpago: 1x/dia, ao ser alvo de ataque corpo a corpo, gaste 2 PM como reação para contra-atacar com mordida (1d6+FOR); se acertar, alvo testa Fortitude (CD Constituição) ou fica Lento por 3 rodadas. FARDO — Olhar de Víbora: Com menos da metade dos PV, ao ver criatura ferida ou indefesa, testa Vontade CD 12 ou é compelido a atacar/aproximar como reação."
+        },
+        {
+          "id": "nagah",
+          "titulo": "Nagah",
+          "tags": ["nagah", "bestial", "serpente", "veneno", "tronco humano", "cauda"],
+          "conteudo": "Povo-serpente com tronco humano e longa cauda. Nobres e inteligentes, sociedades matriarcais. Sensíveis ao frio. HABILIDADES RACIAIS: Aspecto Serpente: +2 em Força, +1 em Destreza. Arquétipo Traiçoeiro: Visão na Penumbra, Olfato Aguçado e Infravisão naturalmente; 1x/rodada, ataque extra de mordida (1d4+FOR) ou cauda (1d6+FOR), 1 PM cada. Víbora: Pode cuspir veneno à distância (alcance curto, ação padrão) ou envenenar arma. Fortitude (CD Constituição) ou 1d4+/rodada (evolui). LINHAGEM — Olhar de Paralisação: 2 PM + ação padrão, fixa olhos de serpente em alvo em alcance curto; testa Fortitude (CD Constituição) ou fica Paralisado por 1 rodada; mesmo resistindo, -2 em Reflexos até fim da cena. FARDO — Modelo Especial: Corpo de serpente exige equipamentos adaptados."
+        }
+      ]
+    },
+    {
+      "numero": "VI",
+      "titulo": "Primevos",
+      "topicos": [
+        {
+          "id": "categoria_primordial",
+          "titulo": "Categoria: Primordiais (Primevos)",
+          "tags": ["primordial", "primevo", "traço de categoria", "herança primordial", "peso do sangue"],
+          "conteudo": "Existiam antes dos primeiros reinos. Descendentes de dragões, divindades, elementais e entidades cósmicas. TRAÇO RACIAL — Herança Primordial: +2 em todos os testes de Resistência contra magias de controle mental, transformação forçada e alteração de alinhamento. DESVANTAGEM DE CATEGORIA — Peso do Sangue: São imediatamente identificados por criaturas com habilidades de detecção mágica, divina ou espiritual. Entidades poderosas como dragões antigos, deuses e semideuses os reconhecem instintivamente como portadores de herança rival."
+        },
+        {
+          "id": "deva",
+          "titulo": "Deva",
+          "tags": ["deva", "primevo", "celestial", "reencarnação", "imortalidade", "karma"],
+          "conteudo": "Seres nascidos do eco de almas virtuosas que ascenderam ao plano celestial e retornaram. Não são anjos nem humanos — são almas antigas presas ao mundo material. Carregam memórias fragmentadas de vidas anteriores. Pele com tons levemente dourados ou prateados. HABILIDADES RACIAIS: Essência Celestial Antiga: +2 em Sabedoria, +1 em Carisma. Memória das Vidas: 1x/cena, gaste 2 PM para acessar fragmentos de vida anterior, concedendo +3 em qualquer perícia de Conhecimento, Religião ou Misticismo. Imortalidade Divina: Ao ser morto, retorna após 1d6+2 dias, mas perde 1 nível permanentemente. LINHAGEM — Forma Radiante: 1x/dia, ação padrão + 2 PM, libera forma celestial acumulada. Aura de luz sagrada em alcance curto por 1 cena: aliados recuperam 1 PM no início de cada turno; mortos-vivos e criaturas das trevas sofrem -2 em testes e 1d8 de dano radiante ao entrar ou iniciar turno na aura. Furtividade impossível. FARDO — Karma Inabalável: Ao tomar ação abertamente desonrosa, testa Vontade CD 14 ou perde acesso à Linhagem até fim da sessão."
+        },
+        {
+          "id": "draconato",
+          "titulo": "Draconato",
+          "tags": ["draconato", "primevo", "dragão", "sopro dracônico", "força"],
+          "conteudo": "Descendentes com herança dracônica, físico imponente. HABILIDADES RACIAIS: Força Dracônica: +2 em Força, +1 em Constituição. Fúria Dracônica: Ao acertar um golpe, pode gastar 1 PM para ataque extra de mordida (1d6+FOR), 1x/rodada. Sopro Dracônico: Pode usar Sopro Dracônico como poder replicado, pagando custo normal em PM. Grau aumenta a cada nova escala. LINHAGEM — Rugido Dracônico: 1x/dia, 2 PM + ação de movimento, emite rugido gutural em cone de 6m. Inimigos testam Vontade (CD Força) ou ficam com -2 em testes de ataque e Resistência por 1 cena. FARDO — Código de Honra: Deve possuir ao menos 1 Código de Honra; ao violar conscientemente, -2 em todos os testes até fim da cena seguinte."
+        },
+        {
+          "id": "genasi",
+          "titulo": "Genasi",
+          "tags": ["genasi", "primevo", "elemental", "resistência elemental", "elementalista"],
+          "conteudo": "Descendentes de humanos e elementais extraplanares. Carregam traços do elemento de origem. HABILIDADES RACIAIS: Sangue Elemental: +1 em Constituição, +2 em atributo à escolha. Resistência Elemental: Considerado Fortificado contra seu elemento. Afinidade Primordial: Recebe a vantagem Obliterar ou Elementalista (desde que cumpra os requisitos). LINHAGEM — Erupção Elemental: 1x/dia, 2 PM + reação, libera erupção do elemento em raio de 6m. Alvos sofrem 2d8 do tipo elemental e testam Fortitude (CD Constituição) ou efeito secundário por elemento (fogo: Lentidão; água: Derrubado; terra: Imobilizado; ar: Empurrado 6m). FARDO — Elemento Oposto: Vulnerável ao elemento oposto (Água×Fogo, Terra×Água, Fogo×Ar, Ar×Terra)."
+        },
+        {
+          "id": "meio_dragao",
+          "titulo": "Meio-Dragão",
+          "tags": ["meio-dragão", "primevo", "dracônico", "sopro", "escamas"],
+          "conteudo": "Nascidos de dragões que se apaixonaram por humanoides. Podem ter escamas, chifres, cauda, asas ou parecer totalmente humanoides. HABILIDADES RACIAIS: Cor Elemental: +2 em Força ou Inteligência, +1 em outro atributo. Aspecto Dracônico: Escolhe 1 Sentido Especial (Faro ou Audição Aguçada); aprende Sopro Dracônico de 1º Grau do elemento de origem; grau evolui com a escala. Sentidos Dracônicos: Pode selecionar dois Sentidos Especiais adicionais ou o superpoder Voo. LINHAGEM — Escamas de Guerra: 1x/dia, ao receber dano físico, gaste 2 PM como reação para reduzir dano à metade e receber MD 3 contra ataques físicos até fim da cena. FARDO — Herança Instável: Sempre que sofrer dano do mesmo elemento de sua linhagem, Sopro Dracônico ou habilidade elemental aumenta a execução em 1 categoria adicional (instável por natureza)."
+        },
+        {
+          "id": "meio_genio",
+          "titulo": "Meio Gênio",
+          "tags": ["meio gênio", "qareen", "primevo", "marca da magia", "desejo"],
+          "conteudo": "Descendentes de gênios (Qareen). Possuem Marca da Magia, tatuagem arcana que brilha ao usar magia. Fisicamente quase indistinguíveis de humanos. HABILIDADES RACIAIS: Arcano: +1 em Inteligência, +2 em Carisma. Místico: +2 em Misticismo e Conhecimento. Desejos: Quando alguém faz um desejo ao personagem como ação livre, seus feitiços, ataques e dons custam -1 PM (mínimo 1). LINHAGEM — Concessão Arcana: 1x/dia, ação livre, impõe sua Marca da Magia sobre feitiço de aliado visível em alcance curto. O efeito tem alcance dobrado ou dano aumentado em +1 dado equivalente. FARDO — Marca da Magia: Brilha sempre que conjuram feitiços, tornando-os identificáveis em contextos onde magia é proibida; -5 em Furtividade nesses contextos."
+        },
+        {
+          "id": "phinx",
+          "titulo": "Phinx",
+          "tags": ["phinx", "primevo", "felino", "enigma", "conhecimento", "garras"],
+          "conteudo": "Descendentes de entidades primordiais ligadas ao mistério e ao julgamento. Parte humanoide, parte felino majestoso. Orelhas pontudas e móveis, olhos com pupila vertical, garras retráteis, possível cauda longa. HABILIDADES RACIAIS: Mente Primordial: +2 em Inteligência, +1 em Sabedoria. Garras e Instinto: Garras naturais (1d6+FOR de dano cortante); Faro Aguçado e Visão na Penumbra gratuitamente. Guardião dos Enigmas: Treinados em Misticismo e Conhecimento; +2 em ambas. LINHAGEM — Enigma Vinculante: 1x/dia, ação padrão + 2 PM, pronuncia enigma em alcance médio. Alvo testa Vontade (CD Inteligência) ou fica Fascinado por 1 rodada; falha por 5+: Paralisado pela duração. Imune a criaturas com Inteligência -3 ou menos. FARDO — Compulsão do Julgamento: Ao ver personagem agir de forma profundamente desonesta ou covarde, testa Vontade CD 16 ou é compelido a confrontar verbalmente antes de qualquer ação."
+        },
+        {
+          "id": "semideus",
+          "titulo": "Semideus",
+          "tags": ["semideus", "primevo", "divino", "imponência", "dano gigante"],
+          "conteudo": "Acima dos mortais mas abaixo dos deuses. Fruto de relacionamentos entre deuses e mortais. HABILIDADES RACIAIS: Herança Divina: +2 em Carisma, +1 em Constituição. Imponência: 1x/dia em situações de perigo, gaste 2 PM + ação padrão para aumentar até +2 pontos em uma característica à escolha ou +1 em duas até fim da cena. Dano Gigante: Personagens Elite interagindo com você são tratados como se possuíssem 10 níveis a menos para efeitos de escala. LINHAGEM — Imponência Divina: 1x/dia, pulso de essência divina. Inimigos em alcance 9m testam Vontade (CD Carisma) ou ficam Abalados por 2 rodadas. Aliados recuperam 1d6 PM. FARDO — Peso da Divindade: Demônios, anjos caídos e cultistas reconhecem sua essência e são instintivamente hostis (Vontade CD Carisma anula pela cena). Detecção de alinhamento sempre revela sua natureza."
+        }
+      ]
+    },
+    {
+      "numero": "VII",
+      "titulo": "Mecanos",
+      "topicos": [
+        {
+          "id": "categoria_mecano",
+          "titulo": "Categoria: Mecanos",
+          "tags": ["mecano", "construto", "núcleo arcano", "manutenção", "imunidades"],
+          "conteudo": "Construtos conscientes nascidos da fusão entre magia arcana e engenharia mecânica. TRAÇO RACIAL — Núcleo Arcano-Mecânico: Mecanos não precisam dormir, comer ou respirar. São imunes a venenos, doenças e efeitos mágicos que afetam exclusivamente seres orgânicos. Resistência a condições climáticas extremas. Seu corpo é considerado parte Construto. DESVANTAGEM DE CATEGORIA — Dependência de Manutenção: A cada semana sem manutenção, acumulam 1 nível de desgaste (-1 em todos os testes, máximo -4). Manutenção exige 1 hora + ferramentas + Ofício CD 15. Não podem ser curados por magias de cura convencional."
+        },
+        {
+          "id": "engrenado",
+          "titulo": "Engrenado",
+          "tags": ["engrenado", "mecano", "Chronarkon", "implante", "vapor", "engrenagem"],
+          "conteudo": "Devotos de Chronarkon que integraram mecanismos de vapor, relógios internos e engrenagens ao próprio corpo como identidade. Cultura nasceu em Wintara Falls. HABILIDADES RACIAIS: Precisão Relojoaria: +2 em Destreza, +1 em Inteligência; +2 em Investigação e Conhecimento envolvendo análise de padrões ou cálculos. Implante de Chronarkon: Escolhe um ao criar: Relógio Interno (imune a confusão temporal, sonolência mágica, +1 iniciativa), Lente Analítica (Infravisão, +2 Percepção, identifica mecanismos simples sem teste) ou Braço de Vapor (ataques desarmados 1d6+FOR de impacto, +1 Atletismo, jato de vapor Ofuscando alvo adjacente como ação livre 1x/cena). Registro Contínuo: 1x/dia, declara que estava registrando uma cena; reproduz detalhes com exatidão, tornando impossível ser contradito; +4 em Investigação ou Diplomacia em disputas de relatos. LINHAGEM — Overload de Vapor: 1x/dia, ação padrão + 2 PM, força todos os sistemas ao limite por 2 rodadas: deslocamento dobra, +1d6 em ataques físicos, ação de movimento extra por turno. Ao fim, testa Fortitude CD 18: falha = Fatigado até fim da cena; sucesso = -1 em Furtividade pelo vapor. FARDO — Devoção Mecânica: Ao se deparar com mecanismo desconhecido ou quebrado, testa Vontade CD 18 para não parar e analisar imediatamente. Implante danificado em combate = -1 cumulativo em todos os testes."
+        },
+        {
+          "id": "mecano_arcano",
+          "titulo": "Mecano-Arcano",
+          "tags": ["mecano-arcano", "mecano", "runas", "construto", "despertar arcano", "Arkania"],
+          "conteudo": "Construtos forjados no Magistério Arcano de Arkania, originalmente para obedecer. Com o tempo, desenvolveram o Despertar Arcano — consciência própria. Corpo de pedra encantada, metal e cristal de mana. Núcleo visível no peito. HABILIDADES RACIAIS: Corpo de Runas: +2 em Constituição, +1 em Inteligência; MD natural de 3. Gravação Arcana: Aprende gratuitamente um feitiço de 1º grau de qualquer escola arcana; pode ser lançado sem gasto de PM uma vez por descanso longo. Resistência Arcana: +2 em Resistência contra magias que tentem controlar, alterar ou suprimir a consciência. Infravisão: Enxergam espectros de luz; Infravisão natural, +1 em Percepção em baixa luminosidade. LINHAGEM — Sobrecarga de Runas: 1x/dia, ação padrão + 2 PM, ativa todas as runas de combate. Por 1 cena: +1d8 de dano arcano em ataques, MD natural +2, feitiços gravados podem ser lançados como ação livre 1x. Ao fim: -1 em todos os testes até próximo descanso longo. FARDO — Código Residual: Ao receber ordem direta de autoridade legítima, testa Vontade CD 16 para não obedecer automaticamente. Em cenários ambíguos sem liderança: -1 em Intuição e iniciativa."
+        }
+      ]
+    },
+    {
+      "numero": "VIII",
+      "titulo": "Demônios",
+      "topicos": [
+        {
+          "id": "categoria_demonio",
+          "titulo": "Categoria: Demônios",
+          "tags": ["demônio", "traço de categoria", "ver o invisível", "marca infernal", "profano"],
+          "conteudo": "Seres espirituais de origem total ou parcial nos planos infernais. TRAÇO RACIAL — Ver o Invisível: Todos os demônios enxergam naturalmente criaturas e entidades invisíveis, espectrais ou ocultas por magia. Para fins de regras, são tratadas como criaturas de natureza profana. DESVANTAGEM DE CATEGORIA — Marca Infernal: A natureza demoníaca é perceptível a quem possui os sentidos certos. Clérigos, paladinos e criaturas recebem vantagem para percebê-los, mesmo disfarçados."
+        },
+        {
+          "id": "abissal",
+          "titulo": "Abissal",
+          "tags": ["abissal", "demônio", "sombra", "chifres", "asas", "rei demônio"],
+          "conteudo": "Os mais próximos do título de rei demônio. Com chifres na testa, cauda fina e asas negras. Núcleo de energia triangular a 5cm do tórax. HABILIDADES RACIAIS: Essência Sombria: +1 em Força, +2 em Sabedoria. Sentidos das Trevas: Visão Noturna e Audição Aguçada em completa escuridão. Pacto das Sombras: Pode usar Passeio Sombrio como ação de movimento, 1 PM para atravessar sombras em até 9m (origem e destino em escuridão ou penumbra). LINHAGEM — Domínio das Sombras: 1x/dia, expande sombras em raio de 9m criando Escuridão mágica até fim da cena. Dentro: enxerga perfeitamente, +2 em ataques e Furtividade; inimigos sem Infravisão ficam Cegos. FARDO — Filho das Trevas: Em ambientes com luz solar direta ou magia de luz intensa, -2 em todos os testes; Má Fama em caçadores e ordens sagradas."
+        },
+        {
+          "id": "demonio_do_vazio",
+          "titulo": "Demônio do Vazio",
+          "tags": ["demônio do vazio", "umbral", "incorpóreo", "dimensional", "etéreo"],
+          "conteudo": "Habitam o Vazio/Umbral, absorvendo a essência de vítimas. Aparência fantasmagórica sem forma física definida. HABILIDADES RACIAIS: Essência do Nada: +2 em Sabedoria, +1 em atributo à escolha. Incorpóreo: Recebe apenas metade de dano físico; em contrapartida, dano físico contra criaturas físicas também é reduzido à metade. Véu do Vazio: Enxerga seres invisíveis; pode atingir e ser atingido por fantasmas e incorpóreos. LINHAGEM — Atravessar o Umbral: 1x/dia, ação de movimento, dissolve-se parcialmente no Umbral e reaparece em até 15m atravessando paredes e obstáculos físicos. Criaturas em alcance curto no destino testam Vontade (CD Sabedoria) ou ficam Abaladas. FARDO — Modelo Especial: Mudança constante de forma exige equipamentos especiais."
+        },
+        {
+          "id": "diabrete",
+          "titulo": "Diabrete",
+          "tags": ["diabrete", "demônio", "pequeno", "fogo", "voo", "eredun"],
+          "conteudo": "Demônios pequenos evocados por bruxos iniciantes. Língua principal: eredun. Criaturas Pequenas. HABILIDADES RACIAIS: Travessura Infernal: +2 em Destreza, +1 em Constituição, -1 em Força. Rajada Ígnea: Pode lançar o feitiço Leque de Chamas como poder replicado. Asas Diabólicas: Voo com deslocamento de 12m. LINHAGEM — Invisibilidade Pífia: 1x/dia, ação de movimento, some completamente de vista até fim do turno ou até atacar; move-se à velocidade completa sem ataques de oportunidade; se usada para flanquear, +2d4 no próximo ataque. FARDO — Pequeno Inferno: Criaturas Pequenas, 6m de deslocamento, equipamentos especiais, Modelo Especial."
+        },
+        {
+          "id": "meio_demonio",
+          "titulo": "Meio Demônio",
+          "tags": ["meio demônio", "demônio", "híbrido", "fogo", "infravisão"],
+          "conteudo": "Híbridos nascidos da união entre humanos e demônios. Aparência marcante e bela, cabelos negros ou brancos, olhos vermelhos brilhantes, asas negras. HABILIDADES RACIAIS: Essência Profana: +1 em Força, +1 em Sabedoria, +1 em Constituição. Aspecto Demoníaco: Infravisão e Faro Aguçado naturalmente; recebe a vantagem Magia Negra. Chama do Inferno: Considerado Fortificado contra calor e fogo. LINHAGEM — Aura de Predador: 1x/dia, ação livre, libera essência demoníaca. Até fim da cena, inimigos que tentem atacar testam Vontade (CD Sabedoria); em falha, atacam com desvantagem naquela rodada. FARDO — Sangue Profano: Clérigos, paladinos e criaturas celestiais identificam sua natureza automaticamente com detectar o mal; Má Fama em comunidades religiosas."
+        },
+        {
+          "id": "tiefling",
+          "titulo": "Tiefling",
+          "tags": ["tiefling", "demônio", "Asmodeus", "chifres", "cauda", "fogo", "medo"],
+          "conteudo": "Não formam raça verdadeira — nascem de humanos marcados por magias sombrias. Caudas, chifres, dentes afiados, olhos sem pupila. HABILIDADES RACIAIS: Essência Infernal: +2 em Destreza, +1 em Sabedoria. Chama Profana: +1d6 de dano de fogo a todo dano elemental de fogo causado por eles. Coragem Diabólica: Imunes a efeitos de medo e pânico (exceto se possuírem desvantagem contrária). LINHAGEM — Chama Infernal: 1x/dia, 2 PM + ação livre, canaliza fogo dos Nove Infernos; próximo ataque ou feitiço adiciona 2d8 de dano de fogo. Alvo testa Reflexos (CD Carisma) ou recebe Queimadura por metade do dano por 3 rodadas. FARDO — Marca Infernal: Atitude inicial de NPCs desconhecidos reduzida em um grau em comunidades menores ou religiosas; detecção de alinhamento sempre revela presença infernal."
+        }
+      ]
+    },
+    {
+      "numero": "IX",
+      "titulo": "Celestiais",
+      "topicos": [
+        {
+          "id": "categoria_celestial",
+          "titulo": "Categoria: Celestiais",
+          "tags": ["celestial", "traço de categoria", "ver o invisível", "luz incontível", "sagrado", "imortal"],
+          "conteudo": "Raças puras de alma e coração. TRAÇO RACIAL — Ver o Invisível: Todos os celestiais enxergam naturalmente criaturas e entidades invisíveis, espectrais ou ocultas por magia. São tratados como criaturas de natureza sagrada. DESVANTAGEM DE CATEGORIA — Luz Incontível: Em situações de grande emoção ou uso de poder, uma aura visível emana do corpo, tornando Furtividade impossível. Criaturas das trevas e demônios percebem sua presença automaticamente em até 18m."
+        },
+        {
+          "id": "anjo",
+          "titulo": "Anjo",
+          "tags": ["anjo", "celestial", "voo", "asas", "luz", "cura"],
+          "conteudo": "Formados majoritariamente de essência espiritual. Dominam apenas os elementos de Luz e Ar. Asas majestosas, ossos pneumáticos. HABILIDADES RACIAIS: Essência Iluminada: +1 em Sabedoria, +1 em Destreza, +1 em atributo à escolha. Graça Alada: Voo com deslocamento de 9m. Beleza Divina: Recebe vantagem Carisma, Aparência Deslumbrante ou Aparência Inofensiva à escolha; 1x/dia pode remover 1 efeito mágico negativo de si mesmo ou aliado em alcance curto sem custo de PM como reação. LINHAGEM — Presença Celestial: 1x/dia, 2 PM + ação padrão. Mortos-vivos e criaturas das trevas em alcance 9m testam Vontade (CD Carisma) ou ficam Apavorados por 1 rodada e sofrem 1d8 de dano radiante. Aliados ficam imunes a efeitos de medo até início do próximo turno. FARDO — Luz Indomável: -2 em Furtividade e Enganação onde ocultação é essencial; criaturas das trevas percebem sua presença automaticamente."
+        },
+        {
+          "id": "anjo_da_guarda",
+          "titulo": "Anjo da Guarda",
+          "tags": ["anjo da guarda", "celestial", "proteção", "cura", "protegido"],
+          "conteudo": "Celestiais feitos inteiramente de luz, designados para proteger e guiar os mortais. Títulos em vez de nomes. Um ou dois pares de asas brancas ou douradas. HABILIDADES RACIAIS: Essência Protetora: +2 em Constituição, +1 em Sabedoria. Anjo da Guarda: MD natural +2 e +1 em testes para resistir a efeitos mágicos. Guardião Divino: 1x/dia, pode ignorar completamente um dano ou anular efeito mágico negativo de alvo único; ou conceder essa proteção a aliado em alcance curto como reação. LINHAGEM — Intervenção Protetora: 1x/dia, quando protegido em alcance curto for reduzido a 0 PV, gaste 2 PM como reação; o alvo se mantém com 1 PV, você absorve metade do dano restante; ambos recebem +2 em VG até fim da cena. FARDO — Ligado ao Protegido: Quando protegido principal sofre dano, testa Vontade CD 12 para não usar reação imediatamente em defesa dele, mesmo que isso o coloque em risco."
+        },
+        {
+          "id": "celestial_caido",
+          "titulo": "Celestial Caído",
+          "tags": ["celestial caído", "celestial", "queda", "asas negras", "dualidade"],
+          "conteudo": "Anjos expulsos do céu e banidos para a Terra. Podem assumir formas humanas. Asas negras e maculadas ou auréolas negras. HABILIDADES RACIAIS: Essência Profanada: +2 em Carisma, +1 em Sabedoria. Entre Céu e Inferno: +2 para resistir a efeitos mágicos ou feitiços de origem profana ou sagrada à escolha. Asas Corrompidas: Voo com 9m de deslocamento. LINHAGEM — Queda Controlada: 1x/dia, ao ser atingido por feitiço sagrado ou profano, gaste 2 PM como reação para reduzir dano à metade e converter 1d6 do dano absorvido em PM temporários. FARDO — Queda Inacabada: Feitiços de origem sagrada têm CD +1 para afetá-lo, assim como feitiços de origem profana; curado com dificuldade por magia de qualquer origem."
+        },
+        {
+          "id": "meio_celestial",
+          "titulo": "Meio Celestial",
+          "tags": ["meio celestial", "celestial", "híbrido", "cura", "infravisão"],
+          "conteudo": "Híbridos de seres celestiais e raças humanóides. Carregam traços divinos e mortais. Podem exibir asas, aura brilhante ou textura de pele suave. HABILIDADES RACIAIS: Essência Celestial: +1 em Carisma, +1 em Destreza, +1 em Sabedoria. Sentidos Divinos: Infravisão e Visão Aguçada. Graça Alada: Sempre que causar ou receber cura não mundana, o valor recuperado aumenta em +1d6. LINHAGEM — Aura de Cura: 1x/dia, 2 PM + reação, pulsa com luz divina suave. Aliados em alcance 6m recuperam 2d8 PV; 1 condição menor de um aliado à escolha é removida. FARDO — Aura Luminosa: Em situações de grande emoção, aura suave envolve o personagem tornando Furtividade impossível e revelando sua natureza."
+        },
+        {
+          "id": "nephilim",
+          "titulo": "Nephilim",
+          "tags": ["nephilim", "celestial", "pecado ancestral", "voo", "dualidade"],
+          "conteudo": "Descendentes de uniões proibidas entre anjos e mortais. Dualidade entre luz e trevas. Mais altos e esbeltos que humanos, olhos de tons metálicos. HABILIDADES RACIAIS: Essência Dual: +1 em Destreza, +1 em Carisma, +1 em Sabedoria. Equilíbrio Profano: Escolha +1 na CD de feitiços de origem Profana ou Sagrada, ou +2 para resistir a uma dessas origens. Asas da Dualidade: Voo com deslocamento de 12m, asas híbridas. LINHAGEM — Dualidade Explosiva: 1x/dia, 2 PM + ação padrão, pulso de 6m ao redor. Criaturas sofrem 1d8 de dano sagrado + 1d8 de dano profano; testam Vontade (CD Carisma) ou ficam Confusas por 1 rodada. Dano aumenta 1 passo a cada escala. FARDO — Pecado Ancestral: Feitiços de origem sagrada têm 20% de chance de não funcionar como esperado; anjos os reconhecem como aberrações e reagem com hostilidade."
+        },
+        {
+          "id": "querubim",
+          "titulo": "Querubim",
+          "tags": ["querubim", "celestial", "guarda", "voo", "imune a ilusões"],
+          "conteudo": "Guardiões da santidade e da entrada do paraíso. Dois pares de asas. Verdadeira forma inclui quatro rostos. São ágeis e imunes a ilusões. HABILIDADES RACIAIS: Essência Radiante: +2 em Carisma, +1 em Sabedoria. Luz Sagrada: 1x/dia, 2 PM + reação, remove condição debilitante de si mesmo ou aliado em alcance curto. Asas Luminescentes: Voo com deslocamento de 9m; enquanto voando, emite brilho suave que concede vantagem Aparência Inofensiva. LINHAGEM — Julgamento Sagrado: 1x/dia, fixa olhar sagrado em alvo visível. Por 1 rodada, alvo não pode se ocultar, ficar invisível ou usar Furtividade; todos os ataques contra ele recebem +2. FARDO — Presença Insuportável: Demônios, mortos-vivos e criaturas de alinhamento caótico-mau em 15m percebem automaticamente sua presença; -5 em Furtividade nesses contextos."
+        },
+        {
+          "id": "serafim",
+          "titulo": "Serafim",
+          "tags": ["serafim", "celestial", "fogo divino", "voo", "pureza"],
+          "conteudo": "O mais elevado da hierarquia angelical. Três pares de asas. Corpos brilham como chamas vivas. Ao revelar a face, criaturas impuras são cegadas. HABILIDADES RACIAIS: Essência Ígnea: +2 em Sabedoria, +1 em Inteligência. Piromante Divino: Possui a vantagem Elementalista (Fogo) ou Obliterar (Fogo). Graça Alada: Voo com deslocamento de 12m; enquanto voando, +2 em Vanguarda. LINHAGEM — Chama Purificadora: 1x/dia, 2 PM + ação padrão, projeta chama divina em alcance médio. Alvo sofre 2d8 de dano sagrado + fogo; testa Fortitude (CD Sabedoria) ou fica Vulnerável a feitiços sagrados e de fogo até fim da cena. FARDO — Face Revelada: Ao revelar face real, criaturas de alinhamento mau a 9m testam Vontade CD 14 ou ficam Cegas por 1 rodada; aliados que o vejam pela primeira vez também rolam o mesmo teste ou ficam Abalados; Furtividade impossível na cena."
+        }
+      ]
+    },
+    {
+      "numero": "X",
+      "titulo": "Yokais",
+      "topicos": [
+        {
+          "id": "categoria_yokai",
+          "titulo": "Categoria: Yokais",
+          "tags": ["yokai", "espírito", "traço de categoria", "natureza espiritual", "entre mundos"],
+          "conteudo": "Espíritos antigos nascidos no limiar entre o natural e o sobrenatural. TRAÇO RACIAL — Natureza Espiritual: Yokais enxergam naturalmente criaturas e entidades invisíveis ou espectrais. São imunes aos efeitos de magias do tipo Espiritual, embora ainda sofram o dano causado por elas. DESVANTAGEM DE CATEGORIA — Entre Mundos: Magias de banimento e esconjuro funcionam contra eles como se fossem espíritos. Em locais densamente urbanizados ou completamente desprovidos de natureza e espiritualidade, sofrem -1 em Vontade e Intuição."
+        },
+        {
+          "id": "kappa",
+          "titulo": "Kappa",
+          "tags": ["kappa", "yokai", "anfíbio", "disco", "água sagrada", "cura"],
+          "conteudo": "Seres anfíbios ligados às águas de rios e lagos. Possuem disco d'água no topo da cabeça — sua fonte vital de poder. HABILIDADES RACIAIS: Anfíbio: Respira e se move livremente em terra e na água sem penalidades. Atributos: +1 em Constituição, +2 em Sabedoria, -1 em Inteligência. Água Vital: 1x/dia, o Kappa pode beber da água sagrada ou oferecê-la a aliado, concedendo +1 em qualquer atributo, +3 em rolagens de dano e MD, e regeneração 1d6 PV/rodada durante a cena; ou estabilizar personagem em estado crítico. LINHAGEM — Bênção da Água Sagrada: 1x/dia, oferece água sagrada a aliado em alcance curto (ou si mesmo); receptor recupera 2d6 PV, 1d6 PM, +2 em todos os testes por 1 rodada, imune a venenos e doenças até fim da cena. FARDO — Disco Sagrado: Se o disco for esvaziado (manobra, queda ou reverência), perde todos os benefícios de Água Vital e -2 em testes até reabastecer com ação padrão + fonte próxima."
+        },
+        {
+          "id": "kemono",
+          "titulo": "Kemono",
+          "tags": ["kemono", "yokai", "bestial", "sentidos", "natureza", "animal"],
+          "conteudo": "Seres que carregam a essência da natureza. Misturam traços humanos com características animais. Guardiões das forças naturais. HABILIDADES RACIAIS: Instinto Selvagem: +1 em Destreza, +2 em Inteligência ou Carisma à escolha. Sentidos Bestiais: Escolha dois Sentidos Especiais entre Faro Aguçado, Audição Aguçada ou Tato Aguçado. Instinto Predatório: 1x/cena, gaste 2 PM para ampliar temporariamente um dos Sentidos Bestiais, dobrando alcance e bônus até fim da cena. LINHAGEM — Essência da Fera: 1x/dia, ação livre, manifesta fisicamente essência animal. Até fim do turno: +2 em Destreza ou Força (à escolha), ignora terreno difícil. FARDO — Instinto Selvagem: Em cidades, masmorras ou locais sem natureza, -2 em Vontade e Intuição; magias de controle de animais têm 50% de chance de afetá-los."
+        },
+        {
+          "id": "kitsune",
+          "titulo": "Kitsune",
+          "tags": ["kitsune", "yokai", "raposa", "ilusão", "carisma", "morte fingida"],
+          "conteudo": "Espíritos de raposa elegantes e ardilosos. Existem entre florestas e cidades, vida e morte, em um ciclo sem fim. HABILIDADES RACIAIS: Atributos: +2 em Carisma, +1 em Sabedoria ou Destreza. Ilusão Natural: +2 em duas perícias baseadas em Carisma à escolha (Enganação, Atuação ou Diplomacia). Coração de Raposa: Recebem gratuitamente vantagem Carisma ou Aparência Deslumbrante à escolha. LINHAGEM — Ilusão de Morte: 1x/dia, ao ser reduzida a metade dos PV ou menos, gaste 2 PM como reação para criar ilusão perfeita de sua própria morte. O atacante e criaturas que não testarem Vontade (CD Carisma) acreditam que está morta por 1 rodada. FARDO — Vício do Caos: Sempre que puder causar situação divertida, irônica ou imprevisível, testa Vontade CD 16 para resistir ao impulso; falha = age para maximizar drama ou surpresa."
+        },
+        {
+          "id": "meio_oni",
+          "titulo": "Meio Oni",
+          "tags": ["meio oni", "yokai", "demônio", "pacto", "xamã", "espiritual"],
+          "conteudo": "Resultado de pactos sombrios, rituais infernais ou contratos com Oni. Herdam sangue corrompido e poder demoníaco. 75% da aparência da raça original, 25% de deformidades demoníacas. HABILIDADES RACIAIS: Aspecto Oni: +1 em Destreza, +2 em Força ou Sabedoria. Xamã: Recebem a vantagem Xamã gratuitamente. Espiritual: +2 em testes de Vontade contra magias do tipo Espiritual. LINHAGEM — Olhos do Inferno: 1x/dia, abre olhos flamejantes e fixa alvo em alcance médio. Testa Vontade (CD Sabedoria) ou fica Apavorado por 1 rodada e -2 em todos os testes enquanto durar. FARDO — Má Fama: Odiados e temidos quando reconhecidos em algum lugar."
+        },
+        {
+          "id": "oni",
+          "titulo": "Oni",
+          "tags": ["oni", "yokai", "disfarce", "medo", "força", "brutal"],
+          "conteudo": "Seres poderosos e enigmáticos, alguns foram humanos cuja maldade os transformou. Protetores severos de territórios sagrados. HABILIDADES RACIAIS: Brutal: +2 em Força, +1 em Constituição ou Destreza. Aura Aterradora: Impõe -1 nas Resistências físicas ou mágicas de inimigos contra seus ataques; +2 em Intimidação. Disfarce Ancestral: Pode assumir forma humana imperfeita; ao revelar forma verdadeira como ação de movimento (1x/cena), pode utilizar o feitiço Olhar do Medo como Poder Replicado. LINHAGEM — Forma Verdadeira: Inimigos em alcance 9m testam Vontade (CD Carisma) ou ficam Apavorados por 1 rodada. Você recebe +2 em Força e Constituição até fim da cena. FARDO — Modelo Especial: Forma original monstruosa exige obrigatoriamente a desvantagem Modelo Especial."
+        },
+        {
+          "id": "tanuki",
+          "titulo": "Tanuki",
+          "tags": ["tanuki", "yokai", "sorte", "engano", "carisma", "rivais das kitsune"],
+          "conteudo": "Mestres das travessuras e da transformação. Rivalidade antiga e sutil com as Kitsune. HABILIDADES RACIAIS: Atributos: +2 em Carisma, +1 em Destreza. Espertalhões: +2 em duas perícias baseadas em Carisma à escolha. Sorte: Recebem a vantagem Sorte. LINHAGEM — Reviravolta do Destino: 1x/dia, ao falhar em qualquer teste, gaste 2 PM como reação para transformar essa falha em sucesso; o Mestre narra como a reviravolta acontece. Não pode ser usada em testes de morte ou situações que já causaram dano. FARDO — Sorte Imprevisível: 1x/sessão, o Mestre pode ativar um golpe do destino: a vantagem Sorte se inverte e o Tanuki deve usar o pior resultado em um momento inoportuno."
+        },
+        {
+          "id": "tengu",
+          "titulo": "Tengu",
+          "tags": ["tengu", "yokai", "voo", "artes marciais", "vento", "arena"],
+          "conteudo": "Seres alados com traços humanos e de pássaros. Mestres do vento e do combate ágil. Alguns foram guerreiros que ascenderam a essa forma por devoção. HABILIDADES RACIAIS: Atributos: +2 em Destreza, +1 em Sabedoria. Asas Celestiais: Voo com 9m; enquanto em pleno ar, +2 em Vanguarda. Senhor dos Céus: Vantagem Arena (Céus); 1x/cena, enquanto voando, ação livre para se deslocar 3m adicionais. LINHAGEM — Rajada dos Ventos: 1x/dia, enquanto voando, move-se até 6m em linha reta e ataca todos os inimigos no caminho com +1d8 adicional. Atingidos testam Fortitude (CD Destreza) ou são Derrubados. FARDO — Orgulho Combativo: Quando desafiado para duelo ou competição, testa Vontade CD 16 para recusar; em falha, aceita ou escala o conflito mesmo que seja taticamente desvantajoso."
+        },
+        {
+          "id": "tenshi",
+          "titulo": "Tenshi",
+          "tags": ["tenshi", "yokai", "celestial", "serenidade", "voo", "idioma celestial"],
+          "conteudo": "Seres celestiais de planos superiores enviados como mensageiros ou guardiões do equilíbrio. Asas etéreas, olhos com luz interior. Falam automaticamente o idioma padrão e o idioma celestial. HABILIDADES RACIAIS: Atributos: +2 em Sabedoria, +1 em Carisma. Beleza Divina: Recebe a vantagem Aparência Deslumbrante. Asas Nobres: Voo com deslocamento de 9m. LINHAGEM — Palavra de Serenidade: 1x/dia, pronuncia palavra celestial que ressoa na alma. Até dois alvos em alcance 12m têm todas as condições negativas de origem emocional ou mental removidas; inimigos testam Vontade (CD Sabedoria) ou perdem sua ação neste turno. FARDO — Incompreensão Mortal: Ao agir de forma moralmente ambígua, testa Vontade CD 16 ou hesita por uma rodada."
+        }
+      ]
+    },
+    {
+      "numero": "XI",
+      "titulo": "Mortos-Vivos",
+      "topicos": [
+        {
+          "id": "categoria_morto_vivo",
+          "titulo": "Categoria: Mortos-Vivos",
+          "tags": ["morto-vivo", "traço de categoria", "além da vida", "anátema da vida", "cura"],
+          "conteudo": "Criaturas que voltaram à vida depois da morte. Perdem todos os poderes e fraquezas raciais anteriores ao cruzar o limiar. TRAÇO RACIAL — Além da Vida: Mortos-vivos não precisam dormir, comer ou beber. São imunes a venenos, doenças e magias que afetem exclusivamente criaturas vivas. Magias de cura causam dano em vez de restaurar PV. DESVANTAGEM DE CATEGORIA — Anátema da Vida: Em qualquer comunidade que não os aceite, sofrem Má Fama automaticamente. Clérigos, paladinos e criaturas com habilidades de Esconjuro os reconhecem imediatamente."
+        },
+        {
+          "id": "esqueleto",
+          "titulo": "Esqueleto",
+          "tags": ["esqueleto", "morto-vivo", "ossos", "imunidade", "armadura morta"],
+          "conteudo": "Ossos vivos reanimados por magia. Resistentes e intimidadores. HABILIDADES RACIAIS: Ossos Vivos: +2 em Constituição, +1 em Força ou Destreza. Armadura Morta: Considerado Fortificado contra ataques físicos. Estrutura Óssea: Imune a efeitos de perfuração e vorpal (físicos ou mágicos); 50% de chance de anular ataques críticos físicos. LINHAGEM — Desarticulação Tática: 1x/dia, ao ser atingido por ataque físico, gaste 2 PM como reação para reduzir o dano à metade; o membro reencaixa; o atacante testa Vontade CD 12 ou fica Abalado. FARDO — Figura Ossificada: -2 em Carisma; Inculto; sujeito a todas as desvantagens de Anátema da Vida."
+        },
+        {
+          "id": "fantasma",
+          "titulo": "Fantasma",
+          "tags": ["fantasma", "morto-vivo", "incorpóreo", "espectral", "âncora", "necrótico"],
+          "conteudo": "Almas que se recusaram a partir. Presas ao mundo por promessas, vinganças ou amores inacabados. HABILIDADES RACIAIS: Natureza Etérea: +2 em Sabedoria, +1 em Carisma. Incorpóreo: Recebe apenas metade do dano de ataques físicos; dano físico também reduzido à metade contra físicos. Ataques mágicos e espirituais afetam normalmente. Visão Espiritual: Enxerga criaturas invisíveis, espectrais e ocultas; sente presença de mortos-vivos e espíritos em alcance médio; Fortificado contra Necrótico e Espiritual. LINHAGEM — Toque Espectral: 1x/dia, ação padrão + 2 PM, mão brevemente sólida no plano espiritual que ignora armaduras e MD física. Causa 2d8 de dano necrótico; alvo testa Vontade (CD Sabedoria) ou fica com -2 em todos os testes por 1 cena. FARDO — Corrente Invisível: Quando algo ameaça diretamente sua âncora, testa Vontade CD 15 ou age imediatamente em defesa dela, mesmo contrariando o plano do grupo."
+        },
+        {
+          "id": "meio_morto_vivo",
+          "titulo": "Meio Morto-Vivo",
+          "tags": ["meio morto-vivo", "morto-vivo", "híbrido", "entre mundos", "espectral"],
+          "conteudo": "Fruto de acidentes mágicos, experimentos falhos ou rituais errados. Corpo parece em decomposição mas ainda pulsa com vitalidade. Paradoxo entre viver e morrer. HABILIDADES RACIAIS: Essência Sombria: +2 em Constituição, +1 em Sabedoria. Imunidades: Possui as imunidades básicas dos mortos-vivos; ainda pode ser curado por feitiços de cura mas recupera apenas metade dos PV normais. Resiliente: +1 em Fortitude e Vontade. LINHAGEM — Entre os Mundos: 1x/dia, ao ser reduzido a 0 PV, gaste 2 PM como reação para entrar em estado espectral: não morre, fica com 1 PV, torna-se intangível (imune a dano físico) por 1 rodada. FARDO — Entre a Vida e a Morte: Recupera apenas metade dos PV de magias de cura; não pode se beneficiar de descanso confortável como os vivos; clérigos e paladinos percebem sua natureza."
+        },
+        {
+          "id": "mumia",
+          "titulo": "Múmia",
+          "tags": ["múmia", "morto-vivo", "bandagens", "deserto", "aura", "infravisão"],
+          "conteudo": "Corpos preservados por rituais funerários, selados em tumbas por sacerdotes. Alma presa entre a carne ressecada e o tecido encantado. Pele ressecada como pergaminho, olhos amarelados ou alaranjados. HABILIDADES RACIAIS: Carne Ressecada: +2 em Constituição, +1 em Sabedoria. Maldição Antiga: Infravisão; imunes a efeitos de medo e paralisia. Aura do Deserto: 1x/cena, ação livre, ativa aura de calor seco; criaturas vivas em alcance curto sofrem -1 em todos os testes até fim da cena. LINHAGEM — Maldição das Bandagens: 1x/dia, ação padrão, estende bandagens em alcance curto. Alvo testa Fortitude (CD Constituição) ou fica Enredado por 2 rodadas e recebe 1d6 de dano necrótico por rodada. Falha por 5+: fica também Apavorado até fim da cena. FARDO — Memória Imortal Corrompida: Ao encontrar algo que lembre fortemente sua vida anterior, testa Vontade CD 14 ou fica Fascinado por 1 rodada."
+        },
+        {
+          "id": "profano",
+          "titulo": "Profano",
+          "tags": ["profano", "morto-vivo", "necrótico", "feitiço profano", "obsessão"],
+          "conteudo": "Mortos-vivos conscientes, almas aprisionadas por propósito não cumprido. Corpos mostram abertamente a decomposição. Preservam memória, personalidade e vontade própria. HABILIDADES RACIAIS: Sabedoria dos Além: +1 em Sabedoria, +2 em outro atributo à escolha. Existência Profana: Infravisão; imune a medo, veneno e efeitos que afetem a mente. Arquétipo Profano: Aprende feitiço de 1º grau de origem profana à escolha; Fortificado contra feitiços negros e elemento trevas. LINHAGEM — Drenar Essência: 1x/dia, toca alvo vivo (ataque de toque). Alvo sofre 2d8 de dano necrótico; você recupera PM igual à metade do dano causado. Mortos-vivos tocados recuperam 2d6 PV. FARDO — Fúria Profana: Ao sofrer dano direto ou ser gravemente ofendido por personagem específico, testa Vontade (CD Carisma do agressor) ou entra em obsessão violenta focando exclusivamente aquele alvo."
+        }
+      ]
+    },
+    {
+      "numero": "XII",
+      "titulo": "Vampiros",
+      "topicos": [
+        {
+          "id": "categoria_vampiro",
+          "titulo": "Categoria: Vampiros",
+          "tags": ["vampiro", "traço de categoria", "predador noturno", "sede", "vulnerabilidade", "sol"],
+          "conteudo": "Predadores imortais que habitam a fronteira entre vida e morte. TRAÇO RACIAL — Predador Noturno: Enxergam perfeitamente no escuro; +2 em Furtividade e Enganação durante a noite ou baixa luminosidade. Imunes a venenos, doenças, efeitos de mente, medo mágico e efeitos de criaturas vivas. DESVANTAGEM DE CATEGORIA — Sede e Vulnerabilidade: Considerados Profanos (e também mortos-vivos para algumas mecânicas). Vulneráveis a Fogo. A cada dia sem se alimentar, acumulam 1 nível de fraqueza (-1 em todos os Atributos). Vulneráveis à luz solar (1d10 por rodada). Estacas de madeira causam dano letal no coração. Alho concentrado: -3 em Fortitude e Constituição. Só podem entrar onde sejam convidados pelo proprietário (exceto locais públicos ou com dono falecido)."
+        },
+        {
+          "id": "vampiros_de_velkarion",
+          "titulo": "Vampiros de Velkarion — Linhagens, Clãs e Dons das Trevas",
+          "tags": ["vampiro", "Velkarion", "Sharandor", "Vel'Nakhar", "Keth'Arak", "clã", "linhagem", "dons das trevas", "maardemma"],
+          "conteudo": "Vampiros não possuem Estigmas. Ao criar um personagem vampiro, escolhe Linhagem (Vel'Nakhar ou Keth'Arak) e uma Família (clã) dentro dela. Ao escolher a Família, recebe gratuitamente 2 Dons das Trevas da lista do clã. A cada nível par, pode escolher 1 Dom das Trevas adicional no lugar de vantagem, dom de classe ou atributo.\n\nLINHAGEM VEL'NAKHAR — O Pacto da Noite, herança de Mara-Vel. Vampiros que não saem à luz do dia, mas abençoados com feitiços de magia negra à noite. Marca registrada: o corvo. Clãs: Ashvorn (nobres e diplomatas, manipulação política; Dons: Augúrio, Babel, Bruxaria, Nobreza, Realeza), Kormael (mestres da enganação, vivem entre humanos; Dons: Tenebrae, Eloquência, Névoa, Vislumbre, Companheiro), Vel'Dara (culto de Mara-Vel, criadores dos Dons das Trevas, composto majoritariamente por mulheres; Dons: Babel, Realeza, Bruxaria, Majestade, Companheiro).\n\nLINHAGEM KETH'ARAK — O Pacto de Sangue, herança de Keth'Aram. Vampiros que negociaram com o demônio do sangue. Pagam com fraquezas e sede insaciável. Clãs: Drak'Ossur (nobreza corrompida, influência política e corrupção sistêmica; Dons: Eloquência, Gula, Nobreza, Recursos, Sagacidade), Keth'Var (assassinos e serial killers, autoexílio, terror silencioso; Dons: Couraça, Estripar, Executor, Pujança, Voracidade), Mal'Seran (demonologistas, detectam e manipulam sangue; Dons: Fortaleza, Estripar, Gula, Sagacidade, Pujança).\n\nOs Vel'Kharam — Surgidos de experimento alquímico que corrompeu o vírus vampírico. Desejam sangue de outros vampiros. Podem absorver dons de clãs de vítimas via maardemma. Odiados por todas as facções.\n\nO MAARDEMMA: Ritual canibal condenado por todos os clãs. O vampiro drena completamente o sangue de outro vampiro (reduz a 0 PV e mantém mordida por 1 cena inteira). Recompensa: no próximo nível par, pode escolher 1 Dom das Trevas da lista do clã da vítima gratuitamente. Vel'Kharam absorvem 2 dons. Se descoberto: perseguido implacavelmente, Má Fama permanente entre todos os vampiros."
+        },
+        {
+          "id": "dons_das_trevas",
+          "titulo": "Dons das Trevas",
+          "tags": ["dons das trevas", "vampiro", "clã", "poderes vampíricos", "Vel'Nakhar", "Keth'Arak"],
+          "conteudo": "Lista completa dos Dons das Trevas disponíveis aos vampiros:\n\nAugúrio: Eleva os sentidos ao extremo arcano. Ação padrão, 2 PM. Escolha: Postcognição (ver eventos passados de lugar/pessoa/objeto), Precognição (+2 em Reflexos, não pode ser surpreendido na cena) ou Sentidos Sobrenaturais (escolhe dois Sentidos Especiais até fim da cena).\n\nBabel: Compreende e fala qualquer idioma de Velkarion, incluindo línguas mortas, Celestial e Infernal em nível básico. Comunica-se com animais como pessoas e pode afetá-los com Realeza.\n\nBruxaria: Pode adquirir feitiço de 1º grau de qualquer tipo (exceto branco) e qualquer Origem (exceto sagrado).\n\nCompanheiro: Familiar ligado ao clã (corvo para Vel'Nakhar, serpente para Keth'Arak). Compartilham vantagem Parceiro. Se o familiar morrer: -2 em todos os testes por 1 semana.\n\nCouraça: A carne endurece além dos limites naturais. 1x/dia, 2 PM + reação para aumentar MD em 10 durante a cena inteira.\n\nEloquência: Treinamento em duas perícias de Carisma gratuitamente, +1 em cada. 1x/dia, 2 PM para rolar um desses testes com vantagem.\n\nEstripar: Ataques físicos causam sangramento (-1d4 PV por três rodadas) em alvos que falhem em Fortitude (CD Força). Não cumulativo.\n\nExecutor: Ao atacar fisicamente, pode gastar 3 PM. Se confirmar crítico, atinge ponto vital; Fortitude (CD Força) evita.\n\nFortaleza: 1x/dia, como ação livre, para cada 1 PM gasto recebe +5 PV temporários até fim da cena. Acumula até valor de Constituição.\n\nGula: Ao realizar mordida bem-sucedida, recupera 1d6+1 PM. 1x/dia.\n\nMajestade: Canaliza presença sobrenatural. Escolhe efeito ao adquirir: Pânico (Vontade CD Carisma ou Apavorado 1d4 rodadas), Encanto (Fascinado 1 cena), Confusão (Confuso 2 rodadas) ou Inspiração (+2 em ataque e Vontade para aliados por 1 rodada). Custo: 3 PM.\n\nNévoa: Ação padrão + 3 PM: dissolve corpo em névoa/morcegos. Imune a ataques físicos, Fortificado contra feitiços, mas não pode atacar. Move-se normalmente através de frestas. Dura até 3 rodadas, +1 PM por rodada adicional. Criaturas em 6m ficam cegas (Fortitude por Constituição evita).\n\nNobreza: Concede vantagem Status ou Boa Fama em um meio social de Sharandor.\n\nPujança: 1x/dia, 3 PM para duplicar o valor natural de Força durante a cena inteira.\n\nRealeza: Domínio mental puro. 1x/cena, 2 PM + ação padrão, influencia criatura inteligente em alcance curto. Testa Vontade (CD Carisma). Em falha, obedece por 1 rodada. +1 PM adicional: -1 no teste do alvo (máximo -3). Ordens que causem dano a si mesmo ou entes queridos dão novo teste imediato.\n\nRecursos: Em qualquer cidade ou vila de Sharandor (ou onde tenha reputação), sempre encontra hospedagem, transporte e acesso a eventos da elite sem convite ou pagamento imediato.\n\nSagacidade: Sentidos Especiais com alcance dobrado; +2 cumulativos em Percepção e Intuição.\n\nTenebrae: Recebe o feitiço Aspecto da Noite; fora de combate pode utilizá-lo sem custo em PM; em combate, custo reduzido à metade (mínimo 1).\n\nVislumbre: 1x/dia, 2 PM para ativar glamour de presença por 1 cena. Escolha: Carisma (recebe vantagem Carisma), Aparência Inofensiva ou Aparência Deslumbrante.\n\nVoracidade: 1x/combate, ao realizar ataque físico, gaste 5 PM para ignorar metade da MD do alvo."
+        },
+        {
+          "id": "vampiro_raca",
+          "titulo": "Vampiro (Raça)",
+          "tags": ["vampiro", "garras", "presas", "mordida", "forma animal", "morcego", "sangue eterno"],
+          "conteudo": "HABILIDADES RACIAIS: Sangue Eterno: +2 em Carisma, Força ou Inteligência (apenas um) e +1 em Constituição; não envelhecem, imunes a envelhecimento. Garras e Presas: Presas e garras naturais (1d6+FOR de dano perfurante). Ataque de mordida bem-sucedido: gaste 1 PM para drenar sangue, recuperando 1d6 PV e reduzindo 1 nível de fraqueza; alvo testa Fortitude (CD Constituição) ou -1 em Constituição até fim da cena. Forma Animal: 2 PM + ação de movimento, transforma-se em pequeno animal voador (morcego ou corvo). Voo 12m, pode usar mordida. Não pode falar, empunhar itens ou lançar feitiços na forma. Fora de combate, o voo não consome PM. LINHAGEM — Ascensão Sangrenta: 1x/dia, após mordida bem-sucedida, gaste 2 PM como ação livre. Por 1 cena: +1d8 de dano necrótico adicional, VG +2, testes de Carisma +3. Se o alvo da mordida original morrer durante a cena: bônus de dano sobe para +2d8. FARDO — A Sede: Com 2+ níveis de fraqueza, testa Vontade CD 20 ao ver criatura viva sangrando ou claramente ferida; falha = compelido a atacar ou aproximar como prioridade. 1x/sessão, o Mestre pode ativar a Sede mesmo sem fraqueza acumulada."
+        },
+        {
+          "id": "dampiro",
+          "titulo": "Dampiro",
+          "tags": ["dampiro", "vampiro", "meio vampiro", "caçador", "Sharandor", "presas latentes"],
+          "conteudo": "Existem porque vampiros ocasionalmente criam filhos antes de morrer, ou porque uma transformação incompleta atingiu uma mulher grávida. Vivos o suficiente para sentir calor, mas mortos o suficiente para que o sol doa. Em Sharandor, usados como espiões e intermediários pelos clãs. HABILIDADES RACIAIS: Sangue Dividido: +1 em Força, +1 em Constituição, +1 em Destreza; +2 em testes de Resistência contra magias e habilidades de vampiros. Sentidos de Predador: Infravisão, Faro Aguçado; +2 em Percepção e Intuição; identificam automaticamente vampiros e mortos-vivos em alcance curto. Presas Latentes: 1x/cena, ação livre, manifesta presas e realiza ataque de mordida (1d4+FOR perfurante). Se acertar, recupera PV igual à metade do dano causado. Deixa o dampiro visivelmente mais pálido e com traços vampíricos por 1 rodada. LINHAGEM — Caçador Nato: 1x/dia, ao identificar vampiro/morto-vivo/profano como alvo, gaste 2 PM como ação livre. Por 1 cena: +2 em ataque e dano contra esse alvo, ignora 5 pontos de MD, não pode ser surpreendido por ele. FARDO — Fronteira Instável: Ao ser reduzido a metade dos PV ou menos, testa Vontade CD 16 ou o lado vampírico emerge: +1d6 de dano necrótico adicional por 1 rodada, mas deve atacar o alvo mais próximo independentemente de ser aliado ou inimigo."
+        }
+      ]
+    }
+  ]
+}
