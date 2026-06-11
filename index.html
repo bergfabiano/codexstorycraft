@@ -2829,10 +2829,11 @@ function renderRacas(){
   var g=document.getElementById('grid-racas');
   if(!g) return;
 
-  // Normaliza string: sem acento, sem invisíveis, trim
-  var _normCat=function(v){ return deaccent((v||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); };
-  // Stem: remove terminações plurais/variações
-  var _stemCat=function(v){ return _normCat(v).replace(/(?:ais|eis|is|es|s)$/,''); };
+  // Normaliza: minúsculas + sem acento + sem invisíveis + trim
+  var _normCat=function(v){ return deaccent((v||'').toLowerCase().replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); };
+  // Stem simples: remove apenas o 's' final (bestiais→bestiai, bestial→bestial, mortos-vivos→mortos-vivo, celestiais→celestiai)
+  // Mas o mais robusto: só comparar se um começa com o outro
+  var _stemCat=function(v){ return _normCat(v).replace(/s$/,''); };
 
   var _makeCard=function(r){
     var n=racaNome(r);
@@ -2864,15 +2865,15 @@ function renderRacas(){
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
   var _ac=_normCat(RACA_ACTIVE_CAT);
-  var _acStem=_stemCat(RACA_ACTIVE_CAT);
 
   _data=DB.racas.filter(function(r){
     if(s&&fstr(r).toLowerCase().indexOf(s)===-1) return false;
     var rc=_normCat(racaCat(r));
     if(!rc) return false;
+    // Match exato
     if(rc===_ac) return true;
-    if(_stemCat(rc)===_acStem) return true;
-    if(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) return true;
+    // Um começa com o outro (resolve singular/plural: "bestial"↔"bestiais", "morto-vivo"↔"mortos-vivos")
+    if(rc.indexOf(_ac)===0||_ac.indexOf(rc)===0) return true;
     return false;
   });
   _data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
