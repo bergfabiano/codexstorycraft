@@ -2088,7 +2088,7 @@ main{
     </div>
 
     <!-- Grid de itens -->
-    <div id="admin-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.75rem;"></div>
+    <div id="admin-grid"></div>
   </div>
 
   <!-- Modal de URL de imagem -->
@@ -2811,7 +2811,7 @@ function renderRacasCatPills(){
   var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')" style="border-right:1px solid var(--border);border-radius:0;padding:0.65rem 0.5rem;font-size:0.72rem;">Todas</button>';
   for(var i=0;i<catOrder.length;i++){
     var cn=catOrder[i];
-    var active=(RACA_ACTIVE_CAT.trim().toLowerCase()===cn.trim().toLowerCase())?' active':'';
+    var active=(deaccent(RACA_ACTIVE_CAT.trim())===deaccent(cn.trim()))?' active':'';
     var isLast=(i===catOrder.length-1);
     btns+='<button class="vd-cat-btn'+active+'" data-rcat="'+cn.replace(/"/g,'&quot;')+'" onclick="switchRacaCat(this.dataset.rcat)" style="'+(isLast?'':'border-right:1px solid var(--border);')+'border-radius:0;padding:0.65rem 0.5rem;font-size:0.72rem;">'+cn+'</button>';
   }
@@ -2856,15 +2856,15 @@ function renderRacas(){
   }
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
-  var _ac=RACA_ACTIVE_CAT.trim().toLowerCase();
+  var _ac=deaccent(RACA_ACTIVE_CAT.trim());
   var data=DB.racas.filter(function(r){
-    var rc=(racaCat(r)||'').trim().toLowerCase();
+    var rc=deaccent((racaCat(r)||'').trim());
     return rc===_ac && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
   });
-  // Se não achou nada, tenta match parcial (ex: "Humanoide" vs "Humanoides")
+  // Se não achou nada, tenta match parcial (ex: "Humanoide" vs "Humanoides", "Bestial" vs "Bestiais")
   if(!data.length){
     data=DB.racas.filter(function(r){
-      var rc=(racaCat(r)||'').trim().toLowerCase();
+      var rc=deaccent((racaCat(r)||'').trim());
       return rc&&(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
     });
   }
@@ -2873,7 +2873,7 @@ function renderRacas(){
 
   // Banner da categoria (desc + traço + vd) embutido no grid
   var catRow=null;
-  for(var i=0;i<DB.racas_cats.length;i++){if((gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')||'').trim().toLowerCase()===RACA_ACTIVE_CAT.trim().toLowerCase()){catRow=DB.racas_cats[i];break;}}
+  for(var i=0;i<DB.racas_cats.length;i++){if(deaccent((gf(DB.racas_cats[i],'CATEGORIA','Categoria','categoria')||'').trim())===deaccent(RACA_ACTIVE_CAT.trim())){catRow=DB.racas_cats[i];break;}}
   var desc=catRow?gf(catRow,'DESCRIÇÃO DA CATEGORIA','Descrição da Categoria','descricao da categoria'):'';
   var traco=catRow?gf(catRow,'TRAÇO RACIAL (de Categoria)','Traço Racial (de Categoria)','traco racial','TRAÇO RACIAL'):'';
   var vdCat=catRow?gf(catRow,'VANTAGEM / DESVANTAGEM DE CATEGORIA','Vantagem / Desvantagem de Categoria','vantagem / desvantagem de categoria'):'';
