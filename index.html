@@ -500,7 +500,41 @@ main{
 .modal-field.full{grid-column:1/-1;}
 .modal-desc{color:var(--text-dim);font-size:0.9rem;line-height:1.72;border-left:2px solid var(--violet-dim);padding-left:1rem;margin:1rem 0;}
 
-/* ── RESULT COUNT / SECTION TITLE ── */
+/* ── CARD IMAGE PLACEHOLDER (1:1) ── */
+.card-img-wrap{
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:5px;
+  overflow:hidden;
+  margin-bottom:0.7rem;
+  border:1px solid rgba(155,93,229,0.12);
+  background:linear-gradient(135deg,var(--surface2) 0%,var(--bg3) 100%);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  position:relative;
+}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-img-wrap .card-img-sym{
+  font-family:'Cinzel',serif;
+  font-size:1.8rem;
+  color:rgba(155,93,229,0.12);
+  user-select:none;
+  line-height:1;
+}
+
+/* Modal image 1:1 */
+.modal-img-wrap{
+  width:120px;height:120px;
+  border-radius:8px;overflow:hidden;flex-shrink:0;
+  border:1px solid rgba(155,93,229,0.2);
+  background:linear-gradient(135deg,var(--surface2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.modal-img-wrap .modal-img-sym{
+  font-family:'Cinzel',serif;font-size:2rem;
+  color:rgba(155,93,229,0.15);user-select:none;
+}
 .result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
 .section-title{font-family:'Cinzel',serif;font-size:0.98rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
 .stitle-sym{color:var(--violet-bright);opacity:0.7;font-size:0.9rem;}
@@ -1909,6 +1943,22 @@ function imgBox(u,sym,size,extra){
   return '<div style="'+style+'border-radius:6px;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(155,93,229,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
 }
 
+// Card-level 1:1 image placeholder (url optional)
+function cardImg(url, sym){
+  var sym2 = sym||'✦';
+  if(url) return '<div class="card-img-wrap"><img src="'+url+'" loading="lazy"></div>';
+  return '<div class="card-img-wrap"><span class="card-img-sym">'+sym2+'</span></div>';
+}
+
+// Modal-level 1:1 image block (shown beside the title)
+function modalImgBlock(url, sym){
+  var sym2 = sym||'✦';
+  var inner = url
+    ? '<img src="'+url+'">'
+    : '<span class="modal-img-sym">'+sym2+'</span>';
+  return '<div class="modal-img-wrap">'+inner+'</div>';
+}
+
 // ── CATEGORY COLORS ──
 function classCardClass(cat){
   var c=(cat||'').toLowerCase();
@@ -2775,6 +2825,7 @@ function renderVantagens(){
     }
 
     return '<div class="card '+cardCls+'" onclick="openModalIdx('+_storeModal(r)+')">'+
+      cardImg(null, isNeg ? '✗' : '✦')+
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
         '<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+
         costBadge+
@@ -3196,6 +3247,7 @@ function renderLoja(){
         var rCopy={};for(var k in r)rCopy[k]=r[k];
         rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=tipoAccent;
         html+='<div class="card" style="--card-accent:'+tipoAccent+';--card-accent-faint:'+tipoAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+          cardImg(null,'✦')+
           '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
             '<div class="card-type" style="color:'+tipoAccent+';">'+tipo+'</div>'+
             (lojaGetPreco(r,cat)?priceSpan(lojaGetPreco(r,cat),'0.85rem'):'')+
@@ -3230,6 +3282,7 @@ function renderLoja(){
           subcatBadge='<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.08em;padding:0.15rem 0.45rem;border-radius:3px;border:1px solid '+sbAcc+';color:'+sbAcc+';background:rgba(0,0,0,0.3);text-transform:uppercase;">'+subcat+'</span>';
         }
         html+='<div class="card" style="--card-accent:'+grpAccent+';--card-accent-faint:'+grpAccent.replace('var(--','rgba(').replace(')',',0.08)')+'" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+          cardImg(null,'✦')+
           '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
             '<div class="card-type" style="color:'+grpAccent+';">'+LOJA_LABELS[cat]+'</div>'+
             (lojaGetPreco(r,cat)?priceSpan(lojaGetPreco(r,cat),'0.85rem'):'')+
@@ -3250,8 +3303,10 @@ function openLojaModal(idx){
   var n=row['_nome_display']||'(sem nome)';
   var cat=row['_loja_cat']||'itens';
   var accent=lojaCardAccent(cat);
-  var html='<div class="modal-type" style="color:'+accent+'">'+LOJA_LABELS[cat]+'</div>'+
-    '<h2 class="modal-name">'+n+'</h2>';
+  var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'+
+    modalImgBlock(null,'✦')+
+    '<div style="flex:1;min-width:0;"><div class="modal-type" style="color:'+accent+'">'+LOJA_LABELS[cat]+'</div>'+
+    '<h2 class="modal-name">'+n+'</h2></div></div>';
 
   var preco=lojaGetPreco(row,cat);
   var desc=lojaGetDesc(row,cat);
@@ -3310,7 +3365,7 @@ function renderGrimorio(){
     var nome=gf(r,'Feitiço','Feitico','feitico','Nome','nome')||'(sem nome)',escola=gf(r,'Escola','escola'),grau=gf(r,'Grau','grau'),origem=gf(r,'Origem','origem'),tipo=gf(r,'Tipo','tipo'),exec=gf(r,'Execução','Execucao','execucao'),alc=gf(r,'Alcance','alcance'),dur=gf(r,'Duração','Duracao','duracao'),res=gf(r,'Resistência','Resistencia','resistencia'),desc=gf(r,'Descrição','Descricao','descricao','desc');
     var cc=escolaCardClass(escola);
     var idx=_storeModal(r);
-    return '<div class="card '+cc+'" onclick="openModalIdx('+idx+')"><div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div><div class="card-name">'+nome+'</div>'+(desc?'<div class="card-desc">'+desc+'</div>':'')+'<div class="card-tags">'+(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'')+'</div></div>';
+    return '<div class="card '+cc+'" onclick="openModalIdx('+idx+')">'+cardImg(null,'✦')+'<div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div><div class="card-name">'+nome+'</div>'+(desc?'<div class="card-desc">'+desc+'</div>':'')+'<div class="card-tags">'+(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'')+'</div></div>';
   }).join('');
 }
 
@@ -3621,7 +3676,7 @@ function renderEstigmas(){
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)',ori=gf(r,'Origem','origem'),d=gf(r,'Descrição','Descricao','descricao','desc'),per=gf(r,'Perícias','Pericias','pericias'),van=gf(r,'Vantagem (Nome)','Vantagem','vantagem'),idi=gf(r,'Idioma','idioma'),ite=gf(r,'Itens','itens');
     var idx=_storeModal(r);
-    return '<div class="card card-especialista" onclick="openModalIdx('+idx+')"><div class="card-type">estigma · '+(ori||'')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'')+'</div></div>';
+    return '<div class="card card-especialista" onclick="openModalIdx('+idx+')">'+cardImg(null,'✸')+'<div class="card-type">estigma · '+(ori||'')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'')+'</div></div>';
   }).join('');
 }
 
@@ -3680,7 +3735,17 @@ function openModal(rowOrStr){
   }else if(nomeDeusImg){
     html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getDeusImg(nomeDeusImg),'☀',100)+'<div style="flex:1;"><div class="modal-type">divindade</div><h2 class="modal-name">'+nome+'</h2></div></div>';
   }else{
-    html=(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>';
+    // Vantagens, feitiços, estigmas e demais — imagem 1:1 ao lado do título
+    var modalSym = row['_vd_cat']==='desvantagens'||row['_vd_cat']==='maldicoes' ? '✗' :
+                   gf(row,'Escola','escola') ? '✦' :
+                   gf(row,'Origem','origem','Categoria','categoria') ? '✸' : '✦';
+    html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'+
+      modalImgBlock(null, modalSym)+
+      '<div style="flex:1;min-width:0;">'+
+        (header?'<div class="modal-type">'+header+'</div>':'')+
+        '<h2 class="modal-name">'+nome+'</h2>'+
+      '</div>'+
+    '</div>';
   }
   // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
   if(!desc&&isVantagem) desc=vdDesc(row);
