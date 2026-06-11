@@ -502,26 +502,46 @@ main{
 
 /* ── HORIZONTAL CARD (vantagens, estigmas, feitiços) ── */
 .card-h{
-  display:flex;flex-direction:row;align-items:flex-start;
-  gap:0.85rem;padding:0.75rem 0.9rem;
+  display:flex;flex-direction:row;align-items:center;
+  gap:0.85rem;padding:0.65rem 0.9rem;
 }
 .card-h .card-h-img{
-  width:58px;height:58px;flex-shrink:0;border-radius:5px;
+  width:52px;height:52px;flex-shrink:0;border-radius:5px;
   border:1px solid rgba(155,93,229,0.15);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .card-h .card-h-img img{width:100%;height:100%;object-fit:cover;}
 .card-h .card-h-sym{
-  font-family:'Cinzel',serif;font-size:1.3rem;
+  font-family:'Cinzel',serif;font-size:1.2rem;
   color:rgba(155,93,229,0.18);user-select:none;
 }
-.card-h .card-h-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.15rem;}
-.card-h .card-h-meta{display:flex;align-items:center;justify-content:space-between;gap:0.4rem;margin-bottom:0.08rem;}
-.card-h .card-type{margin-bottom:0;}
-.card-h .card-name{font-size:0.95rem;margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-h .card-desc{font-size:0.78rem;line-height:1.5;color:var(--text-faint);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.25rem;}
-.card-h .card-tags{margin-top:0.1rem;}
+.card-h .card-h-body{flex:1;min-width:0;}
+.card-h .card-name{
+  font-size:0.92rem;margin-bottom:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* Modal header com imagem à esquerda e título centralizado verticalmente */
+.modal-hero{
+  display:flex;align-items:center;gap:1.25rem;
+  margin-bottom:1.25rem;
+}
+.modal-hero-img{
+  width:110px;height:110px;flex-shrink:0;
+  border-radius:8px;overflow:hidden;
+  border:1px solid rgba(155,93,229,0.2);
+  background:linear-gradient(135deg,var(--surface2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-hero-img img{width:100%;height:100%;object-fit:cover;}
+.modal-hero-img .modal-hero-sym{
+  font-family:'Cinzel',serif;font-size:2.2rem;
+  color:rgba(155,93,229,0.15);user-select:none;
+}
+.modal-hero-info{flex:1;min-width:0;}
+.modal-hero-info .modal-type{margin-bottom:0.4rem;}
+.modal-hero-info .modal-name{margin-bottom:0;font-size:1.35rem;}
 
 /* ── CARD IMAGE PLACEHOLDER (1:1) ── */
 .card-img-wrap{
@@ -1956,18 +1976,27 @@ function getClassImg(n){return CLASS_IMGS[n]||null;}
 function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
 
-// Card horizontal compacto (vantagens, estigmas, feitiços)
-function cardHoriz(url, sym, meta, nome, desc, tagsHtml, extraCls, onclick){
+// Card horizontal minimalista — só imagem + nome
+function cardHoriz(url, sym, extraCls, nome, onclick){
   var imgInner = url
     ? '<img src="'+url+'" loading="lazy">'
     : '<span class="card-h-sym">'+(sym||'✦')+'</span>';
   return '<div class="card card-h'+(extraCls?' '+extraCls:'')+'" onclick="'+onclick+'">'
     +'<div class="card-h-img">'+imgInner+'</div>'
-    +'<div class="card-h-body">'
-      +(meta?'<div class="card-h-meta">'+meta+'</div>':'')
-      +'<div class="card-name">'+nome+'</div>'
-      +(desc?'<div class="card-desc">'+desc+'</div>':'')
-      +(tagsHtml?'<div class="card-tags">'+tagsHtml+'</div>':'')
+    +'<div class="card-h-body"><div class="card-name">'+nome+'</div></div>'
+  +'</div>';
+}
+
+// Modal hero — imagem à esquerda, tipo + título centralizados verticalmente
+function modalHero(url, sym, tipo, nome){
+  var imgInner = url
+    ? '<img src="'+url+'">'
+    : '<span class="modal-hero-sym">'+(sym||'✦')+'</span>';
+  return '<div class="modal-hero">'
+    +'<div class="modal-hero-img">'+imgInner+'</div>'
+    +'<div class="modal-hero-info">'
+      +(tipo?'<div class="modal-type">'+tipo+'</div>':'')
+      +'<h2 class="modal-name">'+nome+'</h2>'
     +'</div>'
   +'</div>';
 }
@@ -2865,7 +2894,7 @@ function renderVantagens(){
 
     var metaHtml='<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+(custo?costBadge:'');
     var tagsHtml=(pre?tag(pre.substring(0,35),'tag-gray'):'')+(extra1?tag(extra1.substring(0,25),'tag-class'):'');
-    return cardHoriz(null, isNeg?'✗':'✦', metaHtml, n, d, tagsHtml, cardCls, 'openModalIdx('+_storeModal(r)+')');
+    return cardHoriz(null, isNeg?'✗':'✦', cardCls, n, 'openModalIdx('+_storeModal(r)+')');
   }).join('');
 }
 
@@ -3396,7 +3425,7 @@ function renderGrimorio(){
     var idx=_storeModal(r);
     var metaGrim='<div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div>';
     var tagsGrim=(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'');
-    return cardHoriz(null,'✦',metaGrim,nome,desc,tagsGrim,cc,'openModalIdx('+idx+')');
+    return cardHoriz(null,'✦',cc,nome,'openModalIdx('+idx+')');
   }).join('');
 }
 
@@ -3709,7 +3738,7 @@ function renderEstigmas(){
     var idx=_storeModal(r);
     var metaEst='<div class="card-type">estigma · '+(ori||'')+'</div>';
     var tagsEst=(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'');
-    return cardHoriz(null,'✸',metaEst,n,d,tagsEst,'card-especialista','openModalIdx('+idx+')');
+    return cardHoriz(null,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
 }
 
@@ -3768,17 +3797,12 @@ function openModal(rowOrStr){
   }else if(nomeDeusImg){
     html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getDeusImg(nomeDeusImg),'☀',100)+'<div style="flex:1;"><div class="modal-type">divindade</div><h2 class="modal-name">'+nome+'</h2></div></div>';
   }else{
-    // Vantagens, feitiços, estigmas e demais — imagem 1:1 ao lado do título
+    // Vantagens, feitiços, estigmas — hero com imagem à esquerda e título centralizado
     var modalSym = row['_vd_cat']==='desvantagens'||row['_vd_cat']==='maldicoes' ? '✗' :
                    gf(row,'Escola','escola') ? '✦' :
                    gf(row,'Origem','origem','Categoria','categoria') ? '✸' : '✦';
-    html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'+
-      modalImgBlock(null, modalSym)+
-      '<div style="flex:1;min-width:0;">'+
-        (header?'<div class="modal-type">'+header+'</div>':'')+
-        '<h2 class="modal-name">'+nome+'</h2>'+
-      '</div>'+
-    '</div>';
+    var heroTipo = header || (row['_vd_cat'] ? VD_LABELS[row['_vd_cat']]||row['_vd_cat'] : '');
+    html = modalHero(null, modalSym, heroTipo, nome);
   }
   // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
   if(!desc&&isVantagem) desc=vdDesc(row);
