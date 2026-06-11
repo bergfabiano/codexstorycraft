@@ -1715,24 +1715,26 @@ main{
 
     <!-- Categoria tabs -->
     <div id="loja-cats" style="margin-bottom:0.75rem;display:grid;grid-template-columns:repeat(9,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
-      <button class="vd-cat-btn active" data-lcat="armas"      onclick="switchLoja('armas')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2694; Armas</button>
-      <button class="vd-cat-btn" data-lcat="municao"    onclick="switchLoja('municao')"    style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x25C6; Muni&#xE7;&#xE3;o</button>
-      <button class="vd-cat-btn" data-lcat="focus"      onclick="switchLoja('focus')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2726; F&#xF3;cus</button>
-      <button class="vd-cat-btn" data-lcat="armadura"   onclick="switchLoja('armadura')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x25A0; Armadura</button>
-      <button class="vd-cat-btn" data-lcat="itens"      onclick="switchLoja('itens')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2736; Itens</button>
-      <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"  style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2665; Montarias</button>
-      <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2318; Ve&#xED;culos</button>
-      <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);">&#x2737; Servi&#xE7;os</button>
-      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')"    style="border-bottom:1px solid var(--border);">&#x2615; Gastronomia</button>
-      <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')"   style="border-right:1px solid var(--border);">&#x2302; Base (Mel.)</button>
-      <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')"   style="border-right:1px solid var(--border);">&#x2302; Base (Est.)</button>
-      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')"   style="border-right:1px solid var(--border);">&#x2747; Imbu&#xED;dos</button>
-      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')" style="border-right:1px solid var(--border);">&#x2697; Alqu&#xED;micos</button>
-      <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')"   style="border-right:1px solid var(--border);">&#x25C8; Min&#xE9;rios &amp; Aux.</button>
-      <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')"      style="border-right:1px solid var(--border);">&#x25C6; Gemas</button>
-      <button class="vd-cat-btn" data-lcat="joias"      onclick="switchLoja('joias')"      style="border-right:1px solid var(--border);">&#x2605; J&#xF3;ias</button>
-      <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')"    style="border-right:1px solid var(--border);">&#x21AF; Aprimoramentos</button>
-      <button class="vd-cat-btn" data-lcat="encant"     onclick="switchLoja('encant')">    &#x2604; Encantamentos</button>
+      <!-- Linha 1 — ordem alfabética: Alquímicos, Aprimoramentos, Armadura, Armas, Base (Est.), Base (Mel.), Encantamentos, Fócus, Gastronomia -->
+      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')" style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Alqu&#xED;micos</button>
+      <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')"    style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Aprimoramentos</button>
+      <button class="vd-cat-btn" data-lcat="armadura"   onclick="switchLoja('armadura')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Armadura</button>
+      <button class="vd-cat-btn active" data-lcat="armas" onclick="switchLoja('armas')"    style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Armas</button>
+      <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Base (Estruturas)</button>
+      <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')"   style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Base (Melhorias)</button>
+      <button class="vd-cat-btn" data-lcat="encant"     onclick="switchLoja('encant')"     style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Encantamentos</button>
+      <button class="vd-cat-btn" data-lcat="focus"      onclick="switchLoja('focus')"      style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">F&#xF3;cus</button>
+      <button class="vd-cat-btn" data-lcat="aliment"    onclick="switchLoja('aliment')"    style="border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Gastronomia</button>
+      <!-- Linha 2 — ordem alfabética: Gemas, Imbuídos, Itens, Jóias, Minérios & Aux., Montarias, Munição, Serviços, Veículos -->
+      <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')"      style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Gemas</button>
+      <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')"   style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Imbu&#xED;dos</button>
+      <button class="vd-cat-btn" data-lcat="itens"      onclick="switchLoja('itens')"      style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Itens</button>
+      <button class="vd-cat-btn" data-lcat="joias"      onclick="switchLoja('joias')"      style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">J&#xF3;ias</button>
+      <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')"   style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Min&#xE9;rios &amp; Aux.</button>
+      <button class="vd-cat-btn" data-lcat="montarias"  onclick="switchLoja('montarias')"  style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Montarias</button>
+      <button class="vd-cat-btn" data-lcat="municao"    onclick="switchLoja('municao')"    style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Muni&#xE7;&#xE3;o</button>
+      <button class="vd-cat-btn" data-lcat="servicos"   onclick="switchLoja('servicos')"   style="border-right:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Servi&#xE7;os</button>
+      <button class="vd-cat-btn" data-lcat="veiculos"   onclick="switchLoja('veiculos')"   style="padding:0.65rem 0.5rem;font-size:0.72rem;">Ve&#xED;culos</button>
     </div>
 
     <!-- Search bar -->
@@ -1876,7 +1878,17 @@ main{
     <div class="filter-bar">
       <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, perícia, poder..." oninput="renderEstigmas()"></div>
       <div class="fg"><label>Origem</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
-      <div class="fg"><label>Vantagem</label><select id="f-est-atrib" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Regi&#xE3;o</label>
+        <div class="chk-filter-wrap" id="chk-wrap-est-regiao">
+          <div class="chk-filter-btn" id="chk-btn-est-regiao" onclick="toggleChkPanel('est-regiao')">
+            <span id="chk-lbl-est-regiao">Todas</span>
+            <span id="chk-badge-est-regiao" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-est-regiao"></div>
+        </div>
+      </div>
       <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
     </div>
     <p class="result-count" id="count-estigmas"></p>
@@ -2011,7 +2023,7 @@ var SHEET_URLS={
   grimorio:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
   classes:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
   dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
-  estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?output=csv",
+  estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?gid=1806585309&single=true&output=csv",
   deuses:          "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv",
   vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=2089466067&single=true&output=csv",
   vd_combate:      "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=2084160057&single=true&output=csv",
@@ -3611,18 +3623,29 @@ function renderGrimorio(){
   var origens=chkGetActive('mag-origem');
   var tipos=chkGetActive('mag-tipo');
 
-  // Populate checkbox panels
+  // Listas fixas para Origem e Tipo
   chkPopulate('mag-escola', uniq(DB.grimorio.map(function(r){return gf(r,'Escola','escola');})).filter(Boolean).sort());
   chkPopulate('mag-grau',   uniq(DB.grimorio.map(function(r){return gf(r,'Grau','grau');})).filter(Boolean).sort());
-  chkPopulate('mag-origem', uniq(DB.grimorio.map(function(r){return gf(r,'Origem','origem');})).filter(Boolean).sort());
-  chkPopulate('mag-tipo',   uniq(DB.grimorio.map(function(r){return gf(r,'Tipo','tipo');})).filter(Boolean).sort());
+  chkPopulate('mag-origem', ['Arcana','Profana','Sagrada']);
+  chkPopulate('mag-tipo',   ['Branca','Elemental','Espiritual','Negra','Neutra']);
+
+  // Helper: campo pode ter múltiplos valores separados (ex: "Sagrada e Profana")
+  function matchMulti(campo, lista){
+    if(!lista.length) return true;
+    if(!campo) return false;
+    var c = campo.toLowerCase();
+    for(var i=0;i<lista.length;i++){
+      if(c.indexOf(lista[i].toLowerCase())>-1) return true;
+    }
+    return false;
+  }
 
   var data=DB.grimorio.filter(function(r){
     return(!s||fstr(r).indexOf(s)>-1)
       &&(!escolas.length||escolas.indexOf(gf(r,'Escola','escola'))>-1)
       &&(!graus.length||graus.indexOf(gf(r,'Grau','grau'))>-1)
-      &&(!origens.length||origens.indexOf(gf(r,'Origem','origem'))>-1)
-      &&(!tipos.length||tipos.indexOf(gf(r,'Tipo','tipo'))>-1);
+      &&matchMulti(gf(r,'Origem','origem'), origens)
+      &&matchMulti(gf(r,'Tipo','tipo'), tipos);
   });
   var g=document.getElementById('grid-grimorio');
   document.getElementById('count-grimorio').textContent=data.length+' resultado'+(data.length===1?'':'s');
@@ -3934,18 +3957,34 @@ function voltarVelkarion(){
 
 // ── RENDER ESTIGMAS ──
 function renderEstigmas(){
-  var s=document.getElementById('f-est-search').value.toLowerCase(),ca=document.getElementById('f-est-cat').value,at=document.getElementById('f-est-atrib').value;
+  var s=document.getElementById('f-est-search').value.toLowerCase();
+  var ca=document.getElementById('f-est-cat').value;
+  var regioes=chkGetActive('est-regiao');
+
   popSel('f-est-cat',uniq(DB.estigmas.map(function(r){return gf(r,'Origem','origem','Categoria','categoria');})),ca);
-  popSel('f-est-atrib',uniq(DB.estigmas.map(function(r){return gf(r,'Vantagem (Nome)','Vantagem','vantagem');})),at);
-  var data=DB.estigmas.filter(function(r){return(!s||fstr(r).indexOf(s)>-1)&&(!ca||gf(r,'Origem','origem','Categoria','categoria')===ca)&&(!at||gf(r,'Vantagem (Nome)','Vantagem','vantagem')===at);});
+  chkPopulate('est-regiao', uniq(DB.estigmas.map(function(r){return gf(r,'Região','Regiao','regiao','região');})).filter(Boolean).sort());
+
+  var data=DB.estigmas.filter(function(r){
+    return(!s||fstr(r).indexOf(s)>-1)
+      &&(!ca||gf(r,'Origem','origem','Categoria','categoria')===ca)
+      &&(!regioes.length||regioes.indexOf(gf(r,'Região','Regiao','regiao','região'))>-1);
+  });
   var g=document.getElementById('grid-estigmas');
-  document.getElementById('count-estigmas').textContent=data.length+' resultados';
+  document.getElementById('count-estigmas').textContent=data.length+' resultado'+(data.length===1?'':'s');
   if(!data.length){g.innerHTML=emptyMsg('✸',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
   g.innerHTML=data.map(function(r){
-    var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)',ori=gf(r,'Origem','origem'),d=gf(r,'Descrição','Descricao','descricao','desc'),per=gf(r,'Perícias','Pericias','pericias'),van=gf(r,'Vantagem (Nome)','Vantagem','vantagem'),idi=gf(r,'Idioma','idioma'),ite=gf(r,'Itens','itens');
+    var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)';
+    var ori=gf(r,'Origem','origem');
+    var reg=gf(r,'Região','Regiao','regiao','região');
+    var d=gf(r,'Descrição','Descricao','descricao','desc');
+    var per=gf(r,'Perícias','Pericias','pericias');
+    var van=gf(r,'Vantagem (Nome)','Vantagem','vantagem');
+    var idi=gf(r,'Idioma','idioma');
+    var idiAd=gf(r,'Idioma Adicional','idioma adicional');
+    var ite=gf(r,'Itens','itens');
     var idx=_storeModal(r);
-    var metaEst='<div class="card-type">estigma · '+(ori||'')+'</div>';
-    var tagsEst=(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'');
+    var metaEst='<div class="card-type">estigma'+(ori?' · '+ori:'')+'</div>';
+    var tagsEst=(reg?tag(reg,'tag-rare'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-gray'):'')+(idiAd?tag(idiAd,'tag-gray'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'');
     return cardHoriz(null,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
 }
@@ -3957,6 +3996,7 @@ function clearFilters(sec){
   // Clear checkbox filters
   if(sec==='classes') chkClear('class-cat');
   if(sec==='grimorio'){ chkClear('mag-escola');chkClear('mag-grau');chkClear('mag-origem');chkClear('mag-tipo'); }
+  if(sec==='estigmas') chkClear('est-regiao');
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
 }
