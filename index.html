@@ -2874,18 +2874,27 @@ function renderRacas(){
   }
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
-  var _ac=deaccent(RACA_ACTIVE_CAT.trim());
+  // Normaliza removendo acentos, espaços extras e caracteres invisíveis
+  function normCat(s){ return deaccent((s||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); }
+  // Stem: remove S/ES/IS final para comparação singular/plural (ex: "bestiais"→"bestia", "bestial"→"bestia")
+  function stemCat(s){ return normCat(s).replace(/(?:ais|eis|is|es|s)$/,''); }
+
+  var _ac=normCat(RACA_ACTIVE_CAT);
+  var _acStem=stemCat(RACA_ACTIVE_CAT);
+
   var data=DB.racas.filter(function(r){
-    var rc=deaccent((racaCat(r)||'').trim());
-    return rc===_ac && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
+    var rc=normCat(racaCat(r));
+    if(!rc) return false;
+    if(!s||fstr(r).toLowerCase().indexOf(s)>-1){
+      // Match exato
+      if(rc===_ac) return true;
+      // Match por stem (singular/plural)
+      if(stemCat(rc)===_acStem) return true;
+      // Match parcial como fallback
+      if(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) return true;
+    }
+    return false;
   });
-  // Se não achou nada, tenta match parcial (ex: "Humanoide" vs "Humanoides", "Bestial" vs "Bestiais")
-  if(!data.length){
-    data=DB.racas.filter(function(r){
-      var rc=deaccent((racaCat(r)||'').trim());
-      return rc&&(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) && (!s||fstr(r).toLowerCase().indexOf(s)>-1);
-    });
-  }
   data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
   document.getElementById('count-racas').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+RACA_ACTIVE_CAT;
 
