@@ -2866,17 +2866,17 @@ function renderRacas(){
   // ── ABA DE CATEGORIA ESPECÍFICA ──
   // Mapa fixo: pill → valores possíveis no CSV (resolve erros de grafia da planilha)
   var _catMap={
-    'bestiais':   ['bestial','bestiais'],
-    'celestiais': ['celestial','celestiais','celestial'],
-    'mortos-vivos':['morto-vivo','mortos-vivos'],
-    'humanoides': ['humanoide','humanoides'],
-    'elfos':      ['elfo','elfos'],
-    'feericos':   ['ferico','feericos','féerico','féericos'],
-    'primevos':   ['primevo','primevos'],
-    'mecanos':    ['mecano','mecanos'],
-    'demonios':   ['demonio','demonios','demônio','demônios'],
-    'yokais':     ['yokai','yokais'],
-    'vampiros':   ['vampiro','vampiros']
+    'bestiais':    ['bestial','bestiais'],
+    'celestiais':  ['celestial','celestiais'],
+    'mortosvivos': ['mortovivo','mortosvivos'],
+    'humanoides':  ['humanoide','humanoides'],
+    'elfos':       ['elfo','elfos'],
+    'feericos':    ['ferico','feericos'],
+    'primevos':    ['primevo','primevos'],
+    'mecanos':     ['mecano','mecanos'],
+    'demonios':    ['demonio','demonios'],
+    'yokais':      ['yokai','yokais'],
+    'vampiros':    ['vampiro','vampiros']
   };
   var _normCatSimple=function(v){ return deaccent((v||'').toLowerCase().replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); };
   var _acKey=_normCatSimple(RACA_ACTIVE_CAT);
