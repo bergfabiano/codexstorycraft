@@ -2651,17 +2651,7 @@ function distributeData(rows,tab){
   if(tab==='vd_maldicoes'){rows=fixVdHeaders(rows);VD.maldicoes=cleanVdRows(rows);VD_STATUS.maldicoes='ok';updateVdBadge('maldicoes',VD.maldicoes.length);return;}
   // Legacy vantagens (fallback)
   if(tab==='racas_cats'){DB.racas_cats=rows;renderRacasCatPills();return;}
-  if(tab==='racas_detail'){
-    DB.racas=rows;
-    // DEBUG temporario — abre o console do navegador para ver
-    var _dbgKeys=Object.keys(rows[0]||{});
-    var _dbgCats=rows.map(function(r){return r['CATEGORIA']||r['Categoria']||r['categoria']||'???';});
-    var _dbgUniq=_dbgCats.filter(function(v,i,a){return a.indexOf(v)===i;});
-    console.log('[racas_detail] '+rows.length+' linhas. Chaves:', _dbgKeys);
-    console.log('[racas_detail] Categorias brutas:', _dbgUniq);
-    renderRacas();
-    return;
-  }
+  if(tab==='racas_detail'){DB.racas=rows;renderRacasCatPills();renderRacas();return;}
   if(tab==='grimorio'){DB.grimorio=rows;return;}
   if(tab==='racas'){DB.racas=rows;return;}
   if(tab==='classes'){DB.classes=rows;return;}
@@ -2801,14 +2791,6 @@ function racaFardo(r){return gf(r,'FARDO','Fardo','fardo')||'';}
 function renderRacasCatPills(){
   var el=document.getElementById('raca-cats');
   if(!el) return;
-  // DEBUG temporario
-  console.log('[racas_cats] DB.racas_cats length:', DB.racas_cats.length);
-  if(DB.racas_cats.length) console.log('[racas_cats] Chaves 1ª linha:', Object.keys(DB.racas_cats[0]));
-  console.log('[racas_cats] DB.racas length:', DB.racas.length);
-  if(DB.racas.length) {
-    var _smpl=DB.racas.slice(0,3).map(function(r){return {nome:r['NOME']||r['Nome']||r['nome'],cat:r['CATEGORIA']||r['Categoria']||r['categoria']};});
-    console.log('[racas_cats] Amostra racas:', _smpl);
-  }
   // Usa APENAS a sheet de cats para definir a ordem e nomes das pills
   // (o match com as raças é feito de forma flexível em renderRacas)
   var catOrder=[];
@@ -2876,21 +2858,13 @@ function renderRacas(){
   // ── ABA DE CATEGORIA ESPECÍFICA ──
   // Normaliza removendo acentos, espaços extras e caracteres invisíveis
   function normCat(s){ return deaccent((s||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); }
-  // Stem: remove S/ES/IS final para comparação singular/plural (ex: "bestiais"→"bestia", "bestial"→"bestia")
-  function stemCat(s){ return normCat(s).replace(/(?:ais|eis|is|es|s)$/,''); }
-
-  var _ac=normCat(RACA_ACTIVE_CAT);
-  var _acStem=stemCat(RACA_ACTIVE_CAT);
 
   var data=DB.racas.filter(function(r){
     var rc=normCat(racaCat(r));
     if(!rc) return false;
     if(!s||fstr(r).toLowerCase().indexOf(s)>-1){
-      // Match exato
       if(rc===_ac) return true;
-      // Match por stem (singular/plural)
       if(stemCat(rc)===_acStem) return true;
-      // Match parcial como fallback
       if(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) return true;
     }
     return false;
