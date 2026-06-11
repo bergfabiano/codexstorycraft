@@ -562,30 +562,38 @@ main{
 /* ── DEBUG BANNERS ── */
 .debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
 
-/* ── VANTAGENS CATEGORY TABS ── */
+/* ── CATEGORY TABS (vantagens, loja, etc.) ── */
 .vd-cats{
-  display:flex;flex-wrap:wrap;gap:0.45rem;
+  display:flex;flex-wrap:wrap;gap:0;
   margin-bottom:0;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
 }
 .vd-cat-btn{
-  display:inline-flex;align-items:center;gap:0.4rem;
-  padding:0.45rem 0.9rem;
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.68rem;
-  letter-spacing:0.08em;text-transform:uppercase;
-  border:1px solid var(--border);border-radius:20px;
-  color:var(--text-faint);background:var(--surface);
-  cursor:pointer;transition:all 0.18s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:0.35rem;
+  padding:0.48rem 0.85rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;
+  letter-spacing:0.07em;text-transform:uppercase;
+  border:none;
+  border-right:1px solid var(--border);
+  border-radius:0;
+  color:var(--text-faint);background:transparent;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;
 }
-.vd-cat-btn:hover{color:var(--text);border-color:var(--violet-dim);background:var(--surface2);}
+.vd-cat-btn:last-child{border-right:none;}
+.vd-cat-btn:hover{color:var(--text);background:rgba(155,93,229,0.08);}
 .vd-cat-btn.active{
   color:#fff;background:var(--violet);
-  border-color:var(--violet);
-  box-shadow:0 0 14px rgba(155,93,229,0.35);
+  border-right-color:var(--violet);
 }
-.vd-cat-neg{border-color:rgba(255,92,138,0.25);}
-.vd-cat-neg:hover,.vd-cat-neg.active{background:var(--cat-desvantagem);border-color:var(--cat-desvantagem);color:#000;box-shadow:0 0 14px rgba(255,92,138,0.3);}
-.vd-cat-mal{border-color:rgba(180,50,50,0.25);}
-.vd-cat-mal:hover,.vd-cat-mal.active{background:#a03030;border-color:#c03030;color:#fff;box-shadow:0 0 14px rgba(160,48,48,0.4);}
+.vd-cat-neg{color:rgba(255,92,138,0.5);}
+.vd-cat-neg:hover{color:var(--cat-desvantagem);background:rgba(255,92,138,0.07);}
+.vd-cat-neg.active{background:var(--cat-desvantagem);color:#000;border-right-color:var(--cat-desvantagem);}
+.vd-cat-mal{color:rgba(192,48,48,0.5);}
+.vd-cat-mal:hover{color:#e05050;background:rgba(192,48,48,0.07);}
+.vd-cat-mal.active{background:#a03030;color:#fff;border-right-color:#c03030;}
 
 /* Badge de contagem nas pills */
 .vd-badge{
@@ -1595,10 +1603,7 @@ main{
       <button class="vd-cat-btn" data-lcat="base_mel"   onclick="switchLoja('base_mel')">  &#x2302; Base (Melhorias)</button>
       <button class="vd-cat-btn" data-lcat="base_est"   onclick="switchLoja('base_est')">  &#x2302; Base (Estruturas)</button>
       <button class="vd-cat-btn" data-lcat="imbuidos"   onclick="switchLoja('imbuidos')">  &#x2747; Imbu&#xED;dos</button>
-      <button class="vd-cat-btn" data-lcat="pocoes"     onclick="switchLoja('pocoes')">    &#x2697; Po&#xE7;&#xF5;es</button>
-      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')">&#x2736; Alqu&#xED;micos</button>
-      <button class="vd-cat-btn vd-cat-neg" data-lcat="venenos"    onclick="switchLoja('venenos')">   &#x2620; Venenos</button>
-      <button class="vd-cat-btn vd-cat-neg" data-lcat="sicario"    onclick="switchLoja('sicario')">   &#x2620; V. Sic&#xE1;rio</button>
+      <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')">&#x2697; Alqu&#xED;micos</button>
       <button class="vd-cat-btn" data-lcat="minerios"   onclick="switchLoja('minerios')">  &#x25C8; Min&#xE9;rios</button>
       <button class="vd-cat-btn" data-lcat="auxiliares" onclick="switchLoja('auxiliares')">&#x25B6; Auxiliares</button>
       <button class="vd-cat-btn" data-lcat="gemas"      onclick="switchLoja('gemas')">     &#x25C6; Gemas</button>
@@ -4176,7 +4181,7 @@ function oraculo_buscar_topicos(pergunta){
   });
 
   resultados.sort(function(a,b){ return b.score - a.score; });
-  return resultados.slice(0, 6);
+  return resultados.slice(0, 8);
 }
 
 // ── Monta o contexto para enviar à API ──
@@ -4262,7 +4267,8 @@ function oraculo_enviar(){
   // Monta o prompt de sistema
   var systemPrompt = 'Você é o Oráculo do Codex StoryCraft — um assistente especialista nas regras do sistema de RPG de mesa Storycraft 3ª Edição, desenvolvido por Berg. ' +
     'Responda perguntas sobre as regras com precisão, usando os trechos dos manuais fornecidos como contexto. ' +
-    'Você tem acesso ao Manual do Jogador (regras, combate, perícias, etc.) e ao Manual das Raças (todas as raças de Velkarion com habilidades, Fardo e Linhagem). ' +
+    'Você tem acesso ao Manual do Jogador (regras, combate, perícias, ações, etc.) e ao Manual das Raças completo (todas as raças de Velkarion organizadas em categorias: Humanoides, Elfos, Féericos, Bestiais, Primevos, Mecanos, Demônios, Celestiais, Yokais, Mortos-Vivos e Vampiros — com habilidades raciais, Fardo e Linhagem de cada uma). ' +
+    'Quando perguntado sobre raças, quantidade de raças, categorias ou qualquer conteúdo do Manual das Raças, consulte o contexto fornecido e responda com base nele. ' +
     'Use linguagem clara e objetiva. Quando citar valores numéricos ou mecânicas específicas, seja exato. ' +
     'Se o contexto não cobrir totalmente a pergunta, diga que a informação pode estar em outro manual do sistema (como o Manual das Classes). ' +
     'Responda sempre em português brasileiro. Não use markdown com # ou ## — use texto simples com negrito (**termo**) quando necessário. ' +
