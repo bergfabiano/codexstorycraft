@@ -2858,6 +2858,11 @@ function renderRacas(){
   // ── ABA DE CATEGORIA ESPECÍFICA ──
   // Normaliza removendo acentos, espaços extras e caracteres invisíveis
   function normCat(s){ return deaccent((s||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); }
+  // Stem: remove terminações para comparar singular/plural (ex: "bestiais"→"bestia", "bestial"→"bestia")
+  function stemCat(s){ return normCat(s).replace(/(?:ais|eis|is|es|s)$/,''); }
+
+  var _ac = normCat(RACA_ACTIVE_CAT);
+  var _acStem = stemCat(RACA_ACTIVE_CAT);
 
   var data=DB.racas.filter(function(r){
     var rc=normCat(racaCat(r));
