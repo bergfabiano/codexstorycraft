@@ -3567,9 +3567,20 @@ function openLojaModal(idx){
   var n=row['_nome_display']||'(sem nome)';
   var cat=row['_loja_cat']||'itens';
   var accent=lojaCardAccent(cat);
+
+  // Para armaduras: mostra badge de tipo (Leve, Média, Pesada, Escudo)
+  var armBadge='';
+  if(cat==='armadura'){
+    var armTipo=row['Tipo']||row['Categoria']||row['Sub-categoria']||'';
+    if(armTipo){
+      var armColor=lojaGroupAccent('armadura',armTipo);
+      armBadge='<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.65rem;border-radius:4px;border:1px solid '+armColor+';color:'+armColor+';background:rgba(0,0,0,0.3);margin-left:0.6rem;">'+armTipo+'</span>';
+    }
+  }
+
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'+
     modalImgBlock(null,'✦')+
-    '<div style="flex:1;min-width:0;"><div class="modal-type" style="color:'+accent+'">'+LOJA_LABELS[cat]+'</div>'+
+    '<div style="flex:1;min-width:0;"><div class="modal-type" style="color:'+accent+';display:flex;align-items:center;flex-wrap:wrap;gap:0.3rem;">'+LOJA_LABELS[cat]+armBadge+'</div>'+
     '<h2 class="modal-name">'+n+'</h2></div></div>';
 
   var preco=lojaGetPreco(row,cat);
