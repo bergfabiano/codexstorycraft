@@ -500,6 +500,29 @@ main{
 .modal-field.full{grid-column:1/-1;}
 .modal-desc{color:var(--text-dim);font-size:0.9rem;line-height:1.72;border-left:2px solid var(--violet-dim);padding-left:1rem;margin:1rem 0;}
 
+/* ── HORIZONTAL CARD (vantagens, estigmas, feitiços) ── */
+.card-h{
+  display:flex;flex-direction:row;align-items:flex-start;
+  gap:0.85rem;padding:0.75rem 0.9rem;
+}
+.card-h .card-h-img{
+  width:58px;height:58px;flex-shrink:0;border-radius:5px;
+  border:1px solid rgba(155,93,229,0.15);
+  background:linear-gradient(135deg,var(--surface2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.card-h .card-h-img img{width:100%;height:100%;object-fit:cover;}
+.card-h .card-h-sym{
+  font-family:'Cinzel',serif;font-size:1.3rem;
+  color:rgba(155,93,229,0.18);user-select:none;
+}
+.card-h .card-h-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.15rem;}
+.card-h .card-h-meta{display:flex;align-items:center;justify-content:space-between;gap:0.4rem;margin-bottom:0.08rem;}
+.card-h .card-type{margin-bottom:0;}
+.card-h .card-name{font-size:0.95rem;margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-h .card-desc{font-size:0.78rem;line-height:1.5;color:var(--text-faint);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.25rem;}
+.card-h .card-tags{margin-top:0.1rem;}
+
 /* ── CARD IMAGE PLACEHOLDER (1:1) ── */
 .card-img-wrap{
   width:100%;
@@ -1933,6 +1956,22 @@ function getClassImg(n){return CLASS_IMGS[n]||null;}
 function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
 
+// Card horizontal compacto (vantagens, estigmas, feitiços)
+function cardHoriz(url, sym, meta, nome, desc, tagsHtml, extraCls, onclick){
+  var imgInner = url
+    ? '<img src="'+url+'" loading="lazy">'
+    : '<span class="card-h-sym">'+(sym||'✦')+'</span>';
+  return '<div class="card card-h'+(extraCls?' '+extraCls:'')+'" onclick="'+onclick+'">'
+    +'<div class="card-h-img">'+imgInner+'</div>'
+    +'<div class="card-h-body">'
+      +(meta?'<div class="card-h-meta">'+meta+'</div>':'')
+      +'<div class="card-name">'+nome+'</div>'
+      +(desc?'<div class="card-desc">'+desc+'</div>':'')
+      +(tagsHtml?'<div class="card-tags">'+tagsHtml+'</div>':'')
+    +'</div>'
+  +'</div>';
+}
+
 function imgBox(u,sym,size,extra){
   var s=size||'100%';
   var inner=u?'<img src="'+u+'" style="width:100%;height:100%;object-fit:cover;">'
@@ -2824,19 +2863,9 @@ function renderVantagens(){
       costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+(isNeg?' pts':' pts')+'</span>';
     }
 
-    return '<div class="card '+cardCls+'" onclick="openModalIdx('+_storeModal(r)+')">'+
-      cardImg(null, isNeg ? '✗' : '✦')+
-      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.35rem;">'+
-        '<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+
-        costBadge+
-      '</div>'+
-      '<div class="card-name">'+n+'</div>'+
-      (d?'<div class="card-desc">'+d+'</div>':'')+
-      '<div class="card-tags">'+
-        (pre?tag(pre.substring(0,35),'tag-gray'):'')+
-        (extra1?tag(extra1.substring(0,25),'tag-class'):'')+
-      '</div>'+
-    '</div>';
+    var metaHtml='<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+(custo?costBadge:'');
+    var tagsHtml=(pre?tag(pre.substring(0,35),'tag-gray'):'')+(extra1?tag(extra1.substring(0,25),'tag-class'):'');
+    return cardHoriz(null, isNeg?'✗':'✦', metaHtml, n, d, tagsHtml, cardCls, 'openModalIdx('+_storeModal(r)+')');
   }).join('');
 }
 
@@ -3365,7 +3394,9 @@ function renderGrimorio(){
     var nome=gf(r,'Feitiço','Feitico','feitico','Nome','nome')||'(sem nome)',escola=gf(r,'Escola','escola'),grau=gf(r,'Grau','grau'),origem=gf(r,'Origem','origem'),tipo=gf(r,'Tipo','tipo'),exec=gf(r,'Execução','Execucao','execucao'),alc=gf(r,'Alcance','alcance'),dur=gf(r,'Duração','Duracao','duracao'),res=gf(r,'Resistência','Resistencia','resistencia'),desc=gf(r,'Descrição','Descricao','descricao','desc');
     var cc=escolaCardClass(escola);
     var idx=_storeModal(r);
-    return '<div class="card '+cc+'" onclick="openModalIdx('+idx+')">'+cardImg(null,'✦')+'<div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div><div class="card-name">'+nome+'</div>'+(desc?'<div class="card-desc">'+desc+'</div>':'')+'<div class="card-tags">'+(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'')+'</div></div>';
+    var metaGrim='<div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div>';
+    var tagsGrim=(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'');
+    return cardHoriz(null,'✦',metaGrim,nome,desc,tagsGrim,cc,'openModalIdx('+idx+')');
   }).join('');
 }
 
@@ -3676,7 +3707,9 @@ function renderEstigmas(){
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)',ori=gf(r,'Origem','origem'),d=gf(r,'Descrição','Descricao','descricao','desc'),per=gf(r,'Perícias','Pericias','pericias'),van=gf(r,'Vantagem (Nome)','Vantagem','vantagem'),idi=gf(r,'Idioma','idioma'),ite=gf(r,'Itens','itens');
     var idx=_storeModal(r);
-    return '<div class="card card-especialista" onclick="openModalIdx('+idx+')">'+cardImg(null,'✸')+'<div class="card-type">estigma · '+(ori||'')+'</div><div class="card-name">'+n+'</div>'+(d?'<div class="card-desc">'+d+'</div>':'')+'<div class="card-tags">'+(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'')+'</div></div>';
+    var metaEst='<div class="card-type">estigma · '+(ori||'')+'</div>';
+    var tagsEst=(ori?tag(ori,'tag-gray'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-rare'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'');
+    return cardHoriz(null,'✸',metaEst,n,d,tagsEst,'card-especialista','openModalIdx('+idx+')');
   }).join('');
 }
 
