@@ -3537,19 +3537,21 @@ function renderLoja(){
   // Mantém a ordem de inserção (ordem da planilha) para todas as outras categorias
 
   var html='';
+  // Cor fixa da categoria — sem variação por subgrupo
+  var catAccent=lojaCardAccent(cat);
+
   if(cat==='imbuidos'){
     data.forEach(function(r){
       var n=lojaGetField(r);
       var tipo=r['Categoria']||'Imbu\u00eddo';
-      var tipoAccent=imbuTipoAccent(tipo);
       var preco=lojaGetPreco(r,cat);
       var rCopy={};for(var k in r)rCopy[k]=r[k];
-      rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=tipoAccent;
+      rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=catAccent;
       var precoHtml=preco?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.8rem;color:'+currencyColor(preco)+';">'+preco+'</span>':'';
-      html+='<div class="card card-h" style="--card-accent:'+tipoAccent+';--card-accent-faint:'+tipoAccent.replace('var(--','rgba(').replace(')',',0.08)')+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
-        '<div class="card-h-img"><span class="card-h-sym" style="color:'+tipoAccent+';">✦</span></div>'+
+      html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+        '<div class="card-h-img"><span class="card-h-sym" style="color:'+catAccent+';">✦</span></div>'+
         '<div class="card-h-body">'+
-          '<div class="card-h-meta"><div class="card-type" style="color:'+tipoAccent+';">'+tipo+'</div>'+precoHtml+'</div>'+
+          '<div class="card-h-meta">'+precoHtml+'</div>'+
           '<div class="card-name">'+n+'</div>'+
         '</div>'+
       '</div>';
@@ -3557,22 +3559,19 @@ function renderLoja(){
   } else {
     data.forEach(function(r){
       var n=lojaGetField(r);
-      var grpAccent=lojaGroupAccent(cat,lojaGetCat(r,cat)||'')||lojaCardAccent(cat);
       var preco=lojaGetPreco(r,cat);
-      var subcat=r['Sub-categoria']||'';
       var rCopy={};for(var k in r)rCopy[k]=r[k];
-      rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=grpAccent;
+      rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=catAccent;
       var precoHtml=preco?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.8rem;color:'+currencyColor(preco)+';">'+preco+'</span>':'';
-      html+='<div class="card card-h" style="--card-accent:'+grpAccent+';--card-accent-faint:'+grpAccent.replace('var(--','rgba(').replace(')',',0.08)')+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
-        '<div class="card-h-img"><span class="card-h-sym" style="color:'+grpAccent+';">✦</span></div>'+
+      html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+        '<div class="card-h-img"><span class="card-h-sym" style="color:'+catAccent+';">✦</span></div>'+
         '<div class="card-h-body">'+
-          '<div class="card-h-meta"><div class="card-type" style="color:'+grpAccent+';">'+LOJA_LABELS[cat]+'</div>'+precoHtml+'</div>'+
+          '<div class="card-h-meta">'+precoHtml+'</div>'+
           '<div class="card-name">'+n+'</div>'+
         '</div>'+
       '</div>';
     });
   }
-
   g.innerHTML='<div class="cards-grid" style="display:contents;">'+html+'</div>';
 }
 
