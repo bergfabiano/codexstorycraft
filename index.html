@@ -770,9 +770,20 @@ main{
 /* ── CONTINENTE GRID ── */
 .vel-continent-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:1rem;
   margin-top:0;
+}
+.vel-cont-banner{
+  width:100%;aspect-ratio:16/9;overflow:hidden;
+  background:linear-gradient(135deg,var(--surface2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;flex-shrink:0;
+}
+.vel-cont-banner img{width:100%;height:100%;object-fit:cover;display:block;}
+.vel-cont-banner-sym{
+  font-family:'Cinzel',serif;font-size:2rem;
+  color:rgba(155,93,229,0.15);user-select:none;
 }
 .vel-cont-card{
   background:var(--surface);
@@ -1689,34 +1700,11 @@ main{
       <button class="vd-cat-btn" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')"    style="padding:0.7rem 0.5rem;font-size:0.75rem;">Maldi&#xE7;&#xF5;es</button>
     </div>
 
-    <!-- Barra de busca + checkbox de custo -->
+    <!-- Barra de busca -->
     <div class="filter-bar" style="margin-top:0;margin-bottom:0.5rem;">
       <div class="fg" style="flex:1;"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito, pré-requisito..." oninput="renderVantagens()"></div>
-      <div class="fg" style="flex:0 0 auto;">
-        <label>Custo</label>
-        <div class="chk-filter-wrap" id="chk-wrap-vd-custo">
-          <div class="chk-filter-btn" id="chk-btn-vd-custo" onclick="toggleChkPanel('vd-custo')">
-            <span id="chk-lbl-vd-custo">Todos</span>
-            <span id="chk-badge-vd-custo" class="chk-filter-badge" style="display:none;"></span>
-            <span class="chk-arrow">&#x25BC;</span>
-          </div>
-          <div class="chk-filter-panel" id="chk-panel-vd-custo"></div>
-        </div>
-      </div>
-      <div class="fg" style="flex:0 0 auto;">
-        <label>Pr&#xE9;-requisito</label>
-        <div class="chk-filter-wrap" id="chk-wrap-vd-prereq">
-          <div class="chk-filter-btn" id="chk-btn-vd-prereq" onclick="toggleChkPanel('vd-prereq')">
-            <span id="chk-lbl-vd-prereq">Todos</span>
-            <span id="chk-badge-vd-prereq" class="chk-filter-badge" style="display:none;"></span>
-            <span class="chk-arrow">&#x25BC;</span>
-          </div>
-          <div class="chk-filter-panel" id="chk-panel-vd-prereq"></div>
-        </div>
-      </div>
       <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
     </div>
-    <!-- Hidden inputs mantidos para não quebrar o clearFilters -->
     <select id="f-vd-custo" style="display:none"><option value="">Todos</option></select>
     <select id="f-vd-prereq" style="display:none"><option value="">Todos</option></select>
 
@@ -2698,11 +2686,14 @@ function renderRacasCatPills(){
     }
   }
   if(!catOrder.length){el.innerHTML='';return;}
-  var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat("")"><span>◈</span> Todas</button>';
+  var total=catOrder.length+1;
+  el.style.cssText='display:grid;grid-template-columns:repeat('+total+',1fr);margin-bottom:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;gap:0;';
+  var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')" style="border-right:1px solid var(--border);border-radius:0;padding:0.65rem 0.5rem;font-size:0.72rem;">Todas</button>';
   for(var i=0;i<catOrder.length;i++){
     var cn=catOrder[i];
     var active=(RACA_ACTIVE_CAT.trim().toLowerCase()===cn.trim().toLowerCase())?' active':'';
-    btns+='<button class="vd-cat-btn'+active+'" data-rcat="'+cn.replace(/"/g,'&quot;')+'" onclick="switchRacaCat(this.dataset.rcat)"><span>☯</span> '+cn+'</button>';
+    var isLast=(i===catOrder.length-1);
+    btns+='<button class="vd-cat-btn'+active+'" data-rcat="'+cn.replace(/"/g,'&quot;')+'" onclick="switchRacaCat(this.dataset.rcat)" style="'+(isLast?'':'border-right:1px solid var(--border);')+'border-radius:0;padding:0.65rem 0.5rem;font-size:0.72rem;">'+cn+'</button>';
   }
   el.innerHTML=btns;
 }
@@ -2719,17 +2710,13 @@ function renderRacas(){
   if(!g) return;
 
   function makeCard(r){
-    var n=racaNome(r),cat=racaCat(r),desc=racaDesc(r),lin=racaLinhagem(r),hab1=racaHab1(r);
+    var n=racaNome(r);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
-    return '<div class="card card-raca" onclick="abrirDetalhesRaca('+_storeModal(rCopy)+')">'+
-      imgBox(getRacaImg(n),'☯')+
-      '<div class="card-type">'+(cat||'raça')+'</div>'+
-      '<div class="card-name">'+n+'</div>'+
-      (desc?'<div class="card-desc">'+desc.substring(0,100)+(desc.length>100?'…':'')+'</div>':'')+
-      '<div class="card-tags">'+
-        (lin?tag(lin.substring(0,30),'tag-gold'):'')+
-        (hab1?tag(hab1.substring(0,30),'tag-conjurador'):'')+
-      '</div>'+
+    var imgUrl=getRacaImg(n);
+    var imgInner=imgUrl?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">':'<span class="card-h-sym">☯</span>';
+    return '<div class="card card-h card-raca" onclick="abrirDetalhesRaca('+_storeModal(rCopy)+')">'+
+      '<div class="card-h-img">'+imgInner+'</div>'+
+      '<div class="card-h-body"><div class="card-name">'+n+'</div></div>'+
     '</div>';
   }
 
@@ -3810,7 +3797,9 @@ function renderVelkarion(){
     var rCopy={};for(var k in r)rCopy[k]=r[k];
     rCopy['_vel_nome']=nome;
     var idx=_storeModal(rCopy);
+    var imgField=gf(r,'Imagem','imagem','Image','image','Foto','foto','Banner','banner')||'';
     return '<div class="vel-cont-card" style="--vel-accent:'+ac.accent+';--vel-accent-faint:'+ac.faint+';" onclick="abrirDetalheContinente('+idx+')">'+
+      '<div class="vel-cont-banner">'+(imgField?'<img src="'+imgField+'" loading="lazy">':'<span class="vel-cont-banner-sym">⚐</span>')+'</div>'+
       '<div class="vel-cont-body">'+
         '<div class="vel-cont-header">'+
           '<div class="vel-cont-nome">'+nome+'</div>'+
@@ -4075,7 +4064,14 @@ function openModal(rowOrStr){
   var nomeDeusImg=isDeus?(gf(row,'Nome do Deus','nome do deus')||gf(row,'_nome_display')):null;
   var html='';
   if(nomeClasseImg){
-    html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getClassImg(nomeClasseImg),'⚔',100)+'<div style="flex:1;">'+(header?'<div class="modal-type">'+header+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2></div></div>';
+    var classCat=gf(row,'Categoria','categoria')||'';
+    var classAccentMap={'combate':'var(--cat-combate)','combatente':'var(--cat-combate)','conjurador':'var(--cat-conjurador)','suporte':'var(--cat-suporte)','especialista':'var(--cat-especialista)'};
+    var classAccent='var(--violet)';
+    var cck=classCat.toLowerCase();
+    for(var ck in classAccentMap){if(cck.indexOf(ck)>-1){classAccent=classAccentMap[ck];break;}}
+    html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getClassImg(nomeClasseImg),'⚔',100)+'<div style="flex:1;">'+(classCat?'<div class="modal-type" style="color:'+classAccent+';">'+classCat+'</div>':'')+'<h2 class="modal-name">'+nome+'</h2>'+
+      '<button class="btn-ver-dons" style="margin-top:0.75rem;width:100%;display:flex;align-items:center;justify-content:center;gap:0.4rem;border-color:'+classAccent+';color:'+classAccent+';" onclick="closeModal();verDonsClasse(\''+nome.replace(/'/g,"\\'")+'\')">'+'✦ Ver Dons de '+nome+'</button>'+
+    '</div></div>';
   }else if(nomeDeusImg){
     html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:0.75rem;">'+imgBox(getDeusImg(nomeDeusImg),'☀',100)+'<div style="flex:1;"><div class="modal-type">divindade</div><h2 class="modal-name">'+nome+'</h2></div></div>';
   }else{
