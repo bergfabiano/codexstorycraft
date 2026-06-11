@@ -2829,7 +2829,12 @@ function renderRacas(){
   var g=document.getElementById('grid-racas');
   if(!g) return;
 
-  function makeCard(r){
+  // Normaliza string: sem acento, sem invisíveis, trim
+  var _normCat=function(v){ return deaccent((v||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); };
+  // Stem: remove terminações plurais/variações
+  var _stemCat=function(v){ return _normCat(v).replace(/(?:ais|eis|is|es|s)$/,''); };
+
+  var _makeCard=function(r){
     var n=racaNome(r);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
     var imgUrl=getRacaImg(n);
@@ -2843,39 +2848,35 @@ function renderRacas(){
       '<div class="card-h-img">'+imgInner+'</div>'+
       '<div class="card-h-body"><div class="card-name">'+n+'</div></div>'+
     '</div>';
-  }
+  };
 
-  // ── ABA "TODAS": ordem alfabética sem agrupamento ──
+  var _data;
+
+  // ── ABA "TODAS" ──
   if(!RACA_ACTIVE_CAT){
-    var data=DB.racas.filter(function(r){return !s||fstr(r).toLowerCase().indexOf(s)>-1;});
-    data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
-    document.getElementById('count-racas').textContent=data.length+' resultado'+(data.length===1?'':'s');
+    _data=DB.racas.filter(function(r){return !s||fstr(r).toLowerCase().indexOf(s)>-1;});
+    _data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
+    document.getElementById('count-racas').textContent=_data.length+' resultado'+(_data.length===1?'':'s');
     document.getElementById('raca-cat-info').style.display='none';
-    g.innerHTML=data.length?'<div class="cards-grid">'+data.map(makeCard).join('')+'</div>':emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
+    g.innerHTML=_data.length?'<div class="cards-grid">'+_data.map(_makeCard).join('')+'</div>':emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
     return;
   }
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
-  // Normaliza removendo acentos, espaços extras e caracteres invisíveis
-  function normCat(s){ return deaccent((s||'').replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); }
-  // Stem: remove terminações para comparar singular/plural (ex: "bestiais"→"bestia", "bestial"→"bestia")
-  function stemCat(s){ return normCat(s).replace(/(?:ais|eis|is|es|s)$/,''); }
+  var _ac=_normCat(RACA_ACTIVE_CAT);
+  var _acStem=_stemCat(RACA_ACTIVE_CAT);
 
-  var _ac = normCat(RACA_ACTIVE_CAT);
-  var _acStem = stemCat(RACA_ACTIVE_CAT);
-
-  var data=DB.racas.filter(function(r){
-    var rc=normCat(racaCat(r));
+  _data=DB.racas.filter(function(r){
+    if(s&&fstr(r).toLowerCase().indexOf(s)===-1) return false;
+    var rc=_normCat(racaCat(r));
     if(!rc) return false;
-    if(!s||fstr(r).toLowerCase().indexOf(s)>-1){
-      if(rc===_ac) return true;
-      if(stemCat(rc)===_acStem) return true;
-      if(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) return true;
-    }
+    if(rc===_ac) return true;
+    if(_stemCat(rc)===_acStem) return true;
+    if(rc.indexOf(_ac)>-1||_ac.indexOf(rc)>-1) return true;
     return false;
   });
-  data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
-  document.getElementById('count-racas').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+RACA_ACTIVE_CAT;
+  _data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
+  document.getElementById('count-racas').textContent=_data.length+' resultado'+(_data.length===1?'':'s')+' em '+RACA_ACTIVE_CAT;
 
   // Banner da categoria (desc + traço + vd) embutido no grid
   var catRow=null;
@@ -2908,10 +2909,10 @@ function renderRacas(){
     html+='</div></div>';
   }
 
-  if(!data.length){
+  if(!_data.length){
     html+=emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
   } else {
-    html+='<div class="cards-grid">'+data.map(makeCard).join('')+'</div>';
+    html+='<div class="cards-grid">'+_data.map(_makeCard).join('')+'</div>';
   }
   g.innerHTML=html;
 }
