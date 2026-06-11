@@ -2864,17 +2864,28 @@ function renderRacas(){
   }
 
   // ── ABA DE CATEGORIA ESPECÍFICA ──
-  var _ac=_normCat(RACA_ACTIVE_CAT);
+  // Mapa fixo: pill → valores possíveis no CSV (resolve erros de grafia da planilha)
+  var _catMap={
+    'bestiais':   ['bestial','bestiais'],
+    'celestiais': ['celestial','celestiais','celestial'],
+    'mortos-vivos':['morto-vivo','mortos-vivos'],
+    'humanoides': ['humanoide','humanoides'],
+    'elfos':      ['elfo','elfos'],
+    'feericos':   ['ferico','feericos','féerico','féericos'],
+    'primevos':   ['primevo','primevos'],
+    'mecanos':    ['mecano','mecanos'],
+    'demonios':   ['demonio','demonios','demônio','demônios'],
+    'yokais':     ['yokai','yokais'],
+    'vampiros':   ['vampiro','vampiros']
+  };
+  var _normCatSimple=function(v){ return deaccent((v||'').toLowerCase().replace(/[\u200B\uFEFF\u00A0]/g,'').trim()); };
+  var _acKey=_normCatSimple(RACA_ACTIVE_CAT);
+  var _allowed=_catMap[_acKey]||[_acKey];
 
   _data=DB.racas.filter(function(r){
     if(s&&fstr(r).toLowerCase().indexOf(s)===-1) return false;
-    var rc=_normCat(racaCat(r));
-    if(!rc) return false;
-    // Match exato
-    if(rc===_ac) return true;
-    // Um começa com o outro (resolve singular/plural: "bestial"↔"bestiais", "morto-vivo"↔"mortos-vivos")
-    if(rc.indexOf(_ac)===0||_ac.indexOf(rc)===0) return true;
-    return false;
+    var rc=_normCatSimple(racaCat(r));
+    return _allowed.indexOf(rc)>-1;
   });
   _data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
   document.getElementById('count-racas').textContent=_data.length+' resultado'+(_data.length===1?'':'s')+' em '+RACA_ACTIVE_CAT;
