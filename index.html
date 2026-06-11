@@ -579,7 +579,29 @@ main{
   color:rgba(155,93,229,0.15);user-select:none;
 }
 .result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
-/* ── CHECKBOX FILTER DROPDOWN ── */
+/* ── LAYOUT TOGGLE (grid / list) ── */
+.layout-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0;}
+.layout-toggle-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:30px;height:28px;
+  background:var(--surface);border:none;cursor:pointer;
+  color:var(--text-faint);font-size:0.85rem;transition:all 0.15s;
+}
+.layout-toggle-btn:hover{color:var(--text);background:var(--surface2);}
+.layout-toggle-btn.active{background:var(--violet);color:#fff;}
+
+/* Card vertical (grid mode) */
+.card-v{display:flex;flex-direction:column;}
+.card-v .card-v-img{
+  width:100%;aspect-ratio:1/1;overflow:hidden;
+  background:linear-gradient(135deg,var(--surface2),var(--bg3));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.card-v .card-v-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-v .card-v-sym{font-family:'Cinzel',serif;font-size:1.8rem;color:rgba(155,93,229,0.12);user-select:none;}
+.card-v .card-v-body{padding:0.6rem 0.75rem 0.7rem;flex:1;display:flex;flex-direction:column;gap:0.15rem;}
+.card-v .card-type{margin-bottom:0.1rem;}
+.card-v .card-name{font-size:0.92rem;}
 .chk-filter-wrap{position:relative;display:inline-block;}
 .chk-filter-btn{
   display:inline-flex;align-items:center;gap:0.4rem;
@@ -1663,7 +1685,13 @@ main{
         <div class="fg" style="flex:1;"><label>Buscar</label><input type="text" id="f-raca-search" placeholder="Nome, linhagem, habilidade..." oninput="renderRacas()"></div>
         <button class="btn-clear" onclick="clearFilters('racas')">Limpar</button>
       </div>
-      <p class="result-count" id="count-racas" style="margin-bottom:0.5rem;"></p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <p class="result-count" id="count-racas" style="margin-bottom:0;"></p>
+        <div class="layout-toggle" id="toggle-racas">
+          <button class="layout-toggle-btn active" id="toggle-racas-h" onclick="setLayout('racas','h')" title="Horizontal">☰</button>
+          <button class="layout-toggle-btn" id="toggle-racas-v" onclick="setLayout('racas','v')" title="Grade">⊞</button>
+        </div>
+      </div>
       <div id="grid-racas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☯</span><h3>Carregando raças...</h3></div></div>
     </div>
     <div id="racas-detalhe" class="classe-detail">
@@ -1691,7 +1719,13 @@ main{
         </div>
         <button class="btn-clear" onclick="clearFilters('classes')">Limpar</button>
       </div>
-      <p class="result-count" id="count-classes"></p>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <p class="result-count" id="count-classes" style="margin-bottom:0;"></p>
+        <div class="layout-toggle" id="toggle-classes">
+          <button class="layout-toggle-btn active" id="toggle-classes-h" onclick="setLayout('classes','h')" title="Horizontal">☰</button>
+          <button class="layout-toggle-btn" id="toggle-classes-v" onclick="setLayout('classes','v')" title="Grade">⊞</button>
+        </div>
+      </div>
       <div class="debug-banner" id="classes-debug"></div>
       <div class="cards-grid" id="grid-classes"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">⚔</span><h3>Nenhuma classe carregada</h3><p>Conecte o Google Sheets.</p></div></div>
     </div>
@@ -1726,7 +1760,13 @@ main{
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
       <p class="result-count" id="count-vantagens" style="margin-bottom:0;"></p>
-      <div id="vd-load-status" style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div id="vd-load-status" style="font-family:'Raleway',sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+        <div class="layout-toggle">
+          <button class="layout-toggle-btn active" id="toggle-vantagens-h" onclick="setLayout('vantagens','h')" title="Horizontal">☰</button>
+          <button class="layout-toggle-btn" id="toggle-vantagens-v" onclick="setLayout('vantagens','v')" title="Grade">⊞</button>
+        </div>
+      </div>
     </div>
 
     <div class="debug-banner" id="vantagensdesvantagens-debug"></div>
@@ -1796,7 +1836,13 @@ main{
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
       <p class="result-count" id="count-loja" style="margin-bottom:0;"></p>
-      <div id="loja-load-status" style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div id="loja-load-status" style="font-family:Raleway,sans-serif;font-weight:600;font-size:0.62rem;color:var(--text-faint);letter-spacing:0.1em;"></div>
+        <div class="layout-toggle">
+          <button class="layout-toggle-btn active" id="toggle-loja-h" onclick="setLayout('loja','h')" title="Horizontal">☰</button>
+          <button class="layout-toggle-btn" id="toggle-loja-v" onclick="setLayout('loja','v')" title="Grade">⊞</button>
+        </div>
+      </div>
     </div>
 
     <div class="cards-grid" id="grid-loja">
@@ -1942,7 +1988,13 @@ main{
       </div>
       <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
     </div>
-    <p class="result-count" id="count-estigmas"></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+      <p class="result-count" id="count-estigmas" style="margin-bottom:0;"></p>
+      <div class="layout-toggle">
+        <button class="layout-toggle-btn active" id="toggle-estigmas-h" onclick="setLayout('estigmas','h')" title="Horizontal">☰</button>
+        <button class="layout-toggle-btn" id="toggle-estigmas-v" onclick="setLayout('estigmas','v')" title="Grade">⊞</button>
+      </div>
+    </div>
     <div class="debug-banner" id="estigmas-debug"></div>
     <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✸</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
@@ -2707,7 +2759,7 @@ function _mesclarAuxNasMinerios(){
   LOJA.minerios = min.concat(aux);
 }
 
-function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();}
+function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();initLayoutToggles();}
 
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
@@ -2781,6 +2833,11 @@ function renderRacas(){
     var n=racaNome(r);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
     var imgUrl=getRacaImg(n);
+    var modo=getLayout('racas');
+    if(modo==='v'){
+      var cat=racaCat(r);
+      return cardVert(imgUrl,'☯',cat||'raça',n,'abrirDetalhesRaca('+_storeModal(rCopy)+')','card-raca');
+    }
     var imgInner=imgUrl?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">':'<span class="card-h-sym">☯</span>';
     return '<div class="card card-h card-raca" onclick="abrirDetalhesRaca('+_storeModal(rCopy)+')">'+
       '<div class="card-h-img">'+imgInner+'</div>'+
@@ -3022,6 +3079,10 @@ function renderClasses(){
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
     var accent=cc==='card-combate'?'var(--cat-combate)':cc==='card-conjurador'?'var(--cat-conjurador)':cc==='card-suporte'?'var(--cat-suporte)':cc==='card-especialista'?'var(--cat-especialista)':'var(--violet)';
     var imgUrl=getClassImg(n);
+    var modo=getLayout('classes');
+    if(modo==='v'){
+      return cardVert(imgUrl,'⚔',cat||'classe',n,'openModalIdx('+_storeModal(rCopy)+')',cc);
+    }
     var imgInner=imgUrl?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy">':'<span class="card-h-sym" style="color:'+accent+';">⚔</span>';
     return '<div class="card card-h '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')">'+
       '<div class="card-h-img">'+imgInner+'</div>'+
@@ -3206,7 +3267,13 @@ function renderVantagens(){
     var isNeg=(cat==='desvantagens'||cat==='maldicoes');
     var costBadge='';
     if(custo) costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+' pts</span>';
-    return cardHoriz(null, isNeg?'✗':'✦', cardCls, n, 'openModalIdx('+_storeModal(r)+')');
+    var catLabel=VD_LABELS[cat]||cat;
+    var vantImg=(window.VANT_IMGS)?(window.VANT_IMGS[catLabel]||window.VANT_IMGS[catLabel.replace(/[.#$\/\[\]]/g,'_')]||null):null;
+    var modo=getLayout('vantagens');
+    if(modo==='v'){
+      return cardVert(vantImg,isNeg?'✗':'✦',sub||VD_LABELS[cat],n,'openModalIdx('+_storeModal(r)+')',cardCls);
+    }
+    return cardHoriz(vantImg, isNeg?'✗':'✦', cardCls, n, 'openModalIdx('+_storeModal(r)+')');
   }).join('');
 }
 
@@ -3605,13 +3672,15 @@ function renderLoja(){
       var precoHtml=preco?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.8rem;color:'+currencyColor(preco)+';">'+preco+'</span>':'';
       var fbImg=(window.LOJA_IMGS&&(window.LOJA_IMGS[n]||window.LOJA_IMGS[n.replace(/[.#$/[\]]/g,'_')]))||null;
       var imgInn=fbImg?'<img src="'+fbImg+'" style="width:100%;height:100%;object-fit:cover;">':'<span class="card-h-sym" style="color:'+catAccent+';">✦</span>';
-      html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
-        '<div class="card-h-img">'+imgInn+'</div>'+
-        '<div class="card-h-body">'+
-          '<div class="card-h-meta">'+precoHtml+'</div>'+
-          '<div class="card-name">'+n+'</div>'+
-        '</div>'+
-      '</div>';
+      var modoLoja=getLayout('loja');
+      if(modoLoja==='v'){
+        html+=cardVert(fbImg,'✦',tipo,n,'openLojaModal('+_storeModal(rCopy)+')');
+      } else {
+        html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+          '<div class="card-h-img">'+imgInn+'</div>'+
+          '<div class="card-h-body"><div class="card-h-meta">'+precoHtml+'</div><div class="card-name">'+n+'</div></div>'+
+        '</div>';
+      }
     });
   } else {
     data.forEach(function(r){
@@ -3622,13 +3691,15 @@ function renderLoja(){
       var precoHtml=preco?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.8rem;color:'+currencyColor(preco)+';">'+preco+'</span>':'';
       var fbImg=(window.LOJA_IMGS&&(window.LOJA_IMGS[n]||window.LOJA_IMGS[n.replace(/[.#$/[\]]/g,'_')]))||null;
       var imgInn=fbImg?'<img src="'+fbImg+'" style="width:100%;height:100%;object-fit:cover;">':'<span class="card-h-sym" style="color:'+catAccent+';">✦</span>';
-      html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
-        '<div class="card-h-img">'+imgInn+'</div>'+
-        '<div class="card-h-body">'+
-          '<div class="card-h-meta">'+precoHtml+'</div>'+
-          '<div class="card-name">'+n+'</div>'+
-        '</div>'+
-      '</div>';
+      var modoLoja=getLayout('loja');
+      if(modoLoja==='v'){
+        html+=cardVert(fbImg,'✦',LOJA_LABELS[cat],n,'openLojaModal('+_storeModal(rCopy)+')');
+      } else {
+        html+='<div class="card card-h" style="--card-accent:'+catAccent+';" onclick="openLojaModal('+_storeModal(rCopy)+')">'+
+          '<div class="card-h-img">'+imgInn+'</div>'+
+          '<div class="card-h-body"><div class="card-h-meta">'+precoHtml+'</div><div class="card-name">'+n+'</div></div>'+
+        '</div>';
+      }
     });
   }
   g.innerHTML='<div class="cards-grid" style="display:contents;">'+html+'</div>';
@@ -3737,9 +3808,8 @@ function renderGrimorio(){
     var nome=gf(r,'Feitiço','Feitico','feitico','Nome','nome')||'(sem nome)',escola=gf(r,'Escola','escola'),grau=gf(r,'Grau','grau'),origem=gf(r,'Origem','origem'),tipo=gf(r,'Tipo','tipo'),exec=gf(r,'Execução','Execucao','execucao'),alc=gf(r,'Alcance','alcance'),dur=gf(r,'Duração','Duracao','duracao'),res=gf(r,'Resistência','Resistencia','resistencia'),desc=gf(r,'Descrição','Descricao','descricao','desc');
     var cc=escolaCardClass(escola);
     var idx=_storeModal(r);
-    var metaGrim='<div class="card-type">'+(escola||'magia')+(tipo?' — '+tipo:'')+'</div>';
-    var tagsGrim=(grau?tag(grau,'tag-gold'):'')+(origem?tag(origem,'tag-especialista'):'')+(exec?tag(exec,'tag-gray'):'')+(alc?tag(alc,'tag-gray'):'')+(res&&res.toLowerCase()!=='nenhuma'?tag('Res: '+res.substring(0,25),'tag-danger'):'');
-    return cardHoriz(null,'✦',cc,nome,'openModalIdx('+idx+')');
+    var grimImg=(window.GRIM_IMGS&&escola)?(window.GRIM_IMGS[escola]||window.GRIM_IMGS[escola.replace(/[.#$\/\[\]]/g,'_')]||null):null;
+    return cardHoriz(grimImg,'✦',cc,nome,'openModalIdx('+idx+')');
   }).join('');
 }
 
@@ -4085,6 +4155,10 @@ function renderEstigmas(){
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)';
     var idx=_storeModal(r);
+    var ori=gf(r,'Origem','origem');
+    if(getLayout('estigmas')==='v'){
+      return cardVert(null,'✸','estigma'+(ori?' · '+ori:''),n,'openModalIdx('+idx+')','card-especialista');
+    }
     return cardHoriz(null,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
 }
@@ -4164,10 +4238,16 @@ function openModal(rowOrStr){
                    gf(row,'Escola','escola') ? '✦' :
                    gf(row,'Origem','origem','Categoria','categoria') ? '✸' : '✦';
     var heroTipo = header || (row['_vd_cat'] ? VD_LABELS[row['_vd_cat']]||row['_vd_cat'] : '');
-    // Tenta pegar imagem do Firebase (vantagens, grimório ou estigmas)
+    // Tenta pegar imagem do Firebase (vantagens por categoria, grimório por escola)
     var fbHeroImg = null;
-    if(window.VANT_IMGS) fbHeroImg = window.VANT_IMGS[nome]||window.VANT_IMGS[nome.replace(/[.#$/[\]]/g,'_')]||null;
-    if(!fbHeroImg && window.GRIM_IMGS) fbHeroImg = window.GRIM_IMGS[nome]||window.GRIM_IMGS[nome.replace(/[.#$/[\]]/g,'_')]||null;
+    if(window.VANT_IMGS && row['_vd_cat']){
+      var _catLabel=VD_LABELS[row['_vd_cat']]||row['_vd_cat'];
+      fbHeroImg=window.VANT_IMGS[_catLabel]||window.VANT_IMGS[_catLabel.replace(/[.#$\/\[\]]/g,'_')]||null;
+    }
+    if(!fbHeroImg && window.GRIM_IMGS){
+      var _escola=gf(row,'Escola','escola')||'';
+      if(_escola) fbHeroImg=window.GRIM_IMGS[_escola]||window.GRIM_IMGS[_escola.replace(/[.#$\/\[\]]/g,'_')]||null;
+    }
     html = modalHero(fbHeroImg, modalSym, heroTipo, nome);
   }
   // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
@@ -4804,7 +4884,48 @@ function oraculo_pergunta_rapida(texto){
   oraculo_enviar();
 }
 
-// ── ACESSO SECRETO AO ADMIN ──
+// ── LAYOUT TOGGLE ──
+var _layoutDefaults = { racas:'h', classes:'h', vantagens:'h', loja:'h', estigmas:'h' };
+
+function getLayout(secao){
+  try { return localStorage.getItem('layout_'+secao)||_layoutDefaults[secao]||'h'; } catch(e){ return 'h'; }
+}
+
+function setLayout(secao, modo){
+  try { localStorage.setItem('layout_'+secao, modo); } catch(e){}
+  // Atualiza botões
+  var bH=document.getElementById('toggle-'+secao+'-h');
+  var bV=document.getElementById('toggle-'+secao+'-v');
+  if(bH){ bH.classList.toggle('active', modo==='h'); }
+  if(bV){ bV.classList.toggle('active', modo==='v'); }
+  // Re-renderiza
+  var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,loja:renderLoja,estigmas:renderEstigmas};
+  if(fn[secao]) fn[secao]();
+}
+
+function initLayoutToggles(){
+  ['racas','classes','vantagens','loja','estigmas'].forEach(function(s){
+    var modo=getLayout(s);
+    var bH=document.getElementById('toggle-'+s+'-h');
+    var bV=document.getElementById('toggle-'+s+'-v');
+    if(bH) bH.classList.toggle('active', modo==='h');
+    if(bV) bV.classList.toggle('active', modo==='v');
+  });
+}
+
+// Card vertical — para modo grade
+function cardVert(url, sym, tipo, nome, onclick, extraCls){
+  var imgInner = url
+    ? '<img src="'+url+'" loading="lazy">'
+    : '<span class="card-v-sym">'+(sym||'✦')+'</span>';
+  return '<div class="card card-v'+(extraCls?' '+extraCls:'')+'" onclick="'+onclick+'">'
+    +'<div class="card-v-img">'+imgInner+'</div>'
+    +'<div class="card-v-body">'
+      +(tipo?'<div class="card-type">'+tipo+'</div>':'')
+      +'<div class="card-name">'+nome+'</div>'
+    +'</div>'
+  +'</div>';
+}
 var _adminClickCount = 0;
 var _adminClickTimer = null;
 var _adminUnlocked = false;
@@ -4853,30 +4974,104 @@ function adminCheckPwd(){
     document.getElementById('admin-pwd-input').focus();
   }
 }
-// ── ADMIN — Gerenciador de Imagens (novo visual) ──
+// ── ADMIN — Gerenciador de Imagens ──
 var _adminSecao = 'racas';
+var _adminSubfiltro = '';    // filtro de subcategoria ativo
 var _adminImgsCarregadas = {};
 var _aimNomeAtual = '';
 
+// Configuração de cada seção:
+// - tipo 'individual': foto por item (com filtro opcional por categoria)
+// - tipo 'categoria':  foto por categoria (a foto aplica a todos os itens dessa categoria)
 var _adminSecoes = [
-  { id:'racas',     label:'Raças',     fonte: function(){ return DB.racas.map(function(r){ return racaNome(r); }); } },
-  { id:'classes',   label:'Classes',   fonte: function(){ return DB.classes.map(function(r){ return gf(r,'Classe','classe')||''; }); } },
-  { id:'deuses',    label:'Deuses',    fonte: function(){ return DB.deuses.map(function(r){ return gf(r,'Nome do Deus','nome do deus','Nome','nome')||''; }); } },
-  { id:'loja',      label:'Loja',      fonte: function(){
-    var nomes=[];
-    Object.keys(LOJA).forEach(function(cat){ (LOJA[cat]||[]).forEach(function(r){ var n=lojaGetField(r); if(n&&n!=='(sem nome)')nomes.push(n); }); });
-    return nomes;
-  }},
-  { id:'velkarion', label:'Velkarion', fonte: function(){ return (DB.vel_continentes.length?DB.vel_continentes:DB.velkarion).map(function(r){ return gf(r,'Continente','continente','Nome','nome')||''; }); } },
-  { id:'grimorio',  label:'Grimório',  fonte: function(){ return DB.grimorio.map(function(r){ return gf(r,'Feitiço','Feitico','feitico','Nome','nome')||''; }); } },
-  { id:'vantagens', label:'Vantagens', fonte: function(){
-    var nomes=[];
-    Object.keys(VD).forEach(function(cat){ (VD[cat]||[]).forEach(function(r){ var n=vdNome(r); if(n)nomes.push(n); }); });
-    return nomes;
-  }}
+  {
+    id:'racas', label:'Raças', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.racas.map(function(r){ return racaCat(r)||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      var lista = DB.racas.filter(function(r){ return !sub || racaCat(r)===sub; });
+      return lista.map(function(r){ return racaNome(r); });
+    }
+  },
+  {
+    id:'classes', label:'Classes', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.classes.map(function(r){ return gf(r,'Categoria','categoria')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      return DB.classes.filter(function(r){ return !sub || gf(r,'Categoria','categoria')===sub; })
+        .map(function(r){ return gf(r,'Classe','classe')||''; });
+    }
+  },
+  {
+    id:'deuses', label:'Deuses', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return DB.deuses.map(function(r){ return gf(r,'Nome do Deus','nome do deus','Nome','nome')||''; });
+    }
+  },
+  {
+    id:'loja', label:'Loja', tipo:'individual',
+    subfiltros: function(){
+      return Object.keys(LOJA_LABELS).filter(function(k){ return LOJA[k]&&LOJA[k].length; })
+        .map(function(k){ return LOJA_LABELS[k]; }).sort();
+    },
+    fonte: function(sub){
+      var nomes=[];
+      Object.keys(LOJA).forEach(function(cat){
+        if(sub && LOJA_LABELS[cat]!==sub) return;
+        (LOJA[cat]||[]).forEach(function(r){
+          var n=lojaGetField(r);
+          // Aprimor/Encant: usa subcategoria como chave (foto única por subcategoria)
+          if((cat==='aprimor'||cat==='encant') && r['Sub-categoria']){
+            var sc=r['Sub-categoria'].trim();
+            if(sc&&nomes.indexOf(sc)===-1) nomes.push(sc);
+          } else {
+            if(n&&n!=='(sem nome)'&&nomes.indexOf(n)===-1) nomes.push(n);
+          }
+        });
+      });
+      return nomes;
+    }
+  },
+  {
+    id:'velkarion', label:'Velkarion', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return (DB.vel_continentes.length?DB.vel_continentes:DB.velkarion)
+        .map(function(r){ return gf(r,'Continente','continente','Nome','nome')||''; });
+    }
+  },
+  {
+    id:'grimorio', label:'Grimório', tipo:'categoria',
+    subfiltroLabel: 'Escola',
+    subfiltros: function(){
+      return uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
+    },
+    // Para grimório, a "chave" salva é o nome da escola
+    fonte: function(sub){
+      var escolas = uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
+      if(sub) escolas = escolas.filter(function(e){ return e===sub; });
+      return escolas;
+    },
+    descricao: 'Uma foto por escola — todos os feitiços dessa escola usarão a mesma imagem.'
+  },
+  {
+    id:'vantagens', label:'Vantagens', tipo:'categoria',
+    subfiltroLabel: 'Categoria',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      // Categorias de vantagens (as abas)
+      return Object.keys(VD_LABELS).map(function(k){ return VD_LABELS[k]; }).filter(Boolean);
+    },
+    // chave salva = nome da categoria (ex: "Versáteis")
+    descricao: 'Uma foto por categoria — todos os itens da categoria usarão a mesma imagem.'
+  }
 ];
 
 function adminInit(){
+  _adminSubfiltro = '';
   var tabs = document.getElementById('admin-secao-tabs');
   if(tabs){
     tabs.innerHTML = _adminSecoes.map(function(s,i){
@@ -4889,6 +5084,7 @@ function adminInit(){
 
 function adminMudarSecao(secao){
   _adminSecao = secao;
+  _adminSubfiltro = '';
   var el=document.getElementById('admin-search'); if(el)el.value='';
   adminInit();
 }
@@ -4908,16 +5104,42 @@ function adminRenderCards(){
   var countEl=document.getElementById('admin-count');
   var s=(document.getElementById('admin-search').value||'').toLowerCase();
   if(!grid) return;
+
   var secaoObj=null;
   for(var i=0;i<_adminSecoes.length;i++){ if(_adminSecoes[i].id===_adminSecao){secaoObj=_adminSecoes[i];break;} }
   if(!secaoObj){ grid.innerHTML=''; return; }
-  var nomes=secaoObj.fonte().filter(function(n){return n&&n.trim();});
-  nomes=nomes.filter(function(n,i){return nomes.indexOf(n)===i;});
-  if(s) nomes=nomes.filter(function(n){return n.toLowerCase().indexOf(s)>-1;});
-  nomes.sort(function(a,b){return a.localeCompare(b,'pt');});
-  countEl.textContent=nomes.length+' item'+(nomes.length===1?'':'s');
-  if(!nomes.length){ grid.innerHTML='<div style="grid-column:1/-1;color:var(--text-faint);font-size:0.85rem;padding:1rem;">Nenhum item encontrado.</div>'; return; }
-  grid.innerHTML=nomes.map(function(nome){
+
+  // Subfiltros
+  var subs = secaoObj.subfiltros ? secaoObj.subfiltros() : [];
+  var subfiltroHtml = '';
+  if(subs.length){
+    subfiltroHtml = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.75rem;">'+
+      '<button class="vd-cat-btn'+(!_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\'\')" style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:4px;">Todos</button>'+
+      subs.map(function(sub){
+        return '<button class="vd-cat-btn'+(sub===_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\''+sub.replace(/'/g,"\\'")+'\') " style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:4px;">'+sub+'</button>';
+      }).join('')+
+    '</div>';
+  }
+
+  // Descrição para seções de categoria
+  var descHtml = secaoObj.descricao
+    ? '<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:rgba(155,93,229,0.07);border-radius:4px;border-left:2px solid var(--violet-dim);">'+secaoObj.descricao+'</div>'
+    : '';
+
+  // Nomes/chaves a exibir
+  var nomes = secaoObj.fonte(_adminSubfiltro||'').filter(function(n){ return n&&n.trim(); });
+  nomes = nomes.filter(function(n,i){ return nomes.indexOf(n)===i; });
+  if(s) nomes = nomes.filter(function(n){ return n.toLowerCase().indexOf(s)>-1; });
+  nomes.sort(function(a,b){ return a.localeCompare(b,'pt'); });
+
+  countEl.textContent = nomes.length+' item'+(nomes.length===1?'':'s');
+
+  if(!nomes.length){
+    grid.innerHTML = subfiltroHtml+descHtml+'<div style="grid-column:1/-1;color:var(--text-faint);font-size:0.85rem;padding:1rem;">Nenhum item encontrado.</div>';
+    return;
+  }
+
+  var cardsHtml = nomes.map(function(nome){
     var chave=nome.replace(/[.#$\/\[\]]/g,'_');
     var url=_adminImgsCarregadas[chave]||_adminImgsCarregadas[nome]||null;
     var temImg=!!url;
@@ -4932,6 +5154,14 @@ function adminRenderCards(){
       '</div>'+
     '</div>';
   }).join('');
+
+  // Não pode usar innerHTML em duas partes, precisa de wrapper
+  grid.innerHTML = subfiltroHtml + descHtml + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.75rem;">'+cardsHtml+'</div>';
+}
+
+function adminSetSub(sub){
+  _adminSubfiltro = sub;
+  adminRenderCards();
 }
 
 function aimAbrir(nome){
