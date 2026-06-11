@@ -1678,20 +1678,42 @@ main{
   <div id="page-vantagens" class="page">
     <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
 
-    <!-- Filtros por categoria (pill tabs) -->
-    <div class="vd-cats" id="vd-cats">
-      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')">    <span>◈</span> Versáteis</button>
-      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')">      <span>⚔</span> Combate</button>
-      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')">      <span>✦</span> Mágicas</button>
-      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')">      <span>◎</span> Ataques Mágicos</button>
-      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')"> <span>★</span> Superpoderes</button>
-      <button class="vd-cat-btn vd-cat-neg" data-cat="desvantagens" onclick="switchVdCat('desvantagens')"><span>▽</span> Desvantagens</button>
-      <button class="vd-cat-btn vd-cat-mal" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')">   <span>☠</span> Maldições</button>
+    <!-- Filtros por categoria — grid completo sem símbolos -->
+    <div class="vd-cats" id="vd-cats" style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:0.75rem;">
+      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')"     style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Vers&#xE1;teis</button>
+      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Combate</button>
+      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">M&#xE1;gicas</button>
+      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Ataques M&#xE1;gicos</button>
+      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')" style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Superpoderes</button>
+      <button class="vd-cat-btn" data-cat="desvantagens" onclick="switchVdCat('desvantagens')" style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Desvantagens</button>
+      <button class="vd-cat-btn" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')"    style="padding:0.7rem 0.5rem;font-size:0.75rem;">Maldi&#xE7;&#xF5;es</button>
     </div>
 
-    <!-- Barra de busca -->
-    <div class="filter-bar" style="margin-top:0.75rem;">
+    <!-- Barra de busca + checkbox de custo -->
+    <div class="filter-bar" style="margin-top:0;margin-bottom:0.5rem;">
       <div class="fg" style="flex:1;"><label>Buscar</label><input type="text" id="f-vd-search" placeholder="Nome, efeito, pré-requisito..." oninput="renderVantagens()"></div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Custo</label>
+        <div class="chk-filter-wrap" id="chk-wrap-vd-custo">
+          <div class="chk-filter-btn" id="chk-btn-vd-custo" onclick="toggleChkPanel('vd-custo')">
+            <span id="chk-lbl-vd-custo">Todos</span>
+            <span id="chk-badge-vd-custo" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-vd-custo"></div>
+        </div>
+      </div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Pr&#xE9;-requisito</label>
+        <div class="chk-filter-wrap" id="chk-wrap-vd-prereq">
+          <div class="chk-filter-btn" id="chk-btn-vd-prereq" onclick="toggleChkPanel('vd-prereq')">
+            <span id="chk-lbl-vd-prereq">Todos</span>
+            <span id="chk-badge-vd-prereq" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-vd-prereq"></div>
+        </div>
+      </div>
       <button class="btn-clear" onclick="clearFilters('vantagens')">Limpar</button>
     </div>
     <!-- Hidden inputs mantidos para não quebrar o clearFilters -->
@@ -1740,11 +1762,34 @@ main{
     <!-- Search bar -->
     <div class="filter-bar" style="margin-top:0.5rem;">
       <div class="fg" style="flex:2;"><label>Buscar</label><input type="text" id="f-loja-search" placeholder="Nome, efeito, categoria..." oninput="renderLoja()"></div>
-      <div class="fg"><label>Categoria</label><select id="f-loja-cat" onchange="renderLoja()"><option value="">Todas</option></select></div>
-      <div class="fg" id="fg-loja-subcat" style="display:none;"><label>Subcategoria</label><select id="f-loja-subcat" onchange="renderLoja()"><option value="">Todas</option></select></div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Categoria</label>
+        <div class="chk-filter-wrap" id="chk-wrap-loja-cat">
+          <div class="chk-filter-btn" id="chk-btn-loja-cat" onclick="toggleChkPanel('loja-cat')">
+            <span id="chk-lbl-loja-cat">Todas</span>
+            <span id="chk-badge-loja-cat" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-loja-cat"></div>
+        </div>
+      </div>
+      <div class="fg" id="fg-loja-subcat" style="display:none;flex:0 0 auto;">
+        <label>Subcategoria</label>
+        <div class="chk-filter-wrap" id="chk-wrap-loja-subcat">
+          <div class="chk-filter-btn" id="chk-btn-loja-subcat" onclick="toggleChkPanel('loja-subcat')">
+            <span id="chk-lbl-loja-subcat">Todas</span>
+            <span id="chk-badge-loja-subcat" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-loja-subcat"></div>
+        </div>
+      </div>
       <div class="fg"><label>Pre&#xE7;o m&#xE1;x.</label><input type="number" id="f-loja-preco" placeholder="Ex: 500" oninput="renderLoja()" style="background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.6rem;font-family:Raleway,sans-serif;font-size:0.85rem;border-radius:4px;outline:none;width:100%;"></div>
       <button class="btn-clear" onclick="clearLojaFilters()">Limpar</button>
     </div>
+    <!-- Hidden selects mantidos para não quebrar refs antigas -->
+    <select id="f-loja-cat" style="display:none"><option value="">Todas</option></select>
+    <select id="f-loja-subcat" style="display:none"><option value="">Todas</option></select>
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;">
       <p class="result-count" id="count-loja" style="margin-bottom:0;"></p>
@@ -1877,7 +1922,6 @@ main{
     <h2 class="section-title"><span class="stitle-sym">✸</span> Estigmas</h2>
     <div class="filter-bar">
       <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, perícia, poder..." oninput="renderEstigmas()"></div>
-      <div class="fg"><label>Origem</label><select id="f-est-cat" onchange="renderEstigmas()"><option value="">Todas</option></select></div>
       <div class="fg" style="flex:0 0 auto;">
         <label>Regi&#xE3;o</label>
         <div class="chk-filter-wrap" id="chk-wrap-est-regiao">
@@ -1887,6 +1931,17 @@ main{
             <span class="chk-arrow">&#x25BC;</span>
           </div>
           <div class="chk-filter-panel" id="chk-panel-est-regiao"></div>
+        </div>
+      </div>
+      <div class="fg" style="flex:0 0 auto;">
+        <label>Origem</label>
+        <div class="chk-filter-wrap" id="chk-wrap-est-origem">
+          <div class="chk-filter-btn" id="chk-btn-est-origem" onclick="toggleChkPanel('est-origem')">
+            <span id="chk-lbl-est-origem">Todas</span>
+            <span id="chk-badge-est-origem" class="chk-filter-badge" style="display:none;"></span>
+            <span class="chk-arrow">&#x25BC;</span>
+          </div>
+          <div class="chk-filter-panel" id="chk-panel-est-origem"></div>
         </div>
       </div>
       <button class="btn-clear" onclick="clearFilters('estigmas')">Limpar</button>
@@ -2840,9 +2895,11 @@ function chkToggle(id, el){
   var s = chkGet(id);
   if(el.checked) s.add(el.value); else s.delete(el.value);
   chkUpdateBtn(id);
-  // trigger render
   if(id.indexOf('mag-')===0) renderGrimorio();
   if(id==='class-cat') renderClasses();
+  if(id==='vd-custo'||id==='vd-prereq') renderVantagens();
+  if(id==='est-regiao'||id==='est-origem') renderEstigmas();
+  if(id==='loja-cat'||id==='loja-subcat') renderLoja();
 }
 
 function chkUpdateBtn(id){
@@ -3042,15 +3099,15 @@ function renderVantagens(){
   var cat=VD_ACTIVE_CAT;
   var rows=VD[cat]||[];
   var s=document.getElementById('f-vd-search').value.toLowerCase();
-  var cu=document.getElementById('f-vd-custo').value;
-  var pr=document.getElementById('f-vd-prereq').value;
   var status=VD_STATUS[cat]||'idle';
 
-  // Populate dynamic filters
   var custos=uniq(rows.map(function(r){return vdCusto(r);})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
-  var prereqs=uniq(rows.map(function(r){return vdPrereq(r);})).filter(Boolean);
-  popSel('f-vd-custo',custos,cu);
-  popSel('f-vd-prereq',prereqs,pr);
+  var prereqs=uniq(rows.map(function(r){return vdPrereq(r);})).filter(Boolean).sort();
+  chkPopulate('vd-custo', custos);
+  chkPopulate('vd-prereq', prereqs);
+
+  var selCustos=chkGetActive('vd-custo');
+  var selPrereqs=chkGetActive('vd-prereq');
 
   var g=document.getElementById('grid-vantagens');
   var statusEl=document.getElementById('vd-load-status');
@@ -3068,8 +3125,8 @@ function renderVantagens(){
     var custoV=vdCusto(r);
     var prereqV=vdPrereq(r);
     return (!s || (nome+' '+desc+' '+custoV).toLowerCase().indexOf(s)>-1)
-        && (!cu || custoV===cu)
-        && (!pr || prereqV===pr);
+        && (!selCustos.length || selCustos.indexOf(custoV)>-1)
+        && (!selPrereqs.length || selPrereqs.indexOf(prereqV)>-1);
   });
 
   document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+VD_LABELS[cat];
@@ -3091,14 +3148,8 @@ function renderVantagens(){
     var extra1= gf(r,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
     var sub  = tipo||escola||'';
     var isNeg=(cat==='desvantagens'||cat==='maldicoes');
-
     var costBadge='';
-    if(custo){
-      costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+(isNeg?' pts':' pts')+'</span>';
-    }
-
-    var metaHtml='<div class="card-type">'+(sub||VD_LABELS[cat])+'</div>'+(custo?costBadge:'');
-    var tagsHtml=(pre?tag(pre.substring(0,35),'tag-gray'):'')+(extra1?tag(extra1.substring(0,25),'tag-class'):'');
+    if(custo) costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+' pts</span>';
     return cardHoriz(null, isNeg?'✗':'✦', cardCls, n, 'openModalIdx('+_storeModal(r)+')');
   }).join('');
 }
@@ -3389,9 +3440,8 @@ function switchLoja(cat){
 
 function clearLojaFilters(){
   document.getElementById('f-loja-search').value='';
-  document.getElementById('f-loja-cat').value='';
-  var sc=document.getElementById('f-loja-subcat');if(sc)sc.value='';
   var p=document.getElementById('f-loja-preco');if(p)p.value='';
+  chkClear('loja-cat');chkClear('loja-subcat');
   renderLoja();
 }
 
@@ -3399,17 +3449,12 @@ function renderLoja(){
   var cat=LOJA_ACTIVE;
   var rows=LOJA[cat]||[];
   var s=(document.getElementById('f-loja-search').value||'').toLowerCase();
-  var selCat=document.getElementById('f-loja-cat').value||'';
   var maxP=parseFloat(document.getElementById('f-loja-preco').value||'')||0;
-  // Subcategoria filter (aprimor, encant, imbuidos)
+  var selCats=chkGetActive('loja-cat');
+  var selSubcats=chkGetActive('loja-subcat');
   var HAS_SUBCAT=['aprimor','encant','imbuidos'];
   var fgSubcat=document.getElementById('fg-loja-subcat');
-  var selSubcat='';
-  if(fgSubcat){
-    fgSubcat.style.display=HAS_SUBCAT.indexOf(cat)>-1?'':'none';
-    var elSubcat=document.getElementById('f-loja-subcat');
-    selSubcat=elSubcat?(elSubcat.value||''):'';
-  }
+  if(fgSubcat) fgSubcat.style.display=HAS_SUBCAT.indexOf(cat)>-1?'':'none';
   var g=document.getElementById('grid-loja');
   var statusEl=document.getElementById('loja-load-status');
   if(!g)return;
@@ -3421,43 +3466,34 @@ function renderLoja(){
   }
   statusEl.textContent='';
 
-  // Populate category filter
+  // Populate categoria checkbox
   var cats=[];
   rows.forEach(function(r){var c=lojaGetCat(r,cat);if(c&&cats.indexOf(c)===-1)cats.push(c);});
-  var fCat=document.getElementById('f-loja-cat');
-  if(fCat){
-    var cur=fCat.value;
-    fCat.innerHTML='<option value="">Todas</option>';
-    cats.forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent=c;if(c===cur)o.selected=true;fCat.appendChild(o);});
-  }
-  // Populate subcategory filter (aprimor, encant, imbuidos)
-  var elSubcatSel=document.getElementById('f-loja-subcat');
-  if(elSubcatSel&&HAS_SUBCAT.indexOf(cat)>-1){
+  chkPopulate('loja-cat', cats.sort());
+
+  // Populate subcategoria checkbox (aprimor, encant, imbuidos)
+  if(HAS_SUBCAT.indexOf(cat)>-1){
     var subcats=[];
     rows.forEach(function(r){var sc=(r['Sub-categoria']||'').trim();if(sc&&subcats.indexOf(sc)===-1)subcats.push(sc);});
-    // Sort imbuidos by scale order (Sub-categoria contém exatamente o nome da escala)
     if(cat==='imbuidos'){
       var SO=['lendario','colossal','titanico','mitico','epico'];
       subcats.sort(function(a,b){
         function nd(s){return s.toLowerCase().replace(/[\u00e0-\u00e5]/g,'a').replace(/[\u00e8-\u00eb]/g,'e').replace(/[\u00ec-\u00ef]/g,'i').replace(/[\u00f2-\u00f6]/g,'o').replace(/[\u00f9-\u00fc]/g,'u').replace(/[^a-z]/g,'');}
-        var ia=SO.indexOf(nd(a)),ib=SO.indexOf(nd(b));
-        if(ia===-1)ia=999;if(ib===-1)ib=999;return ia-ib;
+        var ia=SO.indexOf(nd(a)),ib=SO.indexOf(nd(b));if(ia===-1)ia=999;if(ib===-1)ib=999;return ia-ib;
       });
     } else { subcats.sort(); }
-    var curSC=elSubcatSel.value;
-    elSubcatSel.innerHTML='<option value="">Todas</option>';
-    subcats.forEach(function(sc){var o=document.createElement('option');o.value=sc;o.textContent=sc;if(sc===curSC)o.selected=true;elSubcatSel.appendChild(o);});
+    chkPopulate('loja-subcat', subcats);
   }
 
-  // Filter rows - skip header rows
+  // Filter rows
   var data=rows.filter(function(r){
     var n=lojaGetField(r)||'';
     var keys=Object.keys(r);
     if(keys.length&&keys[0].trim()===n.trim()) return false;
     if(!n||n==='(sem nome)') return false;
     if(s&&(n+' '+lojaGetDesc(r,cat)+' '+lojaGetCat(r,cat)+' '+(r['Sub-categoria']||'')).toLowerCase().indexOf(s)===-1) return false;
-    if(selCat&&lojaGetCat(r,cat)!==selCat) return false;
-    if(selSubcat&&(r['Sub-categoria']||'').trim()!==selSubcat) return false;
+    if(selCats.length&&selCats.indexOf(lojaGetCat(r,cat))===-1) return false;
+    if(selSubcats.length&&selSubcats.indexOf((r['Sub-categoria']||'').trim())===-1) return false;
     if(maxP){var p=parseFloat((lojaGetPreco(r,cat)||'0').replace(/[^\d.]/g,''));if(p&&p>maxP)return false;}
     return true;
   });
@@ -3958,33 +3994,42 @@ function voltarVelkarion(){
 // ── RENDER ESTIGMAS ──
 function renderEstigmas(){
   var s=document.getElementById('f-est-search').value.toLowerCase();
-  var ca=document.getElementById('f-est-cat').value;
   var regioes=chkGetActive('est-regiao');
+  var origens=chkGetActive('est-origem');
 
-  popSel('f-est-cat',uniq(DB.estigmas.map(function(r){return gf(r,'Origem','origem','Categoria','categoria');})),ca);
-  chkPopulate('est-regiao', uniq(DB.estigmas.map(function(r){return gf(r,'Região','Regiao','regiao','região');})).filter(Boolean).sort());
+  // 1. Popula Região com todos os valores disponíveis
+  var todasRegioes=uniq(DB.estigmas.map(function(r){return gf(r,'Região','Regiao','regiao','região');})).filter(Boolean).sort();
+  chkPopulate('est-regiao', todasRegioes);
 
-  var data=DB.estigmas.filter(function(r){
-    return(!s||fstr(r).indexOf(s)>-1)
-      &&(!ca||gf(r,'Origem','origem','Categoria','categoria')===ca)
-      &&(!regioes.length||regioes.indexOf(gf(r,'Região','Regiao','regiao','região'))>-1);
+  // 2. Filtra por região para determinar origens disponíveis
+  var rowsFiltradosPorRegiao=DB.estigmas.filter(function(r){
+    return !regioes.length || regioes.indexOf(gf(r,'Região','Regiao','regiao','região'))>-1;
   });
+
+  // 3. Popula Origem apenas com valores das regiões selecionadas (cascata)
+  var origensDisponiveis=uniq(rowsFiltradosPorRegiao.map(function(r){return gf(r,'Origem','origem','Categoria','categoria');})).filter(Boolean).sort();
+  chkPopulate('est-origem', origensDisponiveis);
+  // Limpa seleções de origem que não existem mais
+  var origemSet=chkGet('est-origem');
+  origemSet.forEach(function(v){ if(origensDisponiveis.indexOf(v)===-1) origemSet.delete(v); });
+  chkUpdateBtn('est-origem');
+  origens=chkGetActive('est-origem');
+
+  // 4. Filtra dados finais
+  var data=DB.estigmas.filter(function(r){
+    var reg=gf(r,'Região','Regiao','regiao','região');
+    var ori=gf(r,'Origem','origem','Categoria','categoria');
+    return(!s||fstr(r).indexOf(s)>-1)
+      &&(!regioes.length||regioes.indexOf(reg)>-1)
+      &&(!origens.length||origens.indexOf(ori)>-1);
+  });
+
   var g=document.getElementById('grid-estigmas');
   document.getElementById('count-estigmas').textContent=data.length+' resultado'+(data.length===1?'':'s');
   if(!data.length){g.innerHTML=emptyMsg('✸',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
   g.innerHTML=data.map(function(r){
     var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)';
-    var ori=gf(r,'Origem','origem');
-    var reg=gf(r,'Região','Regiao','regiao','região');
-    var d=gf(r,'Descrição','Descricao','descricao','desc');
-    var per=gf(r,'Perícias','Pericias','pericias');
-    var van=gf(r,'Vantagem (Nome)','Vantagem','vantagem');
-    var idi=gf(r,'Idioma','idioma');
-    var idiAd=gf(r,'Idioma Adicional','idioma adicional');
-    var ite=gf(r,'Itens','itens');
     var idx=_storeModal(r);
-    var metaEst='<div class="card-type">estigma'+(ori?' · '+ori:'')+'</div>';
-    var tagsEst=(reg?tag(reg,'tag-rare'):'')+(per?tag(per.substring(0,25),'tag-conjurador'):'')+(van?tag(van.substring(0,25),'tag-gold'):'')+(idi?tag(idi,'tag-gray'):'')+(idiAd?tag(idiAd,'tag-gray'):'')+(ite?tag(ite.substring(0,20),'tag-suporte'):'');
     return cardHoriz(null,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
 }
@@ -3996,7 +4041,8 @@ function clearFilters(sec){
   // Clear checkbox filters
   if(sec==='classes') chkClear('class-cat');
   if(sec==='grimorio'){ chkClear('mag-escola');chkClear('mag-grau');chkClear('mag-origem');chkClear('mag-tipo'); }
-  if(sec==='estigmas') chkClear('est-regiao');
+  if(sec==='estigmas'){ chkClear('est-regiao');chkClear('est-origem'); }
+  if(sec==='vantagens'){ chkClear('vd-custo');chkClear('vd-prereq'); }
   var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,itens:renderItens,grimorio:renderGrimorio,deuses:renderDeuses,velkarion:renderVelkarion,estigmas:renderEstigmas};
   if(fn[sec])fn[sec]();
 }
