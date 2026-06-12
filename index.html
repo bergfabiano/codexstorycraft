@@ -462,12 +462,16 @@ main{
 
 /* ── DONS: LAYOUT COLUNAS POR GRAU ── */
 .dons-colunas-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  gap:0.75rem;
+  display:flex;
+  flex-wrap:nowrap;
+  gap:0.6rem;
   align-items:start;
+  overflow-x:auto;
+  padding-bottom:0.5rem;
 }
 .dons-col-grau{
+  flex:0 0 auto;
+  width:160px;
   display:flex;flex-direction:column;gap:0;
 }
 .dons-col-header{
@@ -476,26 +480,27 @@ main{
   text-align:center;padding:0.3rem 0 0.5rem;
   border-bottom:1.5px solid rgba(155,93,229,0.45);
   margin-bottom:0.45rem;
+  white-space:nowrap;
 }
 /* Card horizontal: ícone quadrado + nome */
 .don-card-h{
-  display:flex;align-items:center;gap:0;
+  display:flex;align-items:stretch;gap:0;
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:6px;margin-bottom:4px;
   overflow:hidden;cursor:pointer;
   transition:border-color 0.18s,background 0.18s;
-  min-height:46px;
+  min-height:40px;
 }
 .don-card-h:hover{
   border-color:var(--violet-dim);
   background:var(--surface2);
 }
 .don-card-h-img{
-  flex:0 0 46px;width:46px;height:46px;
+  flex:0 0 40px;width:40px;
   background:var(--surface2);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;color:var(--violet-dim);
+  font-size:1rem;color:var(--violet-dim);
   border-right:1px solid var(--border);
   overflow:hidden;flex-shrink:0;
 }
@@ -503,9 +508,10 @@ main{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .don-card-h-nome{
-  flex:1;padding:0 0.55rem;
-  font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;
-  color:var(--text);line-height:1.3;
+  flex:1;padding:0.3rem 0.5rem;
+  font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;
+  color:var(--text);line-height:1.25;
+  display:flex;align-items:center;
 }
 
 /* ── STATE MSG ── */
@@ -3172,7 +3178,17 @@ function verDonsClasse(nomeClasse){
   var graus=Object.keys(grauMap).sort(),html='';
   if(classeRow){
     var cat=gf(classeRow,'Categoria','categoria'),atb=gf(classeRow,'Atributo de Classe','atributo de classe'),pvi=gf(classeRow,'PV Inicial','pv inicial'),pvn=gf(classeRow,'PV/Nível','pv/nivel','PV/Nivel'),pmi=gf(classeRow,'PM Inicial','pm inicial'),pmn=gf(classeRow,'PM/Nível','pm/nivel','PM/Nivel'),pro=gf(classeRow,'Proficiências','Proficiencias','proficiencias'),per=gf(classeRow,'Perícia Inicial','Pericia Inicial','pericia inicial'),pex=gf(classeRow,'Perícias Extras','Pericias Extras','pericias extras'),kit=gf(classeRow,'Poder de Kit','poder de kit'),ind=gf(classeRow,'Individualidade','individualidade'),res=gf(classeRow,'Resistência','Resistencia','resistencia');
-    html+='<div style="margin-bottom:0.5rem;">'+(getClassImg(nomeClasse)?'<div style="width:160px;height:160px;border-radius:6px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);float:right;margin:0 0 1rem 1.5rem;"><img src="'+getClassImg(nomeClasse)+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">'+(cat||'classe')+'</div><h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2></div>';
+    var _cImg=getClassImg(nomeClasse);
+    var _imgBox=_cImg
+      ?'<img src="'+_cImg+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
+      :'<span style="font-size:2rem;opacity:0.2;">⚔</span>';
+    html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
+      +'<div style="flex:0 0 120px;height:120px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+_imgBox+'</div>'
+      +'<div style="flex:1;padding-top:0.25rem;">'
+        +'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">'+(cat||'classe')+'</div>'
+        +'<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0;">'+nomeClasse+'</h2>'
+      +'</div>'
+    +'</div>';
     if(ind)html+='<p class="classe-ind">'+ind+'</p>';
     html+='<div class="classe-header">';
     if(atb)html+='<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">'+atb+'</p></div>';
