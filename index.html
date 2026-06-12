@@ -464,14 +464,13 @@ main{
 .dons-colunas-wrap{
   display:flex;
   flex-wrap:nowrap;
-  gap:0.6rem;
+  gap:0.5rem;
   align-items:start;
-  overflow-x:auto;
-  padding-bottom:0.5rem;
+  width:100%;
 }
 .dons-col-grau{
-  flex:0 0 auto;
-  width:160px;
+  flex:1 1 0;
+  min-width:0;
   display:flex;flex-direction:column;gap:0;
 }
 .dons-col-header{
@@ -508,10 +507,13 @@ main{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .don-card-h-nome{
-  flex:1;padding:0.3rem 0.5rem;
-  font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;
-  color:var(--text);line-height:1.25;
+  flex:1;padding:0.3rem 0.45rem;
+  font-family:'Cinzel',serif;font-size:0.65rem;font-weight:600;
+  color:var(--text);line-height:1.2;
   display:flex;align-items:center;
+  min-width:0;
+  word-break:break-word;
+  hyphens:auto;
 }
 
 /* ── STATE MSG ── */
@@ -728,7 +730,7 @@ main{
 ::-webkit-scrollbar-thumb:hover{background:rgba(155,93,229,0.5);}
 
 /* ── CONTADOR ── */
-.cnt-wrap{max-width:680px;margin:0 auto;}
+.cnt-wrap{max-width:900px;margin:0 auto;}
 .cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--violet-bright);text-transform:uppercase;display:block;margin-bottom:0.28rem;}
 .cnt-input{background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;width:110px;}
 .cnt-input:focus{border-color:var(--violet);}
