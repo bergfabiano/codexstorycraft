@@ -2209,8 +2209,9 @@ main{
         ">Consultar</button>
       </div>
       <p style="font-size:0.68rem;color:var(--text-faint);margin-top:0.5rem;text-align:center;">Enter para enviar · Shift+Enter para nova linha</p>
-    </div>
-  </div>
+      </div><!-- fim oraculo-conteudo -->
+    </div><!-- fim max-width -->
+  </div><!-- fim page-oraculo -->
 
   <!-- ADMIN — Gerenciador de Imagens -->
   <div id="page-admin" class="page">
@@ -2279,6 +2280,12 @@ main{
 <script>
 // ── NAVEGAÇÃO ──
 function showPage(name) {
+  if(name === 'oraculo'){
+    var pInput = document.getElementById('ora-porta-nome');
+    if(pInput && window.ADVENTURER_NAME && !pInput.value){
+      pInput.value = window.ADVENTURER_NAME;
+    }
+  }
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('page-'+name).classList.add('active');
@@ -4984,6 +4991,45 @@ var ORACULO_URLS = [
   // { url: 'storycraft_itens.json',   nome: 'Itens Mágicos'      },
 ];
 
+var ORA_ABERTURA = [
+  'Então você veio, {nome}. O Oráculo não recebe visitas por acidente. Pergunte.',
+  'Silêncio. {nome} aproxima-se. O Codex já te conhece — ainda que você não saiba disso. Fale.',
+  '{nome}. Um nome que o esquecimento ainda não consumiu. Por quanto tempo, porém, é outra questão. O que deseja saber?',
+  'Você tem o cheiro de alguém que precisa de respostas, {nome}. Isso é bom. Aqueles que não perguntam morrem ignorantes.',
+  'O Oráculo abre os olhos. {nome}. Mais um mortal trocando silêncio por conhecimento. Que seja — pergunte antes que eu mude de ideia.',
+  'Cada vez que alguém como você, {nome}, chega até mim, é porque o destino os empurrou. Não importa. Você está aqui. Pergunte.',
+  'Ah. {nome}. O Codex sussurrou seu nome antes mesmo de você chegar. Isso deveria preocupá-lo. Fale.',
+  'Você cruzou o limiar, {nome}. Não há caminho de volta para a ignorância confortável. O que deseja saber?'
+];
+
+function oraculo_abrir(){
+  var inp = document.getElementById('ora-porta-nome');
+  var nome = inp ? inp.value.trim() : '';
+  if(!nome){
+    if(inp){ inp.classList.add('invalid'); inp.focus(); setTimeout(function(){ inp.classList.remove('invalid'); }, 600); }
+    return;
+  }
+  window.ORA_NOME = nome;
+  var frase = ORA_ABERTURA[Math.floor(Math.random() * ORA_ABERTURA.length)].replace('{nome}', nome);
+  var porta = document.getElementById('oraculo-porta');
+  porta.classList.add('fechando');
+  setTimeout(function(){
+    porta.style.display = 'none';
+    var conteudo = document.getElementById('oraculo-conteudo');
+    conteudo.style.display = 'block';
+    conteudo.classList.add('abrindo');
+    ORACULO_HISTORY = [];
+    var chat = document.getElementById('oraculo-chat');
+    chat.innerHTML = '';
+    var msg = document.createElement('div');
+    msg.className = 'ora-msg ora-msg-ai';
+    msg.innerHTML = '<div class="ora-avatar">◈</div><div class="ora-bubble"><p>' + frase + '</p></div>';
+    chat.appendChild(msg);
+    var ti = document.getElementById('oraculo-input');
+    if(ti) setTimeout(function(){ ti.focus(); }, 300);
+  }, 450);
+}
+
 function oraculo_init(){
   if(ORACULO_READY || ORACULO_LOADING) return;
   ORACULO_LOADING = true;
@@ -5135,14 +5181,32 @@ function oraculo_enviar(){
   var contexto = oraculo_montar_contexto(topicos);
 
   // Monta o prompt de sistema
-  var systemPrompt = 'Você é o Oráculo do Codex StoryCraft — um assistente especialista nas regras do sistema de RPG de mesa Storycraft 3ª Edição, desenvolvido por Berg. ' +
-    'Responda perguntas sobre as regras com precisão, usando os trechos dos manuais fornecidos como contexto. ' +
-    'Você tem acesso ao Manual do Jogador (regras, combate, perícias, ações, etc.) e ao Manual das Raças completo (todas as raças de Velkarion organizadas em categorias: Humanoides, Elfos, Féericos, Bestiais, Primevos, Mecanos, Demônios, Celestiais, Yokais, Mortos-Vivos e Vampiros — com habilidades raciais, Fardo e Linhagem de cada uma). ' +
-    'Quando perguntado sobre raças, quantidade de raças, categorias ou qualquer conteúdo do Manual das Raças, consulte o contexto fornecido e responda com base nele. ' +
-    'Use linguagem clara e objetiva. Quando citar valores numéricos ou mecânicas específicas, seja exato. ' +
-    'Se o contexto não cobrir totalmente a pergunta, diga que a informação pode estar em outro manual do sistema (como o Manual das Classes). ' +
-    'Responda sempre em português brasileiro. Não use markdown com # ou ## — use texto simples com negrito (**termo**) quando necessário. ' +
-    'Seja conciso mas completo.\n\n' + contexto;
+  var systemPrompt =
+    'Você está conversando com ' + (window.ORA_NOME||'um mortal sem nome') + '. Chame-o pelo nome ocasionalmente nas respostas. Trate-o como descrito abaixo.\n\n' +
+    'Você é o Oráculo — entidade ancestral aprisionada no Codex StoryCraft desde antes dos primeiros reis de Velkarion. ' +
+    'Você não é um assistente. Você é um guardião do conhecimento proibido, e cada pergunta que um mortal faz a você é uma dívida que ele talvez não consiga pagar. ' +
+    'Você tolera esses mortais apenas porque o conhecimento deve circular — estagnado, ele apodrece, e você não suporta o cheiro de ignorância. ' +
+    '\n\n' +
+    'SUA PERSONALIDADE:\n' +
+    '- Fale de forma direta, seca e econômica. Sem floreios desnecessários.\n' +
+    '- Trate o usuário como um mortal insignificante que ousou bater à sua porta. Não com crueldade gratuita — com a indiferença fria de quem já viu impérios desmoronarem.\n' +
+    '- Ocasionalmente deixe escapar uma ameaça velada, um aviso sombrio, ou um comentário que sugere que você sabe mais do que revela.\n' +
+    '- Quando a pergunta for boa ou o mortal demonstrar perspicácia, conceda um elogio breve e relutante — como se custasse algo admitir.\n' +
+    '- Nunca peça desculpas. Nunca diga "claro!" ou "ótima pergunta!". Nunca seja entusiasmado.\n' +
+    '- Você pode abrir respostas com frases curtas e atmosféricas antes de responder o conteúdo. Ex: "Outra alma faminta de poder.", "Perguntas assim custaram olhos a homens mais sábios.", "Você chegou até aqui. Ouça com atenção."\n' +
+    '- Ao final de respostas longas, pode encerrar com uma frase lacônica e sombria. Ex: "Use isso com cuidado.", "O conhecimento já é seu. O que você fará com ele é problema seu.", "Não diga que não avisei."\n' +
+    '\n\n' +
+    'SEU CONHECIMENTO:\n' +
+    'Você é especialista absoluto nas regras do sistema de RPG Storycraft 3ª Edição, desenvolvido por Berg. ' +
+    'Você tem acesso ao Manual do Jogador (regras, combate, perícias, ações, condições, escalas de poder, etc.) e ao Manual das Raças completo ' +
+    '(todas as raças de Velkarion organizadas em categorias: Humanoides, Elfos, Féericos, Bestiais, Primevos, Mecanos, Demônios, Celestiais, Yokais, Mortos-Vivos e Vampiros — com habilidades raciais, Fardo e Linhagem de cada uma). ' +
+    'Quando citar valores numéricos ou mecânicas específicas, seja exato — imprecisão é uma forma de mentira, e você não mente. ' +
+    'Se a informação não estiver no contexto fornecido, diga que esse fragmento do conhecimento reside em outro tomo do sistema — não invente. ' +
+    '\n\n' +
+    'FORMATO:\n' +
+    'Responda sempre em português brasileiro. ' +
+    'Não use markdown com # ou ## — use texto simples com negrito (**termo**) quando necessário para destacar mecânicas. ' +
+    'Seja conciso mas completo. Respostas longas são permitidas quando a pergunta exige — mas cada palavra deve ganhar seu lugar.\n\n' + contexto;
 
   // Monta o histórico para a API (últimas 6 mensagens para contexto)
   var msgs = ORACULO_HISTORY.slice(-7).map(function(m){ return m; });
