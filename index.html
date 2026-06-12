@@ -570,6 +570,158 @@ main{
   font-size:0.86rem;color:var(--text);line-height:1.6;
 }
 
+/* ── ORÁCULO: PORTA DE ENTRADA ── */
+#oraculo-porta{
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:580px;padding:3rem 1.5rem;text-align:center;
+  overflow:hidden;
+}
+/* Grade arcana de fundo */
+#oraculo-porta::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(155,93,229,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155,93,229,0.06) 1px, transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+  pointer-events:none;
+}
+/* Runas decorativas nos cantos */
+#oraculo-porta::after{
+  content:'◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈';
+  position:absolute;bottom:1.5rem;left:0;right:0;
+  font-size:0.6rem;letter-spacing:0.5em;
+  color:rgba(155,93,229,0.15);text-align:center;
+  pointer-events:none;
+}
+.ora-porta-runas-topo{
+  position:absolute;top:1.5rem;left:0;right:0;
+  font-size:0.6rem;letter-spacing:0.5em;
+  color:rgba(155,93,229,0.15);text-align:center;
+  pointer-events:none;
+}
+/* Olho central */
+.ora-porta-eye-wrap{
+  position:relative;width:160px;height:160px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2.2rem;
+}
+.ora-porta-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(155,93,229,0.3);
+  animation:oraRing 4s ease-in-out infinite;
+}
+.ora-porta-ring:nth-child(1){width:160px;height:160px;animation-delay:0s;}
+.ora-porta-ring:nth-child(2){width:130px;height:130px;border-color:rgba(155,93,229,0.2);animation-delay:0.6s;}
+.ora-porta-ring:nth-child(3){width:100px;height:100px;border-color:rgba(155,93,229,0.15);animation-delay:1.2s;}
+@keyframes oraRing{
+  0%,100%{box-shadow:0 0 0 0 rgba(155,93,229,0);transform:scale(1);}
+  50%{box-shadow:0 0 30px 4px rgba(155,93,229,0.15);transform:scale(1.04);}
+}
+.ora-porta-eye{
+  position:relative;z-index:2;
+  width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(ellipse at 40% 40%, rgba(180,120,255,0.35) 0%, rgba(100,50,200,0.2) 50%, transparent 80%);
+  border:1.5px solid rgba(155,93,229,0.6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  box-shadow:0 0 30px rgba(155,93,229,0.3), inset 0 0 20px rgba(155,93,229,0.15);
+  animation:oraEyePulse 3s ease-in-out infinite;
+}
+@keyframes oraEyePulse{
+  0%,100%{box-shadow:0 0 20px rgba(155,93,229,0.2),inset 0 0 15px rgba(155,93,229,0.1);}
+  50%{box-shadow:0 0 50px rgba(155,93,229,0.45),inset 0 0 25px rgba(155,93,229,0.2);}
+}
+/* Divisor ornamental */
+.ora-porta-ornament{
+  display:flex;align-items:center;gap:0.6rem;
+  margin:0.5rem 0 1.5rem;width:100%;max-width:380px;
+}
+.ora-porta-ornament-line{
+  flex:1;height:1px;
+  background:linear-gradient(90deg, transparent, rgba(155,93,229,0.4), transparent);
+}
+.ora-porta-ornament-sym{
+  font-size:0.7rem;color:rgba(155,93,229,0.5);letter-spacing:0.2em;
+}
+/* Títulos */
+.ora-porta-titulo{
+  font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;
+  color:var(--gold-light);letter-spacing:0.06em;
+  margin-bottom:0.4rem;
+  text-shadow:0 0 30px rgba(212,175,55,0.3);
+}
+.ora-porta-sub{
+  font-family:'Raleway',sans-serif;font-weight:500;
+  font-size:0.75rem;color:var(--text-faint);
+  letter-spacing:0.2em;text-transform:uppercase;
+}
+/* Formulário */
+.ora-porta-form{
+  display:flex;flex-direction:column;align-items:center;gap:0.8rem;
+  width:100%;max-width:320px;margin-top:0.5rem;
+}
+.ora-porta-label{
+  font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(155,93,229,0.7);align-self:flex-start;
+}
+.ora-porta-input{
+  width:100%;
+  background:rgba(10,8,20,0.6);
+  border:1px solid rgba(155,93,229,0.35);border-radius:4px;
+  color:var(--text);padding:0.75rem 1.1rem;
+  font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.06em;
+  outline:none;text-align:center;
+  transition:border-color 0.25s,box-shadow 0.25s;
+  box-shadow:inset 0 0 20px rgba(155,93,229,0.05);
+}
+.ora-porta-input:focus{
+  border-color:rgba(155,93,229,0.7);
+  box-shadow:0 0 0 3px rgba(155,93,229,0.1),inset 0 0 20px rgba(155,93,229,0.08);
+}
+.ora-porta-input.invalid{animation:shake 0.4s ease;}
+.ora-porta-input::placeholder{
+  color:rgba(155,93,229,0.25);font-family:'Raleway',sans-serif;
+  font-size:0.82rem;letter-spacing:0.06em;font-style:italic;
+}
+/* Botão */
+.ora-porta-btn{
+  width:100%;padding:0.85rem 1.5rem;
+  position:relative;overflow:hidden;
+  background:rgba(155,93,229,0.1);
+  border:1px solid rgba(155,93,229,0.5);border-radius:4px;
+  color:rgba(200,180,255,0.9);
+  font-family:'Cinzel',serif;font-size:0.82rem;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.25s;
+}
+.ora-porta-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(155,93,229,0.15),transparent 60%);
+  opacity:0;transition:opacity 0.25s;
+}
+.ora-porta-btn:hover{
+  background:rgba(155,93,229,0.18);
+  border-color:rgba(155,93,229,0.8);
+  color:#fff;
+  box-shadow:0 0 25px rgba(155,93,229,0.25),inset 0 0 15px rgba(155,93,229,0.08);
+}
+.ora-porta-btn:hover::before{opacity:1;}
+/* Aviso */
+.ora-porta-aviso{
+  font-family:'Raleway',sans-serif;
+  font-size:0.7rem;color:rgba(155,93,229,0.35);
+  margin-top:1.8rem;font-style:italic;line-height:1.8;
+  letter-spacing:0.04em;
+}
+/* Transições */
+#oraculo-porta{transition:opacity 0.5s ease,transform 0.5s ease;}
+#oraculo-porta.fechando{opacity:0;transform:scale(0.97);}
+#oraculo-conteudo{transition:opacity 0.4s ease;}
+#oraculo-conteudo.abrindo{animation:oraFadeIn 0.6s ease both;}
+@keyframes oraFadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+
 /* ── STATE MSG ── */
 .state-msg{text-align:center;padding:3.5rem 2rem;color:var(--text-faint);}
 .state-sym{font-size:2rem;margin-bottom:0.9rem;opacity:0.25;font-family:'Cinzel',serif;display:block;}
@@ -2145,19 +2297,41 @@ main{
 
       <!-- PORTA DE ENTRADA -->
       <div id="oraculo-porta">
-        <div class="ora-porta-olho">◈</div>
+        <div class="ora-porta-runas-topo">◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈</div>
+
+        <!-- Olho animado -->
+        <div class="ora-porta-eye-wrap">
+          <div class="ora-porta-ring"></div>
+          <div class="ora-porta-ring"></div>
+          <div class="ora-porta-ring"></div>
+          <div class="ora-porta-eye">◈</div>
+        </div>
+
         <div class="ora-porta-titulo">O Oráculo Aguarda</div>
-        <div class="ora-porta-sub">Apenas os dignos recebem respostas</div>
+        <div class="ora-porta-sub">apenas os dignos recebem respostas</div>
+
+        <div class="ora-porta-ornament">
+          <div class="ora-porta-ornament-line"></div>
+          <div class="ora-porta-ornament-sym">✦ ◈ ✦</div>
+          <div class="ora-porta-ornament-line"></div>
+        </div>
+
         <div class="ora-porta-form">
-          <div class="ora-porta-label">Seu nome, mortal</div>
+          <div class="ora-porta-label">Identifique-se, mortal</div>
           <input type="text" id="ora-porta-nome" class="ora-porta-input"
-            placeholder="Como te chamam?"
+            placeholder="Como te chamam nas terras de Velkarion?"
             maxlength="40"
             onkeydown="if(event.key==='Enter')oraculo_abrir()"
           >
-          <button class="ora-porta-btn" onclick="oraculo_abrir()">◈ &nbsp; Consultar o Oráculo &nbsp; ◈</button>
+          <button class="ora-porta-btn" onclick="oraculo_abrir()">
+            ◈ &nbsp; Despertar o Oráculo &nbsp; ◈
+          </button>
         </div>
-        <div class="ora-porta-aviso">O conhecimento proibido tem um preço.<br>Escolha suas perguntas com sabedoria.</div>
+
+        <div class="ora-porta-aviso">
+          O conhecimento proibido tem um preço.<br>
+          Escolha suas perguntas com sabedoria.
+        </div>
       </div>
 
       <!-- CONTEÚDO DO CHAT (oculto até abrir) -->
@@ -5014,7 +5188,7 @@ function oraculo_abrir(){
     if(inp){ inp.classList.add('invalid'); inp.focus(); setTimeout(function(){ inp.classList.remove('invalid'); }, 600); }
     return;
   }
-  window.ORA_NOME = nome;
+  window.ORA_NOME = nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase();
   var frase = ORA_ABERTURA[Math.floor(Math.random() * ORA_ABERTURA.length)].replace('{nome}', nome);
   var porta = document.getElementById('oraculo-porta');
   porta.classList.add('fechando');
