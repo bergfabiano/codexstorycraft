@@ -2012,7 +2012,13 @@ main{
       </div>
       <button class="btn-clear" onclick="clearFilters('grimorio')">Limpar</button>
     </div>
-    <p class="result-count" id="count-grimorio"></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+      <p class="result-count" id="count-grimorio" style="margin-bottom:0;"></p>
+      <div class="layout-toggle">
+        <button class="layout-toggle-btn active" id="toggle-grimorio-h" onclick="setLayout('grimorio','h')" title="Horizontal">☰</button>
+        <button class="layout-toggle-btn" id="toggle-grimorio-v" onclick="setLayout('grimorio','v')" title="Grade">⊞</button>
+      </div>
+    </div>
     <div class="debug-banner" id="grimorio-debug"></div>
     <div class="cards-grid" id="grid-grimorio"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✦</span><h3>Nenhuma magia carregada</h3><p>Aguarde o carregamento automático.</p></div></div>
   </div>
@@ -2088,7 +2094,13 @@ main{
       </div>
       <button class="btn-clear" onclick="document.getElementById('f-idioma-search').value='';document.getElementById('f-idioma-cat').value='';renderIdiomas()">Limpar</button>
     </div>
-    <p class="result-count" id="count-idiomas"></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+      <p class="result-count" id="count-idiomas" style="margin-bottom:0;"></p>
+      <div class="layout-toggle">
+        <button class="layout-toggle-btn" id="toggle-idiomas-h" onclick="setLayout('idiomas','h')" title="Horizontal">☰</button>
+        <button class="layout-toggle-btn active" id="toggle-idiomas-v" onclick="setLayout('idiomas','v')" title="Grade">⊞</button>
+      </div>
+    </div>
     <div class="debug-banner" id="idiomas-debug"></div>
     <div class="cards-grid" id="grid-idiomas" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✎</span><h3>Nenhum idioma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
@@ -2927,6 +2939,8 @@ function renderIdiomas(){
     return;
   }
 
+  var _idiomaLayout=getLayout('idiomas');
+  grid.style.gridTemplateColumns=_idiomaLayout==='v'?'repeat(auto-fill,minmax(150px,1fr))':'repeat(auto-fill,minmax(280px,1fr))';
   grid.innerHTML=data.map(function(r){
     var nome=gf(r,'Idioma','idioma','Nome','nome')||'(sem nome)';
     var cat=gf(r,'Categoria','categoria')||'';
@@ -2935,6 +2949,7 @@ function renderIdiomas(){
     var idx=_storeModal(rCopy);
     var imgUrl=getIdiomaImg(nome);
     var imgHtml=imgUrl?'<img src="'+imgUrl+'" alt="'+nome+'">':(cat==='Primitivo'?'🜲':(cat==='Arcano'?'✦':(cat==='Divino'?'☀':(cat==='Racial'?'☯':'✎'))));
+    if(_idiomaLayout==='h') return cardHoriz(imgUrl,'✎','card-especialista',nome,'openModalIdx('+idx+')');
     return '<div class="idioma-card" onclick="openModalIdx('+idx+')">'
       +'<div class="idioma-card-img">'+imgHtml+'</div>'
       +'<div class="idioma-card-body">'
@@ -3370,22 +3385,48 @@ function verDonsClasse(nomeClasse){
     html+='</div>';
   }else{html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2>';}
   if(graus.length){
-    html+='<div class="dons-title">✦ Dons de '+nomeClasse+' <span style="font-size:0.7rem;opacity:0.4;">('+dons.length+' dons)</span></div>';
-    html+='<div class="dons-colunas-wrap">';
-    for(var gi=0;gi<graus.length;gi++){
-      var gr=graus[gi],lista=grauMap[gr];
-      html+='<div class="dons-col-grau"><div class="dons-col-header">'+gr+'</div>';
-      for(var di=0;di<lista.length;di++){
-        var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)',dd=gf(d,'Descrição','Descricao','descricao','desc');
-        var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
-        var dIdx=_storeModal(dCopy);
-        var donImgUrl=window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'';
-        var imgContent=donImgUrl?'<img src="'+donImgUrl+'" alt="'+dn+'">':'✦';
-        html+='<div class="don-card-h" onclick="openModalIdx('+dIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+dn+'</div></div>';
+    var _donsLayout=getLayout('dons');
+    var _toggleHtml='<div id="dons-toggle-wrap" data-classe="'+nomeClasse+'" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;">'
+      +'<div class="dons-title" style="margin-bottom:0;border:none;padding:0;">✦ Dons de '+nomeClasse+' <span style="font-size:0.7rem;opacity:0.4;">('+dons.length+' dons)</span></div>'
+      +'<div class="layout-toggle">'
+        +'<button class="layout-toggle-btn'+(_donsLayout==='h'?' active':'')+'" id="toggle-dons-h" onclick="setLayout(&quot;dons&quot;,&quot;h&quot;)" title="Lista">☰</button>'
+        +'<button class="layout-toggle-btn'+(_donsLayout==='v'?' active':'')+'" id="toggle-dons-v" onclick="setLayout(&quot;dons&quot;,&quot;v&quot;)" title="Grade">⊞</button>'
+      +'</div>'
+    +'</div>';
+    html+=_toggleHtml;
+    if(_donsLayout==='h'){
+      // Modo lista: grau-section com cards horizontais empilhados, quebra por grau
+      for(var gi=0;gi<graus.length;gi++){
+        var gr=graus[gi],lista=grauMap[gr];
+        html+='<div class="grau-section"><div class="grau-section-title">— '+gr+' —</div>';
+        for(var di=0;di<lista.length;di++){
+          var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)';
+          var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
+          var dIdx=_storeModal(dCopy);
+          var donImgUrl=window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'';
+          var imgContent=donImgUrl?'<img src="'+donImgUrl+'" alt="'+dn+'">':'✦';
+          html+='<div class="don-card-h" onclick="openModalIdx('+dIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+dn+'</div></div>';
+        }
+        html+='</div>';
+      }
+    }else{
+      // Modo grade (padrão): colunas por grau
+      html+='<div class="dons-colunas-wrap">';
+      for(var gi=0;gi<graus.length;gi++){
+        var gr=graus[gi],lista=grauMap[gr];
+        html+='<div class="dons-col-grau"><div class="dons-col-header">'+gr+'</div>';
+        for(var di=0;di<lista.length;di++){
+          var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)';
+          var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
+          var dIdx=_storeModal(dCopy);
+          var donImgUrl=window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'';
+          var imgContent=donImgUrl?'<img src="'+donImgUrl+'" alt="'+dn+'">':'✦';
+          html+='<div class="don-card-h" onclick="openModalIdx('+dIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+dn+'</div></div>';
+        }
+        html+='</div>';
       }
       html+='</div>';
     }
-    html+='</div>';
   }else{html+='<div class="state-msg"><span class="state-sym">✦</span><h3>Nenhum dom encontrado</h3></div>';}
   document.getElementById('classe-detalhe-body').innerHTML=html;
   document.getElementById('classes-detalhe').scrollIntoView({behavior:'smooth',block:'start'});
@@ -4064,6 +4105,7 @@ function renderGrimorio(){
     var cc=escolaCardClass(escola);
     var idx=_storeModal(r);
     var grimImg=(window.GRIM_IMGS&&escola)?(window.GRIM_IMGS[escola]||window.GRIM_IMGS[escola.replace(/[.#$\/\[\]]/g,'_')]||null):null;
+    if(getLayout('grimorio')==='v') return cardVert(grimImg,'✦',escola||grau||'feitiço',nome,'openModalIdx('+idx+')',cc);
     return cardHoriz(grimImg,'✦',cc,nome,'openModalIdx('+idx+')');
   }).join('');
 }
@@ -5145,7 +5187,7 @@ function oraculo_pergunta_rapida(texto){
 }
 
 // ── LAYOUT TOGGLE ──
-var _layoutDefaults = { racas:'h', classes:'h', vantagens:'h', loja:'h', estigmas:'h' };
+var _layoutDefaults = { racas:'h', classes:'h', vantagens:'h', loja:'h', estigmas:'h', grimorio:'h', idiomas:'v', dons:'v' };
 
 function getLayout(secao){
   try { return localStorage.getItem('layout_'+secao)||_layoutDefaults[secao]||'h'; } catch(e){ return 'h'; }
@@ -5159,12 +5201,13 @@ function setLayout(secao, modo){
   if(bH){ bH.classList.toggle('active', modo==='h'); }
   if(bV){ bV.classList.toggle('active', modo==='v'); }
   // Re-renderiza
-  var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,loja:renderLoja,estigmas:renderEstigmas};
-  if(fn[secao]) fn[secao]();
+  var fn={racas:renderRacas,classes:renderClasses,vantagens:renderVantagens,loja:renderLoja,estigmas:renderEstigmas,grimorio:renderGrimorio,idiomas:renderIdiomas};
+  if(fn[secao]){fn[secao]();return;}
+  if(secao==='dons'){var _dEl=document.getElementById('dons-toggle-wrap');if(_dEl){var _dCl=_dEl.getAttribute('data-classe');if(_dCl)verDonsClasse(_dCl);}}
 }
 
 function initLayoutToggles(){
-  ['racas','classes','vantagens','loja','estigmas'].forEach(function(s){
+  ['racas','classes','vantagens','loja','estigmas','grimorio','idiomas','dons'].forEach(function(s){
     var modo=getLayout(s);
     var bH=document.getElementById('toggle-'+s+'-h');
     var bV=document.getElementById('toggle-'+s+'-v');
