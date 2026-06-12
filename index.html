@@ -474,11 +474,11 @@ main{
   display:flex;flex-direction:column;gap:0;
 }
 .dons-col-header{
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.55rem;
-  letter-spacing:0.18em;color:var(--violet-bright);text-transform:uppercase;
-  text-align:center;padding:0.3rem 0 0.5rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.75rem;
+  letter-spacing:0.12em;color:var(--violet-bright);text-transform:uppercase;
+  text-align:center;padding:0.4rem 0 0.6rem;
   border-bottom:1.5px solid rgba(155,93,229,0.45);
-  margin-bottom:0.45rem;
+  margin-bottom:0.5rem;
   white-space:nowrap;
 }
 /* Card horizontal: ícone quadrado + nome */
@@ -486,20 +486,20 @@ main{
   display:flex;align-items:stretch;gap:0;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:6px;margin-bottom:4px;
+  border-radius:6px;margin-bottom:5px;
   overflow:hidden;cursor:pointer;
   transition:border-color 0.18s,background 0.18s;
-  min-height:40px;
+  min-height:48px;
 }
 .don-card-h:hover{
   border-color:var(--violet-dim);
   background:var(--surface2);
 }
 .don-card-h-img{
-  flex:0 0 40px;width:40px;
+  flex:0 0 48px;width:48px;
   background:var(--surface2);
   display:flex;align-items:center;justify-content:center;
-  font-size:1rem;color:var(--violet-dim);
+  font-size:1.2rem;color:var(--violet-dim);
   border-right:1px solid var(--border);
   overflow:hidden;flex-shrink:0;
 }
@@ -507,13 +507,67 @@ main{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .don-card-h-nome{
-  flex:1;padding:0.3rem 0.45rem;
-  font-family:'Cinzel',serif;font-size:0.65rem;font-weight:600;
-  color:var(--text);line-height:1.2;
+  flex:1;padding:0.35rem 0.6rem;
+  font-family:'Cinzel',serif;font-size:0.82rem;font-weight:600;
+  color:var(--text);line-height:1.25;
   display:flex;align-items:center;
   min-width:0;
   word-break:break-word;
   hyphens:auto;
+}
+
+/* ── IDIOMAS ── */
+.idioma-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  overflow:hidden;cursor:pointer;transition:border-color 0.18s,transform 0.18s;
+  display:flex;flex-direction:column;
+}
+.idioma-card:hover{border-color:var(--violet-dim);transform:translateY(-2px);}
+.idioma-card-img{
+  width:100%;aspect-ratio:1/1;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;color:var(--violet-dim);overflow:hidden;position:relative;
+}
+.idioma-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.idioma-card-body{padding:0.65rem 0.75rem 0.7rem;}
+.idioma-card-cat{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;
+  letter-spacing:0.13em;text-transform:uppercase;color:var(--violet-bright);
+  opacity:0.7;margin-bottom:0.2rem;
+}
+.idioma-card-nome{
+  font-family:'Cinzel',serif;font-size:0.9rem;font-weight:600;
+  color:var(--text);line-height:1.25;
+}
+.idioma-card-alfa{
+  font-size:0.72rem;color:var(--text-dim);margin-top:0.2rem;
+}
+/* Modal de idioma */
+.idioma-modal-alfabeto{
+  display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:3px;
+  border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
+  background:rgba(155,93,229,0.1);margin-bottom:0.75rem;
+}
+.idioma-modal-field{margin-bottom:0.9rem;}
+.idioma-modal-field label{
+  display:block;font-family:'Raleway',sans-serif;font-weight:700;
+  font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--violet-bright);opacity:0.65;margin-bottom:0.25rem;
+}
+.idioma-modal-field p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;}
+.idioma-modal-racas{
+  display:flex;flex-wrap:wrap;gap:0.3rem;
+}
+.idioma-raca-tag{
+  font-size:0.72rem;padding:0.2rem 0.55rem;border-radius:3px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text-dim);
+}
+.idioma-bonus-box{
+  padding:0.65rem 0.85rem;background:rgba(155,93,229,0.07);
+  border-left:2px solid var(--violet-dim);border-radius:0 4px 4px 0;
+  font-size:0.86rem;color:var(--text);line-height:1.6;
 }
 
 /* ── STATE MSG ── */
@@ -1583,6 +1637,7 @@ main{
     <div class="nav-tab" data-page="grimorio"  onclick="showPage('grimorio')">  <span class="tab-sym">✦</span> Grimório</div>
     <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">    <span class="tab-sym">☀</span> Deuses</div>
     <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')"> <span class="tab-sym">⚐</span> Velkarion</div>
+    <div class="nav-tab" data-page="idiomas"   onclick="showPage('idiomas');renderIdiomas()">  <span class="tab-sym">✎</span> Idiomas</div>
     <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">  <span class="tab-sym">✸</span> Estigmas</div>
     <div class="nav-tab" data-page="oraculo"   onclick="showPage('oraculo');oraculo_init()">  <span class="tab-sym">◈</span> Oráculo</div>
     <div class="nav-tab" data-page="admin" id="nav-admin" onclick="showPage('admin');adminInit()" style="display:none;"><span class="tab-sym">⚙</span> Admin</div>
@@ -2022,6 +2077,22 @@ main{
     </div>
   </div>
 
+  <!-- IDIOMAS -->
+  <div id="page-idiomas" class="page">
+    <h2 class="section-title"><span class="stitle-sym">✎</span> Idiomas de Velkarion</h2>
+    <div class="filter-bar">
+      <div class="fg"><label>Buscar</label><input type="text" id="f-idioma-search" placeholder="Nome, raça, categoria..." oninput="renderIdiomas()"></div>
+      <div class="fg">
+        <label>Categoria</label>
+        <select id="f-idioma-cat" onchange="renderIdiomas()"><option value="">Todas</option></select>
+      </div>
+      <button class="btn-clear" onclick="document.getElementById('f-idioma-search').value='';document.getElementById('f-idioma-cat').value='';renderIdiomas()">Limpar</button>
+    </div>
+    <p class="result-count" id="count-idiomas"></p>
+    <div class="debug-banner" id="idiomas-debug"></div>
+    <div class="cards-grid" id="grid-idiomas" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✎</span><h3>Nenhum idioma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+  </div>
+
   <!-- ESTIGMAS -->
   <div id="page-estigmas" class="page">
     <h2 class="section-title"><span class="stitle-sym">✸</span> Estigmas</h2>
@@ -2204,7 +2275,7 @@ function showPage(name) {
 }
 
 // ── DATABASE ──
-var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[],vel_continentes:[]};
+var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[],vel_continentes:[],idiomas:[]};
 var VEL_REGIOES={
   ignaria:[],murazuma:[],khemet:[],vekashia:[],wintara:[],exparktar:[],lunox:[],sharandor:[]
 };
@@ -2234,6 +2305,7 @@ var SHEET_URLS={
   grimorio:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
   classes:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=1021974355&single=true&output=csv",
   dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvOappe3twEP8OIkbW4-05G0gzdfcr1NGNIOdZ2TcOCOyPTrXK2T0_Ehz6WHQdxb0ygVzqg_1mm2sr/pub?gid=179737344&single=true&output=csv",
+  idiomas:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQqxiXSBqkr6ghvbdXm7IByU-JP416b4xLIZp4rQeDrJIZBOdDWsYypSSP_YTJSH40FXeaStFXskmcD/pub?gid=937660582&single=true&output=csv",
   estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?gid=1806585309&single=true&output=csv",
   deuses:          "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv",
   vd_versateis:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4RQ9SeBPJbYunP13NEhRX7aZYBU3sfe9_oQBXu9Duf_mVdV77tfumzb2m-dqMZrFla1nub9SetSWe/pub?gid=2089466067&single=true&output=csv",
@@ -2374,7 +2446,7 @@ function vdCardClass(cat){
 // ── SPLASH SCREEN ──
 var SPLASH_LABELS={
   racas_cats:'Raças (Categorias)',racas_detail:'Raças',grimorio:'Grimório',
-  classes:'Classes',dons:'Dons',estigmas:'Estigmas',deuses:'Deuses',
+  classes:'Classes',dons:'Dons',idiomas:'Idiomas',estigmas:'Estigmas',deuses:'Deuses',
   vd_versateis:'Vant. Versáteis',vd_combate:'Vant. Combate',vd_magicas:'Vant. Mágicas',
   vd_ataques:'Vant. Ataques',vd_superpoderes:'Superpoderes',vd_desvantagens:'Desvantagens',vd_maldicoes:'Maldições',
   loja_armas:'Loja: Armas',loja_municao:'Loja: Munição',loja_focus:'Loja: Focus',
@@ -2763,6 +2835,7 @@ function distributeData(rows,tab){
   if(tab==='vel_exparktar'){VEL_REGIOES.exparktar=rows;VEL_REGIOES_STATUS.exparktar='ok';return;}
   if(tab==='vel_lunox'){VEL_REGIOES.lunox=rows;VEL_REGIOES_STATUS.lunox='ok';return;}
   if(tab==='vel_sharandor'){VEL_REGIOES.sharandor=rows;VEL_REGIOES_STATUS.sharandor='ok';return;}
+  if(tab==='idiomas'){DB.idiomas=rows;renderIdiomas();return;}
   if(tab==='estigmas'){DB.estigmas=rows;return;}
   var hasFeitico=norm.indexOf('feitico')>-1,hasEscola=keys.indexOf('escola')>-1,hasGrau=keys.indexOf('grau')>-1,hasOrigem=keys.indexOf('origem')>-1;
   if(hasFeitico||(hasEscola&&hasGrau)||(hasEscola&&hasOrigem)){DB.grimorio=rows;return;}
@@ -2815,7 +2888,100 @@ function _mesclarAuxNasMinerios(){
   LOJA.minerios = min.concat(aux);
 }
 
-function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderEstigmas();initLayoutToggles();}
+// ── IDIOMAS ──
+window.IDIOMA_IMGS = window.IDIOMA_IMGS || {};
+
+function getIdiomaImg(n){ return (window.IDIOMA_IMGS&&window.IDIOMA_IMGS[n])||null; }
+
+function renderIdiomas(){
+  var grid=document.getElementById('grid-idiomas');
+  if(!grid) return;
+  var s=(document.getElementById('f-idioma-search')||{}).value||'';
+  s=s.toLowerCase();
+  var catSel=(document.getElementById('f-idioma-cat')||{}).value||'';
+
+  // Popular select de categorias
+  var catEl=document.getElementById('f-idioma-cat');
+  if(catEl && catEl.options.length<=1){
+    var cats=[];
+    DB.idiomas.forEach(function(r){ var c=gf(r,'Categoria','categoria'); if(c&&cats.indexOf(c)===-1) cats.push(c); });
+    cats.sort();
+    cats.forEach(function(c){ var o=document.createElement('option');o.value=c;o.textContent=c;catEl.appendChild(o); });
+  }
+
+  var data=DB.idiomas.filter(function(r){
+    var nome=gf(r,'Idioma','idioma','Nome','nome')||'';
+    var cat=gf(r,'Categoria','categoria')||'';
+    var racas=gf(r,'Raças que Falam','racas que falam','Raças','racas')||'';
+    var alfa=gf(r,'Alfabeto','alfabeto')||'';
+    var matchS=!s||(nome+cat+racas+alfa).toLowerCase().indexOf(s)>-1;
+    var matchC=!catSel||cat===catSel;
+    return matchS&&matchC;
+  });
+
+  var countEl=document.getElementById('count-idiomas');
+  if(countEl) countEl.textContent=data.length+' idioma'+(data.length===1?'':'s');
+
+  if(!data.length){
+    grid.innerHTML=emptyMsg('✎',DB.idiomas.length?'Nenhum resultado':'Nenhum idioma carregado');
+    return;
+  }
+
+  grid.innerHTML=data.map(function(r){
+    var nome=gf(r,'Idioma','idioma','Nome','nome')||'(sem nome)';
+    var cat=gf(r,'Categoria','categoria')||'';
+    var alfa=gf(r,'Alfabeto','alfabeto')||'';
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=nome;rCopy['_tipo']='idioma';
+    var idx=_storeModal(rCopy);
+    var imgUrl=getIdiomaImg(nome);
+    var imgHtml=imgUrl?'<img src="'+imgUrl+'" alt="'+nome+'">':(cat==='Primitivo'?'🜲':(cat==='Arcano'?'✦':(cat==='Divino'?'☀':(cat==='Racial'?'☯':'✎'))));
+    return '<div class="idioma-card" onclick="openModalIdx('+idx+')">'
+      +'<div class="idioma-card-img">'+imgHtml+'</div>'
+      +'<div class="idioma-card-body">'
+        +(cat?'<div class="idioma-card-cat">'+cat+'</div>':'')
+        +'<div class="idioma-card-nome">'+nome+'</div>'
+        +(alfa?'<div class="idioma-card-alfa">'+alfa+'</div>':'')
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function renderIdiomaModal(r){
+  var nome=gf(r,'Idioma','idioma','Nome','nome')||'(sem nome)';
+  var cat=gf(r,'Categoria','categoria')||'';
+  var alfa=gf(r,'Alfabeto','alfabeto')||'';
+  var racas=gf(r,'Raças que Falam','racas que falam','Raças','racas')||'';
+  var desc=gf(r,'Descrição','Descricao','descricao','desc')||'';
+  var bonus=gf(r,'Bônus','Bonus','bonus')||'';
+  var imgUrl=getIdiomaImg(nome);
+  var imgHtml=imgUrl
+    ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
+    :'<span style="font-size:3rem;opacity:0.18;">✎</span>';
+  var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:1;padding-top:0.2rem;">'
+      +(cat?'<div class="modal-type">'+cat+'</div>':'')
+      +'<h2 class="modal-name">'+nome+'</h2>'
+      +(alfa?'<span class="idioma-modal-alfabeto">✎ '+alfa+'</span>':'')
+    +'</div>'
+  +'</div>';
+  if(racas){
+    html+='<div class="idioma-modal-field"><label>Raças que Falam</label><div class="idioma-modal-racas">'
+      +racas.split(/[,;]+/).map(function(x){return x.trim();}).filter(Boolean).map(function(x){
+        return '<span class="idioma-raca-tag">'+x+'</span>';
+      }).join('')
+    +'</div></div>';
+  }
+  if(desc){
+    html+='<div class="idioma-modal-field"><label>Descrição</label><p>'+desc+'</p></div>';
+  }
+  if(bonus){
+    html+='<div class="idioma-modal-field"><label>Bônus</label><div class="idioma-bonus-box">'+bonus+'</div></div>';
+  }
+  return html;
+}
+
+function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderIdiomas();renderEstigmas();initLayoutToggles();}
 
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
@@ -4296,6 +4462,11 @@ function formatDesc(text){
 
 function openModal(rowOrStr){
   var row=(typeof rowOrStr==='string')?JSON.parse(rowOrStr):rowOrStr;
+  if(row['_tipo']==='idioma'){
+    document.getElementById('modalBody').innerHTML=renderIdiomaModal(row);
+    document.getElementById('modalOverlay').classList.add('open');
+    return;
+  }
   var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
   var escola=gf(row,'Escola','escola'),tipo=gf(row,'Tipo','tipo');
   var header=[escola,tipo].filter(Boolean).join(' — ');
@@ -5169,6 +5340,19 @@ var _adminSecoes = [
         .filter(Boolean);
     },
     descricao: 'Uma foto por dom — ícone quadrado exibido no card do don.'
+  },
+  {
+    id:'idiomas', label:'Idiomas', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.idiomas.map(function(r){ return gf(r,'Categoria','categoria')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      return DB.idiomas
+        .filter(function(r){ return !sub || gf(r,'Categoria','categoria')===sub; })
+        .map(function(r){ return gf(r,'Idioma','idioma','Nome','nome')||''; })
+        .filter(Boolean);
+    },
+    descricao: 'Uma foto por idioma — exibida no card e no pop-up.'
   }
 ];
 
@@ -5356,7 +5540,8 @@ function fbLoadImages(){
     if(data.velkarion)window.VEL_IMGS   = data.velkarion;
     if(data.grimorio) window.GRIM_IMGS  = data.grimorio;
     if(data.vantagens)window.VANT_IMGS  = data.vantagens;
-    if(data.dons)     window.DON_IMGS   = data.dons;
+    if(data.dons)     window.DON_IMGS    = data.dons;
+    if(data.idiomas)  window.IDIOMA_IMGS = data.idiomas;
     // Re-renderiza tudo com as imagens novas
     if(typeof renderAll === 'function') renderAll();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
