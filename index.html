@@ -2140,15 +2140,28 @@ main{
 
   <!-- ORÁCULO IA -->
   <div id="page-oraculo" class="page">
-    <h2 class="section-title"><span class="stitle-sym">◈</span> Oráculo — Consultor de Regras</h2>
+    <h2 class="section-title"><span class="stitle-sym">◈</span> Oráculo</h2>
     <div style="max-width:860px;margin:0 auto;">
 
-      <!-- Intro banner -->
-      <div style="padding:1rem 1.25rem;background:var(--surface);border:1px solid rgba(155,93,229,0.25);border-radius:8px;margin-bottom:1.25rem;border-left:3px solid var(--violet);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);"></div>
-        <p style="font-family:'Cinzel',serif;font-size:0.72rem;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.4rem;">◈ Oráculo do Storycraft</p>
-        <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.6;">Consulte as regras do Manual do Jogador em linguagem natural. Pergunte sobre mecânicas, perícias, combate, magias, escalas ou qualquer regra do sistema.</p>
+      <!-- PORTA DE ENTRADA -->
+      <div id="oraculo-porta">
+        <div class="ora-porta-olho">◈</div>
+        <div class="ora-porta-titulo">O Oráculo Aguarda</div>
+        <div class="ora-porta-sub">Apenas os dignos recebem respostas</div>
+        <div class="ora-porta-form">
+          <div class="ora-porta-label">Seu nome, mortal</div>
+          <input type="text" id="ora-porta-nome" class="ora-porta-input"
+            placeholder="Como te chamam?"
+            maxlength="40"
+            onkeydown="if(event.key==='Enter')oraculo_abrir()"
+          >
+          <button class="ora-porta-btn" onclick="oraculo_abrir()">◈ &nbsp; Consultar o Oráculo &nbsp; ◈</button>
+        </div>
+        <div class="ora-porta-aviso">O conhecimento proibido tem um preço.<br>Escolha suas perguntas com sabedoria.</div>
       </div>
+
+      <!-- CONTEÚDO DO CHAT (oculto até abrir) -->
+      <div id="oraculo-conteudo" style="display:none;">
 
       <!-- Chat container -->
       <div id="oraculo-chat" style="
@@ -2158,14 +2171,6 @@ main{
         display:flex;flex-direction:column;gap:0.9rem;
         scroll-behavior:smooth;
       ">
-        <!-- Mensagem inicial -->
-        <div class="ora-msg ora-msg-ai">
-          <div class="ora-avatar">◈</div>
-          <div class="ora-bubble">
-            <p>Saudações, aventureiro. Sou o Oráculo do Codex — fui forjado com o conhecimento do Manual do Jogador Storycraft 3ª Edição.</p>
-            <p style="margin-top:0.5rem;">Pergunte sobre qualquer regra: combate, perícias, escalas, magias, condições... Estou pronto para responder.</p>
-          </div>
-        </div>
       </div>
 
       <!-- Sugestões rápidas -->
