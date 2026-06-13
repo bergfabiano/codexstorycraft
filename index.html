@@ -5277,13 +5277,38 @@ function oraculo_buscar_topicos(pergunta){
   });
 
   resultados.sort(function(a,b){ return b.score - a.score; });
-  return resultados.slice(0, 8);
+  return resultados.slice(0, 12);
+}
+
+// ── Busca o tópico da lista oficial de validação (sempre incluso no contexto) ──
+function oraculo_buscar_lista_oficial(){
+  var listaTopic = null;
+  ORACULO_JSONS.forEach(function(entry){
+    if(!entry.data) return;
+    (entry.data.capitulos||[]).forEach(function(cap){
+      (cap.topicos||[]).forEach(function(top){
+        if(top.titulo && top.titulo.indexOf('Todos os nomes oficiais') > -1){
+          listaTopic = { top: top, cap: cap, fonte: entry.nome };
+        }
+      });
+    });
+  });
+  return listaTopic;
 }
 
 // ── Monta o contexto para enviar à API ──
 function oraculo_montar_contexto(topicos){
-  if(!topicos.length) return '';
   var ctx = '=== TRECHOS RELEVANTES DOS MANUAIS STORYCRAFT ===\n\n';
+
+  // Sempre injeta a lista oficial de nomes válidos primeiro
+  var listaOficial = oraculo_buscar_lista_oficial();
+  if(listaOficial){
+    ctx += '[ LISTA OFICIAL — referência obrigatória de validação ]\n';
+    ctx += listaOficial.top.conteudo + '\n\n';
+    ctx += '---\n\n';
+  }
+
+  if(!topicos.length) return ctx;
   topicos.forEach(function(r){
     ctx += '[ ' + (r.fonte||'Manual') + ' → ' + r.cap.titulo + ' → ' + r.top.titulo + ' ]\n';
     ctx += r.top.conteudo + '\n\n';
