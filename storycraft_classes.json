@@ -1,0 +1,738 @@
+{
+  "sistema": "StoryCraft 3ª Edição",
+  "fonte": "Manual das Classes",
+  "versao": "1.0",
+  "capitulos": [
+    {
+      "titulo": "Regras Gerais de Classes",
+      "topicos": [
+        {
+          "titulo": "Como as Classes Funcionam — Introdução",
+          "tags": [
+            "classe",
+            "regra",
+            "progressão",
+            "pericias",
+            "pv",
+            "pm",
+            "proficiência",
+            "resistência",
+            "tipo de classe",
+            "combatente",
+            "conjurador",
+            "suporte",
+            "especialista"
+          ],
+          "conteudo": "As classes se dividem em 4 tipos: Combatentes (foco em dominar o campo de batalha com técnica e força), Conjuradores (manipuladores de energia, essência, espírito ou feitiço), Suportes (fortalecem aliados, enfraquecem inimigos e garantem que o grupo funcione) e Especialistas (precisão, utilidade e impacto situacional).\n\nToda classe possui duas perícias treinadas fixas e permite treinar mais perícias extras. Cada classe concede PV e PM iniciais mais ganhos por nível ímpar. Toda classe tem proficiências específicas e +1 em uma Resistência (Fortitude, Reflexos ou Vontade). Ao adquirir uma classe, o personagem recebe gratuitamente um Poder de Kit e uma Individualidade."
+        },
+        {
+          "titulo": "Dons de Classe — Regras",
+          "tags": [
+            "dom de classe",
+            "grau",
+            "aquisição",
+            "nível",
+            "físico",
+            "mágico",
+            "natural",
+            "ofensivo",
+            "baluarte",
+            "sustentável",
+            "CD"
+          ],
+          "conteudo": "Dons de Classe são vantagens exclusivas adquiridas a cada nível par. Podem ser escolhidos em vez de uma vantagem geral ou aumento de atributo. Cada dom possui um grau; ao atingir o nível mínimo para um grau, pode-se escolher qualquer dom daquele grau ou inferior, mas nunca de grau superior.\n\nTipos: Dons físicos (combatentes e alguns especialistas, sem influência mágica, tratados como Poder de Habilidade). Dons mágicos (conjuradores, suportes e alguns especialistas capazes de usar magia).\n\nCategorias: Naturais (passivos, sem custo de PM). Ofensivos (custo de PM opcional ou obrigatório, causam efeito direto). Baluartes (custo e tempo de execução, concedem benefícios ao usuário ou aliados).\n\nCD dos dons: 10 + Atributo Chave da Classe + Escala do Personagem.\n\nSustentáveis: pagam custo integral ao ativar e metade por rodada para manter. Limite padrão: sustentar apenas 1 dom por vez.\n\nDons sem execução especificada: ação livre. Apenas um dom por rodada como ação livre, salvo indicação contrária."
+        },
+        {
+          "titulo": "Multiclasse — Regras Completas",
+          "tags": [
+            "multiclasse",
+            "regra",
+            "nível 10",
+            "nível 20",
+            "limite",
+            "duas vezes",
+            "três classes",
+            "bloqueio",
+            "dom de 5º grau",
+            "maestria"
+          ],
+          "conteudo": "Multiclasse representa evolução além de uma especialização. Só pode ser feita ao atingir novos níveis de escala: níveis 10, 20, 30, 40 e 50. Limite máximo: 2 multiclasses, totalizando até 3 classes.\n\nAo entrar em nova classe: recebe a Individualidade da classe, o Poder de Kit e o aumento de atributo normal. Não recebe automaticamente a vantagem extra do novo nível de escala. PV e PM evoluem pela nova classe mas valores base iniciais não são concedidos novamente.\n\nLimitações: escolher qualquer multiclasse bloqueia permanentemente acesso a dons de 5º grau. Ao adquirir multiclasse não pode escolher dons da nova classe imediatamente; começa a adquiri-los no próximo ciclo (níveis 12, 22, 32...).\n\nSoma de níveis: todas as classes se somam para efeitos de limitações e requisitos.\n\nAlternativa: ao invés de Individualidade, o jogador pode escolher receber uma Vantagem e um Poder de Kit.\n\nMaestria: personagem que nunca realizou multiclasse e atinge nível 50 desbloqueia a Maestria, podendo escolher um segundo Dom de 5º Grau além do normal."
+        },
+        {
+          "titulo": "Nível de Escala de Classe e Progressão Padrão",
+          "tags": [
+            "escala",
+            "nível de escala",
+            "comum",
+            "lendário",
+            "colossal",
+            "titânico",
+            "mítico",
+            "épico",
+            "progressão"
+          ],
+          "conteudo": "Cada classe possui seu próprio nível de escala que segue a progressão padrão do sistema:\n- Comum: nível 1\n- Lendário: nível 2\n- Colossal: nível 3\n- Titânico: nível 4\n- Mítico: nível 5\n- Épico: nível 6\n\nEsses níveis determinam quais graus de dons de classe podem ser escolhidos.\n\nProgressão padrão (idêntica para todas as classes):\n- Nível 1: Habilidades iniciais\n- Níveis 2-8: Dom de Classe (1º Grau)\n- Nível 10: Multiclasse ou Dom de Classe (2º Grau)\n- Níveis 12-18: Dom de Classe (2º Grau)\n- Nível 20: Multiclasse ou Dom de Classe (3º Grau)\n- Níveis 22-28: Dom de Classe (3º Grau)\n- Nível 30: Multiclasse ou Dom de Classe (4º Grau)\n- Níveis 32-38: Dom de Classe (4º Grau)\n- Nível 40: Multiclasse ou Dom de Classe (5º Grau)\n- Nível 50: Maestria ou Vantagem"
+        }
+      ]
+    },
+    {
+      "titulo": "Combatentes",
+      "topicos": [
+        {
+          "titulo": "Arqueiro",
+          "tags": [
+            "arqueiro",
+            "combatente",
+            "distância",
+            "pontaria",
+            "destreza",
+            "arco",
+            "disparo",
+            "furtividade"
+          ],
+          "conteudo": "Especialista em combate à distância que controla o campo com posicionamento e precisão.\n\nAtributo chave: Destreza. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Pontaria e Atletismo (+5 extras). Proficiências: armas marciais à distância, armaduras médias. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Movimento Preciso (no primeiro turno +3m deslocamento e +2 VG; ação de mirar como ação livre), Olhos do Falcão (+2 Percepção; gasta 1 PM para focar alvo em alcance médio com +2 em ataques).\n\nDons notáveis: 1º grau: Foco do Caçador (parado = +1 dado de dano + acerto), Tiro Penetrante (1 PM = ignora cobertura + 1d6 dano), Tiro Duplo (1 PM = segunda flecha +1d6). 2º grau: Caçada Silenciosa (+1 dado vs desprevenidos), Caçador Estratégico (movimento furtivo), Tiro Silencioso (2 PM = +2 dano + Fortitude ou sem feitiços). 3º grau: Precisão Letal (+1 multiplicador crítico), Mira Letal (+1 ou +2 margem crítico). 4º grau: Disparo Violento (2 PM = ignora metade MD), Tiro de Arpão (4 PM = metade dano mesmo ao errar), Flecha Fantasma (4 PM = atinge incorpóreos). 5º grau: Atirador de Elite (6 PM = +2 acerto, +2 VG, dano +1 passo, margem crítico +2 por 3 turnos), Golpe Final (Fortitude ou cai a 0 PV se Perto da Morte), Camuflagem (8 PM = -10% acerto contra si, sem rastros)."
+        },
+        {
+          "titulo": "Bárbaro",
+          "tags": [
+            "bárbaro",
+            "combatente",
+            "fúria",
+            "força",
+            "resistência",
+            "destruição",
+            "primordial"
+          ],
+          "conteudo": "A força selvagem em forma de aventureiro, especialista em Fúria controlada e resistência física.\n\nAtributo chave: Força. PV inicial: 18 + Constituição (+6 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Atletismo (+5 extras). Proficiências: armas marciais e escudos. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Fúria Primordial (Fúria sem penalidades normais; empunhando arma de duas mãos +1 na margem de crítico), Cólera (1 PM + movimento: +2 acerto e dano corpo a corpo; +1 PM+bônus por escala).\n\nDons notáveis: 1º grau: Guerreiro Primordial (ao sofrer dano +1 acerto e dano cumulativo até +5), Resistência Selvagem (1 PM + reação: duplica Constituição na MD), Sede de Sangue (iniciativa com vantagem; pré-req Iniciativa Aprimorada). 2º grau: Avanço Brutal (investida +2d6 + derruba), Presença Aterradora (usa Força em Intimidação; +1 passo dano contra intimidados). 3º grau: Golpe Brutal (2 PM: +2 dados base + atordoa), Sangue de Ferro (+10 PV por escala + +1 MD). 4º grau: Para Rasgar a Terra (6 PM: cone 9m 10d8+Força), Coração Indestruível (em Fúria: regenera 2d8 PV por turno + imune a sangramento). 5º grau: Avatar da Destruição (8 PM: +4 acerto, +2 VG, margem e multiplicador +1), Sobrecarga Hemolítica (8 PM: dano +1 passo, +3m, inimigos sofrem dano ao atacar)."
+        },
+        {
+          "titulo": "Cavaleiro da Morte",
+          "tags": [
+            "cavaleiro da morte",
+            "combatente",
+            "morte",
+            "necromancia",
+            "morto-vivo",
+            "sombra",
+            "frio",
+            "aura"
+          ],
+          "conteudo": "Combatente sombrio que une disciplina marcial e poder necromântico. Deve ser obrigatoriamente um morto-vivo.\n\nAtributo chave: Força. PV inicial: 18 + Constituição (+6 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Cavalgar e Intimidação (+5 extras). Proficiências: armas marciais, armaduras médias, pesadas e escudos. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Aliado Amaldiçoado (vantagem Aliado para cavalo morto-vivo; no 1º turno como ação livre lança Pânico usando Sabedoria), Mortificado (1 PM + ação de movimento: reanima cadáver com metade dos PV por 1 cena; apenas 1 por vez).\n\nDons notáveis: 1º grau: Mestre da Necromancia (2 feitiços de 1º grau Profana/Arcana como Poder Replicado), Calcificar (1 PM: +3 MD e +2 VG OU arma +MD como dano), Aura da Morte (aura 6m: 1d6 frio/necro por rodada + drena 1 PV por vítima). 2º grau: Sopro da Cripta (2 PM: cone 6m, 6d6+Constituição frio/necro + Enredado), Lâmina do Medo (2 PM: +2d8 dano + Apavorado). 3º grau: Arma do Luto (4 PM sustentável: ignora metade MD + cura 2d6 por golpe), Veludo da Morte (4 PM: cura alvo reduzida 50%). 4º grau: Lamento Eterno (6 PM: 5d10 necro em alcance curto + Amedrontado), Retribuição Sombria (2 PM sustentável: inimigos que acertam recebem debuffs cumulativos). 5º grau: Senhor da Morte (1x por dia: nega morte permanente de aliado sacrificando 1/4 dos PV máximos), Ressurgir da Morte (1x por dia: retorna na próxima rodada com 30% PV)."
+        },
+        {
+          "titulo": "Cavaleiro Lorde",
+          "tags": [
+            "cavaleiro lorde",
+            "combatente",
+            "liderança",
+            "honra",
+            "cavalaria",
+            "proteção",
+            "escudo",
+            "montaria"
+          ],
+          "conteudo": "Combatente nobre feito para liderar, proteger e impor respeito. Inicia com o Código de Honra dos Heróis ou dos Cavalheiros.\n\nAtributo chave: Força. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Cavalgar (+5 extras). Proficiências: armas marciais, armaduras médias, pesadas e escudos. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Juramento da Cavalaria (vantagem Aliado = cavalo de guerra; montado +2 VG e +1 dado dano; inicia com Código de Honra), Impenetrável (1 PM + reação: dobra MD contra projéteis físicos à distância; se anular completamente pode rebater).\n\nDons notáveis: 1º grau: Investida Montada (+1d6 dano + +3m deslocamento), Defesa Regimental (1 PM + movimento: área em alcance curto com +2 VG, +1 MD e +1 Fortitude), Fortaleza do Juramento (+2 VG pesada, +4 com escudo). 2º grau: Juramento do Escudo (2 PM: jura proteger aliado, +2 VG/Acerto/MD), Muro de Ferro (Força/2 à VG; dobra ao proteger). 3º grau: Eterno Lorde (4 PM: área 9m com +2 VG, +2 MD e +30 PV temporários), Lança Imperial (6 PM: salto 8d6+Força em 3m raio + Derrubado). 4º grau: Duelo (+2 em tudo num duelo justo), Carga Imperial (2d8 dano extra + Fortitude ou empurrado 9m). 5º grau: Juramento da Vanguarda (ação padrão: protege aliados em Força; +5 VG e +3 MD ao defender), Lança do Destino (10 PM: 15d10+Força ignorando metade MD; se matar o alvo, aliados recebem bônus)."
+        },
+        {
+          "titulo": "Domador de Feras",
+          "tags": [
+            "domador de feras",
+            "combatente",
+            "fera",
+            "animal",
+            "parceiro",
+            "adestramento",
+            "sobrevivência",
+            "bando"
+          ],
+          "conteudo": "Combatente que luta ao lado de uma ou mais feras companheiras formando uma dupla perigosa.\n\nAtributo chave: Sabedoria. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Adestramento e Sobrevivência (+5 extras). Proficiências: armas marciais, armaduras médias e escudos pequenos. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Companheiro Animal (fera Parceiro que segue a escala; até 3 feras: 2ª no nível 20, 3ª no nível 30), Força Feral (por fera em campo: +1 VG, +1 Acerto e +1 dado base de dano, cumulativo).\n\nDons notáveis: 1º grau: Instinto Selvagem (+2 Sobrevivência e Percepção; usa Sobrevivência em ataques), Elo Animal (1 PM: compartilha sentido especial da fera), Caçada Coordenada (feras flanqueiam para o Domador). 2º grau: Investida das Garras (2 PM: fera ataca extra causando 2d6+Força ignorando metade MD), Instinto da Presa (em florestas: ação padrão extra por cena + Arena). 3º grau: Golpe Animalesco (adiciona Sabedoria ao dano físico; margem e multiplicador +1 com fera aliada), Feras Aprimoradas (+1 dado base e +1 passo dano nas feras). 4º grau: Predador Coordenado (+1 multiplicador crítico com 3 feras flanqueando), Rei da Selva (descanso em floresta = estalagem; com 3 feras = luxuoso). 5º grau: Caçada Suprema (8 PM: ataque furtivo coordenado +10 Furtividade + dano +1 passo), Espírito Ancestral (10 PM: espírito animal que bônus nas feras e ignora metade MD)."
+        },
+        {
+          "titulo": "Domador de Ondas",
+          "tags": [
+            "domador de ondas",
+            "combatente",
+            "água",
+            "maré",
+            "fluidez",
+            "elemental",
+            "tridente",
+            "submerso"
+          ],
+          "conteudo": "Combatente que transforma água, movimento e pressão em arma. Especialista em ambientes aquáticos.\n\nAtributo chave: Força. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Atletismo (+5 extras). Proficiências: armas marciais, escudos leves e armaduras médias. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Fluidez das Marés (1 PM + padrão: arma envolta em água, +2 Acerto + 1 dado base dano físico extra; Submerso = +1 VG por escala), Submerso/Olhos do Falcão (em água: forma líquida, atravessa frestas, ataques elementais água, 1 PM = mitiga dano físico à metade; regenera 2d4 PV por rodada).\n\nDons notáveis: 1º grau: Guarda Fluida (em Submerso: Arena + inimigos sofrem 1d6 dano água ao atacar), Golpe Torrencial (1 PM: +1 dado + empurra 1,5m/Força + Caído). 2º grau: Redemoinho Cortante (2 PM: vórtice 3m por 3 rodadas, desvantagem inimigos + 2d8 dano água). 3º grau: Instinto das Profundezas (+2 Acerto e VG vs múltiplos; em Submerso ignora 1º dano físico), Enxurrada (6 PM: torrente 6m 8d8+Força + empurra 12m). 4º grau: Peso das Águas (Submerso com arma encantada: margem +2, multiplicador +1), Fusão Aquática (6 PM: invisível na água por 2 rodadas + ataques com vantagem). 5º grau: Senhor das Profundezas (1x por dia: PM reduzido à metade + imune a críticos em Submerso + regeneração dobrada), Terror Abissal (10 PM + 2 rodadas concentração: monstro marinho colossal 15d10+Força em 30m)."
+        },
+        {
+          "titulo": "Executor",
+          "tags": [
+            "executor",
+            "combatente",
+            "veneno",
+            "assassino",
+            "furtividade",
+            "condição",
+            "alquimia",
+            "carrasco"
+          ],
+          "conteudo": "Combatente feito para encerrar problemas de forma rápida, brutal e definitiva. Especialista em venenos e execuções.\n\nAtributo chave: Destreza. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Furtividade e Luta (+5 extras). Proficiências: nenhuma. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Veneno do Carrasco (começa com 300 Ƒ$ em alquímicos; 1x por combate: envenena arma com ação de movimento, +1d8 dano veneno + Fortitude ou 2d4 por 3 rodadas), Execução Perfeita (1 PM: vs alvo com condição negativa +2 Acerto +1 dado base; se envenenado pelo Executor: dano +1 passo).\n\nDons notáveis: 1º grau: Passe Negro (Status no submundo, +2 em perícias no crime, 20% desconto mercado negro), Alquimista Sombrio (+2 Ofício Alquimia; +1 dado veneno; pré-req Ofício Alquimia), Golpe Preciso (+1 margem crítico vs desprevenido/flanqueado/condição), Toxicidade (imune aos próprios venenos; CD +2 permanente). 2º grau: Mestre das Toxinas (+1d8 veneno + +2 CD; pré-req Alquimista Sombrio), Execução Rápida (2 PM: ataque adicional imediato –2 acerto). 3º grau: Veneno Letal (CD +2 + dano +1 passo na lâmina), Execução Implacável (2 PM: ação extra após abater). 4º grau: Sombra Assassina (6 PM: invisível por cena; 1º ataque ignora Destreza na VG + +3d10), Presas das Toxinas (com arma envenenada: –5 VG e –3 MD do alvo). 5º grau: Toque do Carrasco (Perto da Morte: Fortitude ou cai a 0 PV), Praga Irremovível (veneno passa a durar até a morte)."
+        },
+        {
+          "titulo": "Guerreiro",
+          "tags": [
+            "guerreiro",
+            "combatente",
+            "força",
+            "todas as armas",
+            "versátil",
+            "estilo de combate",
+            "instância",
+            "resistência"
+          ],
+          "conteudo": "O combatente clássico do StoryCraft: treinado, resistente e adaptável a diferentes estilos.\n\nAtributo chave: Força. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Atletismo (+5 extras). Proficiências: todas as armas corpo a corpo, arremesso, escudos e armaduras leves/médias/pesadas. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Estilo de Combate (escolhe Instância por cena: Ofensiva +1 Acerto +1d6 dano corpo a corpo / Defensiva +2 VG e MD / Tática +1 Reflexos + 1 PM troca posição com aliado), Determinação (1 PM: +2 acerto; quando PV = 0: Constituição CD 15 para ficar com 1 PV).\n\nDons notáveis: 1º grau: Força Bruta (1 PM: +1 dado base corpo a corpo), Instinto de Batalha (1 PM: contra-ataque imediato quando inimigo anuncia ataque corpo a corpo), Provocar (1 PM: força alvos em 6m a atacá-lo). 2º grau: Avanço Imparável (2 PM: após abater, move 6m + ataque extra +1 acerto +1d6), Glória em Combate (2 PM: +2 Acerto, dano e VG por cena). 3º grau: Muralha de Ferro (4 PM: +4 MD + imune a empurrões por 2 rodadas), Ruptura Óssea (6 PM: 8d6+Força + Penalidade de Ataque –2 + sangramento). 4º grau: Brutalizar (4 PM com arma pesada: +2d8; +1 acerto por abatido até limite de escala), Transe Sanguinário (10 PM por cena: +2 margem crítico, +1 multiplicador, dano +1 passo, –2 VG e –3 MD). 5º grau: Campeão Indomável (8 PM: +10 MD, +3 Resistências, imune atordoamento/medo/sangramento por 3 rodadas)."
+        },
+        {
+          "titulo": "Lutador de Rua",
+          "tags": [
+            "lutador de rua",
+            "combatente",
+            "desarmado",
+            "punho",
+            "força",
+            "improvisar",
+            "briga",
+            "carisma como força"
+          ],
+          "conteudo": "Combatente que aprendeu a vencer sem academia nem honra. Especialista em combate desarmado e improviso.\n\nAtributo chave: Força. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 8 (+4 por nível par). Perícias treinadas: Luta e Atletismo (+5 extras). Proficiências: desarmado e armaduras leves. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Duelista Urbano (ataques desarmados 1d6 letais ou não letais sem penalidade; aumenta 1 passo por escala; variação por tamanho do alvo), Cruzado de Esquerda (1 PM: ataque desarmado adicional +2 Acerto; +1 adicional por escala; 1x por cena: +Força em manobras).\n\nDons notáveis: 1º grau: Casca de Rua (Força à VG sem armadura média+), Corpo de Aço (usa Força em vez de Constituição em PV e MD), Briga de Bar (ataques com armas improvisadas = desarmados com dano +1 passo). 2º grau: Apagão (2 PM: Atordoado por 1 rodada; 1x por cena), Pressão do Flanco (em flanco: +1 dado base). 3º grau: Ponto de Quebra (margem crítico desarmado +2), Corpo Fechado (Constituição à VG, limitado à escala), Brecha de Combate (multiplicador crítico +1). 4º grau: Ritmo do Espancamento (PM cumulativo para +1 dado por golpe consecutivo), Sai na Mão (2 PM: Reflexos para esquivar + contra-ataque). 5º grau: Sangue nos Olhos (1x por dia Frenesi: +3 Força, –2 Int/Sabedoria, dano físico /2, imune a imobilização/controle mental), Sem Pena (margem +2, multiplicador +1 desarmado; 6 PM: ignora imunidade a críticos e metade MD)."
+        },
+        {
+          "titulo": "Mestre das Armas",
+          "tags": [
+            "mestre das armas",
+            "combatente",
+            "arma",
+            "versátil",
+            "troca de arma",
+            "crítico",
+            "proficiência",
+            "duelista"
+          ],
+          "conteudo": "O combatente que levou o treinamento marcial ao limite. Domina qualquer arma que empunhe.\n\nAtributo chave: Força. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Pontaria (+5 extras). Proficiências: todas as armas simples e marciais, armaduras leves/médias e escudos. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Armeiro (1x por combate ao trocar arma: +2 Acerto e VG; toda arma com proficiência: +1 dado base dano), Arsenal Supremo (ao errar: 1 PM para recriar +2 Acerto; 1 uso por nova arma no combate).\n\nDons notáveis: 1º grau: Técnica Afiada (ao recriar ataque: +2 Acerto extra + +1 dado base), Troca de Arsenal (1x por combate: troca como ação livre + +1d8 no próximo ataque), Postura do Arsenal (2 PM: Ofensiva +1 margem/multiplicador ou Defensiva 50% anular críticos). 2º grau: Mente Afiada (2 PM: anula condição mental 1x por combate), Versatilidade Bélica (pode usar qualquer variante de Ataque Especial). 3º grau: Acerto Perfeito (ao abater ou crítico: +2 PM + ataque extra –2), Crítico em Sequência (ao trocar arma: primeiro crítico +1 multiplicador). 4º grau: Arma Preferida (arma escolhida: +1 margem e multiplicador permanentes), Força do Armeiro (+2 em Força ou Destreza; 1x). 5º grau: Arsenal Divino (margem +2, multiplicador +1 com qualquer arma proficiente), Mestre das Duas Lâminas (1x por dia por 3 rodadas: duas armas com ataque extra cada, –2 acerto, +1 dado base)."
+        },
+        {
+          "titulo": "Monge",
+          "tags": [
+            "monge",
+            "combatente",
+            "desarmado",
+            "sabedoria",
+            "espírito",
+            "chi",
+            "disciplina",
+            "fluidez"
+          ],
+          "conteudo": "Combatente que transforma corpo, mente e espírito em uma única arma. Usa Sabedoria em combate.\n\nAtributo chave: Força. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Acrobacia (+5 extras). Proficiências: desarmado e armas marciais. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Disciplinado (ataques desarmados +1 passo de dano; 1 PM: +2 dano por ponto de Sabedoria, máx 10; usa Sabedoria em acerto e dano), Serenidade Interior (dano mínimo em quedas; 1 PM: +Sabedoria em Acrobacia ou Reflexos; armadura leve: Sabedoria à VG).\n\nDons notáveis: 1º grau: Respiração do Chi (1 PM + reação: regenera 2d6+8 PV + remove 1 condição física), Golpe Sereno (1 PM: +1 dado dano; crítico: +1 dado extra grátis), Fluxo Contínuo (1 PM: ataque adicional –2 Acerto), Esquiva Absoluta (1 PM + reação: Reflexos vs Acerto inimigo, sucesso = esquiva total). 2º grau: Passo da Garça (2 PM por turno: voa 12m), Mãos do Vazio (vs Acerto inimigo: ignora metade MD + dano espiritual; Vontade ou não gasta PM no próximo turno), Toque de Lótus (2 PM: +2d6 dano e cura mesma quantidade em si ou aliado). 3º grau: Punho do Dragão (2 PM: alcance curto; +1 PM = 2 alvos), Meditação (descanso curto recupera dobro; 1h meditação = bônus no próximo combate). 4º grau: Golpe da Tempestade (flanqueado: +1 dado base; ataques atingem todos adjacentes), Rajada do Tigre (4 PM por golpe: 3 ataques 12d8+Sabedoria). 5º grau: Lótus Divina (8 PM: transcendência, ataques em cone 9m com +1 passo dano + margem +2), Dança da Peônia (5 PM/rodada: –5 em tudo mas dano /2 + 50% ignorar críticos + imune a Vontade + +50% cura)."
+        },
+        {
+          "titulo": "Ninja",
+          "tags": [
+            "ninja",
+            "combatente",
+            "furtividade",
+            "invisibilidade",
+            "chi",
+            "arte ninja",
+            "sombra",
+            "teleporte"
+          ],
+          "conteudo": "O combatente das sombras que age com precisão e furtividade. Usa feitiços como Técnicas Ninja.\n\nAtributo chave: Destreza. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Furtividade e Ladinagem (+5 extras). Proficiências: armas marciais e exóticas, armaduras leves. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Passos das Sombras (começa com Invisibilidade sem contar no limite; 1 PM: Furtividade com vantagem; 1 PM/cena ou rodada: andar em superfícies incomuns), Arte Ninja (escolhe 3 escolas de feitiço permanentes; aprende 3 feitiços 1º grau como Poder Replicado usando Inteligência; +1 técnica a cada 3 níveis).\n\nDons notáveis: 1º grau: Mente do Shinobi (Inteligência no dano de Artes Ninja, Iniciativa e ataques com acuidade), Técnica Sutil (em furtivo/invisível/desprevenido: +1 dado base). 2º grau: Golpe do Silêncio (ao sair de invisibilidade: ignora metade MD + +1 dado base; 1x por cena), Corpo Etéreo (2 PM: intangível até fim do turno), Kawarimi (2 PM + Reflexos: anula ataque + se desloca 9m; 1x por combate), Henge (2 PM: assume aparência de outra pessoa; +10 Enganação/Atuação). 3º grau: Clone das Sombras (1 PM: clones em número = Inteligência, +1 VG e dano por clone), Shunshin (2 PM: teleporte 9m + vantagem se surgir atrás do alvo). 4º grau: Lâmina Sangrenta (margem e multiplicador +1 com acuidade/arremesso), Fuinjutsu (sela itens em pergaminhos; marcar inimigo: sempre sabe direção em 1km). 5º grau: Passo do Deus Relâmpago (Shunshin em alvos marcados sem limite; alcance marcas = 10km), Senhor das Artes Ninjas (copia qualquer magia vista; mantém = Inteligência técnicas; 1h para aprimorar próprias Artes)."
+        },
+        {
+          "titulo": "Pistoleiro",
+          "tags": [
+            "pistoleiro",
+            "combatente",
+            "arma de fogo",
+            "pólvora",
+            "disparo",
+            "destreza",
+            "intimidação",
+            "balístico"
+          ],
+          "conteudo": "Combatente especializado em armas de fogo, combinando velocidade e poder de fogo.\n\nAtributo chave: Destreza. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Pontaria e Furtividade (+5 extras). Proficiências: armas de disparo. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Na Mira (1 PM: +2 Acerto à distância até fim do turno; +2 por escala +1 PM; ataques com fogo ignoram metade da cobertura), Chumbo Grosso (resultado 19 = acerto automático; primeiro disparo por cena com vantagem; se 1º na iniciativa: +1 dado base extra).\n\nDons notáveis: 1º grau: Engatilhado (1 PM: +2 acerto e +2d6 dano), Disparo de Intimidação (1 PM: Vontade vs acerto ou Intimidados), Mãos Velozes (recarregar = ação de movimento), Bala Serrada (1 PM: +1d8 dano + Fortitude ou sangramento). 2º grau: Alvo Jurado (+1 dado base vs único inimigo focado), Tambor da Carnificina (2 PM: disparo adicional + +1 dado), Pólvora Abundante (20% chance de não consumir munição). 3º grau: Tempestade de Balas (6 PM: cone 6m, todos fazem Reflexos), Furado Igual Peneira (2 PM: ignora metade MD), Duelista (4 PM: +Destreza em acerto e dano até fim do turno). 4º grau: Casca de Ferro (acerto crítico: +2 VG cumulativo, máx 5x), Pólvora Negra (6 PM: 2d10+Destreza por segundo até morrer ou tratar). 5º grau: Na Cabeça (Perto da Morte: Fortitude ou 0 PV), Valsa da Bala (8 PM: +1 passo dano, +1 alcance, +1 multiplicador, +3 margem)."
+        },
+        {
+          "titulo": "Samurai",
+          "tags": [
+            "samurai",
+            "combatente",
+            "honra",
+            "bushido",
+            "katana",
+            "arma ancestral",
+            "destreza",
+            "código"
+          ],
+          "conteudo": "Combatente da disciplina, da honra e do domínio absoluto da lâmina. Segue o Código de Honra dos Samurais.\n\nAtributo chave: Destreza. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Atletismo (+5 extras). Proficiências: armas marciais, exóticas e armaduras médias. Resistência: +1 em Vontade.\n\nHabilidades iniciais: Caminho do Bushidô (1 PM: testa Vontade duas vezes; +Sabedoria em testes de Carisma com honra; desvantagem de Código dos Samurais sem bônus adicionais), Arma Ancestral (arma ligada à alma que desperta poderes automaticamente: aprimoramento menor grátis, encantamento menor no nível 10, aprimoramento médio nível 20, encantamento médio nível 30, aprimoramento maior nível 40, encantamento maior nível 50).\n\nDons notáveis: 1º grau: Postura Iaijutsu (1 PM: +2 Acerto e +1 dado base com arma ancestral até fim da cena), Voto da Serenidade (1 PM: +Sabedoria em acerto e dano até fim do turno), Golpe de Kiai (1 PM: +1d10 dano direto nos PV). 2º grau: Corte da Lua Minguante (2 PM: ignora metade MD + +1d10), Lâmina Solitária (só arma ancestral: +1 passo dano + +1 margem crítico). 3º grau: Percepção do Corte (+1 acerto e dano por acerto consecutivo, limitado à escala), Voz dos Antepassados (4 PM + 1h ritual: espírito ancestral concede 6d6 para testes). 4º grau: Crítico Ascendente (confirmar crítico: +1 dado extra + sangramento com 2 PM), Determinação Absoluta (6 PM: permanece com 1 PV quando seria reduzido a 0). 5º grau: Xogum (8 PM: +2 dados base, +5 VG, +2 Resistências; crítico vs Perto da Morte = Fortitude ou 0 PV), Espírito de Musashi (8 PM: margem +2, multiplicador +1, imune a medo/controle/Encantamento)."
+        },
+        {
+          "titulo": "Senhor das Chamas",
+          "tags": [
+            "senhor das chamas",
+            "combatente",
+            "fogo",
+            "chamas",
+            "elemental",
+            "aura",
+            "carga",
+            "fúria ardente"
+          ],
+          "conteudo": "Combatente que carrega o fogo como extensão da própria vontade. Transforma calor em arma.\n\nAtributo chave: Força. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Luta e Misticismo (+5 extras). Proficiências: armas marciais e armaduras médias. Resistência: +1 em Fortitude.\n\nHabilidades iniciais: Coração Ígneo (1 PM + movimento: dano físico vira elemental fogo + +2 Acerto + +1d10 dano; vs vulnerável ao fogo +1 dado extra; imune a queimadura + MD 5 vs fogo), Fúria Ardente (acumula 1 carga por rodada até máx = Força; por carga: +1 Acerto e dano; na metade das cargas: inimigos que atacam corpo a corpo sofrem 1d6 direto por ataque, aumentando por escala).\n\nDons notáveis: 1º grau: Chama Ascendente (1 PM: +1d6 fogo até fim do turno), Toque Ígneo (1 PM: Fortitude ou 2d6 fogo por 3 rodadas), Aura Calcinante (1 PM + reação: corpo em chamas; inimigos que acertam corpo a corpo sofrem 1d6+ por escala). 2º grau: Chama Intelectual (+Inteligência à VG; dano de auras e escudos +Inteligência). 3º grau: Erupção Infernal (6 PM: danos elementais fogo +2 dados por 2 rodadas), Soberano das Cinzas (manipula fogo mundano grátis; ignora imunidade a fogo; imune a fogo mundano). 4º grau: Domínio das Chamas Vivas (6 PM: campo fogo 6m raio por 2 rodadas: 2d6 por rodada + regenera + +1 margem crítico), Pira Suprema (4 PM: –2 acerto, –1 dado mas ignora metade MD). 5º grau: Imperador Escarlate (8 PM: VG +1 passo, dano +1 passo, aura +1,5m + 50 PV temporários), Voo da Fênix (ao ir a 0 PV: volta com 1/4 PV + regenera 2d8+Constituição por 3 rodadas; 1x por 1d6+1 dias)."
+        },
+        {
+          "titulo": "Sentinela",
+          "tags": [
+            "sentinela",
+            "combatente",
+            "armadilha",
+            "caçador",
+            "marcação",
+            "floresta",
+            "sobrevivência",
+            "defesa"
+          ],
+          "conteudo": "Combatente feito para proteger, resistir e controlar o campo com armadilhas e marcações de presas.\n\nAtributo chave: Sabedoria. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Sobrevivência e Armadilhas (+5 extras). Proficiências: armas marciais, arremesso, arcos, bestas e armaduras leves. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Instinto Predatório (1 PM: +Sabedoria em Sobrevivência e Percepção; 1 PM: marca criatura +2 Acerto e VG, +1 por escala; número de marcas = Sabedoria), Espírito do Ermo (em florestas/natureza: nunca surpreso, +5 Iniciativa, Arena; 1 PM: testa Sobrevivência/Percepção/Furtividade com vantagem 1x/cena cada).\n\nDons notáveis: 1º grau: Preparar Armadilha (1 PM + padrão: armadilha simples 2d8 + lentidão; 1 ativa por vez), Parceiro Animal (vínculo com animal parceiro). 2º grau: Armadilhas Avançadas (4d8 + Imobilizado; 2 ativas; pré-req Preparar Armadilha), Campo de Caça (2 PM: área 9m por 3 rodadas: inimigos –2 Acerto/VG, aliados +1). 3º grau: Fios da Ruína (armadilhas ignoram MD = Sabedoria), Campo de Armadilha (área de ameaça 3m ativada automaticamente), Arapuca Instintiva (+Sabedoria ao dano das armadilhas). 4º grau: Caçador Faminto (marca +2 margem/dados vs alvo; ao abater: recupera 4 PM; pré-req Marca Letal), Armadilha Sangrenta (sangramento 2d8 por 3 rodadas se falhar no Reflexos). 5º grau: Espírito da Selva (8 PM: funde-se ao ambiente por 3 rodadas, +5 VG, camuflagem total, +2 dados armadilhas, regenera 1d10 PV/rodada), Predador da Queda (marcados pelas armadilhas: +1 passo dano, +2 margem/multiplicador crítico)."
+        }
+      ]
+    },
+    {
+      "titulo": "Conjuradores",
+      "topicos": [
+        {
+          "titulo": "Apóstata",
+          "tags": [
+            "apóstata",
+            "conjurador",
+            "trevas",
+            "mental",
+            "sombra",
+            "patrono",
+            "eclipse",
+            "negação da fé"
+          ],
+          "conteudo": "Conjurador que rompeu com uma fé. Sua magia nasce de conhecimento religioso, rebeldia espiritual e poder das trevas.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Religião (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: tipo Negro ou Espiritual, Origem Arcana ou Profana. Começa com 2 feitiços extras 1º grau Negro.\n\nHabilidades iniciais: Pacto do Eclipse (patrono sombrio, 2 poderes de Patrono; dons podem causar Augúrios de Trevas; 5 patronos disponíveis: Mur'khaal, Shyruul, Ur'Gorath, Xy'rell, Vhar'Morr com benefícios progressivos por escala), Toque das Sombras (usa Cura para os Mortos só em si mesmo; não pode receber feitiços Sagrados).\n\nDons notáveis: 1º grau: Peste Mental (1 PM: 2d6 dano mental por 3 turnos), Contaminação (falha de inimigo = segundo inimigo também afetado), Palavra da Ruína (1 PM: 3d8 Trevas + +1 dado por 2 rodadas se com condição mental). 2º grau: Explosão Mental (2 PM: 6d6 mental ignorando MD), Névoa Psíquica (2 PM: névoa 3m 2d6/rodada + Desorientado). 3º grau: Forma Sombria (6 PM: feitiços Trevas/Mental +1 dado base, +5 MD, CD +2), Colapso da Sanidade (2 PM: 2 Augúrios = Pasmo por 1 turno). 4º grau: Maldita Devoção (4 PM + reação: antecipa dano dos Augúrios = PV temporários), Eco da Maldição (inimigo que passa na resistência refaz –2). 5º grau: Usurpar a Vontade (12 PM: controle total do corpo do alvo até fim da cena), Terror Abissal (Augúrios ignoram imunidades + dano +1 passo + duram até fim da cena)."
+        },
+        {
+          "titulo": "Arcanista",
+          "tags": [
+            "arcanista",
+            "conjurador",
+            "arcano",
+            "versátil",
+            "foco",
+            "escola mágica",
+            "inteligência",
+            "míssil"
+          ],
+          "conteudo": "Conjurador versátil que estuda magia como arte. Não pode lançar feitiços divinos ou profanos.\n\nAtributo chave: Inteligência. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Conhecimento e Misticismo (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: qualquer escola de Origem Arcana. Começa com 2 feitiços extras 1º grau Arcana.\n\nHabilidades iniciais: Melhoria Arcana (1 PM: +1 dado dano OU +1 CD; 2 PM: ambos; por escala: +1 melhoria adicional por +1 PM), Égide Etéreo (1 PM + reação: +4 VG e 10 PV temporários 1x por combate; ao abater com feitiço Arcano: recupera 1d4–1d12 PM).\n\nDons notáveis: 1º grau: Fluxo Arcano (1 PM: +1 dado dano + alvo adicional em alcance curto), Domínio da Escola (escola escolhida: CD +2 por 1 PM OU +1 dado por 1 PM), Convergência de Poder (+1 dano por dado rolado). 2º grau: Míssil Arcano (2 PM/míssil: 2d10+4 dano direto PV; até 3+Escala disparos), Dreno Etéreo (crítico: alvo perde 2d6 PM, você recupera igual), Runas do Impacto (ao causar dano mágico: –1 VG cumulativo até limite = Escala). 3º grau: Lança Feitiço (+2 PM: feitiço vira projétil contra VG), Vazio Devastador (abaixo de metade PM: 4 PM = dados +1 passo). 4º grau: Rasgo Astral (2 PM: Vulnerável Arcano por 2 rodadas), Núcleo Irradiado (acima de metade PM: feitiços +1 dado base). 5º grau: Alma Arcana Suprema (3 rodadas: imune a dano físico, feitiços não podem ser anulados, dano +1 passo), Mil e Um (dano +1 passo, margem +1, multiplicador +1; crítico = Colapso Arcano)."
+        },
+        {
+          "titulo": "Bruxo",
+          "tags": [
+            "bruxo",
+            "conjurador",
+            "pacto",
+            "patrono",
+            "carisma",
+            "maldição",
+            "trevas",
+            "entidade"
+          ],
+          "conteudo": "Conjurador que encontrou poder em pactos com entidades antigas. Seus feitiços nascem de acordos e vontades sombrias.\n\nAtributo chave: Carisma. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Enganação (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: escolhe 2 escolas + escolas do patrono. Começa com 2 feitiços extras 1º grau Arcana ou Profana.\n\nHabilidades iniciais: Pacto Sombrio (1 PM extra em feitiço Negro: +1 dado profano; escolhe Entidade Patronal: Abismo, Lua, Caos, Morte ou Conhecimento com bônus específicos), Eco Profano (aura 3m: –1 VG/Acerto/Resistências por escala; pode transferir para alvo marcado; contra marcados +1 dado base).\n\nDons notáveis: 1º grau: Lamento do Vazio (1 PM: Fortitude ou 1d10 psíquico + Abalado; 2ª falha = Apavorado), Garras das Ruínas (1 PM: Fortitude ou 1d10 necrótico + dano cont. = Carisma por 3 rodadas), Pacto do Eterno (2 poderes de patrono extras + 1 feitiço extra). 2º grau: Manto do Patrono (2 PM: +4 VG e 30 PV temporários; 20% anular críticos), Mau Olhado (2 PM: amaldiçoa com olhar = desvantagem em qualquer teste). 3º grau: Banquete da Carne (ao causar dano com ofensivo: recupera 1 PV por dado até Carisma), Praga (2 PM: Fortitude ou Espraguejado 3 rodadas). 4º grau: Pestilência (Praga dura até fim da cena + se espalha para adjacentes), Trono das Duas Vozes (escolhe segundo patrono). 5º grau: Comunhão com o Patrono (ritual + relicário: não morre até fim da cena; 1x por relicário), Testamento (efeitos negativos duram até fim da cena mesmo a 0 PV; Amaldiçoar permanente por PM permanentes)."
+        },
+        {
+          "titulo": "Druida",
+          "tags": [
+            "druida",
+            "conjurador",
+            "natureza",
+            "forma selvagem",
+            "animal",
+            "transmutação",
+            "cura",
+            "ambiente"
+          ],
+          "conteudo": "Conjurador ligado à natureza viva. Pode assumir formas animais e lança feitiços de Transmutação mais 2 escolas escolhidas.\n\nAtributo chave: Sabedoria. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Cura e Sobrevivência (+6 extras). Proficiências: armaduras médias e escudos de madeira. Resistência: +1 em Reflexos. Feitiços: Transmutação + 2 escolas escolhidas; Origem Sagrada ou Arcana. Começa com 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Coração Verdejante (em floresta: Arena + descansos confortáveis + Transmutação custa metade PM; 1 PM: perícias com vantagem 1x/cena), Forma Selvagem (1 PM + padrão: animal pequeno/médio; +2 Destreza, 2 sentidos especiais, arma natural 1d6+Força; mantém PV e consciência; sem fala/itens/feitiços).\n\nDons notáveis: 1º grau: Pele de Carvalho (1 PM: +2 VG e 3 MD por escala), Arsenal de Sylvara (1 PM: armas naturais/orgânicas +1 passo OU armadura +5 MD). 2º grau: Instinto Feral (em Forma Selvagem: +2 Acerto + +1 dado), Canal Natural (curas removem condições também). 3º grau: Forma Selvagem Aprimorada (+2 Força/Destreza, +1 passo dano, deslocamento 12m), Guardiões do Bosque (6 PM: 3 espíritos que curam 1d10+Sabedoria; 1x por dia). 4º grau: Avatar da Natureza (6 PM: +3 Força/Des/Con, +2 VG e MD por cena), Armamentos da Mãe Natureza (Arsenal: ofensivo +1 dado + ignora imunidade a críticos; defensivo +5 MD + 50% anular críticos). 5º grau: Renascimento Verdejante (a 0 PV: renascimento no próximo turno com metade PV/PM + cura 3d10 em aliados 9m), Forma Selvagem Suprema (6 PM: +4 Força/Des, +5 MD, +6 VG, +3m deslocamento, ataques naturais +2d10)."
+        },
+        {
+          "titulo": "Feiticeiro",
+          "tags": [
+            "feiticeiro",
+            "conjurador",
+            "herança",
+            "carisma",
+            "instinto",
+            "sangue",
+            "dracônico",
+            "elemental",
+            "celestial",
+            "abissal",
+            "espectral",
+            "feérico"
+          ],
+          "conteudo": "Conjurador que carrega a magia no sangue. Não precisa de gestos/palavras para conjurar. Adiciona Carisma ao dano ofensivo.\n\nAtributo chave: Carisma. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Atuação (+6 extras). Proficiências: nenhuma. Resistência: +1 em Vontade. Feitiços: qualquer escola; começa com 2 feitiços extras 1º grau + 1 a cada 3 níveis.\n\nHabilidades iniciais: Herdeiro Ancestral (define herança: Dracônica, Elemental, Celestial, Espectral, Feérica ou Abissal; +2 Misticismo relacionado + +1 dado OU +1 CD do tipo; bônus adicionais por escala), Sangue que Canta Magia (sem gestos/palavras; feitiços não podem ser copiados; +Carisma no dano ofensivo).\n\nDons notáveis: 1º grau: Feitiço Instintivo (1 PM: +1 dado dano; 1x por magia), Toque Místico (feitiços de toque = alcance curto; +1 PM: segundo alvo). 2º grau: Herança Desperta (tipo da herança +1 dano por dado), Surto de Poder (1x por rodada: metade PM arredondado para cima + dano +50%), Eco Mágico (1x por cena: +2 PM = mesmo feitiço em segundo alvo). 3º grau: Convergência Arcana (2 feitiços diferentes consecutivos: segundo +1 CD e +1 dado), Magia Fluida (2 PM: lançar feitiço grau inferior como ação de movimento). 4º grau: Tempestade de Mana (+6 PM: feitiço de área = tempestade 2 rodadas, 2d10 arcano/rodada), Alma Infinita (1x por cena ao chegar a 0 PM: continua por 2 rodadas + colapsoa no fim). 5º grau: Despertar da Herança (forma suprema da linhagem por cena; efeitos diferentes por tipo), Deus entre os Mortais (feitiços não podem ser anulados por escala inferior; PM reduzido à metade; dano +1 passo)."
+        },
+        {
+          "titulo": "Floromante",
+          "tags": [
+            "floromante",
+            "conjurador",
+            "flores",
+            "veneno",
+            "natureza",
+            "planta",
+            "sabedoria",
+            "jardim"
+          ],
+          "conteudo": "Conjurador que transforma flores, raízes, pólen e seivas mágicas em poder. Suporte e controle.\n\nAtributo chave: Sabedoria. PV inicial: 10 + Constituição (+5 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Sobrevivência e Misticismo (+6 extras). Proficiências: nenhuma. Resistência: +1 em Fortitude. Feitiços: escolhe escolas livremente. Começa com feitiços extras 1º grau de qualquer escola.\n\nHabilidades iniciais: Guardião do Jardim (imune a doenças e venenos; 1 PM: raízes em 6m = terreno difícil + cobertura por cena 1x por descanso curto), Seiva Tóxica (1x por combate: 1 PM imbui arma por 1 rodada, +1d6 veneno + Fortitude ou envenenado 1d6/2 rodadas; dano +1 passo por escala).\n\nDons notáveis: 1º grau: Toque Verdejante (1 PM: remove condição + regenera 2d6 PV por 3 rodadas), Esporos Irritantes (1 PM: 6m raio 2d6/rodada + Enjoado por 3 rodadas), Pacto Envenenado (CD de venenos +2; venenos dentro do Jardim +1 dado). 2º grau: Raiz Traiçoeira (1 PM por feitiço: +1 dado + Enredado), Planta Carnívora (2 PM: planta Média por cena, 2d8+Sabedoria, pode receber Seiva Tóxica). 3º grau: Mandíbula Verde (2 PM: planta carnívora extra; múltiplas +1 passo dano; pré-req Planta Carnívora), Era Venenosa (+Sabedoria ao dano de venenos). 4º grau: Selva Carnívora (+2 PM: planta extra que faz manobras usando Sobrevivência), Névoa Verde (4 PM: área 3m ao redor, Fortitude ou Enjoado). 5º grau: Coroa da Rainha das Raízes (8 PM: Flor-Rainha Enorme por cena, metade PV do Floromante, ataques alcance curto em área 6m), Sangue da Seiva Inexorável (venenos +1 passo + CD +2 + ignoram imunidades; ao sofrer veneno recupera metade)."
+        },
+        {
+          "titulo": "Mago",
+          "tags": [
+            "mago",
+            "conjurador",
+            "grimório",
+            "memorizar",
+            "inteligência",
+            "arcano",
+            "aprimoramento",
+            "versatilidade"
+          ],
+          "conteudo": "Conjurador que domina a magia pelo estudo. Usa Grimório para memorizar feitiços; só pode lançar os memorizados.\n\nAtributo chave: Inteligência. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Conhecimento (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: todas as escolas Arcana e Divina. Começa com 3 feitiços extras 1º grau.\n\nHabilidades iniciais: Grimório Arcano (memoriza metade dos feitiços conhecidos após 1h de estudo 1x por dia; +2 Misticismo com grimório; 1x por cena: –1 PM em feitiço memorizado; +1 feitiço extra por escala), Arquiteto da Magia (Misticismo CD 15+PM do feitiço: aplica 1 efeito extra ao feitiço memorizado +1 PM; efeitos: +1 dado, área/alcance +categoria, +1 CD, ponto de origem diferente).\n\nDons notáveis: 1º grau: Magia Encadeada (1 PM: alvo adicional no alcance), Sobrecarga Mágica (2 feitiços diferentes vs mesmo alvo: +1d10 instabilidade), Ressonância do Grimório (ao lançar aprimorado: 30% chance aprimoramento extra grátis). 2º grau: Magia Agressiva (1 PM: rerrola 1s e 2s; +1 PM = +1 dado extra), Feitiço Sem Custo (1x por combate: lança memorizado sem PM). 3º grau: Símbolo da Vontade (CD +2 para tipo de resistência específico), Foco Estável Arcano (1x por combate: lança mesmo feitiço novamente pela metade do custo). 4º grau: Forja Arcana (4 PM: maximiza dados de feitiço até 1 grau abaixo do máximo), Globo Arcano (4 PM: esfera flutuante que dispara 2d10 por rodada + bonus se lançar feitiço). 5º grau: Núcleo Infinito de Mana (ao causar dano: recupera 1d6 PM, máx 2x/rodada; pode continuar a 0 PV por 2 rodadas 1x/cena), Matriz de Amplificação (+3 aprimoramentos além do limite; +2 feitiços no Grimório)."
+        },
+        {
+          "titulo": "Mago Branco",
+          "tags": [
+            "mago branco",
+            "conjurador",
+            "cura",
+            "luz",
+            "proteção",
+            "sabedoria",
+            "sagrado",
+            "suporte mágico"
+          ],
+          "conteudo": "Conjurador voltado exclusivamente à cura, proteção e purificação. Só conjura feitiços do tipo Branco.\n\nAtributo chave: Sabedoria. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Religião e Misticismo (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: qualquer escola mas somente tipo Branco. Começa com 2 feitiços extras 1º grau Branco.\n\nHabilidades iniciais: Eco da Alvorada (apenas feitiços Brancos; podem causar dano; curas em si mesmo e aliados reduzidas em 50%), Aurora Interior (ao lançar feitiço: alvo +2 em resistência OU inimigo –2; 1 PM + reação: anula ataque corpo a corpo e Ofusca agressor; aliados sob Aurora = ponto de origem).\n\nDons notáveis: 1º grau: Selo Brilhante (1 PM: marca inimigo; aliados +2 Acerto + +1 dado contra marcado), Bênção Branca (+1 VG por feitiço em aliado; –1 VG por inimigo que falhar), Corrente Penitente (falha = Lento; 2ª falha = Imobilizado). 2º grau: Marca da Luz (Aurora em 2 alvos; ao anular: Ofusca 2ª agressor), Santuário Branco (feitiços Brancos –1 PM 2º/3º grau, –2 PM 4º/5º; 1x por cena: feitiço Branco grátis). 3º grau: Prisão do Halo (2 PM + reação: Ofuscados = teste Vontade ou Atordoados 1 turno). 4º grau: Luz Hostil (4 PM: marcado irradia luz, próximos 3 ataques com desvantagem), Reflexo Divino (6 PM: cria segunda forma, dividindo PV/PM). 5º grau: Luz Absoluta (curas em área; danos ignoram imunidade; ascensão 1x por dia = ignora metade MD), Coração Radiante (1x por dia por aliado: protege de 0 PV + curas recuperam 75% em vez de 50%)."
+        },
+        {
+          "titulo": "Mago do Caos",
+          "tags": [
+            "mago do caos",
+            "conjurador",
+            "caos",
+            "imprevisível",
+            "dado",
+            "aleatório",
+            "inteligência",
+            "sem multiclasse"
+          ],
+          "conteudo": "Conjurador que lida com magia em seu estado mais instável. ÚNICA CLASSE que não pode realizar multiclasse.\n\nAtributo chave: Inteligência. PV inicial: 6 + Constituição (+3 por nível ímpar). PM inicial: 12 (+6 por nível par). Perícias treinadas: Misticismo e Intuição (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: qualquer Origem/Tipo/Escola. Começa com 3 feitiços extras 1º grau.\n\nHabilidades iniciais: Brincando com o Caos (ÚNICA classe sem multiclasse; 1 PM/dia: escolhe poder de kit de qualquer outra classe até fim do dia; nova escolha custa +2 PM), Feitiço Imprevisível (1 PM ao lançar: rola 1d6; 1-2 = falha sem PM extra; 3-4 = funciona + metade PM; 5-6 = dano máximo OU desvantagem na resistência OU custo 0).\n\nDons notáveis: 1º grau: Efeito Cascata (1 PM: +1d6 dano explosivo – se 6, rola novamente; se 1, dano /2), Campo Caótico (1x por dia: todos feitiços no campo rolam 1d12 para efeito aleatório), Carma (1x por dia por alvo até escala: transforma falha em acerto ou vice-versa + próximo teste invertido). 2º grau: Vinte e Um (4 PM: qualquer rolagem = 20 natural; concede crédito ao Mestre), Acesso Induzido (1x por cena: usa qualquer feitiço de grau adequado; perde 1 próprio por 1 dia). 3º grau: Degrau Proibido (1x por dia: feitiço de grau superior; perde grau mais alto pelo resto do dia), Mutação Caótica (6 PM: altera aparência e habilidades raciais até fim da cena; 1d6 para se tornar permanente por 1 dia). 4º grau: Pegar Emprestado (2-8 PM: usa dom de outra classe até fim da cena; bloqueia 1 próprio). 5º grau: Sinfonia do Caos (4 PM por ativação: controla Campo Caótico escolhendo os efeitos; máx 12 aplicações; pré-req Campo Caótico)."
+        },
+        {
+          "titulo": "Mago Negro",
+          "tags": [
+            "mago negro",
+            "conjurador",
+            "trevas",
+            "inteligência",
+            "sangramento",
+            "drenagem",
+            "maldição",
+            "feitiço negro"
+          ],
+          "conteudo": "Conjurador que domina forças ligadas à sombra, corrupção e enfraquecimento. Apenas feitiços do tipo Negro.\n\nAtributo chave: Inteligência. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Conhecimento (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: somente tipo Negro, qualquer origem/escola. Começa com 2 feitiços extras 1º grau Negro.\n\nHabilidades iniciais: Selo Sombrio (+2 Resistência vs feitiços Negro/Espiritual; sucesso = reflete ao conjurador; 2 PV = +1 dado dano OU 1 PV = +1 CD OU 3 PV = ambos), Sussurro das Trevas (ao resistir a feitiço ofensivo: na próxima rodada lança versão sombria como ação livre; paga PM normal; 1x por feitiço por combate).\n\nDons notáveis: 1º grau: Força Sanguinária (Inteligência nos PV totais; usa Int em vez de Con para PV), Maldição Hemorrágica (ataques mágicos causam Sangramento 1d6+Inteligência por 3 rodadas; reaplicar = Hemorragia). 2º grau: Banquete Rubro (criatura sangrando em alcance curto: recupera PV = metade do dano/rodada até Inteligência máximo), Aura da Carnificina (6m: –2 Fortitude/Acerto/VG + +1 dado ao sangramento). 3º grau: Dominância Obscura (todas as CDs dos feitiços +2), Focus Sombrio (1 PV: +1 dado e +1 CD por uso). 4º grau: Domínio da Noite (6 PM: esfera sombrias 6m raio, desvantagem em tudo + dobro PM por 3 turnos), Sel da Ruína (próximo ataque contra marcado: vantagem + +2 margem crítico). 5º grau: Hemomancia Lamentável (sangramento +1 passo + +1 dado do fócus; Perto da Morte = Fortitude ou 0 PV), Apoteose Destrutiva (dano Negro +1 passo; 1 resistência com desvantagem 1x/rodada; ignoram imunidades)."
+        },
+        {
+          "titulo": "Mestre das Almas",
+          "tags": [
+            "mestre das almas",
+            "conjurador",
+            "espírito",
+            "sabedoria",
+            "xamã",
+            "possessão",
+            "invocação",
+            "plano espiritual"
+          ],
+          "conteudo": "Conjurador que enxerga a existência além do corpo. Lida com espíritos, vínculos invisíveis e forças entre vida e morte.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Intuição (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: qualquer origem/escola do tipo Espiritual ou Neutra. Começa com 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Contrato Espiritual (vantagem Xamã; fala a língua dos espíritos; 1 PM + padrão: invoca espírito; +1 PM por escala para dominar; Vontade para resistir), Linha Tênue (imune a efeitos de espíritos/magias espirituais; +5 MD vs esses feitiços; 1 PM + Misticismo: sente presenças espirituais em 30m).\n\nDons notáveis: 1º grau: Maldição Espiritual (1 PM: cegueira/confusão/silêncio por 2 rodadas; por maldição ativa: –1 cumulativo nas resistências até –3), Fios Espirituais (1 PM: controla 1 membro de inimigo; sustentável). 2º grau: Chamado Espiritual (2 PM: invoca espírito que ataca 3d6 espiritual; dura até fim do combate), Canalização da Vida (2 PM: 6d6 dano + absorve 2d6 PV ou 1d6 PM). 3º grau: Conexão Suprema (CD dos efeitos espirituais +2; 1ª rolagem por inimigo = desvantagem), Vínculo de Observação (2 PM: vê e ouve através de espírito; 1 distância = Sabedoria × 12m). 4º grau: Possessão do Vínculo (4 PM: espírito possui cadáver recém caído), Maldição Espiritual Superior (ação livre: imbui próximo ataque com maldição; 4 PM: maldição superior). 5º grau: Tecelão das Almas (1x por descanso longo: retorna com 30% PV/PM; OU sacrifica 5 PM permanentes para reviver aliado), Titeriteiro de Reikonmaru (maldições ignoram imunidades; Domínio de Corpo = até 3 corpos simultâneos)."
+        },
+        {
+          "titulo": "Necromante",
+          "tags": [
+            "necromante",
+            "conjurador",
+            "morto-vivo",
+            "invocação",
+            "inteligência",
+            "cadáver",
+            "legião",
+            "necromancia"
+          ],
+          "conteudo": "Conjurador que domina a fronteira entre vida e morte. Convoca e controla mortos-vivos.\n\nAtributo chave: Inteligência. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Cura e Misticismo (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Fortitude. Feitiços: escola Necromancia + 2 escolas extras; Arcana e Profana. Começa com 2 feitiços extras 1º grau Negro.\n\nHabilidades iniciais: Essência da Morte (1 PM + padrão: convoca 1d4+1 mortos-vivos com 1 PV cada que atacam com 1d6+4; máximo = Atributo Chave), Domínio da Sepultura (1x por turno quando alguém morre em alcance curto: 1 PM + movimento para absorver essência = 1d4 PM OU +1 dado base dano; cada morto em campo: +2 dano por invocação ativa).\n\nDons notáveis: 1º grau: Necroanimação (1 PM + movimento: reanima inimigo caído com metade PV por cena; 1x por cena; escala igual ou inferior), Aura Marcada (aura 3m por morto-vivo: –2 Fortitude e VG inimigos). 2º grau: Carne Incansável (+10 PV+Inteligência e +2 MD por escala), Lâminas Negras (falha vs feitiço: mortos-vivos +1 dado base vs esse alvo). 3º grau: Legião Fúnebre (6 PM: convoca 1d6-1 caniçais, máx 5), Cadáver Animado Superior (6 PM: reanima 2 inimigos caídos neste turno). 4º grau: Marcha Cadavérica (+5 VG e +3 MD às invocações; aura –2 Vontade), Carranca da Cripta (+1 dano por dado + chance de Pestilência). 5º grau: Devorador de Almas (12 PM: Devorador Fúnebre colossal 120 PV, 2 ataques 4d10+8 crítico 18 x4; usa feitiços do Necromante), Reencarnação Impura (ritual 24h + 3000 Ƒ$: aprisiona alma morta em amuleto para invocar como morto-vivo especial)."
+        },
+        {
+          "titulo": "Sábio",
+          "tags": [
+            "sábio",
+            "conjurador",
+            "sabedoria",
+            "memória",
+            "feitiço memorizado",
+            "imbuir",
+            "elemental",
+            "conhecimento"
+          ],
+          "conteudo": "Conjurador que transforma conhecimento e percepção em poder. Pode memorizar feitiços ao vê-los sendo lançados.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Conhecimento e Misticismo (+6 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: qualquer escola de Origem Arcana. Começa com 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Memória Absoluta (reação + 1 PM + Misticismo vs CD do feitiço ao vê-lo ser lançado: memoriza temporariamente 1 feitiço de grau que possa conjurar; 1 por vez), Escriba do Feitiço (1 PM: +Sabedoria em fabricação de pergaminhos, Misticismo e Conhecimento; pode transferir feitiço memorizado para pergaminho; usa pergaminhos próprios sem teste).\n\nDons notáveis: 1º grau: Imbuir Arcano (1 PM: encanta equipamento com elemento; armas +1 dado elemental, armaduras +5 MD, escudos +2 vs elemento), Leitura Mística (1 PM + toque: Misticismo +10 para identificar magia), Sorver Feitiço (1 PM: Misticismo vs CD do feitiço ativo = absorve e aplica no próximo ataque). 2º grau: Eco Arcano (ao resistir a feitiço ofensivo: Misticismo vs CD = recupera metade PM do feitiço), Impacto Mágico (2 PM: +2d6 dano mágico em feitiço seu ou aliado). 3º grau: Espelho Mágico (6 PM: campo reflexivo 3m raio por 2 rodadas; absorve 1 feitiço por rodada), Absorção de Bênção (4 PM: rouba feitiço benéfico ativo de inimigo). 4º grau: Dragnologia (6 PM: elemento escolhido +1 passo dano + ignora imunidades), Feitiço Agressivo (6 PM: sela inimigo; ele e aliado ignoram metade MD do alvo). 5º grau: Apoteose Elemental (8 PM: apoteose elemental = invulnerável ao elemento + dano +1 passo +1 dado), Modo Sábio (8 PM: feitiços +2 dados, não anuláveis; acessa TODOS os feitiços memorizados ao longo da jornada)."
+        },
+        {
+          "titulo": "Xamã",
+          "tags": [
+            "xamã",
+            "conjurador",
+            "totem",
+            "elemental",
+            "espírito",
+            "sabedoria",
+            "natureza",
+            "fogo água terra ar"
+          ],
+          "conteudo": "Conjurador que caminha entre o mundo material e o espiritual. Invoca totens elementais.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+4 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Sobrevivência e Religião (+6 extras). Proficiências: nenhuma. Resistência: +1 em Fortitude. Feitiços: Elemental + 2 escolas; Origem Sagrada ou Arcana. Começa com 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Chamado Elemental (1 PM + movimento em alcance curto: invoca totem em área 3m raio; MD 5, PV 5, VG 10; 1 totem por vez; benefícios de até 1 totem por vez; 4 tipos: Fogo, Água, Terra, Ar com escalas progressivas), Elemento Vivo (vê e interage com incorpóreos/invisíveis/elementais; +2 vs feitiços elementais; +2 em todos os danos e curas, +1 por escala).\n\nDons notáveis: 1º grau: Arma Espiritual (1 PM: +1d6 espiritual ou +1d8 com totem ativo), Purificação Ancestral (1 PM: remove 1 veneno/condição; se em área de totem: +2d6 PV). 2º grau: Espírito Animal (2 PM: forma espiritual animal incorpórea; pode conjurar espirituais/divinos), Bênção dos Quatro Caminhos (ao invocar totem: escolhe benefício até fim do próximo turno), Solo Sagrado (área dos totens = 6m; efeitos persistem 1 rodada após destruição). 3º grau: Ritual Elemental (efeito especial para cada tipo de totem 1x por dia; totem some após usar), Totem Tempestuoso (em Ar/Fogo: +1 dado em feitiços daquele elemento). 4º grau: Convergência Totêmica (ação completa + 2 PM/totem: até 4 totens simultâneos; aliados recebem benefício de 2 totens; pré-req Duplo Pacto), Tempestade Elemental (inimigos nos totens sofrem 2d10 elemental por rodada). 5º grau: Fortalecimento Totêmico (+10 PV por Escala + +5 MD para todos os totens)."
+        }
+      ]
+    },
+    {
+      "titulo": "Suportes",
+      "topicos": [
+        {
+          "titulo": "Arauto",
+          "tags": [
+            "arauto",
+            "suporte",
+            "fé",
+            "divindade",
+            "graça",
+            "proteção",
+            "provocar",
+            "sabedoria",
+            "armadura pesada"
+          ],
+          "conteudo": "Suporte que carrega a voz de uma força maior. Protege aliados e pressiona inimigos com autoridade espiritual.\n\nAtributo chave: Sabedoria. PV inicial: 18 + Constituição (+6 por nível ímpar). PM inicial: 10 (+4 por nível ímpar). Perícias treinadas: Religião e Luta (+7 extras). Proficiências: armas marciais, armaduras pesadas e escudos. Resistência: +1 em Vontade. Feitiços: 3 feitiços divinos extras 1º grau.\n\nHabilidades iniciais: Voz Divina (3 Graças Divinas em vez de 1; Religião CD 15: +2 VG/Acerto/+3 MD até fim da cena; 20+ e 1 PM: compartilha Graça com aliados), Prece de Fé (bônus de escudo dobrado em VG/MD; 1 PM + padrão + Religião CD 15: +2 Resistências + 1 PM + reação para reduzir dano à metade).\n\nDons notáveis: 1º grau: Verbo Divino (1 PM + Religião CD 15: +2 CD dos dons/feitiços OU +1 dado dano/ataques), Provocar (1 PM: forças alvo a atacá-lo; condição Provocado –2 Acerto), Marca do Guardião (1 PM: aura 6m sustentável, aliados +2 testes, inimigos –2). 2º grau: Armadura da Providência (pesada: +Sabedoria/2 à VG; Religião CD ao quase ser acertado = +Sabedoria total), Mártir Sagrado (2 PM: transfere até Sabedoria em VG/MD para aliado até próximo turno). 3º grau: Resplendor da Fé (pesada: Sabedoria completo à VG; ao chegar à metade dos PV: aliados +2 VG/MD por 1 rodada), Ligação Protetora (2 PM: transfere metade do dano recebido por aliado). 4º grau: Escudo Ricochete (6 PM: arremessa escudo 10d6+MD em até 5 alvos), Flagelo Divino (Ligação = até 3 aliados; absorve todo dano deles 1x/rodada). 5º grau: Rito de Devolução (8 PM: dano/cura/efeito recebido por você também afeta agressor até fim da cena), Soberania (ritual: barreira divina 90m raio que reduz ou anula dano físico e mágico)."
+        },
+        {
+          "titulo": "Arcano",
+          "tags": [
+            "arcano",
+            "suporte",
+            "inteligência",
+            "arma mágica",
+            "escudo arcano",
+            "absorção",
+            "contrafeitiço",
+            "combate mágico"
+          ],
+          "conteudo": "Suporte que combina combate e magia. Usa Inteligência em ataques; qualquer arma que empunha se torna mágica. Pode usar armaduras sem penalidades.\n\nAtributo chave: Inteligência. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Misticismo e Luta (+5 extras). Proficiências: armas marciais, armaduras pesadas e escudos. Resistência: +1 em Vontade. Feitiços: qualquer tipo e origem; começa com 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Domínio Arcano (usa armaduras sem penalidade; ataques sempre mágicos usando Misticismo/Inteligência; cada ataque/manobra custa 1 PM; sem PM não pode atacar), Escudo Arcano (1 PM + cena: +2 VG por escala; anula 1 efeito negativo mágico; pode transferir para aliado em alcance curto com ação de movimento + 1 PM).\n\nDons notáveis: 1º grau: Recuperação Arcana (toque: restaura 1d6 PM por escala; 1x por criatura por cena), Arma Enfeitiçada (imbui feitiço na arma + dano da arma; toque; se não supera VG = metade dano), Sentir Feitiço (+2 Misticismo: detecta magia em 15m). 2º grau: Construção Mágica (+Inteligência na MD contra feitiços), Couraça do Arquimago (pesada: +Inteligência à VG; Inteligência em Reflexos por 1 PM). 3º grau: Absorção Mágica (ao resistir: 20% chance de absorver = relança como ação livre), Controle Arcano (2 PM: aura 9m reduz CD dos feitiços alheios em = Inteligência; sustentado). 4º grau: Proteção Mágica (ao resistir: recupera 1d6+grau PM; 1x/rodada), Escudo Arcano Aprimorado (1x por combate: +5 MD até cena + anula 2 efeitos + +30 PV temporários). 5º grau: Aurora Boreal (12 PM + 2 rodadas: cristaliza em mana criaturas com mana em 30m; Vontade com desvantagem ou petrificadas 1d10+1 dias), Lâmina Boreal (críticos: Vontade ou bloqueado PM por 1 turno; margem +2, multiplicador +1)."
+        },
+        {
+          "titulo": "Clérigo",
+          "tags": [
+            "clérigo",
+            "suporte",
+            "cura",
+            "sabedoria",
+            "divindade",
+            "fé",
+            "bênção",
+            "marca divina",
+            "liturgia"
+          ],
+          "conteudo": "Suporte que canaliza fé e poder sagrado para proteger aliados e enfrentar o que ameaça sua crença.\n\nAtributo chave: Sabedoria. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Religião e Cura (+7 extras). Proficiências: armas marciais, armaduras médias e pesadas, escudos pequenos e médios. Resistência: +1 em Vontade. Feitiços: 3 feitiços divinos extras 1º grau (polaridade da divindade determina tipo).\n\nHabilidades iniciais: Devoção (2 Graças divinas; liturgia diária 1h + Religião CD 15: 1 PM + reação 1x/rodada para +1d10 em teste recente ou dano/feitiço), Arma Divina (proficiente na arma da divindade; 1 PM + movimento: imbui com poder divino, mágica, +1 passo dano, usa Sabedoria no ataque/dano).\n\nDons notáveis: 1º grau: Aura Divina (2 PM: aura 6m 2d6+Sabedoria dano OU cura; sustentável), Bênção da Fé (aura 6m: aliados +2 em todas as Resistências), Marca Divina (ao atingir: marca até fim da cena; 1 PM + 1x/rodada = +2d6 dano ou cura nos marcados). 2º grau: Aura Protetora (Bênção expande para 9m; 2 PM por aliado: rerrola falha de perícia 1x/cena), Manto Guardião (1 PM + reação: reduz dano de aliado à metade 1x/rodada). 3º grau: Santuário de Aço (pesada: Sabedoria completo à VG; 2 PM ao curar: +3 VG a aliados próximos), Revelação Religiosa (2 PM: Religião identifica criatura; +2 Acerto, +1 dado, +2 CD contra ela até fim da cena). 4º grau: Vontade Implacável (2 PM: rerrola resistência que falhou, mesmo crítica; aliado também pode), Símbolo do Temor (ritual: exibir símbolo = pânico em criaturas de polaridade contrária 1x/dia). 5º grau: Intervenção Divina (1x por aventura: milagre imprevisível), Êxtase do Símbolo Supremo (8 PM: escala +1 passo + ignora imunidades; ritual 12h + 500 Ƒ$)."
+        },
+        {
+          "titulo": "Encantador",
+          "tags": [
+            "encantador",
+            "suporte",
+            "encantamento",
+            "inteligência",
+            "buffar",
+            "fortalecer",
+            "aliado",
+            "escola de encantamento"
+          ],
+          "conteudo": "Suporte que usa magia para fortalecer, inspirar e transformar o potencial dos aliados. Todos os feitiços benéficos em aliado também afetam o próprio Encantador.\n\nAtributo chave: Inteligência. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 12 (+6 por nível ímpar). Perícias treinadas: Misticismo e Conhecimento (+7 extras). Proficiências: armas marciais e armaduras leves. Resistência: +1 em Vontade. Feitiços: escola Encantamento + 2 escolas escolhidas; 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Encanto Inspirador (feitiços só em 1 alvo; ao lançar benéfico em aliado: Encantador também recebe; 1 PM: encanta aliado com vantagem/dom que possui; 1 encantamento ativo por vez), Encantamento Mágico (1 PM + padrão: imbui encantamento menor em equipamento/aliado por cena; 1 encantamento por cena; aliados em 9m: +1 em testes até próximo turno do Encantador).\n\nDons notáveis: 1º grau: Transferência de Vitalidade (1 PM: +2 em 1 atributo OU +1 em 2 atributos; pode ultrapassar limite de escala), Bênção Ofensiva (1 PM: +1 dado em ataques e feitiços), Escudo Encantado (1 PM: dobra VG e MD de equipamento por cena), Lâmina Crítica (1 PM: +1 margem e multiplicador crítico). 2º grau: Cântico Duplo (2 encantamentos simultâneos; em alvos diferentes OU mesmo), Véu da Resistência (2 PM: +2 em 1 Resistência + ignora 1 teste 1x/cena). 3º grau: Encantamento Potente (6 PM: encantamento de nível médio pela Individualidade), Quebra de Regras (4 PM: próximo feitiço/ataque ignora imunidades). 4º grau: Sinfonia Gloriosa (3 encantamentos simultâneos; pré-req Cântico Duplo), Escudo Vital (6 PM: PV temporários = 1/3 PV máximo + +5 VG e MD). 5º grau: Deus Zero (8 PM: ao encantar aliado, você fica imune a muitas condições), Deus Corona (8 PM: aliado sobe 1 categoria de elite até fim da cena)."
+        },
+        {
+          "titulo": "Espiritualista",
+          "tags": [
+            "espiritualista",
+            "suporte",
+            "vínculo",
+            "sabedoria",
+            "parceiro",
+            "alma",
+            "telepatia",
+            "espiritualidade"
+          ],
+          "conteudo": "Suporte que trabalha com energia interior e forças invisíveis. Cria vínculos espirituais com aliados.\n\nAtributo chave: Sabedoria. PV inicial: 15 + Constituição (+5 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Intuição e Misticismo (+7 extras). Proficiências: nenhuma. Resistência: +1 em Vontade. Feitiços: Espirituais ou Neutras; 2 feitiços extras 1º grau.\n\nHabilidades iniciais: Vínculo Espiritual (1 PM + padrão: vínculo com aliado em alcance curto por cena; comunicação telepática livre; alcance máximo 9m; custo 1 PM/rodada; 1 vínculo por vez; não pode vincular involuntários), Alma Gêmea (com vínculo: concede 1 efeito de parceiro 1x/cena ao vinculado; pode gastar seus PM pelos do vinculado até Sabedoria máximo por cena).\n\nDons notáveis: 1º grau: O Melhor entre Dois (1 PM: ambos testam mesma perícia, escolhe melhor; 1x/cena), Feitiço Compartilhado (Misticismo vs CD: usa feitiço do aliado vinculado 1x/cena), Passo de Vínculo (sem ataques de oportunidade ao se mover; +3m deslocamento ambos). 2º grau: Harmonia Espiritual (efeitos de vínculo duram +1 rodada; custo de manutenção –1 PM), Vínculo Maior (2 vínculos simultâneos; alcance 12m). 3º grau: Salvação Espiritual (4 PM + reação: testa resistência no lugar do aliado; se passar ele evita, se falhar ambos sofrem), Sincronia Perfeita (flancos com vinculados +3 em vez de +2, +1 dado dano). 4º grau: Amigo de Alma (até 2 efeitos benéficos do aliado também afetam Espiritualista; pré-req Transmissão Mística), Permuta Espiritual (6 PM: troca atributos entre vinculados). 5º grau: Despertar da Alma Suprema (8 PM: aliado desperta dom de 5º grau que não possui até fim da cena; 1x/dia), Relicário das Almas Entrelaçadas (ritual: revive aliados que morreram; 1x por aliado)."
+        },
+        {
+          "titulo": "Expurgador",
+          "tags": [
+            "expurgador",
+            "suporte",
+            "fogo",
+            "sagrado",
+            "profano",
+            "purificação",
+            "exorcismo",
+            "chama"
+          ],
+          "conteudo": "Suporte treinado para remover corrupção. Especialista em combater criaturas profanas com fogo sagrado.\n\nAtributo chave: Sabedoria. PV inicial: 18 + Constituição (+6 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Cura e Religião (+7 extras). Proficiências: armas marciais, armaduras médias e escudos leves. Resistência: +1 em Fortitude. Feitiços: Origem Sagrada do tipo Branca, Elemental (fogo) ou Neutra; 3 feitiços extras 1º grau.\n\nHabilidades iniciais: Chama Sagrada (fogo não dano aliados; criaturas malignas/profanas/amaldiçoadas sempre afetadas), Pira Redentora (ao causar dano com feitiço de fogo Sagrado: Fortitude ou marca com Pira; criaturas malignas/profanas +1 dano por dado, –2 Fortitude, queimam 1d6/rodada por 3 rodadas por escala).\n\nDons notáveis: 1º grau: Chama de Desalento (+1 dado vs profanas + +1 dado Pira Redentora), Brasa Purificadora (+2 vs efeitos profanos; 1 PM: reduz dano dessas fontes à metade), Fogo do Despertar (manipula chamas mundanas grátis; com chama próxima em descanso: aliados recuperam +Sabedoria em PV/PM). 2º grau: Couraça da Inquisição (pesada: +Sabedoria à VG vs profanas + dano +1 passo), Dogma das Chamas (feitiços/técnicas fogo: +1 CD; +2 vs Profanas), Bênção da Brasa (curas recuperam +1 dado; com condição negativa: +2d6 extra). 3º grau: Execução da Chama (vs marcados pela Pira: +1 margem/multiplicador; vs profanas: +2). 4º grau: Exorcismo (Perto da Morte + ataque: Fortitude ou destruída; não afeta Chefes/MVP), Armadura do Eclipse Solar (6 PM: +5 VG; inimigos que atacam corpo a corpo sofrem 2d10+Sabedoria). 5º grau: Ascensão da Fênix (ao morrer/tragédia: restaura PV/PM de todos; profanas = Fortitude com desvantagem ou destruídas; Chefes/MVP = Apavorados), Senhor da Chama Absoluta (criaturas profanas nunca são de escala elite superior; ataques/feitiços ignoram mitigação e bloqueiam regeneração profana)."
+        },
+        {
+          "titulo": "Hierofante",
+          "tags": [
+            "hierofante",
+            "suporte",
+            "cura",
+            "sabedoria",
+            "divino",
+            "bênção",
+            "purificação",
+            "incapaz de causar dano a vivos"
+          ],
+          "conteudo": "Suporte que representa o conhecimento sagrado em sua forma mais profunda. NÃO PODE causar dano a criaturas vivas (exceto profanas). Toda cura +1 passo.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+4 por nível ímpar). PM inicial: 12 (+6 por nível par). Perícias treinadas: Religião e Cura (+7 extras). Proficiências: Fócus e armaduras leves. Resistência: +1 em Vontade. Feitiços: Origem Divina de qualquer escola exceto feitiços de dano puramente ofensivo; 3 feitiços extras 1º grau.\n\nHabilidades iniciais: Voto de Misericórdia (não se devota a polaridade negativa; 2 Graças divinas; NÃO PODE causar dano a vivos exceto profanos; curas +1 passo; +1 PM = +1 dado por cura), Alma Pura (imune a efeitos mentais, maldições e Profanos; percebe automaticamente criaturas/objetos malignos em 30m; símbolos = medo ou repulsa em mortos-vivos/profanos de escala igual ou inferior).\n\nDons notáveis: 1º grau: Bênção da Serenidade (1 PM: +Sabedoria a qualquer cura), Mãos Medicinais (Cura CD 15: 1d6 PV + 1d6 por 5 pontos acima), Gloria (1 PM: aliado com Bênção da Glória tem vantagem 1x/rodada; 1 PM: 2 dados para dados de sorte). 2º grau: Graça do Peregrino (sem armadura/leve: +Sabedoria à VG), Angelus (2 PM: aliado +Sabedoria à VG e MD por cena), Sufragium (2 PM + reação: criatura em alcance curto recebe ação padrão extra). 3º grau: Kyrie Eleison (4 PM + reação: anula completamente 1 dano físico 1x/cena por alvo; dano físico subsequente /2), Plenitude (cura que excede PV máximo = PV temporário até 30). 4º grau: Cantocandidus (6 PM: área 9m que impede feitiços ofensivos/Negro/Profanos; sustentado), Resurgere (6 PM: marca aliado; ao chegar a 0 PV volta no próximo turno com metade PV). 5º grau: Magnus Exorcismus (8 PM: 20d10 em área 30m; almas malignas expulsas e seladas), Trinitas Custodes (8 PM: 3 anjos guardiões que podem conjurar feitiços do Hierofante até 3º grau)."
+        },
+        {
+          "titulo": "Oráculo",
+          "tags": [
+            "oráculo",
+            "suporte",
+            "destino",
+            "presságio",
+            "visão",
+            "ilusão",
+            "adivinhação",
+            "carisma",
+            "sabedoria"
+          ],
+          "conteudo": "Suporte que enxerga sinais onde outros veem acaso. Manipula o destino para guiar aliados.\n\nAtributo chave: Sabedoria. PV inicial: 8 + Constituição (+2 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Conhecimento e Intuição (+7 extras). Proficiências: armaduras leves e escudos pequenos. Resistência: +1 em Vontade. Feitiços: somente Adivinhação, Encantamento e Ilusão; 3 feitiços extras 1º grau.\n\nHabilidades iniciais: Visão do Destino (+2 em 3 perícias à escolha mesmo sem treino; 1 PM + reação: vantagem em teste de perícia para si ou aliado 1x/cena), Destino Reescrito (início do dia: rola 2 d20 e anota; 1 PM + reação: substitui resultado de criatura em alcance curto por 1 dos valores anotados; após uso desaparecem até descanso longo).\n\nDons notáveis: 1º grau: Presságio Fugaz (1 PM + reação: próximo teste do inimigo com desvantagem; 1x/cena), Mente Ilusória (1 PM + reação: ilusão distrai inimigo em alcance curto; Vontade ou perde ação; 1x por alvo). 2º grau: Miragem Persistente (2 PM: ilusão 6m por 2 rodadas; falha = ataca ilusões ou aliado), Desvio de Linha (2 PM + reação: transforma erro de aliado em acerto OU acerto de inimigo em erro; 1x/cena). 3º grau: Manto do Destino (armadura leve: +Carisma à VG em vez de Destreza), Reflexo Profético (2 PM + reação: Intuição vs Acerto/CD; sucesso = dano /2 + nega efeitos). 4º grau: Véu das Verdades Ocultas (6 PM: revela segredos, armadilhas, ilusões e intenções em 9m), Intercepção Oracular (ao ver conjuração: Misticismo vs CD; sucesso = identifica e pode anular custando mesmos PM; 1x/cena). 5º grau: Tabuleiro do Destino (8 PM: reescreve probabilidades; 1 alvo sem 20 natural, 1 alvo sem 1 natural; substitui esses números em testes do combate), Senhor do Destino (100 Ƒ$ + ritual: bola de cristal; define desfecho desejado e indesejado; pode trocar o resultado 1x)."
+        }
+      ]
+    },
+    {
+      "titulo": "Especialistas",
+      "topicos": [
+        {
+          "titulo": "Bardo",
+          "tags": [
+            "bardo",
+            "especialista",
+            "carisma",
+            "música",
+            "inspiração",
+            "partitura",
+            "performance",
+            "feitiço copiado"
+          ],
+          "conteudo": "Especialista que transforma arte, presença e talento em influência. Usa partituras mágicas em combate.\n\nAtributo chave: Carisma. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Atuação e Enganação (+8 extras). Proficiências: armas marciais e instrumentos musicais. Resistência: +1 em Reflexos. Feitiços: qualquer Origem, mas somente 3 escolas escolhidas permanentemente; 3 feitiços 1º grau.\n\nHabilidades iniciais: Vivências da Estrada (1 PM: realiza teste de perícia como se treinado OU ajuda aliado +Carisma ao resultado; 1 efeito por cena), Inspiração Cativante (padrão + Atuação CD 15: +2 em todos os testes de perícia por cena; OU 1h + CD 20: inspiração guardada para uso no dia).\n\nDons notáveis: 1º grau: Balada Mortal (arma vira instrumento mágico com alcance curto; usa Atuação/Carisma em ataque/dano), Maestro (cria partituras mágicas sustentáveis; +Inteligência ao dano). 2º grau: Sinfonia Estimulante (2 PM: até 3 aliados recebem +1 dado dano 1x/turno), Partitura 2 — Coro de Retaliação (2 PM: aliados que são errados podem contra-atacar). 3º grau: Ritmo Dissonante (acertos consecutivos = Marcas de Dissonância: +2 Acerto +1d8 dano; 2 marcas = Abalado; 3 = Apavorado), Balada Harmônica (+1 margem e multiplicador crítico; crítico = Colapso Harmônico + Enjoado). 4º grau: Narrativa Reescrita (6 PM + Atuação CD 18: aliado em alcance curto ao cair a 0 PV permanece com 1 PV), Ritmo Enfeitiçado (reação + Atuação vs CD: copia feitiço visto; mantém 1 por vez). 5º grau: Orquestra (1h + Atuação CD 30: próximo combate = todas as partituras simultâneas; 3+ partituras = inimigos em área com desvantagem 1x/rodada), Concerto Supremo (8 PM: sinfonia 30m raio: aliados –PM/2, inimigos dobram PM; 3 rodadas)."
+        },
+        {
+          "titulo": "Bufão",
+          "tags": [
+            "bufão",
+            "especialista",
+            "carisma",
+            "provocação",
+            "humor",
+            "deboche",
+            "performance",
+            "improviso"
+          ],
+          "conteudo": "Especialista que transforma riso, provocação e absurdo em ferramenta de sobrevivência.\n\nAtributo chave: Carisma. PV inicial: 8 + Constituição (+4 por nível ímpar). PM inicial: 6 (+3 por nível ímpar). Perícias treinadas: Atuação e Enganação (+8 extras). Proficiências: nenhuma. Resistência: +1 em Reflexos. Feitiços: 2 feitiços 1º grau de Ilusão ou Encantamento como Poder Replicado (dom Mestres das Máscaras).\n\nHabilidades iniciais: Entretenimento (1 PM: substitui Diplomacia/Atuação por Enganação; 1 PM + ação de movimento + Atuação vs Vontade: alvo perde ação OU aliado recebe vantagem), Deboche Profano (reação + 1 PM ao ver ataque/feitiço em alcance curto: Atuação vs Vontade; falha = habilidade falha; –5 ou –10 = Abalado ou Pasmo).\n\nDons notáveis: 1º grau: Gás do Riso (1 PM: névoa 6m 3d6 + Vontade ou passa turno rindo), Surpresa Patética (1x por combate: 1 PM ao ser primeiro alvo = boneco ilusório anula dano + reposiciona), Ataque de Carisma (+Carisma como dano extra ao interpretar/zombar). 2º grau: Gargalhada Paralisante (crítico após performance = Pasmo por crise de riso), Arsenal Improvisado (2 PM: objeto vira arma 1d8+Carisma por 3 rodadas). 3º grau: Improviso Mortal (Arsenal: 2d8 + preciso ou impactante; vs falha em Vontade +1d8 extra), Espetáculo da Provocação (acertar ou falha na Vontade = nível de Irritação: –2 Acerto vs Bufão; 3 níveis = desvantagem). 4º grau: Provocação Escancarada (1 PM ao ser reduzido a 0 PV: finge morte, aliados acreditam; 4 PM no próximo turno = ataque desprevenido com vantagem), Humilhação Fatal (6 PM: acerto + Atuação vs Vontade = +5d10 dano e –5 VG/MD por 2 rodadas). 5º grau: Deus das Máscaras (1x por dia: assume persona perfeita de criatura visível, copia dons/feitiços até 4º grau usando Carisma), Grande Teatro da Insanidade (10 PM: Atuação em 30m raio; Vontade ou: frenesi OU obediência OU inconscientes de tanto rir)."
+        },
+        {
+          "titulo": "Carteador",
+          "tags": [
+            "carteador",
+            "especialista",
+            "carta",
+            "baralho",
+            "jogatina",
+            "sorte",
+            "carisma",
+            "aposta"
+          ],
+          "conteudo": "Especialista que transforma sorte, leitura de risco e truques rápidos em estilo de vida. Usa cartas como armas.\n\nAtributo chave: Carisma. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Enganação e Jogatina (+8 extras). Proficiências: nenhuma. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Baralho Mágico (foco e arma único; até 20 cartas como projéteis 1d6 crítico 19×2 usando Pontaria e Acuidade; ação de movimento: puxa 1d4 cartas de volta em alcance curto), Entre o 7 e o 9 (ritual diário de 1h: 1 PM + reação 1x/cena: Carta 7 = vantagem em 1 teste OU Carta 9 = +Carisma em qualquer teste/valor).\n\nDons notáveis: 1º grau: Ás na Manga (1 PM + dano: +1 dado base + +2 Acerto), Mãos Viciadas (usa Jogatina em vez de Pontaria; 1 PM: Jogatina no lugar de Enganação/Ladinagem/Prestidigitação), Aposta de Sangue (sacrifica cartas: 1 PM ou 1d8 PV por carta). 2º grau: Crítico Ampliado (baralho: margem e multiplicador +1), Cartas Carismáticas (2d6 em vez de 1d6; crítico: 2 PM = carta sombra = ataque extra sem consumir munição). 3º grau: Carta Coringa (2 PM 1x/dia: substitui qualquer teste não treinado por Jogatina), Mesa da Fortuna (1 PM 1x/rodada: +1d6+escala em qualquer valor após a rolagem). 4º grau: Castelo de Cartas (dobra usos diários das Cartas da Corte), Carta Reserva (ao resistir a efeito: Jogatina no teste; sucesso = sela efeito numa carta = dispara no próximo acerto). 5º grau: Avatar da Carta (1x/dia: todos os 4 naipes simultâneos: todos os bônus de Bênção dos Naipes; nunca falha crítica em Jogatina), Prisão da Corte (10 PM: aprisiona alvo inconsciente/Perto da Morte nas cartas por dias = Escala de Classe)."
+        },
+        {
+          "titulo": "Dançarino",
+          "tags": [
+            "dançarino",
+            "especialista",
+            "carisma",
+            "dança",
+            "sedução",
+            "ritmo",
+            "movimento",
+            "performance"
+          ],
+          "conteudo": "Especialista que transforma movimento, ritmo e presença corporal em poder. Cria danças mágicas.\n\nAtributo chave: Carisma. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Atuação e Sedução (+8 extras). Proficiências: armas exóticas e instrumentos musicais. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Círculo do Ritmo (danças especiais em área 6m ao redor, sustentáveis; inimigos próximos: entre 4,5-3m = –1 Resistências; em 1,5m ou corpo a corpo = –2; 1 dança ativa por vez; Vontade testada toda rodada), Exuberante (+2 em todos os testes de Carisma e sociais; 1 PM: eleva para +5; replica Canto da Sereia vs atraídos 1x/cena).\n\nDons notáveis: 1º grau: Luta Coreografada (proficiente em desarmado/instrumentos/itens artísticos; dano +1 passo; usa Atuação/Carisma em ataque/dano), 1ª Dança/Ritmo de Descompasso (1 PM: Vontade ou –2 Acerto/VG; 1º ataque vs Dançarino com desvantagem). 2º grau: Esgotamento Final (Frustrado que falha novamente = Esmorecido 3 rodadas; pré-req Fricção Emocional), 2ª Dança/Ritmo Silencioso (2 PM: –2 Acerto e dano /1 passo para quem falhar). 3º grau: Marca da Sedução (vs atraído: 2 PM extras ao acertar = Apaixonado por cena), 3ª Dança/Ritmo Contido (4 PM: Vontade ou deslocamento /2 e sem alterações de velocidade/ações). 4º grau: 4ª Dança/Ritmo Contagiante (6 PM: Vontade ou dançam involuntariamente seguindo o Dançarino), Chute do Dragão Azul (6 PM: cone 6m 10d8 sônico/impacto + Vontade ou PM bloqueados 2 rodadas). 5º grau: Dança do Dragão Azul (10 PM: 15d10 sônico/impacto em todos na área 6m + Vontade ou sem PM 3 rodadas), Beijo do Pavor e Sedução (10 PM: vs atraído = Submisso 3 rodadas + 5d10 psíquico/rodada)."
+        },
+        {
+          "titulo": "Gatuno",
+          "tags": [
+            "gatuno",
+            "especialista",
+            "furtividade",
+            "ladinagem",
+            "destreza",
+            "golpe baixo",
+            "roubo",
+            "infiltração"
+          ],
+          "conteudo": "Especialista das mãos leves e passos silenciosos. Especializado em golpes furtivos e infiltrações.\n\nAtributo chave: Destreza. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Ladinagem e Furtividade (+8 extras). Proficiências: nenhuma. Resistência: +1 em Reflexos.\n\nHabilidades iniciais: Golpe Baixo (1x/rodada ao atingir desprevenido com corpo a corpo/alcance curto OU ao flanquear: +1d6 dano; +1d6 a cada 5 níveis; imunes a críticos são imunes), Instinto Sobrevivente (1 PM: +Destreza em qualquer perícia treinada; sofre dano mínimo de quedas).\n\nDons notáveis: 1º grau: Mãos Leves (1 PM: Ladinagem como ação livre 1x/rodada), Sombra Ágil (ignora terreno difícil em Furtividade; com CD 15+: vantagem em Ladinagem/Prestidigitação), Rei da Emboscada (flanqueando: +1 dado extra no Golpe Baixo + dobro de bônus de flanqueamento). 2º grau: Ataque Surpresa (1 PM: ação padrão extra em Furtividade; 1x/cena), Corte de Oportunidade (flanqueando/furtivo/oportunidade: +2 margem crítico), Evasão Precisa (sem dano se passar no Reflexos; armadura leve ou imóvel = não funciona). 3º grau: Olhos na Sombra (não pode ser flanqueado; trata grupo adjacente como 1 para furtividade), Anatomia Maquiavélica (Golpe Baixo +1 passo vs humanoides). 4º grau: Golpe Preciso (6 PM: acerto garantido em desprevenido = 10d6; 1x/cena), Ladrão Arcano (Golpe Baixo: recupera 1 PM por dado; Vontade para /2). 5º grau: A Pessoa Certa para o Trabalho (6 PM: atravessa área vigiada sem reações/armadilhas/testes passivos; desaparece se cercado por 4 PM), Lâmina Sangrenta (Golpe Baixo +1 passo; crítico = dano dobrado + Hemorragia se falhar no Estripar; pré-req Estripar)."
+        },
+        {
+          "titulo": "Mediador",
+          "tags": [
+            "mediador",
+            "especialista",
+            "carisma",
+            "diplomacia",
+            "intimidação",
+            "língua ferina",
+            "controle mental",
+            "suporte social"
+          ],
+          "conteudo": "Especialista que resolve conflitos com palavras certas. Usa habilidades sociais como ferramenta de combate.\n\nAtributo chave: Carisma. PV inicial: 12 + Constituição (+4 por nível ímpar). PM inicial: 8 (+4 por nível ímpar). Perícias treinadas: Diplomacia e Enganação (+8 extras). Proficiências: armas marciais, armaduras pesadas e escudos. Resistência: +1 em Vontade.\n\nHabilidades iniciais: Aura de Comando (usa dons através de perícias de Carisma vs Inteligência 2+; comandos não forçam suicídio/quebra de código de honra; 1 PM: +4 em Intimidação/Diplomacia/Enganação em 1 interação), Língua Ferina (1 PM + padrão: Diplomacia ou Intimidação vs Vontade; falha = 2d6 dano psíquico não letal; a 0 PV = rende-se/foge conforme a perícia usada; +1 PM = +1d6 a cada 5 níveis).\n\nDons notáveis: 1º grau: Palavras de Inspiração (1 PM + Diplomacia CD 10: +1 em todos os testes dos aliados; +1 por 10 acima da CD), Motivar (1 PM: aliado rerrola qualquer rolagem OU +1d10 ao próximo dano), Vontade Inabalável (imune a controle mental; 1 PM: remove efeito mental de aliado). 2º grau: Terror Psicológico (falha na Língua Ferina = Abalado; 2ª falha = Apavorado; após = Frustrado), Semente da Discórdia (2 PM: Vontade vs Diplomacia; falha = trata aliados como inimigos por 1 turno), Retórica de Guerra (2 PM + Diplomacia CD 20: aliados em alcance curto +1 passo dano físico até fim da cena). 3º grau: Mandato de Comando (6 PM: até 3 inimigos inteligentes = Vontade ou obedecem 1 ação específica). 4º grau: Engano Memorável (8 PM: induz amnésia em inimigo sobre eventos/habilidades da cena), Dominar a Mente (6 PM: Diplomacia vs Vontade; falha = aliado ou servo até fim da cena). 5º grau: Sentença de Morte (12 PM: Perto da Morte ou Abalado emocionalmente = Vontade ou imediatamente a 0 PV; 1x por combate; não afeta Chefes/MVP), Palavra Letal (Língua Ferina causa dano letal; afeta Int 0; falha crítica = crítico do Mediador)."
+        }
+      ]
+    },
+    {
+      "titulo": "Lista Oficial de Classes — Referência de Validação",
+      "topicos": [
+        {
+          "titulo": "Todos os nomes oficiais de classes do sistema Storycraft",
+          "tags": [
+            "lista completa",
+            "validação",
+            "classes",
+            "nomes oficiais",
+            "existe",
+            "não existe"
+          ],
+          "conteudo": "LISTA OFICIAL E COMPLETA de todas as classes do sistema Storycraft 3ª Edição. NENHUMA classe existe além das listadas aqui. Se não estiver nesta lista, NÃO EXISTE no sistema.\n\n=== COMBATENTES (16 classes) ===\n- Arqueiro\n- Bárbaro\n- Cavaleiro da Morte\n- Cavaleiro Lorde\n- Domador de Feras\n- Domador de Ondas\n- Executor\n- Guerreiro\n- Lutador de Rua\n- Mestre das Armas\n- Monge\n- Ninja\n- Pistoleiro\n- Samurai\n- Senhor das Chamas\n- Sentinela\n\n=== CONJURADORES (14 classes) ===\n- Apóstata\n- Arcanista\n- Bruxo\n- Druida\n- Feiticeiro\n- Floromante\n- Mago\n- Mago Branco\n- Mago do Caos\n- Mago Negro\n- Mestre das Almas\n- Necromante\n- Sábio\n- Xamã\n\n=== SUPORTES (8 classes) ===\n- Arauto\n- Arcano\n- Clérigo\n- Encantador\n- Espiritualista\n- Expurgador\n- Hierofante\n- Oráculo\n\n=== ESPECIALISTAS (6 classes) ===\n- Bardo\n- Bufão\n- Carteador\n- Dançarino\n- Gatuno\n- Mediador\n\nTotal: 44 classes. Qualquer classe citada que não esteja nesta lista NÃO EXISTE no sistema Storycraft."
+        }
+      ]
+    }
+  ]
+}
