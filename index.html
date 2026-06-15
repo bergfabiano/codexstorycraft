@@ -2842,8 +2842,7 @@ async function autoLoadTab(tabKey,url){
       return false;
     }
     var rows=parseCSV(text, true); // noSkip: tab já é conhecida, 1ª linha sempre é cabeçalho
-    if(!rows.length){showDebug(tabKey,'CSV vazio. Preview: '+text.substring(0,300));return false;}
-    showDebug(tabKey,'[DEBUG] '+rows.length+' linhas | cols: '+Object.keys(rows[0]||{}).join(', '));
+    if(!rows.length) return false;
     distributeData(rows,tabKey);
     return true;
   }catch(e){
