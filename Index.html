@@ -2842,7 +2842,8 @@ async function autoLoadTab(tabKey,url){
       return false;
     }
     var rows=parseCSV(text, true); // noSkip: tab já é conhecida, 1ª linha sempre é cabeçalho
-    if(!rows.length) return false;
+    if(!rows.length){showDebug(tabKey,'CSV vazio. Preview: '+text.substring(0,300));return false;}
+    showDebug(tabKey,'[DEBUG] '+rows.length+' linhas | cols: '+Object.keys(rows[0]||{}).join(', '));
     distributeData(rows,tabKey);
     return true;
   }catch(e){
@@ -2980,8 +2981,8 @@ function distributeData(rows,tab){
   if(tab==='racas_detail'){DB.racas=rows;renderRacasCatPills();renderRacas();return;}
   if(tab==='grimorio'){DB.grimorio=rows;return;}
   if(tab==='racas'){DB.racas=rows;return;}
-  if(tab==='classes'){DB.classes=rows;return;}
-  if(tab==='dons'){DB.dons=rows;return;}
+  if(tab==='classes'){DB.classes=rows;renderClasses();return;}
+  if(tab==='dons'){DB.dons=rows;renderClasses();return;}
   if(tab==='vantagensdesvantagens'||tab==='vantagens'){DB.vantagens=rows;return;}
   if(tab==='itensloja'||tab==='itens'){DB.itens=rows;return;}
   if(tab==='loja_armas'){LOJA.armas=rows;LOJA_STATUS.armas='ok';if(LOJA_ACTIVE==='armas')renderLoja();return;}
@@ -3037,8 +3038,10 @@ function distributeData(rows,tab){
   if(tab==='estigmas'){DB.estigmas=rows;return;}
   var hasFeitico=norm.indexOf('feitico')>-1,hasEscola=keys.indexOf('escola')>-1,hasGrau=keys.indexOf('grau')>-1,hasOrigem=keys.indexOf('origem')>-1;
   if(hasFeitico||(hasEscola&&hasGrau)||(hasEscola&&hasOrigem)){DB.grimorio=rows;return;}
-  var hasPapel=keys.indexOf('papel')>-1,hasRaridade=keys.indexOf('raridade')>-1,hasRaca=keys.indexOf('raca')>-1||norm.indexOf('raca')>-1,hasDominio=keys.indexOf('dominio')>-1||norm.indexOf('dominio')>-1,hasClasse=keys.indexOf('classe')>-1,hasNomeDeus=norm.indexOf('nomedodeus')>-1||norm.indexOf('nomedeus')>-1;
+  var hasPapel=keys.indexOf('papel')>-1,hasRaridade=keys.indexOf('raridade')>-1,hasRaca=keys.indexOf('raca')>-1||norm.indexOf('raca')>-1,hasDominio=keys.indexOf('dominio')>-1||norm.indexOf('dominio')>-1,hasClasse=keys.indexOf('classe')>-1,hasNomeDeus=norm.indexOf('nomedodeus')>-1||norm.indexOf('nomedeus')>-1,hasCategoria=keys.indexOf('categoria')>-1,hasPodeKit=keys.some(function(k){return k.indexOf('poder')>-1||k.indexOf('kit')>-1;}),hasNomeDom=keys.indexOf('nome do dom')>-1||keys.indexOf('nomedom')>-1||norm.some(function(k){return k.indexOf('nomedom')>-1;});
   if(hasNomeDeus){DB.deuses=rows;return;}
+  if(hasNomeDom||(hasClasse&&hasCategoria&&keys.indexOf('grau')>-1)){DB.dons=rows;return;}
+  if(hasPodeKit||(hasClasse&&hasCategoria&&!hasRaca)){DB.classes=rows;return;}
   if(hasRaca||(hasClasse&&!hasPapel)){DB.racas=rows;return;}
   if(hasPapel){DB.classes=rows;return;}
   if(hasRaridade){DB.itens=rows;return;}
