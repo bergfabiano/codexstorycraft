@@ -4929,7 +4929,7 @@ function openModal(rowOrStr){
   }
   // Para vantagens, se desc não foi encontrado, tenta vdDesc como fallback
   if(!desc&&isVantagem) desc=vdDesc(row);
-  html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
+  if(!isDeus) html+=(desc?'<div class="modal-desc">'+formatDesc(desc)+'</div>':'');
   // Para vantagens: mostra custo e pré-requisito de forma elegante
   if(isVantagem){
     var vCusto=vdCusto(row),vPrereq=vdPrereq(row)||(row['Requisito']||'').trim()||(row['requisito']||'').trim(),vExtra=gf(row,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
@@ -4941,7 +4941,7 @@ function openModal(rowOrStr){
       if(vExtra) html+='<div><div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-bottom:0.2rem;">Extra</div><div style="font-size:0.9rem;color:var(--text);">'+vExtra+'</div></div>';
       html+='</div>';
     }
-  } else if(fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
+  } else if(!isDeus&&fields.length){html+='<hr class="modal-divider"><div class="modal-fields">'+fields.map(function(k){return'<div class="modal-field"><label>'+k+'</label><p>'+row[k]+'</p></div>';}).join('')+'</div>';}
   document.getElementById('modalBody').innerHTML=html;
   document.getElementById('modalOverlay').classList.add('open');
 }
