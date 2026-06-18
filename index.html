@@ -3386,13 +3386,13 @@ function abrirDetalhesRaca(idx){
   html+='</div></div>';
 
   // Habilidades raciais
-  var habs=[[hab1,'1ª Habilidade'],[hab2,'2ª Habilidade'],[hab3,'3ª Habilidade']].filter(function(h){return h[0];});
+  var habs=[[hab1,'I Habilidade'],[hab2,'II Habilidade'],[hab3,'III Habilidade']].filter(function(h){return h[0];});
   if(habs.length){
     html+='<hr class="modal-divider">';
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">⚡ Habilidades Raciais</div>';
     var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
-      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(155,93,229,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
       html+='<div class="modal-sub"><span class="modal-sub-title" style="display:flex;align-items:center;">'+_iconHtml+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>';
     });
   }
@@ -3401,7 +3401,7 @@ function abrirDetalhesRaca(idx){
   if(lin){
     html+='<hr class="modal-divider">';
     var _linIcon=getRacaLFImg('linhagem');
-    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(109,255,179,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_linIconHtml+'✦ Linhagem</div>';
     html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+lin+'</p>';
   }
@@ -3410,7 +3410,7 @@ function abrirDetalhesRaca(idx){
   if(fardo){
     html+='<hr class="modal-divider">';
     var _farIcon=getRacaLFImg('fardo');
-    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(246,66,66,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_farIconHtml+'▽ Fardo</div>';
     html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+fardo+'</p>';
   }
