@@ -2187,7 +2187,7 @@ main{
       </div>
       <p class="result-count" id="count-deuses"></p>
       <div class="debug-banner" id="deuses-debug"></div>
-      <div class="cards-grid" id="grid-deuses"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☀</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+      <div class="cards-grid" id="grid-deuses" style="grid-template-columns:repeat(5,1fr);"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">☀</span><h3>Nenhum deus carregado</h3><p>Conecte o Google Sheets.</p></div></div>
     </div>
     <div id="deuses-detalhe" class="classe-detail">
       <button class="btn-voltar" onclick="voltarDeuses()">← Voltar aos Deuses</button>
@@ -3392,8 +3392,8 @@ function abrirDetalhesRaca(idx){
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">⚡ Habilidades Raciais</div>';
     var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
-      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(155,93,229,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
-      html+='<div class="modal-sub"><span class="modal-sub-title" style="display:flex;align-items:center;">'+_iconHtml+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>';
+      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--gold-light);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--gold-light);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+      html+='<div class="modal-sub" style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.6rem 0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<div style="flex:1;min-width:0;"><span class="modal-sub-title">'+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>'+'</div>';
     });
   }
 
@@ -3401,18 +3401,16 @@ function abrirDetalhesRaca(idx){
   if(lin){
     html+='<hr class="modal-divider">';
     var _linIcon=getRacaLFImg('linhagem');
-    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(109,255,179,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
-    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_linIconHtml+'✦ Linhagem</div>';
-    html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+lin+'</p>';
+    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--green);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--green);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.35rem;">✦ Linhagem</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+lin+'</p>'+'</div></div>';
   }
 
   // Fardo
   if(fardo){
     html+='<hr class="modal-divider">';
     var _farIcon=getRacaLFImg('fardo');
-    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'<span style="display:inline-block;width:20px;height:20px;border-radius:3px;border:1px dashed rgba(246,66,66,0.3);flex-shrink:0;margin-right:0.4rem;vertical-align:middle;"></span>';
-    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_farIconHtml+'▽ Fardo</div>';
-    html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+fardo+'</p>';
+    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--cat-desvantagem);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--cat-desvantagem);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.35rem;">▽ Fardo</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+fardo+'</p>'+'</div></div>';
   }
 
   // Seção da Categoria (sem outras raças)
@@ -4325,6 +4323,7 @@ function renderDeuses(){
     return(!s||fstr(r).indexOf(s)>-1)&&(!al||pol===al)&&(!do2||ars===do2);
   });
   var g=document.getElementById('grid-deuses');
+  g.style.gridTemplateColumns='repeat(5,1fr)';
   document.getElementById('count-deuses').textContent=data.length+' resultado'+(data.length===1?'':'s');
   if(!data.length){g.innerHTML=emptyMsg('☀',DB.deuses.length?'Nenhum resultado':'Nenhum deus carregado');return;}
   g.innerHTML=data.map(function(r){
