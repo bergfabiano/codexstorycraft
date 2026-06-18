@@ -4455,9 +4455,9 @@ function renderDeuses(){
     var cc=deusCardClass(pol);
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
     return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')" style="cursor:pointer;">'+imgBox(getDeusImg(n),'☀')+
-      '<div style="padding:0.6rem 0.75rem 0.8rem;text-align:center;">'+
-      '<div style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:0.88rem;font-weight:700;color:var(--gold-light);line-height:1.3;margin-bottom:0.3rem;letter-spacing:0.03em;">'+n+'</div>'+
-      (sob?'<div style="font-family:Raleway,sans-serif;font-size:0.68rem;font-weight:500;color:var(--violet-bright);letter-spacing:0.06em;font-style:italic;">'+sob+'</div>':'')+
+      '<div style="padding:0.75rem 0.85rem 1rem;text-align:center;">'+
+      '<div style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:0.92rem;font-weight:700;color:var(--gold-light);line-height:1.3;margin-bottom:0.55rem;letter-spacing:0.02em;text-shadow:0 0 12px rgba(212,175,55,0.3);">'+n+'</div>'+
+      (sob?'<div style="font-family:Raleway,sans-serif;font-size:0.7rem;font-weight:600;color:#e8b86d;letter-spacing:0.07em;font-style:italic;">'+sob+'</div>':'')+
       '</div></div>';
   }).join('');
 }
@@ -4873,11 +4873,14 @@ function openModal(rowOrStr){
   for(var i=0;i<rks.length;i++){if(descKeys.indexOf(deaccent(rks[i]))>-1&&row[rks[i]]){desc=row[rks[i]];break;}}
   var skipKeys=['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','vantagem','desvantagem','maldicao','tipo','escola','descrição completa','descricao completa','descrição','descricao','desc','lore','resumo','efeito','objetivo','texto','detalhes','graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao','graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
   var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
+  var isDom=!!(gf(row,'Nome do Dom','nome do dom')&&gf(row,'Classe','classe'));
   var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
   var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
-  var isVantagem=!isClasse&&!isDeus&&!!(row['_vd_cat']||gf(row,'Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Requisito','requisito'));
+  var isVantagem=!isClasse&&!isDeus&&!isDom&&!!(row['_vd_cat']||gf(row,'Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Requisito','requisito'));
   var nomeClasseImg=isClasse?(gf(row,'Classe','classe')||gf(row,'_nome_display')):null;
   var nomeDeusImg=isDeus?(gf(row,'Nome do Deus','nome do deus')||gf(row,'_nome_display')):null;
+  // Imagem do dom: por classe+grau ou por nome do dom
+  var donImgUrl=isDom?(getDonGrauImg(gf(row,'Classe','classe'),gf(row,'Grau','grau'))||(window.DON_IMGS&&window.DON_IMGS[nome]?window.DON_IMGS[nome]:null)):null;
   var html='';
   if(nomeClasseImg){
     var classCat=gf(row,'Categoria','categoria')||'';
@@ -4890,11 +4893,17 @@ function openModal(rowOrStr){
     '</div></div>';
   }else if(nomeDeusImg){
     var _deusImg=getDeusImg(nomeDeusImg);
+    var _deusSob=getDeusSubtitulo(nome);
     var _deusDesc=gf(row,'Descrição','Descricao','descricao','Lore','lore','desc')||'';
-    html='<div style="padding:0.25rem 0;">'+
-      (_deusImg?'<div style="width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;margin-bottom:1rem;"><img src="'+_deusImg+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+
-      (_deusDesc?'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem;">'+_deusDesc+'</p>':'')+
-      '<div style="text-align:center;"><button class="btn-ver-dons" style="padding:0.65rem 2rem;" onclick="closeModal();verGracasDeus(&quot;'+nome.replace(/"/g,'&quot;')+'&quot;)">☀ Saiba mais sobre esta Divindade</button></div>'+
+    html='<div style="padding:0;">'+
+      '<div style="display:flex;gap:1.25rem;align-items:center;margin-bottom:1.25rem;">'+
+      (_deusImg?'<div style="flex-shrink:0;width:110px;height:110px;border-radius:8px;overflow:hidden;border:1px solid rgba(212,175,55,0.4);"><img src="'+_deusImg+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+
+      '<div style="flex:1;min-width:0;">'+
+      '<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.25rem;font-weight:700;color:var(--gold-light);line-height:1.25;margin-bottom:0.3rem;">'+nome+'</h2>'+
+      (_deusSob?'<div style="font-family:Raleway,sans-serif;font-size:0.75rem;font-weight:600;color:#e8b86d;letter-spacing:0.06em;font-style:italic;">'+_deusSob+'</div>':'')+
+      '</div></div>'+
+      (_deusDesc?'<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.7;margin-bottom:1.5rem;">'+_deusDesc+'</p>':'')+
+      '<button class="btn-ver-dons" style="width:100%;" onclick="closeModal();verGracasDeus(&quot;'+nome.replace(/"/g,'&quot;')+'&quot;)">☀ Saiba mais sobre esta Divindade</button>'+
       '</div>';
   }else{
     // Vantagens, feitiços, estigmas — hero com imagem à esquerda e título centralizado
@@ -4903,8 +4912,8 @@ function openModal(rowOrStr){
                    gf(row,'Origem','origem','Categoria','categoria') ? '✸' : '✦';
     var heroTipo = header || (row['_vd_cat'] ? VD_LABELS[row['_vd_cat']]||row['_vd_cat'] : '');
     // Tenta pegar imagem do Firebase (vantagens por categoria, grimório por escola)
-    var fbHeroImg = null;
-    if(window.VANT_IMGS && row['_vd_cat']){
+    var fbHeroImg = donImgUrl || null;
+    if(!fbHeroImg && window.VANT_IMGS && row['_vd_cat']){
       var _catLabel=VD_LABELS[row['_vd_cat']]||row['_vd_cat'];
       fbHeroImg=window.VANT_IMGS[_catLabel]||window.VANT_IMGS[_catLabel.replace(/[.#$\/\[\]]/g,'_')]||null;
     }
