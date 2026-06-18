@@ -2551,9 +2551,18 @@ var SHEET_URLS={
 var CLASS_IMGS={};
 var DEUS_IMGS={};
 var RACA_IMGS={};
+// Novos dicionários de ícones
+var RACA_HAB_IMGS={}; // chave: "Categoria" (ex: "Humanoides") → url do ícone p/ habilidades raciais
+var RACA_LF_IMGS={linhagem:'',fardo:''};  // ícone único para Linhagem e Fardo de todas as raças
+var DON_GRAU_IMGS={}; // chave: "NomeClasse|Grau" → url do ícone p/ dons daquela classe+grau
+var GRIM_SPELL_IMGS={}; // chave: nome do feitiço → url do ícone individual
 function getClassImg(n){return CLASS_IMGS[n]||null;}
 function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
+function getRacaHabImg(cat){return RACA_HAB_IMGS[cat]||RACA_HAB_IMGS[(cat||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
+function getRacaLFImg(tipo){return (tipo==='linhagem'?RACA_LF_IMGS.linhagem:RACA_LF_IMGS.fardo)||null;}
+function getDonGrauImg(classe,grau){var k=(classe+'|'+grau).replace(/[.#$\/\[\]]/g,'_');return DON_GRAU_IMGS[k]||null;}
+function getSpellImg(nome){return GRIM_SPELL_IMGS[nome]||GRIM_SPELL_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 
 // Card horizontal minimalista — só imagem + nome
 function cardHoriz(url, sym, extraCls, nome, onclick){
@@ -3381,22 +3390,28 @@ function abrirDetalhesRaca(idx){
   if(habs.length){
     html+='<hr class="modal-divider">';
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">⚡ Habilidades Raciais</div>';
+    var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
-      html+='<div class="modal-sub"><span class="modal-sub-title">'+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>';
+      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+      html+='<div class="modal-sub"><span class="modal-sub-title" style="display:flex;align-items:center;">'+_iconHtml+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>';
     });
   }
 
   // Linhagem
   if(lin){
     html+='<hr class="modal-divider">';
-    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">✦ Linhagem</div>';
+    var _linIcon=getRacaLFImg('linhagem');
+    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_linIconHtml+'✦ Linhagem</div>';
     html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+lin+'</p>';
   }
 
   // Fardo
   if(fardo){
     html+='<hr class="modal-divider">';
-    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;">▽ Fardo</div>';
+    var _farIcon=getRacaLFImg('fardo');
+    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:20px;height:20px;border-radius:3px;object-fit:cover;flex-shrink:0;margin-right:0.4rem;opacity:0.85;vertical-align:middle;">':'';
+    html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;display:flex;align-items:center;">'+_farIconHtml+'▽ Fardo</div>';
     html+='<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;">'+fardo+'</p>';
   }
 
@@ -3591,7 +3606,8 @@ function verDonsClasse(nomeClasse){
           var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)';
           var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
           var dIdx=_storeModal(dCopy);
-          var donImgUrl=window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'';
+          var _donGrauImg=getDonGrauImg(nomeClasse,gr);
+          var donImgUrl=_donGrauImg||(window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'');
           var imgContent=donImgUrl?'<img src="'+donImgUrl+'" alt="'+dn+'">':'✦';
           html+='<div class="don-card-h" onclick="openModalIdx('+dIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+dn+'</div></div>';
         }
@@ -3607,7 +3623,8 @@ function verDonsClasse(nomeClasse){
           var d=lista[di],dn=gf(d,'Nome do Dom','nome do dom')||'(sem nome)';
           var dCopy={};for(var k in d)dCopy[k]=d[k];dCopy['_nome_display']=dn;
           var dIdx=_storeModal(dCopy);
-          var donImgUrl=window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'';
+          var _donGrauImg=getDonGrauImg(nomeClasse,gr);
+          var donImgUrl=_donGrauImg||(window.DON_IMGS&&window.DON_IMGS[dn]?window.DON_IMGS[dn]:'');
           var imgContent=donImgUrl?'<img src="'+donImgUrl+'" alt="'+dn+'">':'✦';
           html+='<div class="don-card-h" onclick="openModalIdx('+dIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+dn+'</div></div>';
         }
@@ -4292,7 +4309,7 @@ function renderGrimorio(){
     var nome=gf(r,'Feitiço','Feitico','feitico','Nome','nome')||'(sem nome)',escola=gf(r,'Escola','escola'),grau=gf(r,'Grau','grau'),origem=gf(r,'Origem','origem'),tipo=gf(r,'Tipo','tipo'),exec=gf(r,'Execução','Execucao','execucao'),alc=gf(r,'Alcance','alcance'),dur=gf(r,'Duração','Duracao','duracao'),res=gf(r,'Resistência','Resistencia','resistencia'),desc=gf(r,'Descrição','Descricao','descricao','desc');
     var cc=escolaCardClass(escola);
     var idx=_storeModal(r);
-    var grimImg=(window.GRIM_IMGS&&escola)?(window.GRIM_IMGS[escola]||window.GRIM_IMGS[escola.replace(/[.#$\/\[\]]/g,'_')]||null):null;
+    var grimImg=getSpellImg(nome)||(window.GRIM_IMGS&&escola?(window.GRIM_IMGS[escola]||window.GRIM_IMGS[escola.replace(/[.#$\/\[\]]/g,'_')]||null):null);
     if(getLayout('grimorio')==='v') return cardVert(grimImg,'✦',escola||grau||'feitiço',nome,'openModalIdx('+idx+')',cc);
     return cardHoriz(grimImg,'✦',cc,nome,'openModalIdx('+idx+')');
   }).join('');
@@ -4733,6 +4750,10 @@ function openModal(rowOrStr){
     if(window.VANT_IMGS && row['_vd_cat']){
       var _catLabel=VD_LABELS[row['_vd_cat']]||row['_vd_cat'];
       fbHeroImg=window.VANT_IMGS[_catLabel]||window.VANT_IMGS[_catLabel.replace(/[.#$\/\[\]]/g,'_')]||null;
+    }
+    if(!fbHeroImg && window.GRIM_SPELL_IMGS){
+      var _nomeFeitico=nome||'';
+      if(_nomeFeitico) fbHeroImg=getSpellImg(_nomeFeitico);
     }
     if(!fbHeroImg && window.GRIM_IMGS){
       var _escola=gf(row,'Escola','escola')||'';
@@ -5623,18 +5644,30 @@ var _adminSecoes = [
     }
   },
   {
-    id:'grimorio', label:'Grimório', tipo:'categoria',
+    id:'grimorio', label:'Grimório (por Escola)', tipo:'categoria',
     subfiltroLabel: 'Escola',
     subfiltros: function(){
       return uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
     },
-    // Para grimório, a "chave" salva é o nome da escola
     fonte: function(sub){
       var escolas = uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
       if(sub) escolas = escolas.filter(function(e){ return e===sub; });
       return escolas;
     },
-    descricao: 'Uma foto por escola — todos os feitiços dessa escola usarão a mesma imagem.'
+    descricao: 'Uma foto por escola — fallback quando o feitiço não tem ícone próprio.'
+  },
+  {
+    id:'grimorio_spell', label:'Grimório (por Feitiço)', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      return DB.grimorio
+        .filter(function(r){ return !sub || gf(r,'Escola','escola')===sub; })
+        .map(function(r){ return gf(r,'Feitiço','Feitico','feitico','Nome','nome')||''; })
+        .filter(Boolean);
+    },
+    descricao: 'Ícone individual por feitiço — tem prioridade sobre o ícone da escola.'
   },
   {
     id:'vantagens', label:'Vantagens', tipo:'categoria',
@@ -5659,6 +5692,39 @@ var _adminSecoes = [
         .filter(Boolean);
     },
     descricao: 'Uma foto por dom — ícone quadrado exibido no card do don.'
+  },
+  {
+    id:'don_grau_imgs', label:'Dons por Classe+Grau', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.classes.map(function(r){ return gf(r,'Classe','classe')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      var classes=sub?[sub]:uniq(DB.classes.map(function(r){return gf(r,'Classe','classe')||'';})).filter(Boolean).sort();
+      var graus=uniq(DB.dons.map(function(r){return gf(r,'Grau','grau')||'';})).filter(Boolean).sort();
+      var nomes=[];
+      classes.forEach(function(cl){
+        graus.forEach(function(gr){
+          var temDon=DB.dons.some(function(d){return gf(d,'Classe','classe')===cl&&gf(d,'Grau','grau')===gr;});
+          if(temDon) nomes.push(cl+'|'+gr);
+        });
+      });
+      return nomes;
+    },
+    descricao: 'Ícone por Classe+Grau — todos os dons daquela classe e grau usam a mesma imagem. Chave: "NomeClasse|Grau"'
+  },
+  {
+    id:'raca_hab_cats', label:'Raças — Hab. por Categoria', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return uniq(DB.racas.map(function(r){ return racaCat(r)||''; })).filter(Boolean).sort();
+    },
+    descricao: 'Ícone por Categoria racial — todos os Humanoides terão o mesmo ícone nas habilidades 1, 2 e 3, por exemplo.'
+  },
+  {
+    id:'raca_lf', label:'Raças — Linhagem & Fardo', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){ return ['linhagem','fardo']; },
+    descricao: 'Dois ícones globais: um único ícone para Linhagem e um único para Fardo em todas as raças.'
   },
   {
     id:'idiomas', label:'Idiomas', tipo:'individual',
@@ -5852,15 +5918,20 @@ function fbLoadImages(){
     if(!snap.exists()) return;
     var data = snap.val();
     // data = { racas: {Nome: url}, classes: {Nome: url}, loja: {Nome: url}, ... }
-    if(data.racas)    Object.assign(window.RACA_IMGS,  data.racas);
-    if(data.classes)  Object.assign(window.CLASS_IMGS, data.classes);
-    if(data.deuses)   Object.assign(window.DEUS_IMGS,  data.deuses);
-    if(data.loja)     window.LOJA_IMGS  = data.loja;
-    if(data.velkarion)window.VEL_IMGS   = data.velkarion;
-    if(data.grimorio) window.GRIM_IMGS  = data.grimorio;
-    if(data.vantagens)window.VANT_IMGS  = data.vantagens;
-    if(data.dons)     window.DON_IMGS    = data.dons;
-    if(data.idiomas)  window.IDIOMA_IMGS = data.idiomas;
+    if(data.racas)        Object.assign(window.RACA_IMGS,  data.racas);
+    if(data.classes)      Object.assign(window.CLASS_IMGS, data.classes);
+    if(data.deuses)       Object.assign(window.DEUS_IMGS,  data.deuses);
+    if(data.loja)         window.LOJA_IMGS  = data.loja;
+    if(data.velkarion)    window.VEL_IMGS   = data.velkarion;
+    if(data.grimorio)     window.GRIM_IMGS  = data.grimorio;
+    if(data.vantagens)    window.VANT_IMGS  = data.vantagens;
+    if(data.dons)         window.DON_IMGS    = data.dons;
+    if(data.idiomas)      window.IDIOMA_IMGS = data.idiomas;
+    // Novos dicionários
+    if(data.raca_hab_cats)  Object.assign(window.RACA_HAB_IMGS, data.raca_hab_cats);
+    if(data.raca_lf){window.RACA_LF_IMGS.linhagem=data.raca_lf.linhagem||'';window.RACA_LF_IMGS.fardo=data.raca_lf.fardo||'';}
+    if(data.don_grau_imgs)  Object.assign(window.DON_GRAU_IMGS, data.don_grau_imgs);
+    if(data.grimorio_spell) Object.assign(window.GRIM_SPELL_IMGS, data.grimorio_spell);
     // Re-renderiza tudo com as imagens novas
     if(typeof renderAll === 'function') renderAll();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
@@ -5879,6 +5950,12 @@ window.fbSaveImage = function(secao, nome, url){
 window.LOJA_IMGS  = window.LOJA_IMGS  || {};
 window.VEL_IMGS   = window.VEL_IMGS   || {};
 window.GRIM_IMGS  = window.GRIM_IMGS  || {};
+window.VANT_IMGS  = window.VANT_IMGS  || {};
+window.DON_IMGS   = window.DON_IMGS   || {};
+window.RACA_HAB_IMGS = window.RACA_HAB_IMGS || {};
+window.RACA_LF_IMGS  = window.RACA_LF_IMGS  || {linhagem:'',fardo:''};
+window.DON_GRAU_IMGS = window.DON_GRAU_IMGS  || {};
+window.GRIM_SPELL_IMGS = window.GRIM_SPELL_IMGS || {};
 window.VANT_IMGS  = window.VANT_IMGS  || {};
 window.DON_IMGS   = window.DON_IMGS   || {};
 
