@@ -2034,51 +2034,29 @@ main{
   <div id="page-vantagens" class="page">
     <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
 
-    <!-- Filtros por categoria — grid completo sem símbolos -->
-    <!-- Vantagens: Todas + checkboxes -->
-    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;flex-wrap:wrap;">
-      <button class="vd-checkbox-all active" id="vd-all-btn" onclick="switchVdTodas()">Todas</button>
-      <div class="vd-checkbox-filter" id="vd-checkbox-filter">
-        <label class="vd-checkbox-label" data-cat="versateis">
-          <input type="checkbox" onchange="toggleVdCat('versateis')">
-          <span class="vd-cb-dot" style="background:var(--violet-bright);"></span>Versáteis
-        </label>
-        <label class="vd-checkbox-label" data-cat="combate">
-          <input type="checkbox" onchange="toggleVdCat('combate')">
-          <span class="vd-cb-dot" style="background:#fcb362;"></span>Combate
-        </label>
-        <label class="vd-checkbox-label" data-cat="magicas">
-          <input type="checkbox" onchange="toggleVdCat('magicas')">
-          <span class="vd-cb-dot" style="background:#7bb4fc;"></span>Mágicas
-        </label>
-        <label class="vd-checkbox-label" data-cat="ataques">
-          <input type="checkbox" onchange="toggleVdCat('ataques')">
-          <span class="vd-cb-dot" style="background:#c084fc;"></span>Ataques Mágicos
-        </label>
-        <label class="vd-checkbox-label" data-cat="superpoderes">
-          <input type="checkbox" onchange="toggleVdCat('superpoderes')">
-          <span class="vd-cb-dot" style="background:#ffd700;"></span>Superpoderes
-        </label>
-        <label class="vd-checkbox-label checked-neg" data-cat="desvantagens">
-          <input type="checkbox" onchange="toggleVdCat('desvantagens')">
-          <span class="vd-cb-dot" style="background:var(--cat-desvantagem);"></span>Desvantagens
-        </label>
-        <label class="vd-checkbox-label checked-neg" data-cat="maldicoes">
-          <input type="checkbox" onchange="toggleVdCat('maldicoes')">
-          <span class="vd-cb-dot" style="background:#ff6b6b;"></span>Maldições
-        </label>
-      </div>
+    <!-- Tabs de categoria vantagens: grid 8 colunas, retangulares encaixadas -->
+    <div id="vd-tabs" style="display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:0.75rem;">
+      <button class="vd-tab-btn active" data-cat="todas"        onclick="switchVdTab('todas')"        style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(155,93,229,0.18);color:var(--text);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Todas</button>
+      <button class="vd-tab-btn" data-cat="versateis"    onclick="switchVdTab('versateis')"    style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Versáteis</button>
+      <button class="vd-tab-btn" data-cat="combate"      onclick="switchVdTab('combate')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Combate</button>
+      <button class="vd-tab-btn" data-cat="magicas"      onclick="switchVdTab('magicas')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Mágicas</button>
+      <button class="vd-tab-btn" data-cat="ataques"      onclick="switchVdTab('ataques')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">At. Mágicos</button>
+      <button class="vd-tab-btn" data-cat="superpoderes" onclick="switchVdTab('superpoderes')" style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Superpoderes</button>
+      <button class="vd-tab-btn" data-cat="desvantagens" onclick="switchVdTab('desvantagens')" style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Desvantagens</button>
+      <button class="vd-tab-btn" data-cat="maldicoes"    onclick="switchVdTab('maldicoes')"    style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;cursor:pointer;transition:background 0.15s;">Maldições</button>
     </div>
-    <!-- Pills legadas escondidas (mantidas para compatibilidade) -->
-    <div class="vd-cats" id="vd-cats" style="display:none;">
-      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')">Versáteis</button>
-      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')">Combate</button>
-      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')">Mágicas</button>
-      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')">Ataques Mágicos</button>
-      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')">Superpoderes</button>
-      <button class="vd-cat-btn" data-cat="desvantagens" onclick="switchVdCat('desvantagens')">Desvantagens</button>
-      <button class="vd-cat-btn" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')">Maldições</button>
+    <!-- Checkboxes: só aparece na aba Todas -->
+    <div id="vd-cb-wrap" style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.6rem;">
+      <label class="vd-checkbox-label checked" data-cat="versateis"><input type="checkbox" checked onchange="toggleVdCat('versateis')"><span class="vd-cb-dot" style="background:var(--violet-bright);"></span>Versáteis</label>
+      <label class="vd-checkbox-label checked" data-cat="combate"><input type="checkbox" checked onchange="toggleVdCat('combate')"><span class="vd-cb-dot" style="background:#fcb362;"></span>Combate</label>
+      <label class="vd-checkbox-label checked" data-cat="magicas"><input type="checkbox" checked onchange="toggleVdCat('magicas')"><span class="vd-cb-dot" style="background:#7bb4fc;"></span>Mágicas</label>
+      <label class="vd-checkbox-label checked" data-cat="ataques"><input type="checkbox" checked onchange="toggleVdCat('ataques')"><span class="vd-cb-dot" style="background:#c084fc;"></span>At. Mágicos</label>
+      <label class="vd-checkbox-label checked" data-cat="superpoderes"><input type="checkbox" checked onchange="toggleVdCat('superpoderes')"><span class="vd-cb-dot" style="background:#ffd700;"></span>Superpoderes</label>
+      <label class="vd-checkbox-label checked" data-cat="desvantagens"><input type="checkbox" checked onchange="toggleVdCat('desvantagens')"><span class="vd-cb-dot" style="background:var(--cat-desvantagem);"></span>Desvantagens</label>
+      <label class="vd-checkbox-label checked" data-cat="maldicoes"><input type="checkbox" checked onchange="toggleVdCat('maldicoes')"><span class="vd-cb-dot" style="background:#ff6b6b;"></span>Maldições</label>
     </div>
+    <!-- Pills legadas escondidas -->
+    <div class="vd-cats" id="vd-cats" style="display:none;"></div>
 
     <!-- Barra de busca -->
     <div class="filter-bar" style="margin-top:0;margin-bottom:0.5rem;">
@@ -3712,36 +3690,51 @@ function voltarClasses(){
 }
 
 // ── VANTAGENS: SWITCH CATEGORY ──
-// ── VANTAGENS: MULTI-CHECKBOX ──
-var VD_SELECTED_CATS = []; // vazio = Todas
-var VD_TODAS_ACTIVE = true;
+// ── VANTAGENS: TABS + MULTI-CHECKBOX ──
+var VD_ACTIVE_TAB = 'todas'; // 'todas' ou nome de categoria
+var VD_SELECTED_CATS = Object.keys({versateis:1,combate:1,magicas:1,ataques:1,superpoderes:1,desvantagens:1,maldicoes:1});
 
-function switchVdTodas(){
-  VD_TODAS_ACTIVE = true;
-  VD_SELECTED_CATS = [];
-  // Uncheck all checkboxes
-  document.querySelectorAll('#vd-checkbox-filter input[type=checkbox]').forEach(function(cb){ cb.checked=false; });
-  document.querySelectorAll('#vd-checkbox-filter label').forEach(function(lb){ lb.classList.remove('checked'); });
-  document.getElementById('vd-all-btn').classList.add('active');
+function switchVdTab(tab){
+  VD_ACTIVE_TAB = tab;
+  // Atualiza visual dos botões de tab
+  document.querySelectorAll('.vd-tab-btn').forEach(function(b){
+    var isActive = b.getAttribute('data-cat') === tab;
+    b.style.background = isActive ? 'rgba(155,93,229,0.2)' : 'transparent';
+    b.style.color = isActive ? 'var(--text)' : 'var(--text-dim)';
+  });
+  // Mostra/esconde checkboxes (só na aba Todas)
+  var cbWrap = document.getElementById('vd-cb-wrap');
+  if(cbWrap) cbWrap.style.display = (tab === 'todas') ? 'flex' : 'none';
+  // Se não for Todas, força a cat selecionada
+  if(tab !== 'todas'){
+    VD_SELECTED_CATS = [tab];
+  } else {
+    // Restaura todos os checked
+    var checked = [];
+    document.querySelectorAll('#vd-cb-wrap input[type=checkbox]').forEach(function(cb){
+      if(cb.checked) checked.push(cb.closest('label').getAttribute('data-cat'));
+    });
+    VD_SELECTED_CATS = checked.length ? checked : Object.keys(VD_LABELS);
+  }
   renderVantagens();
 }
 
 function toggleVdCat(cat){
-  VD_TODAS_ACTIVE = false;
-  document.getElementById('vd-all-btn').classList.remove('active');
-  var idx = VD_SELECTED_CATS.indexOf(cat);
-  var label = document.querySelector('#vd-checkbox-filter label[data-cat="'+cat+'"]');
-  if(idx === -1){
-    VD_SELECTED_CATS.push(cat);
-    if(label) label.classList.add(cat==='desvantagens'||cat==='maldicoes'?'checked-neg':'checked');
+  var label = document.querySelector('#vd-cb-wrap label[data-cat="'+cat+'"]');
+  var cb = label ? label.querySelector('input') : null;
+  var checked = cb ? cb.checked : false;
+  if(checked){
+    if(VD_SELECTED_CATS.indexOf(cat)===-1) VD_SELECTED_CATS.push(cat);
+    if(label) label.classList.add('checked');
   } else {
-    VD_SELECTED_CATS.splice(idx,1);
-    if(label){ label.classList.remove('checked'); label.classList.remove('checked-neg'); }
+    VD_SELECTED_CATS = VD_SELECTED_CATS.filter(function(c){return c!==cat;});
+    if(label) label.classList.remove('checked');
   }
-  // Se nenhum marcado, volta ao Todas
+  // Se nenhum selecionado, seleciona todos
   if(VD_SELECTED_CATS.length === 0){
-    VD_TODAS_ACTIVE = true;
-    document.getElementById('vd-all-btn').classList.add('active');
+    VD_SELECTED_CATS = Object.keys(VD_LABELS);
+    document.querySelectorAll('#vd-cb-wrap input[type=checkbox]').forEach(function(c){c.checked=true;});
+    document.querySelectorAll('#vd-cb-wrap label').forEach(function(l){l.classList.add('checked');});
   }
   renderVantagens();
 }
@@ -3820,20 +3813,20 @@ function renderVantagens(){
   var g=document.getElementById('grid-vantagens');
   var statusEl=document.getElementById('vd-load-status');
 
-  // Determina quais categorias exibir
-  var allCats=Object.keys(VD_LABELS);
-  var activeCats=(VD_TODAS_ACTIVE||VD_SELECTED_CATS.length===0)?allCats:VD_SELECTED_CATS;
+  // Cats a exibir
+  var activeCats = (VD_ACTIVE_TAB==='todas') ? VD_SELECTED_CATS : [VD_ACTIVE_TAB];
+  if(!activeCats||!activeCats.length) activeCats=Object.keys(VD_LABELS);
 
-  // Verifica se ainda carregando
+  // Checa carregamento
   var loading=activeCats.some(function(c){var st=VD_STATUS[c]||'idle';return st==='idle'||st==='loading';});
   if(loading){
     statusEl.textContent='Carregando...';
-    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando vantagens...</h3></div>';
+    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando...</h3></div>';
     return;
   }
   statusEl.textContent='';
 
-  // Junta rows de todas as cats ativas
+  // Monta rows
   var rows=[];
   activeCats.forEach(function(cat){
     (VD[cat]||[]).forEach(function(r){
@@ -3856,8 +3849,7 @@ function renderVantagens(){
         &&(!selPrereqs.length||selPrereqs.indexOf(prereqV)>-1);
   });
 
-  var labelStr=(VD_TODAS_ACTIVE||VD_SELECTED_CATS.length===0)?'':' em '+VD_SELECTED_CATS.map(function(c){return VD_LABELS[c];}).join(', ');
-  document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s')+labelStr;
+  document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s');
 
   if(!data.length){
     g.innerHTML=emptyMsg('△',rows.length?'Nenhum resultado':'Nenhuma entrada carregada');
@@ -4408,6 +4400,12 @@ function renderGrimorio(){
       &&(!graus.length||graus.indexOf(gf(r,'Grau','grau'))>-1)
       &&matchMulti(gf(r,'Origem','origem'), origens)
       &&matchMulti(gf(r,'Tipo','tipo'), tipos);
+  });
+  // Ordem alfabética sempre
+  data.sort(function(a,b){
+    var na=gf(a,'Feitiço','Feitico','feitico','Nome','nome')||'';
+    var nb=gf(b,'Feitiço','Feitico','feitico','Nome','nome')||'';
+    return na.localeCompare(nb,'pt');
   });
   var g=document.getElementById('grid-grimorio');
   document.getElementById('count-grimorio').textContent=data.length+' resultado'+(data.length===1?'':'s');
