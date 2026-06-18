@@ -3395,7 +3395,7 @@ function abrirDetalhesRaca(idx){
     var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
       var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--gold-light);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--gold-light);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-      html+='<div class="modal-sub" style="padding:0.6rem 0.75rem;display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<span class="modal-sub-title" style="display:block;margin-bottom:0.3rem;">'+h[1]+'</span>'+'<span class="modal-sub-body">'+formatDesc(h[0])+'</span>'+'</div>'+'</div>';
+      html+='<div class="modal-sub" style="padding:0.6rem 0.75rem;">'+'<span class="modal-sub-title" style="display:block;margin-bottom:0.45rem;">'+h[1]+'</span>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<span class="modal-sub-body" style="flex:1;min-width:0;">'+formatDesc(h[0])+'</span>'+'</div>'+'</div>';
     });
   }
 
@@ -3404,7 +3404,7 @@ function abrirDetalhesRaca(idx){
     html+='<hr class="modal-divider">';
     var _linIcon=getRacaLFImg('linhagem');
     var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--green);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--green);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem;">✦ Linhagem</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+lin+'</p>'+'</div></div>';
+    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">✦ Linhagem</div>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+lin+'</p>'+'</div></div>';
   }
 
   // Fardo
@@ -3412,7 +3412,7 @@ function abrirDetalhesRaca(idx){
     html+='<hr class="modal-divider">';
     var _farIcon=getRacaLFImg('fardo');
     var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--cat-desvantagem);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--cat-desvantagem);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem;">▽ Fardo</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+fardo+'</p>'+'</div></div>';
+    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">▽ Fardo</div>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+fardo+'</p>'+'</div></div>';
   }
 
   // Seção da Categoria (sem outras raças)
