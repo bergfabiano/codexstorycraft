@@ -4485,17 +4485,17 @@ function verGracasDeus(nomeDeus){
   var polIcon=pol==='Positiva'?'▲':pol==='Negativa'?'▼':'◆';
   var imgU=getDeusImg(nomeDeus);
 
-  // ── HEADER: imagem ao lado do nome ──
-  var html='<div style="display:flex;gap:1.25rem;align-items:center;margin-bottom:1.5rem;">';
+  // ── HEADER: imagem ao lado do nome+subtítulo+desc ──
+  var html='<div style="display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.75rem;">';
   if(imgU){
-    html+='<div style="flex-shrink:0;width:130px;height:130px;border-radius:8px;overflow:hidden;border:2px solid var(--gold-light);">'+
+    html+='<div style="flex-shrink:0;width:140px;height:140px;border-radius:10px;overflow:hidden;border:2px solid var(--gold-light);box-shadow:0 0 18px rgba(212,175,55,0.25);">'+
       '<img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;"></div>';
   }
-  html+='<div style="flex:1;min-width:0;">';
-  html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.3rem;">Divindade</div>';
-  html+='<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.7rem;font-weight:700;color:var(--gold-light);margin-bottom:0.2rem;line-height:1.2;">'+nomeDeus+'</h2>';
-  if(sob) html+='<div style="font-family:Raleway,sans-serif;font-size:0.82rem;font-weight:500;color:var(--violet-bright);font-style:italic;margin-bottom:0.65rem;">'+sob+'</div>';
-  if(desc) html+='<p style="color:var(--text-dim);font-size:0.86rem;line-height:1.6;margin:0;">'+desc+'</p>';
+  html+='<div style="flex:1;min-width:0;padding-top:0.25rem;">';
+  html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.25em;color:var(--violet-bright);text-transform:uppercase;opacity:0.7;margin-bottom:0.4rem;">Divindade</div>';
+  html+='<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.75rem;font-weight:700;color:var(--gold-light);line-height:1.2;margin-bottom:0.35rem;text-shadow:0 0 20px rgba(212,175,55,0.3);">'+nomeDeus+'</h2>';
+  if(sob) html+='<div style="font-family:Raleway,sans-serif;font-size:0.85rem;font-weight:600;color:var(--violet-bright);letter-spacing:0.05em;margin-bottom:0.75rem;">'+sob+'</div>';
+  if(desc) html+='<p style="color:var(--text-dim);font-size:0.87rem;line-height:1.65;margin:0;">'+desc+'</p>';
   html+='</div></div>';
 
   // ── CAMPOS ──
@@ -4507,25 +4507,18 @@ function verGracasDeus(nomeDeus){
   if(obc) html+='<div class="classe-field classe-header-full"><label>Obrigações e Culto</label><p>'+obc+'</p></div>';
   html+='</div>';
 
-  // ── GRAÇAS: tags horizontais dividindo o espaço igualmente ──
+  // ── GRAÇAS: estilo don-card-h (ícone 48x48 + nome horizontal) ──
   if(gracas.length){
-    html+='<div style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:0.72rem;font-weight:700;color:var(--gold-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;">☀ Graças</div>';
-    html+='<div style="display:grid;grid-template-columns:repeat('+gracas.length+',1fr);gap:0.6rem;">';
+    html+='<div style="font-family:Raleway,sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--gold-light);text-transform:uppercase;opacity:0.8;margin-bottom:0.5rem;">☀ Graças</div>';
+    html+='<div style="display:grid;grid-template-columns:repeat('+gracas.length+',1fr);gap:0.5rem;">';
     for(var gi=0;gi<gracas.length;gi++){
       var g=gracas[gi];
       var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||''};
       var gracaIdx=_storeModal(gracaObj);
-      html+='<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;" onclick="openModalIdx('+gracaIdx+')" onmouseenter="this.style.borderColor=\'var(--gold-light)\'" onmouseleave="this.style.borderColor=\'var(--border)\'">';
-      // Imagem 1:1
-      html+='<div style="width:100%;aspect-ratio:1/1;background:var(--surface);overflow:hidden;display:flex;align-items:center;justify-content:center;">';
-      if(imgU) html+='<img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;opacity:0.55;">';
-      else html+='<span style="font-size:2rem;opacity:0.2;">☀</span>';
-      html+='</div>';
-      // Título da graça (sem "Graça N")
-      html+='<div style="padding:0.55rem 0.65rem 0.65rem;">';
-      html+='<div style="font-family:Cinzel,serif;font-size:0.88rem;font-weight:700;color:var(--gold-light);line-height:1.3;">'+(g.titulo||'Graça '+(gi+1))+'</div>';
-      if(g.desc) html+='<div style="font-size:0.75rem;color:var(--text-dim);line-height:1.5;margin-top:0.3rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">'+g.desc+'</div>';
-      html+='</div></div>';
+      html+='<div class="don-card-h" onclick="openModalIdx('+gracaIdx+')" style="margin-bottom:0;">'+
+        '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(imgU?'<img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
+        '<div class="don-card-h-nome">'+(g.titulo||'Graça '+(gi+1))+'</div>'+
+        '</div>';
     }
     html+='</div>';
   } else {
@@ -4896,17 +4889,11 @@ function openModal(rowOrStr){
       '<button class="btn-ver-dons" style="margin-top:0.75rem;width:100%;display:flex;align-items:center;justify-content:center;gap:0.4rem;border-color:'+classAccent+';color:'+classAccent+';" onclick="closeModal();verDonsClasse(\''+nome.replace(/'/g,"\\'")+'\')">'+'✦ Ver Dons de '+nome+'</button>'+
     '</div></div>';
   }else if(nomeDeusImg){
-    var _deusSob=getDeusSubtitulo(nome);
     var _deusImg=getDeusImg(nomeDeusImg);
     var _deusDesc=gf(row,'Descrição','Descricao','descricao','Lore','lore','desc')||'';
-    html='<div style="padding:0.5rem 0;">'+
-      '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">'+
-      (_deusImg?'<img src="'+_deusImg+'" style="width:80px;height:80px;border-radius:8px;object-fit:cover;border:2px solid var(--gold-light);flex-shrink:0;">':'')+
-      '<div>'+
-      '<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.3rem;font-weight:700;color:var(--gold-light);line-height:1.2;margin-bottom:0.2rem;">'+nome+'</h2>'+
-      (_deusSob?'<div style="font-family:Raleway,sans-serif;font-size:0.78rem;font-weight:500;color:var(--violet-bright);font-style:italic;">'+_deusSob+'</div>':'')+
-      '</div></div>'+
-      (_deusDesc?'<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.65;margin-bottom:1.25rem;">'+_deusDesc+'</p>':'')+
+    html='<div style="padding:0.25rem 0;">'+
+      (_deusImg?'<div style="width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;margin-bottom:1rem;"><img src="'+_deusImg+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+
+      (_deusDesc?'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem;">'+_deusDesc+'</p>':'')+
       '<div style="text-align:center;"><button class="btn-ver-dons" style="padding:0.65rem 2rem;" onclick="closeModal();verGracasDeus(&quot;'+nome.replace(/"/g,'&quot;')+'&quot;)">☀ Saiba mais sobre esta Divindade</button></div>'+
       '</div>';
   }else{
