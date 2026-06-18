@@ -2254,7 +2254,7 @@ main{
       </div>
     </div>
     <div class="debug-banner" id="idiomas-debug"></div>
-    <div class="cards-grid" id="grid-idiomas" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✎</span><h3>Nenhum idioma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
+    <div class="cards-grid" id="grid-idiomas" style="grid-template-columns:repeat(7,1fr);"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✎</span><h3>Nenhum idioma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
 
   <!-- ESTIGMAS -->
@@ -3105,6 +3105,7 @@ function getIdiomaImg(n){ return (window.IDIOMA_IMGS&&window.IDIOMA_IMGS[n])||nu
 function renderIdiomas(){
   var grid=document.getElementById('grid-idiomas');
   if(!grid) return;
+  grid.style.gridTemplateColumns='repeat(7,1fr)';
   var s=(document.getElementById('f-idioma-search')||{}).value||'';
   s=s.toLowerCase();
   var catSel=(document.getElementById('f-idioma-cat')||{}).value||'';
@@ -3393,7 +3394,7 @@ function abrirDetalhesRaca(idx){
     var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
       var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--gold-light);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--gold-light);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-      html+='<div class="modal-sub" style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.6rem 0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<div style="flex:1;min-width:0;"><span class="modal-sub-title">'+h[1]+'</span><span class="modal-sub-body">'+formatDesc(h[0])+'</span></div>'+'</div>';
+      html+='<div class="modal-sub" style="padding:0.6rem 0.75rem;">'+'<span class="modal-sub-title" style="display:block;margin-bottom:0.45rem;">'+h[1]+'</span>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<span class="modal-sub-body" style="flex:1;min-width:0;">'+formatDesc(h[0])+'</span>'+'</div>'+'</div>';
     });
   }
 
@@ -3402,7 +3403,7 @@ function abrirDetalhesRaca(idx){
     html+='<hr class="modal-divider">';
     var _linIcon=getRacaLFImg('linhagem');
     var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--green);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--green);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.35rem;">✦ Linhagem</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+lin+'</p>'+'</div></div>';
+    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">✦ Linhagem</div>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+lin+'</p>'+'</div></div>';
   }
 
   // Fardo
@@ -3410,7 +3411,7 @@ function abrirDetalhesRaca(idx){
     html+='<hr class="modal-divider">';
     var _farIcon=getRacaLFImg('fardo');
     var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--cat-desvantagem);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--cat-desvantagem);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-    html+='<div style="display:flex;align-items:flex-start;gap:0.75rem;padding:0.1rem 0;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<div style="flex:1;min-width:0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.35rem;">▽ Fardo</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;">'+fardo+'</p>'+'</div></div>';
+    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">▽ Fardo</div>'+'<div style="display:flex;align-items:flex-start;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+fardo+'</p>'+'</div></div>';
   }
 
   // Seção da Categoria (sem outras raças)
@@ -3814,8 +3815,10 @@ var LOJA_SYMS={
 
 // Extract name, price, category, description from any loja row
 function lojaGetField(r){
+  // Para Munição: usa a coluna Categoria (nome específico ex: 'Flechas Finas') em vez de 'Tipo de Munição'
+  if(r['Tipo de Munição']!==undefined) return r['Categoria']||r['Tipo de Munição']||'(sem nome)';
   // Name - varies by category
-  return r['Arma']||r['Munição']||r['Tipo de Munição']||r['Fócus']||r['Amadura']||r['Armadura']||
+  return r['Arma']||r['Munição']||r['Fócus']||r['Amadura']||r['Armadura']||
     r['Item']||r['Montaria']||r['Veículo / Tipo']||r['Serviço']||r['Refeição']||
     r['Nome']||r['Imbuído']||r['Poção']||r['Veneno']||r['Veneno Sicário']||
     r['Minério']||r['Auxiliar']||r['Gema']||r['Joia']||r[Object.keys(r)[0]]||'(sem nome)';
@@ -4234,7 +4237,10 @@ function openLojaModal(idx){
 
   // Structured fields
   var skip=['_nome_display','_loja_cat','_vd_cat','_modal_fields','_grp_accent'];
-  var skipLower=['categoria','sub-categoria','n\u00edvel','nivel','cor','complexidade'];
+  // Para munição: o nome já veio de Categoria, então mostrar 'Tipo de Munição' e não pular 'Categoria'
+  var skipLower=(cat==='municao')
+    ?['sub-categoria','n\u00edvel','nivel','cor','complexidade']
+    :['categoria','sub-categoria','n\u00edvel','nivel','cor','complexidade'];
   var nameVal=n;
   var fields=Object.keys(row).filter(function(k){
     if(skip.indexOf(k)>-1)return false;
