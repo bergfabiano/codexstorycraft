@@ -4305,7 +4305,9 @@ function renderLoja(){
       var rCopy={};for(var k in r)rCopy[k]=r[k];
       rCopy['_nome_display']=n;rCopy['_loja_cat']=cat;rCopy['_vd_cat']='loja';rCopy['_grp_accent']=catAccent;
       var precoHtml=preco?'<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.8rem;color:'+currencyColor(preco)+';">'+preco+'</span>':'';
-      var fbImg=(window.LOJA_IMGS&&(window.LOJA_IMGS[n]||window.LOJA_IMGS[n.replace(/[.#$/[\]]/g,'_')]))||null;
+      // Base (Estruturas) e Base (Melhorias): imagem única por categoria (chave = label da categoria)
+      var _fbKey=(cat==='base_est'||cat==='base_mel')?LOJA_LABELS[cat]:n;
+      var fbImg=(window.LOJA_IMGS&&(window.LOJA_IMGS[_fbKey]||window.LOJA_IMGS[_fbKey.replace(/[.#$/[\]]/g,'_')]))||null;
       var imgInn=fbImg?'<img src="'+fbImg+'" style="width:100%;height:100%;object-fit:cover;">':'<span class="card-h-sym" style="color:'+catAccent+';">✦</span>';
       var modoLoja=getLayout('loja');
       if(modoLoja==='v'){
@@ -4519,7 +4521,7 @@ function verGracasDeus(nomeDeus){
       var g=gracas[gi];
       var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||''};
       var gracaIdx=_storeModal(gracaObj);
-      var gracaImgU=getDeusGracaImg(nomeDeus,g.titulo||'Graça '+(gi+1))||imgU;
+      var gracaImgU=(window.DEUS_GRACA_IMGS&&(window.DEUS_GRACA_IMGS[nomeDeus]||window.DEUS_GRACA_IMGS[nomeDeus.replace(/[.#$\/\[\]]/g,'_')]))||imgU;
       html+='<div class="don-card-h" onclick="openModalIdx('+gracaIdx+')" style="margin-bottom:0;">'+
         '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(gracaImgU?'<img src="'+gracaImgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
         '<div class="don-card-h-nome">'+(g.titulo||'Graça '+(gi+1))+'</div>'+
@@ -4930,6 +4932,10 @@ function openModal(rowOrStr){
     if(!fbHeroImg && window.GRIM_IMGS){
       var _escola=gf(row,'Escola','escola')||'';
       if(_escola) fbHeroImg=window.GRIM_IMGS[_escola]||window.GRIM_IMGS[_escola.replace(/[.#$\/\[\]]/g,'_')]||null;
+    }
+    // Estigmas: tenta imagem do estigma pelo nome
+    if(!fbHeroImg && window.ESTIGMA_IMGS && gf(row,'Nome do Estigma','nome do estigma')){
+      fbHeroImg=getEstigmaImg(nome)||null;
     }
     html = modalHero(fbHeroImg, modalSym, heroTipo, nome);
   }
@@ -5793,6 +5799,11 @@ var _adminSecoes = [
       var nomes=[];
       Object.keys(LOJA).forEach(function(cat){
         if(sub && LOJA_LABELS[cat]!==sub) return;
+        // Base (Estruturas) e Base (Melhorias): 1 imagem por categoria
+        if(cat==='base_est'||cat==='base_mel'){
+          if(LOJA[cat]&&LOJA[cat].length){ var lb=LOJA_LABELS[cat]; if(nomes.indexOf(lb)===-1) nomes.push(lb); }
+          return;
+        }
         (LOJA[cat]||[]).forEach(function(r){
           var n=lojaGetField(r);
           // Aprimor/Encant: usa subcategoria como chave (foto única por subcategoria)
@@ -5926,23 +5937,13 @@ var _adminSecoes = [
   },
   {
     id:'deus_gracas', label:'Deuses — Graças', tipo:'individual',
-    subfiltros: function(){
-      return uniq(DB.deuses.map(function(r){ return gf(r,'Nome do Deus','nome do deus','Nome','nome')||''; })).filter(Boolean).sort();
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return DB.deuses
+        .map(function(r){ return gf(r,'Nome do Deus','nome do deus','Nome','nome')||''; })
+        .filter(Boolean);
     },
-    fonte: function(sub){
-      var nomes=[];
-      DB.deuses.forEach(function(r){
-        var nd=gf(r,'Nome do Deus','nome do deus','Nome','nome')||'';
-        if(!nd) return;
-        if(sub && nd!==sub) return;
-        for(var gi=1;gi<=4;gi++){
-          var gt=gf(r,'Graça '+gi+' - Título','Graca '+gi+' - Titulo');
-          if(gt) nomes.push(nd+'|'+gt);
-        }
-      });
-      return nomes;
-    },
-    descricao: 'Ícone individual por Graça de cada Deus. Chave: "NomeDeus|Título da Graça". Se não houver ícone próprio, usa a imagem do deus.'
+    descricao: 'Uma imagem por Deus — todas as Graças desse Deus usarão a mesma imagem.'
   }
 ];
 
