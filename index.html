@@ -962,6 +962,38 @@ main{
 .debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
 
 /* ── CATEGORY TABS (vantagens, loja, etc.) ── */
+.vd-checkbox-filter{
+  display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.6rem 0;margin-bottom:0.5rem;
+}
+.vd-checkbox-label{
+  display:flex;align-items:center;gap:0.35rem;
+  font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-dim);cursor:pointer;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;padding:0.3rem 0.75rem;
+  transition:all 0.15s;user-select:none;
+}
+.vd-checkbox-label:hover{color:var(--text);border-color:var(--violet-dim);}
+.vd-checkbox-label input{display:none;}
+.vd-checkbox-label.checked{
+  background:rgba(155,93,229,0.15);
+  border-color:var(--violet-bright);color:var(--text);
+}
+.vd-checkbox-label.checked-neg{
+  background:rgba(255,92,138,0.15);
+  border-color:var(--cat-desvantagem);color:var(--text);
+}
+.vd-cb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.vd-checkbox-all{
+  font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text-dim);cursor:pointer;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:20px;padding:0.3rem 0.9rem;
+  transition:all 0.15s;
+}
+.vd-checkbox-all.active{background:rgba(155,93,229,0.2);border-color:var(--violet-bright);color:var(--text);}
 .vd-cats{
   display:flex;flex-wrap:wrap;gap:0;
   margin-bottom:0;
@@ -2003,14 +2035,49 @@ main{
     <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
 
     <!-- Filtros por categoria — grid completo sem símbolos -->
-    <div class="vd-cats" id="vd-cats" style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:0.75rem;">
-      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')"     style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Vers&#xE1;teis</button>
-      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Combate</button>
-      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">M&#xE1;gicas</button>
-      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')"      style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Ataques M&#xE1;gicos</button>
-      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')" style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Superpoderes</button>
-      <button class="vd-cat-btn" data-cat="desvantagens" onclick="switchVdCat('desvantagens')" style="padding:0.7rem 0.5rem;font-size:0.75rem;border-right:1px solid var(--border);">Desvantagens</button>
-      <button class="vd-cat-btn" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')"    style="padding:0.7rem 0.5rem;font-size:0.75rem;">Maldi&#xE7;&#xF5;es</button>
+    <!-- Vantagens: Todas + checkboxes -->
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;flex-wrap:wrap;">
+      <button class="vd-checkbox-all active" id="vd-all-btn" onclick="switchVdTodas()">Todas</button>
+      <div class="vd-checkbox-filter" id="vd-checkbox-filter">
+        <label class="vd-checkbox-label" data-cat="versateis">
+          <input type="checkbox" onchange="toggleVdCat('versateis')">
+          <span class="vd-cb-dot" style="background:var(--violet-bright);"></span>Versáteis
+        </label>
+        <label class="vd-checkbox-label" data-cat="combate">
+          <input type="checkbox" onchange="toggleVdCat('combate')">
+          <span class="vd-cb-dot" style="background:#fcb362;"></span>Combate
+        </label>
+        <label class="vd-checkbox-label" data-cat="magicas">
+          <input type="checkbox" onchange="toggleVdCat('magicas')">
+          <span class="vd-cb-dot" style="background:#7bb4fc;"></span>Mágicas
+        </label>
+        <label class="vd-checkbox-label" data-cat="ataques">
+          <input type="checkbox" onchange="toggleVdCat('ataques')">
+          <span class="vd-cb-dot" style="background:#c084fc;"></span>Ataques Mágicos
+        </label>
+        <label class="vd-checkbox-label" data-cat="superpoderes">
+          <input type="checkbox" onchange="toggleVdCat('superpoderes')">
+          <span class="vd-cb-dot" style="background:#ffd700;"></span>Superpoderes
+        </label>
+        <label class="vd-checkbox-label checked-neg" data-cat="desvantagens">
+          <input type="checkbox" onchange="toggleVdCat('desvantagens')">
+          <span class="vd-cb-dot" style="background:var(--cat-desvantagem);"></span>Desvantagens
+        </label>
+        <label class="vd-checkbox-label checked-neg" data-cat="maldicoes">
+          <input type="checkbox" onchange="toggleVdCat('maldicoes')">
+          <span class="vd-cb-dot" style="background:#ff6b6b;"></span>Maldições
+        </label>
+      </div>
+    </div>
+    <!-- Pills legadas escondidas (mantidas para compatibilidade) -->
+    <div class="vd-cats" id="vd-cats" style="display:none;">
+      <button class="vd-cat-btn active" data-cat="versateis"     onclick="switchVdCat('versateis')">Versáteis</button>
+      <button class="vd-cat-btn" data-cat="combate"      onclick="switchVdCat('combate')">Combate</button>
+      <button class="vd-cat-btn" data-cat="magicas"      onclick="switchVdCat('magicas')">Mágicas</button>
+      <button class="vd-cat-btn" data-cat="ataques"      onclick="switchVdCat('ataques')">Ataques Mágicos</button>
+      <button class="vd-cat-btn" data-cat="superpoderes" onclick="switchVdCat('superpoderes')">Superpoderes</button>
+      <button class="vd-cat-btn" data-cat="desvantagens" onclick="switchVdCat('desvantagens')">Desvantagens</button>
+      <button class="vd-cat-btn" data-cat="maldicoes"    onclick="switchVdCat('maldicoes')">Maldições</button>
     </div>
 
     <!-- Barra de busca -->
@@ -3139,7 +3206,7 @@ function renderIdiomas(){
   }
 
   var _idiomaLayout=getLayout('idiomas');
-  grid.style.gridTemplateColumns=_idiomaLayout==='v'?'repeat(7,1fr)':'repeat(auto-fill,minmax(280px,1fr))';
+  grid.style.gridTemplateColumns='repeat(7,1fr)';
   grid.innerHTML=data.map(function(r){
     var nome=gf(r,'Idioma','idioma','Nome','nome')||'(sem nome)';
     var cat=gf(r,'Categoria','categoria')||'';
@@ -3295,7 +3362,8 @@ function renderRacas(){
     _data.sort(function(a,b){return racaNome(a).localeCompare(racaNome(b),'pt');});
     document.getElementById('count-racas').textContent=_data.length+' resultado'+(_data.length===1?'':'s');
     document.getElementById('raca-cat-info').style.display='none';
-    g.innerHTML=_data.length?'<div class="cards-grid">'+_data.map(_makeCard).join('')+'</div>':emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
+    var _racasCols='grid-template-columns:repeat(5,1fr);gap:0.9rem;';
+    g.innerHTML=_data.length?'<div class="cards-grid" style="'+_racasCols+'">'+_data.map(_makeCard).join('')+'</div>':emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
     return;
   }
 
@@ -3360,7 +3428,7 @@ function renderRacas(){
   if(!_data.length){
     html+=emptyMsg('☯',DB.racas.length?'Nenhum resultado':'Nenhuma raça carregada');
   } else {
-    html+='<div class="cards-grid">'+_data.map(_makeCard).join('')+'</div>';
+    html+='<div class="cards-grid" style="grid-template-columns:repeat(5,1fr);gap:0.9rem;">'+_data.map(_makeCard).join('')+'</div>';
   }
   g.innerHTML=html;
 }
@@ -3644,6 +3712,40 @@ function voltarClasses(){
 }
 
 // ── VANTAGENS: SWITCH CATEGORY ──
+// ── VANTAGENS: MULTI-CHECKBOX ──
+var VD_SELECTED_CATS = []; // vazio = Todas
+var VD_TODAS_ACTIVE = true;
+
+function switchVdTodas(){
+  VD_TODAS_ACTIVE = true;
+  VD_SELECTED_CATS = [];
+  // Uncheck all checkboxes
+  document.querySelectorAll('#vd-checkbox-filter input[type=checkbox]').forEach(function(cb){ cb.checked=false; });
+  document.querySelectorAll('#vd-checkbox-filter label').forEach(function(lb){ lb.classList.remove('checked'); });
+  document.getElementById('vd-all-btn').classList.add('active');
+  renderVantagens();
+}
+
+function toggleVdCat(cat){
+  VD_TODAS_ACTIVE = false;
+  document.getElementById('vd-all-btn').classList.remove('active');
+  var idx = VD_SELECTED_CATS.indexOf(cat);
+  var label = document.querySelector('#vd-checkbox-filter label[data-cat="'+cat+'"]');
+  if(idx === -1){
+    VD_SELECTED_CATS.push(cat);
+    if(label) label.classList.add(cat==='desvantagens'||cat==='maldicoes'?'checked-neg':'checked');
+  } else {
+    VD_SELECTED_CATS.splice(idx,1);
+    if(label){ label.classList.remove('checked'); label.classList.remove('checked-neg'); }
+  }
+  // Se nenhum marcado, volta ao Todas
+  if(VD_SELECTED_CATS.length === 0){
+    VD_TODAS_ACTIVE = true;
+    document.getElementById('vd-all-btn').classList.add('active');
+  }
+  renderVantagens();
+}
+
 var VD_LABELS={
   versateis:'Versáteis',combate:'Combate',magicas:'Mágicas',
   ataques:'Ataques Mágicos',superpoderes:'Superpoderes',
@@ -3714,67 +3816,67 @@ function vdNome(r){
 }
 
 function renderVantagens(){
-  var cat=VD_ACTIVE_CAT;
-  var rows=VD[cat]||[];
   var s=document.getElementById('f-vd-search').value.toLowerCase();
-  var status=VD_STATUS[cat]||'idle';
-
-  var custos=uniq(rows.map(function(r){return vdCusto(r);})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
-  var prereqs=uniq(rows.map(function(r){return vdPrereq(r);})).filter(Boolean).sort();
-  chkPopulate('vd-custo', custos);
-  chkPopulate('vd-prereq', prereqs);
-
-  var selCustos=chkGetActive('vd-custo');
-  var selPrereqs=chkGetActive('vd-prereq');
-
   var g=document.getElementById('grid-vantagens');
   var statusEl=document.getElementById('vd-load-status');
 
-  if(status==='idle'||status==='loading'){
+  // Determina quais categorias exibir
+  var allCats=Object.keys(VD_LABELS);
+  var activeCats=(VD_TODAS_ACTIVE||VD_SELECTED_CATS.length===0)?allCats:VD_SELECTED_CATS;
+
+  // Verifica se ainda carregando
+  var loading=activeCats.some(function(c){var st=VD_STATUS[c]||'idle';return st==='idle'||st==='loading';});
+  if(loading){
     statusEl.textContent='Carregando...';
-    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">'+VD_SYMS[cat]+'</span><h3>Carregando '+VD_LABELS[cat]+'...</h3></div>';
+    g.innerHTML='<div class="state-msg" style="grid-column:1/-1"><span class="state-sym">△</span><h3>Carregando vantagens...</h3></div>';
     return;
   }
-
   statusEl.textContent='';
-  var data=rows.filter(function(r){
-    var nome=vdNome(r);
-    var desc=vdDesc(r)||'';
-    var custoV=vdCusto(r);
-    var prereqV=vdPrereq(r);
-    return (!s || (nome+' '+desc+' '+custoV).toLowerCase().indexOf(s)>-1)
-        && (!selCustos.length || selCustos.indexOf(custoV)>-1)
-        && (!selPrereqs.length || selPrereqs.indexOf(prereqV)>-1);
+
+  // Junta rows de todas as cats ativas
+  var rows=[];
+  activeCats.forEach(function(cat){
+    (VD[cat]||[]).forEach(function(r){
+      var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_vd_cat']=cat;
+      rows.push(rCopy);
+    });
   });
 
-  document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s')+' em '+VD_LABELS[cat];
+  var custos=uniq(rows.map(function(r){return vdCusto(r);})).filter(Boolean).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
+  var prereqs=uniq(rows.map(function(r){return vdPrereq(r);})).filter(Boolean).sort();
+  chkPopulate('vd-custo',custos);
+  chkPopulate('vd-prereq',prereqs);
+  var selCustos=chkGetActive('vd-custo');
+  var selPrereqs=chkGetActive('vd-prereq');
+
+  var data=rows.filter(function(r){
+    var nome=vdNome(r),desc=vdDesc(r)||'',custoV=vdCusto(r),prereqV=vdPrereq(r);
+    return (!s||(nome+' '+desc+' '+custoV).toLowerCase().indexOf(s)>-1)
+        &&(!selCustos.length||selCustos.indexOf(custoV)>-1)
+        &&(!selPrereqs.length||selPrereqs.indexOf(prereqV)>-1);
+  });
+
+  var labelStr=(VD_TODAS_ACTIVE||VD_SELECTED_CATS.length===0)?'':' em '+VD_SELECTED_CATS.map(function(c){return VD_LABELS[c];}).join(', ');
+  document.getElementById('count-vantagens').textContent=data.length+' resultado'+(data.length===1?'':'s')+labelStr;
 
   if(!data.length){
-    g.innerHTML=emptyMsg(VD_SYMS[cat],rows.length?'Nenhum resultado':'Nenhuma entrada carregada');
+    g.innerHTML=emptyMsg('△',rows.length?'Nenhum resultado':'Nenhuma entrada carregada');
     return;
   }
 
-  var cardCls='card-vd-'+cat;
+  var modo=getLayout('vantagens');
   g.innerHTML=data.map(function(r){
-    var n    = vdNome(r);
-    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;rCopy['_vd_cat']=cat;r=rCopy;
-    var custo= vdCusto(r);
-    var pre  = vdPrereq(r)||(r['Requisito']||'').trim()||(r['requisito']||'').trim();
-    var d    = vdDesc(r);
-    var tipo = gf(r,'Tipo','tipo');
-    var escola= gf(r,'Escola','escola');
-    var extra1= gf(r,'Alcance','alcance','Acumulável','acumulavel','Acumulavel');
-    var sub  = tipo||escola||'';
+    var cat=r['_vd_cat'];
+    var n=vdNome(r);
+    var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;r=rCopy;
+    var tipo=gf(r,'Tipo','tipo'),escola=gf(r,'Escola','escola');
+    var sub=tipo||escola||'';
     var isNeg=(cat==='desvantagens'||cat==='maldicoes');
-    var costBadge='';
-    if(custo) costBadge='<span style="font-family:Cinzel,serif;font-weight:700;font-size:0.88rem;color:'+(isNeg?'var(--cat-desvantagem)':'var(--gold-light)')+';">'+custo+' pts</span>';
+    var cardCls='card-vd-'+cat;
     var catLabel=VD_LABELS[cat]||cat;
     var vantImg=(window.VANT_IMGS)?(window.VANT_IMGS[catLabel]||window.VANT_IMGS[catLabel.replace(/[.#$\/\[\]]/g,'_')]||null):null;
-    var modo=getLayout('vantagens');
-    if(modo==='v'){
-      return cardVert(vantImg,isNeg?'✗':'✦',sub||VD_LABELS[cat],n,'openModalIdx('+_storeModal(r)+')',cardCls);
-    }
-    return cardHoriz(vantImg, isNeg?'✗':'✦', cardCls, n, 'openModalIdx('+_storeModal(r)+')');
+    if(modo==='v') return cardVert(vantImg,isNeg?'✗':'✦',sub||catLabel,n,'openModalIdx('+_storeModal(r)+')',cardCls);
+    return cardHoriz(vantImg,isNeg?'✗':'✦',cardCls,n,'openModalIdx('+_storeModal(r)+')');
   }).join('');
 }
 
