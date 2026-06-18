@@ -3139,7 +3139,7 @@ function renderIdiomas(){
   }
 
   var _idiomaLayout=getLayout('idiomas');
-  grid.style.gridTemplateColumns=_idiomaLayout==='v'?'repeat(auto-fill,minmax(150px,1fr))':'repeat(auto-fill,minmax(280px,1fr))';
+  grid.style.gridTemplateColumns=_idiomaLayout==='v'?'repeat(7,1fr)':'repeat(auto-fill,minmax(280px,1fr))';
   grid.innerHTML=data.map(function(r){
     var nome=gf(r,'Idioma','idioma','Nome','nome')||'(sem nome)';
     var cat=gf(r,'Categoria','categoria')||'';
@@ -4658,6 +4658,7 @@ function renderEstigmas(){
   });
 
   var g=document.getElementById('grid-estigmas');
+  if(getLayout('estigmas')==='v') g.style.gridTemplateColumns='repeat(5,1fr)';
   document.getElementById('count-estigmas').textContent=data.length+' resultado'+(data.length===1?'':'s');
   if(!data.length){g.innerHTML=emptyMsg('✸',DB.estigmas.length?'Nenhum resultado':'Nenhum estigma carregado');return;}
   g.innerHTML=data.map(function(r){
