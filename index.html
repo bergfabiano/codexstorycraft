@@ -2616,6 +2616,8 @@ var RACA_HAB_IMGS={}; // chave: "Categoria" (ex: "Humanoides") → url do ícone
 var RACA_LF_IMGS={linhagem:'',fardo:''};  // ícone único para Linhagem e Fardo de todas as raças
 var DON_GRAU_IMGS={}; // chave: "NomeClasse|Grau" → url do ícone p/ dons daquela classe+grau
 var GRIM_SPELL_IMGS={}; // chave: nome do feitiço → url do ícone individual
+var ESTIGMA_IMGS={}; // chave: nome do estigma → url do ícone
+var DEUS_GRACA_IMGS={}; // chave: "NomeDeus|Título da Graça" → url do ícone
 function getClassImg(n){return CLASS_IMGS[n]||null;}
 function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
@@ -2623,6 +2625,8 @@ function getRacaHabImg(cat){return RACA_HAB_IMGS[cat]||RACA_HAB_IMGS[(cat||'').r
 function getRacaLFImg(tipo){return (tipo==='linhagem'?RACA_LF_IMGS.linhagem:RACA_LF_IMGS.fardo)||null;}
 function getDonGrauImg(classe,grau){var k=(classe+'|'+grau).replace(/[.#$\/\[\]]/g,'_');return DON_GRAU_IMGS[k]||null;}
 function getSpellImg(nome){return GRIM_SPELL_IMGS[nome]||GRIM_SPELL_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
+function getEstigmaImg(nome){return ESTIGMA_IMGS[nome]||ESTIGMA_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
+function getDeusGracaImg(deus,titulo){var k=(deus+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return DEUS_GRACA_IMGS[k]||null;}
 
 // Card horizontal minimalista — só imagem + nome
 function cardHoriz(url, sym, extraCls, nome, onclick){
@@ -4515,8 +4519,9 @@ function verGracasDeus(nomeDeus){
       var g=gracas[gi];
       var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||''};
       var gracaIdx=_storeModal(gracaObj);
+      var gracaImgU=getDeusGracaImg(nomeDeus,g.titulo||'Graça '+(gi+1))||imgU;
       html+='<div class="don-card-h" onclick="openModalIdx('+gracaIdx+')" style="margin-bottom:0;">'+
-        '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(imgU?'<img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
+        '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(gracaImgU?'<img src="'+gracaImgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
         '<div class="don-card-h-nome">'+(g.titulo||'Graça '+(gi+1))+'</div>'+
         '</div>';
     }
@@ -4809,10 +4814,11 @@ function renderEstigmas(){
     var n=gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||'(sem nome)';
     var idx=_storeModal(r);
     var ori=gf(r,'Origem','origem');
+    var estImg=getEstigmaImg(n);
     if(getLayout('estigmas')==='v'){
-      return cardVert(null,'✸','estigma'+(ori?' · '+ori:''),n,'openModalIdx('+idx+')','card-especialista');
+      return cardVert(estImg,'✸','estigma'+(ori?' · '+ori:''),n,'openModalIdx('+idx+')','card-especialista');
     }
-    return cardHoriz(null,'✸','card-especialista',n,'openModalIdx('+idx+')');
+    return cardHoriz(estImg,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
 }
 
@@ -5904,6 +5910,39 @@ var _adminSecoes = [
         .filter(Boolean);
     },
     descricao: 'Uma foto por idioma — exibida no card e no pop-up.'
+  },
+  {
+    id:'estigmas_imgs', label:'Estigmas', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.estigmas.map(function(r){ return gf(r,'Região','Regiao','regiao','região')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      return DB.estigmas
+        .filter(function(r){ return !sub || gf(r,'Região','Regiao','regiao','região')===sub; })
+        .map(function(r){ return gf(r,'Nome do Estigma','nome do estigma','Nome','nome')||''; })
+        .filter(Boolean);
+    },
+    descricao: 'Um ícone por estigma — exibido no card e no pop-up.'
+  },
+  {
+    id:'deus_gracas', label:'Deuses — Graças', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.deuses.map(function(r){ return gf(r,'Nome do Deus','nome do deus','Nome','nome')||''; })).filter(Boolean).sort();
+    },
+    fonte: function(sub){
+      var nomes=[];
+      DB.deuses.forEach(function(r){
+        var nd=gf(r,'Nome do Deus','nome do deus','Nome','nome')||'';
+        if(!nd) return;
+        if(sub && nd!==sub) return;
+        for(var gi=1;gi<=4;gi++){
+          var gt=gf(r,'Graça '+gi+' - Título','Graca '+gi+' - Titulo');
+          if(gt) nomes.push(nd+'|'+gt);
+        }
+      });
+      return nomes;
+    },
+    descricao: 'Ícone individual por Graça de cada Deus. Chave: "NomeDeus|Título da Graça". Se não houver ícone próprio, usa a imagem do deus.'
   }
 ];
 
@@ -6098,6 +6137,8 @@ function fbLoadImages(){
     if(data.raca_lf){window.RACA_LF_IMGS.linhagem=data.raca_lf.linhagem||'';window.RACA_LF_IMGS.fardo=data.raca_lf.fardo||'';}
     if(data.don_grau_imgs)  Object.assign(window.DON_GRAU_IMGS, data.don_grau_imgs);
     if(data.grimorio_spell) Object.assign(window.GRIM_SPELL_IMGS, data.grimorio_spell);
+    if(data.estigmas_imgs)  Object.assign(window.ESTIGMA_IMGS,    data.estigmas_imgs);
+    if(data.deus_gracas)    Object.assign(window.DEUS_GRACA_IMGS,  data.deus_gracas);
     // Re-renderiza tudo com as imagens novas
     if(typeof renderAll === 'function') renderAll();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
@@ -6122,6 +6163,8 @@ window.RACA_HAB_IMGS = window.RACA_HAB_IMGS || {};
 window.RACA_LF_IMGS  = window.RACA_LF_IMGS  || {linhagem:'',fardo:''};
 window.DON_GRAU_IMGS = window.DON_GRAU_IMGS  || {};
 window.GRIM_SPELL_IMGS = window.GRIM_SPELL_IMGS || {};
+window.ESTIGMA_IMGS    = window.ESTIGMA_IMGS    || {};
+window.DEUS_GRACA_IMGS = window.DEUS_GRACA_IMGS || {};
 window.VANT_IMGS  = window.VANT_IMGS  || {};
 window.DON_IMGS   = window.DON_IMGS   || {};
 
