@@ -4699,8 +4699,8 @@ function abrirDetalheContinente(idx){
       var regObj={'_vel_regiao_nome':rn,'_vel_regiao_cap':rcap,'_vel_regiao_resumo':rresumo,'_vel_regiao_cenario':rcenario,'_vel_regiao_destaques':rdestaques,'_vel_regiao_img':_velRegImg,'_vel_det_accent':ac.accent};
       var regIdx=_storeModal(regObj);
       // Thumbnail 16:9 (imagem real ou placeholder)
-      var thumbHtml=rimg
-        ?'<img class="vel-regiao-thumb" src="'+rimg+'" alt="'+rn+'" loading="lazy">'
+      var thumbHtml=_velRegImg
+        ?'<img class="vel-regiao-thumb" src="'+_velRegImg+'" alt="'+rn+'" loading="lazy">'
         :'<div class="vel-regiao-thumb-placeholder">◆</div>';
       html+='<div class="vel-regiao-card" style="--vel-det-accent:'+ac.accent+';padding:0;" onclick="abrirRegiaoModal('+regIdx+')">'+
         thumbHtml+
