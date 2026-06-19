@@ -4339,7 +4339,8 @@ function openLojaModal(idx){
     }
   }
 
-  var lojaImgUrl = (window.LOJA_IMGS && window.LOJA_IMGS[n.replace(/[.#$/[\]]/g,'_')]) || (window.LOJA_IMGS && window.LOJA_IMGS[n]) || null;
+  var _lojaImgKey=(cat==='base_est'||cat==='base_mel')?LOJA_LABELS[cat]:n;
+  var lojaImgUrl = (window.LOJA_IMGS && (window.LOJA_IMGS[_lojaImgKey]||window.LOJA_IMGS[_lojaImgKey.replace(/[.#$/[\]]/g,'_')])) || (window.LOJA_IMGS && (window.LOJA_IMGS[n]||window.LOJA_IMGS[n.replace(/[.#$/[\]]/g,'_')])) || null;
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'+
     modalImgBlock(lojaImgUrl,'✦')+
     '<div style="flex:1;min-width:0;"><div class="modal-type" style="color:'+accent+';display:flex;align-items:center;flex-wrap:wrap;gap:0.3rem;">'+LOJA_LABELS[cat]+armBadge+'</div>'+
@@ -4519,9 +4520,9 @@ function verGracasDeus(nomeDeus){
     html+='<div style="display:grid;grid-template-columns:repeat('+gracas.length+',1fr);gap:0.5rem;">';
     for(var gi=0;gi<gracas.length;gi++){
       var g=gracas[gi];
-      var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||''};
-      var gracaIdx=_storeModal(gracaObj);
       var gracaImgU=(window.DEUS_GRACA_IMGS&&(window.DEUS_GRACA_IMGS[nomeDeus]||window.DEUS_GRACA_IMGS[nomeDeus.replace(/[.#$\/\[\]]/g,'_')]))||imgU;
+      var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||'','_img_url':gracaImgU||''};
+      var gracaIdx=_storeModal(gracaObj);
       html+='<div class="don-card-h" onclick="openModalIdx('+gracaIdx+')" style="margin-bottom:0;">'+
         '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(gracaImgU?'<img src="'+gracaImgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
         '<div class="don-card-h-nome">'+(g.titulo||'Graça '+(gi+1))+'</div>'+
@@ -4920,7 +4921,7 @@ function openModal(rowOrStr){
                    gf(row,'Origem','origem','Categoria','categoria') ? '✸' : '✦';
     var heroTipo = header || (row['_vd_cat'] ? VD_LABELS[row['_vd_cat']]||row['_vd_cat'] : '');
     // Tenta pegar imagem do Firebase (vantagens por categoria, grimório por escola)
-    var fbHeroImg = donImgUrl || null;
+    var fbHeroImg = donImgUrl || row['_img_url'] || null;
     if(!fbHeroImg && window.VANT_IMGS && row['_vd_cat']){
       var _catLabel=VD_LABELS[row['_vd_cat']]||row['_vd_cat'];
       fbHeroImg=window.VANT_IMGS[_catLabel]||window.VANT_IMGS[_catLabel.replace(/[.#$\/\[\]]/g,'_')]||null;
