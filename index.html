@@ -2434,7 +2434,7 @@ main{
     <h2 class="section-title"><span class="stitle-sym">⚙</span> Admin — Imagens</h2>
 
     <!-- Abas de seção -->
-    <div id="admin-secao-tabs" style="display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1rem;"></div>
+    <div id="admin-secao-tabs" style="display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1rem;"></div>
 
     <!-- Busca -->
     <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
@@ -5954,7 +5954,7 @@ function adminInit(){
   if(tabs){
     tabs.innerHTML = _adminSecoes.map(function(s,i){
       var isLast = i===_adminSecoes.length-1;
-      return '<button class="vd-cat-btn'+(_adminSecao===s.id?' active':'')+'" onclick="adminMudarSecao(\''+s.id+'\')" style="border-radius:0;padding:0.6rem 0.4rem;font-size:0.7rem;'+(isLast?'':'border-right:1px solid var(--border);')+'">'+s.label+'</button>';
+      return '<button class="vd-cat-btn'+(_adminSecao===s.id?' active':'')+'" onclick="adminMudarSecao(\''+s.id+'\')" style="border-radius:0;padding:0.55rem 0.5rem;font-size:0.68rem;white-space:nowrap;border-right:1px solid var(--border);border-bottom:1px solid var(--border);flex:1 1 calc(100%/8);text-align:center;">'+s.label+'</button>';
     }).join('');
   }
   adminCarregarImagens();
