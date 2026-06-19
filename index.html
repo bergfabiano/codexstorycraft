@@ -1092,10 +1092,11 @@ main{
   margin-top:0;
 }
 .vel-cont-banner{
-  width:100%;aspect-ratio:16/9;overflow:hidden;
+  width:100%;aspect-ratio:1/1;overflow:hidden;
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;
   position:relative;flex-shrink:0;
+  max-height:220px;
 }
 .vel-cont-banner img{width:100%;height:100%;object-fit:cover;display:block;}
 .vel-cont-banner-sym{
@@ -4612,8 +4613,9 @@ function renderVelkarion(){
     rCopy['_vel_nome']=nome;
     var idx=_storeModal(rCopy);
     var imgField=gf(r,'Imagem','imagem','Image','image','Foto','foto','Banner','banner')||'';
+    var _velContImg=(window.VEL_CONT_IMGS&&(window.VEL_CONT_IMGS[nome]||window.VEL_CONT_IMGS[nome.replace(/[.#$\/\[\]]/g,'_')]))||imgField||'';
     return '<div class="vel-cont-card" style="--vel-accent:'+ac.accent+';--vel-accent-faint:'+ac.faint+';" onclick="abrirDetalheContinente('+idx+')">'+
-      '<div class="vel-cont-banner">'+(imgField?'<img src="'+imgField+'" loading="lazy">':'<span class="vel-cont-banner-sym">⚐</span>')+'</div>'+
+      '<div class="vel-cont-banner">'+(_velContImg?'<img src="'+_velContImg+'" loading="lazy">':'<span class="vel-cont-banner-sym">⚐</span>')+'</div>'+
       '<div class="vel-cont-body">'+
         '<div class="vel-cont-header">'+
           '<div class="vel-cont-nome">'+nome+'</div>'+
@@ -4689,8 +4691,9 @@ function abrirDetalheContinente(idx){
       var rcenario=gf(reg,'Cenário','Cenario','cenario')||'';
       var rdestaques=gf(reg,'Destaques','destaques')||'';
       var rimg=gf(reg,'Imagem','imagem','Image','image','Img','img')||'';
+      var _velRegImg=(window.VEL_REG_IMGS&&(window.VEL_REG_IMGS[rn]||window.VEL_REG_IMGS[rn.replace(/[.#$\/\[\]]/g,'_')]))||rimg||'';
       // Store region for modal
-      var regObj={'_vel_regiao_nome':rn,'_vel_regiao_cap':rcap,'_vel_regiao_resumo':rresumo,'_vel_regiao_cenario':rcenario,'_vel_regiao_destaques':rdestaques,'_vel_regiao_img':rimg,'_vel_det_accent':ac.accent};
+      var regObj={'_vel_regiao_nome':rn,'_vel_regiao_cap':rcap,'_vel_regiao_resumo':rresumo,'_vel_regiao_cenario':rcenario,'_vel_regiao_destaques':rdestaques,'_vel_regiao_img':_velRegImg,'_vel_det_accent':ac.accent};
       var regIdx=_storeModal(regObj);
       // Thumbnail 16:9 (imagem real ou placeholder)
       var thumbHtml=rimg
@@ -5820,26 +5823,45 @@ var _adminSecoes = [
     }
   },
   {
-    id:'velkarion', label:'Velkarion', tipo:'individual',
+    id:'vel_cont_imgs', label:'Velkarion — Brasões', tipo:'individual',
     subfiltros: function(){ return []; },
     fonte: function(){
       return (DB.vel_continentes.length?DB.vel_continentes:DB.velkarion)
-        .map(function(r){ return gf(r,'Continente','continente','Nome','nome')||''; });
-    }
+        .map(function(r){ return gf(r,'Continente','continente','Nome','nome')||''; })
+        .filter(Boolean);
+    },
+    descricao: 'Brasão 1:1 por continente — exibido no card da lista de continentes.'
   },
   {
-    id:'grimorio', label:'Grimório (por Escola)', tipo:'categoria',
-    subfiltroLabel: 'Escola',
+    id:'vel_reg_imgs', label:'Velkarion — Regiões', tipo:'individual',
     subfiltros: function(){
-      return uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
+      return (DB.vel_continentes.length?DB.vel_continentes:DB.velkarion)
+        .map(function(r){ return gf(r,'Continente','continente','Nome','nome')||''; })
+        .filter(Boolean).sort();
     },
     fonte: function(sub){
-      var escolas = uniq(DB.grimorio.map(function(r){ return gf(r,'Escola','escola')||''; })).filter(Boolean).sort();
-      if(sub) escolas = escolas.filter(function(e){ return e===sub; });
-      return escolas;
+      var nomes=[];
+      var chaves=Object.keys(VEL_REGIOES);
+      chaves.forEach(function(k){
+        var regs=VEL_REGIOES[k]||[];
+        // se subfiltro, filtra pelo continente
+        if(sub){
+          var contNome=(DB.vel_continentes.length?DB.vel_continentes:DB.velkarion)
+            .filter(function(r){ return gf(r,'Continente','continente','Nome','nome')===sub; });
+          if(!contNome.length) return;
+          var ck=velGetRegioesKey(sub);
+          if(ck!==k) return;
+        }
+        regs.forEach(function(reg){
+          var rn=gf(reg,'Região','Regiao','regiao','Nome','nome')||'';
+          if(rn&&nomes.indexOf(rn)===-1) nomes.push(rn);
+        });
+      });
+      return nomes;
     },
-    descricao: 'Uma foto por escola — fallback quando o feitiço não tem ícone próprio.'
+    descricao: 'Imagem 16:9 por região — exibida no card e no modal de região.'
   },
+
   {
     id:'grimorio_spell', label:'Grimório (por Feitiço)', tipo:'individual',
     subfiltros: function(){
@@ -5864,19 +5886,7 @@ var _adminSecoes = [
     // chave salva = nome da categoria (ex: "Versáteis")
     descricao: 'Uma foto por categoria — todos os itens da categoria usarão a mesma imagem.'
   },
-  {
-    id:'dons', label:'Dons', tipo:'individual',
-    subfiltros: function(){
-      return uniq(DB.dons.map(function(r){ return gf(r,'Grau','grau')||''; })).filter(Boolean).sort();
-    },
-    fonte: function(sub){
-      return DB.dons
-        .filter(function(r){ return !sub || gf(r,'Grau','grau')===sub; })
-        .map(function(r){ return gf(r,'Nome do Dom','nome do dom')||''; })
-        .filter(Boolean);
-    },
-    descricao: 'Uma foto por dom — ícone quadrado exibido no card do don.'
-  },
+
   {
     id:'don_grau_imgs', label:'Dons por Classe+Grau', tipo:'individual',
     subfiltros: function(){
@@ -5954,7 +5964,7 @@ function adminInit(){
   if(tabs){
     tabs.innerHTML = _adminSecoes.map(function(s,i){
       var isLast = i===_adminSecoes.length-1;
-      return '<button class="vd-cat-btn'+(_adminSecao===s.id?' active':'')+'" onclick="adminMudarSecao(\''+s.id+'\')" style="border-radius:0;padding:0.55rem 0.5rem;font-size:0.68rem;white-space:nowrap;border-right:1px solid var(--border);border-bottom:1px solid var(--border);flex:1 1 calc(100%/8);text-align:center;">'+s.label+'</button>';
+      return '<button class="vd-cat-btn'+(_adminSecao===s.id?' active':'')+'" onclick="adminMudarSecao(\''+s.id+'\')" style="border-radius:0;padding:0.55rem 0.5rem;font-size:0.68rem;white-space:nowrap;border-right:1px solid var(--border);border-bottom:1px solid var(--border);flex:1 1 calc(100%/7);text-align:center;min-width:0;">'+s.label+'</button>';
     }).join('');
   }
   adminCarregarImagens();
@@ -6141,6 +6151,8 @@ function fbLoadImages(){
     if(data.grimorio_spell) Object.assign(window.GRIM_SPELL_IMGS, data.grimorio_spell);
     if(data.estigmas_imgs)  Object.assign(window.ESTIGMA_IMGS,    data.estigmas_imgs);
     if(data.deus_gracas)    Object.assign(window.DEUS_GRACA_IMGS,  data.deus_gracas);
+    if(data.vel_cont_imgs)  window.VEL_CONT_IMGS = data.vel_cont_imgs;
+    if(data.vel_reg_imgs)   window.VEL_REG_IMGS  = data.vel_reg_imgs;
     // Re-renderiza tudo com as imagens novas
     if(typeof renderAll === 'function') renderAll();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
@@ -6169,6 +6181,8 @@ window.ESTIGMA_IMGS    = window.ESTIGMA_IMGS    || {};
 window.DEUS_GRACA_IMGS = window.DEUS_GRACA_IMGS || {};
 window.VANT_IMGS  = window.VANT_IMGS  || {};
 window.DON_IMGS   = window.DON_IMGS   || {};
+window.VEL_CONT_IMGS = window.VEL_CONT_IMGS || {};
+window.VEL_REG_IMGS  = window.VEL_REG_IMGS  || {};
 
 // Carrega ao iniciar
 fbLoadImages();
