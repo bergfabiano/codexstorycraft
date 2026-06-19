@@ -2633,10 +2633,11 @@ function getEstigmaImg(nome){return ESTIGMA_IMGS[nome]||ESTIGMA_IMGS[(nome||'').
 function getDeusGracaImg(deus,titulo){var k=(deus+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return DEUS_GRACA_IMGS[k]||null;}
 
 // Card horizontal minimalista — só imagem + nome
-function cardHoriz(url, sym, extraCls, nome, onclick){
+function cardHoriz(url, sym, extraCls, nome, onclick, imgKey){
+  var _key = imgKey||nome;
   var imgInner = url
     ? '<img src="'+url+'" loading="lazy">'
-    : '<span class="card-h-sym">'+(sym||'✦')+'</span>';
+    : '<span class="card-h-sym card-img-pending" data-img-key="'+_key+'">'+(sym||'✦')+'</span>';
   return '<div class="card card-h'+(extraCls?' '+extraCls:'')+'" onclick="'+onclick+'">'
     +'<div class="card-h-img">'+imgInner+'</div>'
     +'<div class="card-h-body"><div class="card-name">'+nome+'</div></div>'
@@ -3263,7 +3264,7 @@ function renderIdiomaModal(r){
   return html;
 }
 
-function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderIdiomas();renderEstigmas();initLayoutToggles();}
+function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderIdiomas();renderEstigmas();initLayoutToggles();if(typeof fbInjectImages==='function') setTimeout(fbInjectImages,0);}
 
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
@@ -3893,6 +3894,7 @@ function renderVantagens(){
     if(modo==='v') return cardVert(vantImg,isNeg?'✗':'✦',sub||catLabel,n,'openModalIdx('+_storeModal(r)+')',cardCls);
     return cardHoriz(vantImg,isNeg?'✗':'✦',cardCls,n,'openModalIdx('+_storeModal(r)+')');
   }).join('');
+  if(typeof fbInjectImages==='function') setTimeout(fbInjectImages,0);
 }
 
 // ── RENDER ITENS ──
@@ -4829,6 +4831,7 @@ function renderEstigmas(){
     }
     return cardHoriz(estImg,'✸','card-especialista',n,'openModalIdx('+idx+')');
   }).join('');
+  if(typeof fbInjectImages==='function') setTimeout(fbInjectImages,0);
 }
 
 // ── CLEAR FILTERS ──
@@ -5699,10 +5702,11 @@ function initLayoutToggles(){
 }
 
 // Card vertical — para modo grade
-function cardVert(url, sym, tipo, nome, onclick, extraCls){
+function cardVert(url, sym, tipo, nome, onclick, extraCls, imgKey){
+  var _key = imgKey||nome;
   var imgInner = url
     ? '<img src="'+url+'" loading="lazy">'
-    : '<span class="card-v-sym">'+(sym||'✦')+'</span>';
+    : '<span class="card-v-sym card-img-pending" data-img-key="'+_key+'">'+(sym||'✦')+'</span>';
   return '<div class="card card-v'+(extraCls?' '+extraCls:'')+'" onclick="'+onclick+'">'
     +'<div class="card-v-img">'+imgInner+'</div>'
     +'<div class="card-v-body">'
@@ -6132,6 +6136,82 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+
+// ── Injeta imagens nos placeholders do DOM sem re-renderizar ──
+function fbInjectImages(){
+  // Mapa de dicionário por seção para busca rápida
+  var dicts = [
+    window.RACA_IMGS, window.CLASS_IMGS, window.DEUS_IMGS, window.LOJA_IMGS,
+    window.VEL_IMGS, window.GRIM_IMGS, window.VANT_IMGS, window.DON_IMGS,
+    window.IDIOMA_IMGS, window.RACA_HAB_IMGS, window.DON_GRAU_IMGS,
+    window.GRIM_SPELL_IMGS, window.ESTIGMA_IMGS, window.DEUS_GRACA_IMGS,
+    window.VEL_CONT_IMGS, window.VEL_REG_IMGS
+  ];
+
+  function lookupImg(key){
+    if(!key) return null;
+    var safe = key.replace(/[.#$\/\[\]]/g,'_');
+    for(var d=0;d<dicts.length;d++){
+      var dic=dicts[d]; if(!dic) continue;
+      var url=dic[key]||dic[safe];
+      if(url) return url;
+    }
+    return null;
+  }
+
+  // Substitui placeholders .card-img-pending por <img>
+  var pending = document.querySelectorAll('.card-img-pending');
+  pending.forEach(function(el){
+    var key = el.getAttribute('data-img-key');
+    var url = lookupImg(key);
+    if(!url) return;
+    var img = document.createElement('img');
+    img.src = url;
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 0.3s;';
+    img.onload = function(){ img.style.opacity='1'; };
+    el.parentNode.replaceChild(img, el);
+  });
+
+  // Velkarion continentes (banner)
+  if(window.VEL_CONT_IMGS){
+    document.querySelectorAll('.vel-cont-banner').forEach(function(banner){
+      if(banner.querySelector('img')) return; // já tem imagem
+      var sym = banner.querySelector('.vel-cont-banner-sym');
+      if(!sym) return;
+      var card = banner.closest('.vel-cont-card');
+      if(!card) return;
+      var nameEl = card.querySelector('.vel-cont-name');
+      var nome = nameEl ? nameEl.textContent.trim() : '';
+      var url = lookupImg(nome);
+      if(!url) return;
+      var img = document.createElement('img');
+      img.src = url; img.loading = 'lazy';
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 0.3s;';
+      img.onload = function(){ img.style.opacity='1'; };
+      sym.parentNode.replaceChild(img, sym);
+    });
+  }
+
+  // Velkarion regiões (thumb)
+  if(window.VEL_REG_IMGS){
+    document.querySelectorAll('.vel-regiao-thumb-placeholder').forEach(function(ph){
+      var card = ph.closest('.vel-regiao-card');
+      if(!card) return;
+      var nameEl = card.querySelector('.vel-reg-nome');
+      var nome = nameEl ? nameEl.textContent.trim() : '';
+      var url = lookupImg(nome);
+      if(!url) return;
+      var img = document.createElement('img');
+      img.className = 'vel-regiao-thumb';
+      img.src = url; img.loading = 'lazy';
+      img.style.cssText = 'opacity:0;transition:opacity 0.3s;';
+      img.onload = function(){ img.style.opacity='1'; };
+      ph.parentNode.replaceChild(img, ph);
+    });
+  }
+}
+
 // ── Carrega todas as imagens do Firebase e popula os dicionários ──
 function fbLoadImages(){
   get(ref(db, 'codex_images')).then(function(snap){
@@ -6156,8 +6236,8 @@ function fbLoadImages(){
     if(data.deus_gracas)    Object.assign(window.DEUS_GRACA_IMGS,  data.deus_gracas);
     if(data.vel_cont_imgs)  window.VEL_CONT_IMGS = data.vel_cont_imgs;
     if(data.vel_reg_imgs)   window.VEL_REG_IMGS  = data.vel_reg_imgs;
-    // Re-renderiza tudo com as imagens novas
-    if(typeof renderAll === 'function') renderAll();
+    // Injeta imagens nos cards já renderizados sem re-renderizar
+    fbInjectImages();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
 }
 
