@@ -490,17 +490,17 @@ main{
   border-radius:6px;margin-bottom:5px;
   overflow:hidden;cursor:pointer;
   transition:border-color 0.18s,background 0.18s;
-  min-height:48px;
+  min-height:64px;
 }
 .don-card-h:hover{
   border-color:var(--violet-dim);
   background:var(--surface2);
 }
 .don-card-h-img{
-  flex:0 0 48px;width:48px;
+  flex:0 0 64px;width:64px;
   background:var(--surface2);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;color:var(--violet-dim);
+  font-size:1.5rem;color:var(--violet-dim);
   border-right:1px solid var(--border);
   overflow:hidden;flex-shrink:0;
 }
@@ -508,8 +508,8 @@ main{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .don-card-h-nome{
-  flex:1;padding:0.35rem 0.6rem;
-  font-family:'Cinzel',serif;font-size:0.82rem;font-weight:600;
+  flex:1;padding:0.5rem 0.8rem;
+  font-family:'Cinzel',serif;font-size:0.88rem;font-weight:600;
   color:var(--text);line-height:1.25;
   display:flex;align-items:center;
   min-width:0;
@@ -4524,7 +4524,7 @@ function verGracasDeus(nomeDeus){
       var gracaObj={'_nome_display':g.titulo||'Graça '+(gi+1),'Tipo':'Graça de '+nomeDeus,'Descrição':g.desc||'','_img_url':gracaImgU||''};
       var gracaIdx=_storeModal(gracaObj);
       html+='<div class="don-card-h" onclick="openModalIdx('+gracaIdx+')" style="margin-bottom:0;">'+
-        '<div class="don-card-h-img" style="flex:0 0 48px;width:48px;height:48px;">'+(gracaImgU?'<img src="'+gracaImgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
+        '<div class="don-card-h-img" style="flex:0 0 64px;width:64px;height:64px;">'+(gracaImgU?'<img src="'+gracaImgU+'" style="width:100%;height:100%;object-fit:cover;">':'☀')+'</div>'+
         '<div class="don-card-h-nome">'+(g.titulo||'Graça '+(gi+1))+'</div>'+
         '</div>';
     }
