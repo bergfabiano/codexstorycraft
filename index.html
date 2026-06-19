@@ -435,7 +435,7 @@ main{
   color:var(--text-dim);font-size:0.9rem;line-height:1.72;
   border-left:2px solid var(--violet-dim);padding-left:1rem;margin-bottom:1.5rem;
 }
-/* ── Conjuradores: Vínculo & Feitiços Adquiridos por Nível (apenas página de detalhes) ── */
+/* ── Conjuradores: Feitiços Adquiridos & Vínculo (apenas página de detalhes) ── */
 .classe-extra-block{
   display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem;
   background:var(--surface);border:1px solid var(--border);
@@ -447,31 +447,12 @@ main{
   letter-spacing:0.18em;color:var(--violet-bright);opacity:0.8;
   text-transform:uppercase;margin-bottom:0.4rem;
 }
-.classe-extra-title{
-  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
-  color:var(--gold-light);margin-bottom:0.45rem;
-}
-.classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;}
+.classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;margin:0;}
 .vinculo-cards-wrap{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
-  gap:0.5rem;margin-top:0.2rem;
+  gap:0.5rem;margin-top:0.2rem;margin-bottom:1.5rem;
 }
 .vinculo-cards-wrap .don-card-h{margin-bottom:0;}
-.feiticos-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
-  gap:0.5rem;margin-top:0.25rem;
-}
-.feiticos-grid-item{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:6px;padding:0.5rem 0.6rem;text-align:center;
-}
-.feiticos-grid-item-full{grid-column:1/-1;text-align:left;}
-.fg-nivel{
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;
-  letter-spacing:0.08em;color:var(--violet-bright);opacity:0.8;
-  text-transform:uppercase;margin-bottom:0.2rem;
-}
-.fg-valor{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold-light);}
 .dons-title{
   font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold-light);
   letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;
@@ -2671,7 +2652,7 @@ function getDonGrauImg(classe,grau){var k=(classe+'|'+grau).replace(/[.#$\/\[\]]
 function getSpellImg(nome){return GRIM_SPELL_IMGS[nome]||GRIM_SPELL_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getEstigmaImg(nome){return ESTIGMA_IMGS[nome]||ESTIGMA_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getDeusGracaImg(deus,titulo){var k=(deus+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return DEUS_GRACA_IMGS[k]||null;}
-function getClassVinculoImg(n){var k=(n||'').replace(/[.#$\/\[\]]/g,'_');return CLASS_VINC_IMGS[n]||CLASS_VINC_IMGS[k]||null;}
+function getClassVinculoImg(classe,titulo){var k=(classe+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return CLASS_VINC_IMGS[k]||null;}
 function getClassFeiticosImg(n){var k=(n||'').replace(/[.#$\/\[\]]/g,'_');return CLASS_FEIT_IMGS[n]||CLASS_FEIT_IMGS[k]||null;}
 
 // Card horizontal minimalista — só imagem + nome
@@ -3340,12 +3321,30 @@ function gf(row){
   return '';
 }
 function tag(label,cls){if(!label)return '';return '<span class="tag '+cls+'">'+label+'</span>';}
+function _limpaNome(s){return (s||'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();}
+// Resolve um nome de classe "sujo" (espaços/maiúsculas/acentos divergentes na aba Conjuradores)
+// para o nome canônico tal como está na aba Classes — garante que a chave de imagem salva no
+// admin seja a mesma usada na renderização (getClassVinculoImg/getClassFeiticosImg usam nomeClasse vindo de DB.classes).
+function canonClasseNome(nomeSujo){
+  var alvo=deaccent(_limpaNome(nomeSujo));
+  if(!alvo) return _limpaNome(nomeSujo);
+  for(var i=0;i<DB.classes.length;i++){
+    var cl=gf(DB.classes[i],'Classe','classe');
+    if(deaccent(_limpaNome(cl))===alvo) return cl;
+  }
+  return _limpaNome(nomeSujo);
+}
 // ── Conjuradores (aba separada "Conjuradores"): Vínculos (até 6 opções por classe) e Feitiços Adquiridos ──
 var CLASSE_FEIT_KEYS=['Feitiços Adquiridos','Feitiços por Nível','Feitiços Adquiridos por Nível','Feitiços Conhecidos','Magias por Nível','Magias Conhecidas','Feiticos Adquiridos','Feiticos por Nivel','Feiticos Adquiridos por Nivel','Feiticos Conhecidos','Magias por Nivel'];
 function classeFeitTxt(r){return r?gf.apply(null,[r].concat(CLASSE_FEIT_KEYS)):'';}
-// Busca a linha da aba "Conjuradores" correspondente a uma classe
+// Busca a linha da aba "Conjuradores" correspondente a uma classe (tolerante a espaços, maiúsculas e acentos)
 function getConjuradorRow(nomeClasse){
-  for(var i=0;i<DB.conjuradores.length;i++){ if(gf(DB.conjuradores[i],'Classe','classe')===nomeClasse) return DB.conjuradores[i]; }
+  var alvo=deaccent(_limpaNome(nomeClasse));
+  if(!alvo) return null;
+  for(var i=0;i<DB.conjuradores.length;i++){
+    var cl=gf(DB.conjuradores[i],'Classe','classe');
+    if(deaccent(_limpaNome(cl))===alvo) return DB.conjuradores[i];
+  }
   return null;
 }
 // Lê as colunas "Vínculo 1".."Vínculo 6" de uma linha de conjurador e separa título/mensagem completa de cada uma
@@ -3764,37 +3763,27 @@ function verDonsClasse(nomeClasse){
     html+='</div>';
     // Dados da aba separada "Conjuradores" (Categoria, Classe, Feitiços Adquiridos, Vínculo 1..6)
     var conjRow=getConjuradorRow(nomeClasse);
-    // ── Vínculo — um card horizontal por opção (Vínculo 1..6); clique abre pop-up com a mensagem completa ──
-    var vinculos=getVinculosDaClasse(conjRow);
-    if(vinculos.length){
-      var _vincImg=getClassVinculoImg(nomeClasse);
-      var _vincCardsHtml=vinculos.map(function(v){
-        var vIdx=_storeModal({_tipo:'vinculo',_nome_display:v.titulo,_classe:nomeClasse,_mensagem:v.mensagem});
-        return '<div class="don-card-h" onclick="openModalIdx('+vIdx+')"><div class="don-card-h-img">☄</div><div class="don-card-h-nome">'+v.titulo+'</div></div>';
-      }).join('');
-      html+='<div class="classe-extra-block">'+imgBox(_vincImg,'☄',92)
-        +'<div class="classe-extra-content">'
-          +'<div class="classe-extra-label">Vínculo</div>'
-          +'<div class="vinculo-cards-wrap">'+_vincCardsHtml+'</div>'
-        +'</div>'
-      +'</div>';
-    }
-    // ── Feitiços Adquiridos — só aparece se a classe tiver essa coluna preenchida na aba Conjuradores ──
+    // ── Feitiços Adquiridos — card único (ícone + texto corrido), logo abaixo do Poder de Kit ──
     var feitTxt=classeFeitTxt(conjRow);
     if(feitTxt){
       var _feitImg=getClassFeiticosImg(nomeClasse);
-      var _feitLinhas=feitTxt.split(/\n+/).map(function(l){return l.trim();}).filter(Boolean);
-      var _feitItensHtml=_feitLinhas.map(function(linha){
-        var m=linha.match(/^(.+?)\s*[:\-–—]\s*(.+)$/);
-        if(m) return '<div class="feiticos-grid-item"><div class="fg-nivel">'+m[1].trim()+'</div><div class="fg-valor">'+m[2].trim()+'</div></div>';
-        return '<div class="feiticos-grid-item feiticos-grid-item-full"><div class="fg-valor">'+linha+'</div></div>';
-      }).join('');
       html+='<div class="classe-extra-block">'+imgBox(_feitImg,'✦',92)
         +'<div class="classe-extra-content">'
           +'<div class="classe-extra-label">Feitiços Adquiridos</div>'
-          +'<div class="feiticos-grid">'+_feitItensHtml+'</div>'
+          +'<p>'+feitTxt.trim().replace(/\n+/g,'<br>')+'</p>'
         +'</div>'
       +'</div>';
+    }
+    // ── Vínculo — grade de cards (um por opção, "Vínculo 1".."Vínculo 6"), cada um com seu próprio ícone ──
+    var vinculos=getVinculosDaClasse(conjRow);
+    if(vinculos.length){
+      html+='<div class="dons-title" style="margin-bottom:0.6rem;">✦ Vínculo de '+nomeClasse+'</div>';
+      html+='<div class="vinculo-cards-wrap">'+vinculos.map(function(v){
+        var vIdx=_storeModal({_tipo:'vinculo',_nome_display:v.titulo,_classe:nomeClasse,_mensagem:v.mensagem});
+        var _vImg=getClassVinculoImg(nomeClasse,v.titulo);
+        var imgContent=_vImg?'<img src="'+_vImg+'" alt="'+v.titulo+'">':'☄';
+        return '<div class="don-card-h" onclick="openModalIdx('+vIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+v.titulo+'</div></div>';
+      }).join('')+'</div>';
     }
   }else{html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2>';}
   if(graus.length){
@@ -5939,20 +5928,27 @@ var _adminSecoes = [
     }
   },
   {
-    id:'classe_vinculo', label:'Classes — Vínculo', tipo:'individual',
-    subfiltros: function(){ return []; },
-    fonte: function(){
-      return DB.conjuradores.filter(function(r){ return getVinculosDaClasse(r).length>0; })
-        .map(function(r){ return gf(r,'Classe','classe')||''; }).filter(Boolean);
+    id:'classe_vinculo', label:'Classes — Vínculo (por opção)', tipo:'individual',
+    subfiltros: function(){
+      return uniq(DB.conjuradores.map(function(r){ return canonClasseNome(gf(r,'Classe','classe'))||''; })).filter(Boolean).sort();
     },
-    descricao: 'Imagem 1:1 da seção de Vínculo — só aparece para classes com ao menos uma coluna "Vínculo 1..6" preenchida na aba Conjuradores.'
+    fonte: function(sub){
+      var linhas=sub?DB.conjuradores.filter(function(r){return canonClasseNome(gf(r,'Classe','classe'))===sub;}):DB.conjuradores;
+      var nomes=[];
+      linhas.forEach(function(r){
+        var cl=canonClasseNome(gf(r,'Classe','classe'))||'';
+        getVinculosDaClasse(r).forEach(function(v){ nomes.push(cl+'|'+v.titulo); });
+      });
+      return nomes;
+    },
+    descricao: 'Ícone individual por opção de Vínculo — cada "Vínculo 1..6" de cada classe tem sua própria imagem. Chave: "NomeClasse|Título do Vínculo"'
   },
   {
     id:'classe_feiticos', label:'Classes — Feitiços Adquiridos', tipo:'individual',
     subfiltros: function(){ return []; },
     fonte: function(){
       return DB.conjuradores.filter(function(r){ return !!classeFeitTxt(r); })
-        .map(function(r){ return gf(r,'Classe','classe')||''; }).filter(Boolean);
+        .map(function(r){ return canonClasseNome(gf(r,'Classe','classe'))||''; }).filter(Boolean);
     },
     descricao: 'Imagem 1:1 da seção de Feitiços Adquiridos — só aparece para classes com a coluna "Feitiços Adquiridos" preenchida na aba Conjuradores.'
   },
