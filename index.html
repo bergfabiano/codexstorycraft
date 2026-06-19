@@ -435,6 +435,43 @@ main{
   color:var(--text-dim);font-size:0.9rem;line-height:1.72;
   border-left:2px solid var(--violet-dim);padding-left:1rem;margin-bottom:1.5rem;
 }
+/* ── Conjuradores: Vínculo & Feitiços Adquiridos por Nível (apenas página de detalhes) ── */
+.classe-extra-block{
+  display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;margin-bottom:1.25rem;
+}
+.classe-extra-content{flex:1;min-width:0;}
+.classe-extra-label{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;
+  letter-spacing:0.18em;color:var(--violet-bright);opacity:0.8;
+  text-transform:uppercase;margin-bottom:0.4rem;
+}
+.classe-extra-title{
+  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
+  color:var(--gold-light);margin-bottom:0.45rem;
+}
+.classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;}
+.vinculo-cards-wrap{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:0.5rem;margin-top:0.2rem;
+}
+.vinculo-cards-wrap .don-card-h{margin-bottom:0;}
+.feiticos-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));
+  gap:0.5rem;margin-top:0.25rem;
+}
+.feiticos-grid-item{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;padding:0.5rem 0.6rem;text-align:center;
+}
+.feiticos-grid-item-full{grid-column:1/-1;text-align:left;}
+.fg-nivel{
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;
+  letter-spacing:0.08em;color:var(--violet-bright);opacity:0.8;
+  text-transform:uppercase;margin-bottom:0.2rem;
+}
+.fg-valor{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold-light);}
 .dons-title{
   font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold-light);
   letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;
@@ -2514,7 +2551,7 @@ function showPage(name) {
 }
 
 // ── DATABASE ──
-var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[],vel_continentes:[],idiomas:[]};
+var DB={racas:[],racas_cats:[],classes:[],dons:[],vantagens:[],itens:[],grimorio:[],deuses:[],velkarion:[],estigmas:[],vel_continentes:[],idiomas:[],conjuradores:[]};
 var VEL_REGIOES={
   ignaria:[],murazuma:[],khemet:[],vekashia:[],wintara:[],exparktar:[],lunox:[],sharandor:[]
 };
@@ -2544,6 +2581,7 @@ var SHEET_URLS={
   grimorio:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiGuaJLLDCO5FUonGzmR3il0Tbmka4ELiQO2RIbbEDWLlGJJVkfm5T15WoQVaWuhpLbUx2tSo34JHG/pub?output=csv",
   classes:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxPB4-p81CU5CAnDfHVY7yv-6y-YJW2wf0EwvZJrzouIxoUqoY35SCNgHi4ar7YA/pub?gid=1807496046&single=true&output=csv",
   dons:            "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxPB4-p81CU5CAnDfHVY7yv-6y-YJW2wf0EwvZJrzouIxoUqoY35SCNgHi4ar7YA/pub?gid=610834344&single=true&output=csv",
+  conjuradores:    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxPB4-p81CU5CAnDfHVY7yv-6y-YJW2wf0EwvZJrzouIxoUqoY35SCNgHi4ar7YA/pub?gid=682071546&single=true&output=csv",
   idiomas:         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQqxiXSBqkr6ghvbdXm7IByU-JP416b4xLIZp4rQeDrJIZBOdDWsYypSSP_YTJSH40FXeaStFXskmcD/pub?gid=937660582&single=true&output=csv",
   estigmas:        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRua3Uhy9cTqp1VmZOid607_zC7t3mMM0bC7kUpzah4TR168n9tNGVszpLVEEEakj4ymr_95nor--Sa/pub?gid=1806585309&single=true&output=csv",
   deuses:          "https://docs.google.com/spreadsheets/d/e/2PACX-1vTbQ8KLUALmCJt0bCgY45cyIMhuUyoxU1UJf71g8DnDW1QhoDDmGFHISGLgfXdoV5wx0CmYFMG1EnGY/pub?output=csv",
@@ -2622,6 +2660,8 @@ var DON_GRAU_IMGS={}; // chave: "NomeClasse|Grau" → url do ícone p/ dons daqu
 var GRIM_SPELL_IMGS={}; // chave: nome do feitiço → url do ícone individual
 var ESTIGMA_IMGS={}; // chave: nome do estigma → url do ícone
 var DEUS_GRACA_IMGS={}; // chave: "NomeDeus|Título da Graça" → url do ícone
+var CLASS_VINC_IMGS={}; // chave: NomeClasse → url do ícone do Vínculo (Patrono/Herança/Totem/Pacto)
+var CLASS_FEIT_IMGS={}; // chave: NomeClasse → url do ícone de Feitiços Adquiridos por Nível
 function getClassImg(n){return CLASS_IMGS[n]||null;}
 function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
@@ -2631,6 +2671,8 @@ function getDonGrauImg(classe,grau){var k=(classe+'|'+grau).replace(/[.#$\/\[\]]
 function getSpellImg(nome){return GRIM_SPELL_IMGS[nome]||GRIM_SPELL_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getEstigmaImg(nome){return ESTIGMA_IMGS[nome]||ESTIGMA_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getDeusGracaImg(deus,titulo){var k=(deus+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return DEUS_GRACA_IMGS[k]||null;}
+function getClassVinculoImg(n){var k=(n||'').replace(/[.#$\/\[\]]/g,'_');return CLASS_VINC_IMGS[n]||CLASS_VINC_IMGS[k]||null;}
+function getClassFeiticosImg(n){var k=(n||'').replace(/[.#$\/\[\]]/g,'_');return CLASS_FEIT_IMGS[n]||CLASS_FEIT_IMGS[k]||null;}
 
 // Card horizontal minimalista — só imagem + nome
 function cardHoriz(url, sym, extraCls, nome, onclick, imgKey){
@@ -2722,7 +2764,7 @@ function vdCardClass(cat){
 // ── SPLASH SCREEN ──
 var SPLASH_LABELS={
   racas_cats:'Raças (Categorias)',racas_detail:'Raças',grimorio:'Grimório',
-  classes:'Classes',dons:'Dons',idiomas:'Idiomas',estigmas:'Estigmas',deuses:'Deuses',
+  classes:'Classes',dons:'Dons',idiomas:'Idiomas',estigmas:'Estigmas',deuses:'Deuses',conjuradores:'Conjuradores',
   vd_versateis:'Vant. Versáteis',vd_combate:'Vant. Combate',vd_magicas:'Vant. Mágicas',
   vd_ataques:'Vant. Ataques',vd_superpoderes:'Superpoderes',vd_desvantagens:'Desvantagens',vd_maldicoes:'Maldições',
   loja_armas:'Loja: Armas',loja_municao:'Loja: Munição',loja_focus:'Loja: Focus',
@@ -3060,6 +3102,7 @@ function distributeData(rows,tab){
   if(tab==='racas'){DB.racas=rows;return;}
   if(tab==='classes'){DB.classes=rows;renderClasses();return;}
   if(tab==='dons'){DB.dons=rows;renderClasses();return;}
+  if(tab==='conjuradores'){DB.conjuradores=rows;return;}
   if(tab==='vantagensdesvantagens'||tab==='vantagens'){DB.vantagens=rows;return;}
   if(tab==='itensloja'||tab==='itens'){DB.itens=rows;return;}
   if(tab==='loja_armas'){LOJA.armas=rows;LOJA_STATUS.armas='ok';if(LOJA_ACTIVE==='armas')renderLoja();return;}
@@ -3266,6 +3309,26 @@ function renderIdiomaModal(r){
 
 function renderAll(){_modalStore=[];renderRacas();renderClasses();renderVantagens();renderLoja();renderGrimorio();renderDeuses();renderVelkarion();renderIdiomas();renderEstigmas();initLayoutToggles();if(typeof fbInjectImages==='function') setTimeout(fbInjectImages,0);}
 
+// Pop-up de um Vínculo individual (Patrono/Herança/Totem/Pacto) — título + mensagem completa
+function renderVinculoModal(r){
+  var nome=r['_nome_display']||'(sem nome)';
+  var classe=r['_classe']||'';
+  var msg=r['_mensagem']||'';
+  var imgUrl=getClassVinculoImg(classe);
+  var imgHtml=imgUrl
+    ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
+    :'<span style="font-size:3rem;opacity:0.18;">☄</span>';
+  var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:1;padding-top:0.2rem;">'
+      +'<div class="modal-type">'+(classe?'Vínculo de '+classe:'Vínculo')+'</div>'
+      +'<h2 class="modal-name">'+nome+'</h2>'
+    +'</div>'
+  +'</div>';
+  if(msg) html+='<div class="modal-desc">'+formatDesc(msg)+'</div>';
+  return html;
+}
+
 // ── HELPERS ──
 function deaccent(s){return(s||'').toLowerCase().replace(/[àáâãä]/g,'a').replace(/[èéêë]/g,'e').replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o').replace(/[ùúûü]/g,'u').replace(/[ç]/g,'c').replace(/[ñ]/g,'n').replace(/[-]/g,'');}
 function gf(row){
@@ -3277,6 +3340,49 @@ function gf(row){
   return '';
 }
 function tag(label,cls){if(!label)return '';return '<span class="tag '+cls+'">'+label+'</span>';}
+// ── Conjuradores (aba separada "Conjuradores"): Vínculos (até 6 opções por classe) e Feitiços Adquiridos ──
+var CLASSE_FEIT_KEYS=['Feitiços Adquiridos','Feitiços por Nível','Feitiços Adquiridos por Nível','Feitiços Conhecidos','Magias por Nível','Magias Conhecidas','Feiticos Adquiridos','Feiticos por Nivel','Feiticos Adquiridos por Nivel','Feiticos Conhecidos','Magias por Nivel'];
+function classeFeitTxt(r){return r?gf.apply(null,[r].concat(CLASSE_FEIT_KEYS)):'';}
+// Busca a linha da aba "Conjuradores" correspondente a uma classe
+function getConjuradorRow(nomeClasse){
+  for(var i=0;i<DB.conjuradores.length;i++){ if(gf(DB.conjuradores[i],'Classe','classe')===nomeClasse) return DB.conjuradores[i]; }
+  return null;
+}
+// Lê as colunas "Vínculo 1".."Vínculo 6" de uma linha de conjurador e separa título/mensagem completa de cada uma
+function getVinculosDaClasse(conjRow){
+  if(!conjRow) return [];
+  var out=[];
+  for(var n=1;n<=6;n++){
+    var raw=gf(conjRow,'Vínculo '+n,'Vinculo '+n);
+    var parsed=parseVinculoCell(raw);
+    if(parsed) out.push(parsed);
+  }
+  return out;
+}
+// "Título\nMensagem completa" (preferencial) ou "Título: mensagem" ou texto único como fallback
+function parseVinculoCell(txt){
+  txt=(txt||'').trim();
+  if(!txt) return null;
+  var nlIdx=txt.search(/\r?\n/);
+  if(nlIdx>-1){
+    var titulo=txt.slice(0,nlIdx).trim();
+    var msg=txt.slice(nlIdx).replace(/^\r?\n+/,'').trim();
+    if(titulo) return {titulo:titulo,mensagem:msg||titulo};
+  }
+  var m=txt.match(/^([^\n:]{2,60}):\s*([\s\S]+)$/);
+  if(m) return {titulo:m[1].trim(),mensagem:m[2].trim()};
+  var sm=txt.match(/^(.{4,80}?[.!?])\s+([\s\S]+)$/);
+  if(sm) return {titulo:sm[1].trim(),mensagem:txt};
+  return {titulo:txt.length>60?txt.slice(0,57).trim()+'…':txt,mensagem:txt};
+}
+// Verifica se uma coluna pertence a Vínculo/Feitiços Adquiridos (usado p/ nunca expor isso no pop-up de classe)
+function isVincOuFeitKey(k){
+  var kt=deaccent(k).replace(/[^a-z0-9]/g,'');
+  if(kt.indexOf('vinculo')>-1) return true;
+  if(kt.indexOf('feiticosadquiridos')>-1||kt.indexOf('feiticospornivel')>-1||kt.indexOf('feiticosconhecidos')>-1) return true;
+  if(kt.indexOf('magiaspornivel')>-1||kt.indexOf('magiasconhecidas')>-1) return true;
+  return false;
+}
 function fstr(row){return Object.values(row).join(' ').toLowerCase();}
 function rarColor(r){var m={'lendario':'tag-rare','lendário':'tag-rare','epico':'tag-rare','épico':'tag-rare','raro':'tag-class','incomum':'tag-gold','comum':'tag-gray','artefato':'tag-danger'};return m[(r||'').toLowerCase()]||'tag-gray';}
 function popSel(id,opts,cur){var sel=document.getElementById(id);if(!sel)return;var first=sel.options[0];sel.innerHTML='';sel.appendChild(first);for(var i=0;i<opts.length;i++){var o=document.createElement('option');o.value=opts[i];o.textContent=opts[i];if(opts[i]===cur)o.selected=true;sel.appendChild(o);}}
@@ -3656,6 +3762,40 @@ function verDonsClasse(nomeClasse){
     if(pex)html+='<div class="classe-field"><label>Perícias Extras</label><p>'+pex+'</p></div>';
     if(kit)html+='<div class="classe-field classe-header-full"><label>Poder de Kit</label><p>'+kit+'</p></div>';
     html+='</div>';
+    // Dados da aba separada "Conjuradores" (Categoria, Classe, Feitiços Adquiridos, Vínculo 1..6)
+    var conjRow=getConjuradorRow(nomeClasse);
+    // ── Vínculo — um card horizontal por opção (Vínculo 1..6); clique abre pop-up com a mensagem completa ──
+    var vinculos=getVinculosDaClasse(conjRow);
+    if(vinculos.length){
+      var _vincImg=getClassVinculoImg(nomeClasse);
+      var _vincCardsHtml=vinculos.map(function(v){
+        var vIdx=_storeModal({_tipo:'vinculo',_nome_display:v.titulo,_classe:nomeClasse,_mensagem:v.mensagem});
+        return '<div class="don-card-h" onclick="openModalIdx('+vIdx+')"><div class="don-card-h-img">☄</div><div class="don-card-h-nome">'+v.titulo+'</div></div>';
+      }).join('');
+      html+='<div class="classe-extra-block">'+imgBox(_vincImg,'☄',92)
+        +'<div class="classe-extra-content">'
+          +'<div class="classe-extra-label">Vínculo</div>'
+          +'<div class="vinculo-cards-wrap">'+_vincCardsHtml+'</div>'
+        +'</div>'
+      +'</div>';
+    }
+    // ── Feitiços Adquiridos — só aparece se a classe tiver essa coluna preenchida na aba Conjuradores ──
+    var feitTxt=classeFeitTxt(conjRow);
+    if(feitTxt){
+      var _feitImg=getClassFeiticosImg(nomeClasse);
+      var _feitLinhas=feitTxt.split(/\n+/).map(function(l){return l.trim();}).filter(Boolean);
+      var _feitItensHtml=_feitLinhas.map(function(linha){
+        var m=linha.match(/^(.+?)\s*[:\-–—]\s*(.+)$/);
+        if(m) return '<div class="feiticos-grid-item"><div class="fg-nivel">'+m[1].trim()+'</div><div class="fg-valor">'+m[2].trim()+'</div></div>';
+        return '<div class="feiticos-grid-item feiticos-grid-item-full"><div class="fg-valor">'+linha+'</div></div>';
+      }).join('');
+      html+='<div class="classe-extra-block">'+imgBox(_feitImg,'✦',92)
+        +'<div class="classe-extra-content">'
+          +'<div class="classe-extra-label">Feitiços Adquiridos</div>'
+          +'<div class="feiticos-grid">'+_feitItensHtml+'</div>'
+        +'</div>'
+      +'</div>';
+    }
   }else{html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2>';}
   if(graus.length){
     var _donsLayout=getLayout('dons');
@@ -4883,6 +5023,11 @@ function openModal(rowOrStr){
     document.getElementById('modalOverlay').classList.add('open');
     return;
   }
+  if(row['_tipo']==='vinculo'){
+    document.getElementById('modalBody').innerHTML=renderVinculoModal(row);
+    document.getElementById('modalOverlay').classList.add('open');
+    return;
+  }
   var nome=gf(row,'_nome_display','Feitiço','Feitico','feitico','Nome do Dom','nome do dom','Nome do Deus','nome do deus','Classe','classe','Nome','nome','Vantagem','vantagem','Desvantagem','desvantagem','Maldição','Maldicao','maldicao','Regiao','regiao','Titulo','titulo','Nome do Estigma','nome do estigma')||'(sem nome)';
   var escola=gf(row,'Escola','escola'),tipo=gf(row,'Tipo','tipo');
   var header=[escola,tipo].filter(Boolean).join(' — ');
@@ -4890,7 +5035,7 @@ function openModal(rowOrStr){
   var desc='',rks=Object.keys(row);
   for(var i=0;i<rks.length;i++){if(descKeys.indexOf(deaccent(rks[i]))>-1&&row[rks[i]]){desc=row[rks[i]];break;}}
   var skipKeys=['_nome_display','feitiço','feitico','nome do dom','classe','nome do estigma','nome do deus','nome','vantagem','desvantagem','maldicao','tipo','escola','descrição completa','descricao completa','descrição','descricao','desc','lore','resumo','efeito','objetivo','texto','detalhes','graca 1 - titulo','graca 1 - descricao','graca 2 - titulo','graca 2 - descricao','graca 3 - titulo','graca 3 - descricao','graca 4 - titulo','graca 4 - descricao'];
-  var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&row[k]&&row[k].trim();});
+  var fields=rks.filter(function(k){return skipKeys.indexOf(deaccent(k))===-1&&!isVincOuFeitKey(k)&&row[k]&&row[k].trim();});
   var isDom=!!(gf(row,'Nome do Dom','nome do dom')&&gf(row,'Classe','classe'));
   var isClasse=!!(gf(row,'Classe','classe')&&!gf(row,'Nome do Dom','nome do dom')&&!gf(row,'Feitiço','Feitico','feitico'));
   var isDeus=!!(gf(row,'Polaridade','polaridade')&&gf(row,'Arsenal Divino','arsenal divino'))||!!(gf(row,'Nome do Deus','nome do deus'));
@@ -5794,6 +5939,24 @@ var _adminSecoes = [
     }
   },
   {
+    id:'classe_vinculo', label:'Classes — Vínculo', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return DB.conjuradores.filter(function(r){ return getVinculosDaClasse(r).length>0; })
+        .map(function(r){ return gf(r,'Classe','classe')||''; }).filter(Boolean);
+    },
+    descricao: 'Imagem 1:1 da seção de Vínculo — só aparece para classes com ao menos uma coluna "Vínculo 1..6" preenchida na aba Conjuradores.'
+  },
+  {
+    id:'classe_feiticos', label:'Classes — Feitiços Adquiridos', tipo:'individual',
+    subfiltros: function(){ return []; },
+    fonte: function(){
+      return DB.conjuradores.filter(function(r){ return !!classeFeitTxt(r); })
+        .map(function(r){ return gf(r,'Classe','classe')||''; }).filter(Boolean);
+    },
+    descricao: 'Imagem 1:1 da seção de Feitiços Adquiridos — só aparece para classes com a coluna "Feitiços Adquiridos" preenchida na aba Conjuradores.'
+  },
+  {
     id:'deuses', label:'Deuses', tipo:'individual',
     subfiltros: function(){ return []; },
     fonte: function(){
@@ -6145,7 +6308,7 @@ function fbInjectImages(){
     window.VEL_IMGS, window.GRIM_IMGS, window.VANT_IMGS, window.DON_IMGS,
     window.IDIOMA_IMGS, window.RACA_HAB_IMGS, window.DON_GRAU_IMGS,
     window.GRIM_SPELL_IMGS, window.ESTIGMA_IMGS, window.DEUS_GRACA_IMGS,
-    window.VEL_CONT_IMGS, window.VEL_REG_IMGS
+    window.VEL_CONT_IMGS, window.VEL_REG_IMGS, window.CLASS_VINC_IMGS, window.CLASS_FEIT_IMGS
   ];
 
   function lookupImg(key){
@@ -6236,6 +6399,8 @@ function fbLoadImages(){
     if(data.deus_gracas)    Object.assign(window.DEUS_GRACA_IMGS,  data.deus_gracas);
     if(data.vel_cont_imgs)  window.VEL_CONT_IMGS = data.vel_cont_imgs;
     if(data.vel_reg_imgs)   window.VEL_REG_IMGS  = data.vel_reg_imgs;
+    if(data.classe_vinculo)  Object.assign(window.CLASS_VINC_IMGS, data.classe_vinculo);
+    if(data.classe_feiticos) Object.assign(window.CLASS_FEIT_IMGS, data.classe_feiticos);
     // Injeta imagens nos cards já renderizados sem re-renderizar
     fbInjectImages();
   }).catch(function(e){ console.warn('fbLoadImages:', e); });
@@ -6266,6 +6431,8 @@ window.VANT_IMGS  = window.VANT_IMGS  || {};
 window.DON_IMGS   = window.DON_IMGS   || {};
 window.VEL_CONT_IMGS = window.VEL_CONT_IMGS || {};
 window.VEL_REG_IMGS  = window.VEL_REG_IMGS  || {};
+window.CLASS_VINC_IMGS = window.CLASS_VINC_IMGS || {};
+window.CLASS_FEIT_IMGS = window.CLASS_FEIT_IMGS || {};
 
 // Carrega ao iniciar
 fbLoadImages();
