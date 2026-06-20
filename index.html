@@ -453,10 +453,15 @@ main{
   margin-top:0.2rem;margin-bottom:1.5rem;
 }
 .vinculo-cards-wrap .don-card-h{
-  margin-bottom:0;flex:0 1 auto;width:auto;min-width:200px;max-width:100%;
+  margin-bottom:0;flex:0 1 auto;width:auto;min-width:200px;max-width:320px;
 }
-.vinculo-cards-wrap .don-card-h-img{flex:0 0 76px;width:76px;font-size:1.7rem;}
-.vinculo-cards-wrap .don-card-h-nome{font-size:0.92rem;padding:0.6rem 1.1rem;hyphens:none;}
+.vinculo-cards-wrap .don-card-h-img{flex:0 0 76px;width:76px;height:76px;font-size:1.7rem;}
+.vinculo-cards-wrap .don-card-h-nome{
+  font-size:0.92rem;padding:0.6rem 1.1rem;hyphens:none;min-width:0;
+}
+.vinculo-cards-wrap .don-card-h-nome span{
+  display:block;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
 .dons-title{
   font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold-light);
   letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;
@@ -3786,7 +3791,7 @@ function verDonsClasse(nomeClasse){
         var vIdx=_storeModal({_tipo:'vinculo',_nome_display:v.titulo,_classe:nomeClasse,_mensagem:v.mensagem});
         var _vImg=getClassVinculoImg(nomeClasse,v.titulo);
         var imgContent=_vImg?'<img src="'+_vImg+'" alt="'+v.titulo+'">':'☄';
-        return '<div class="don-card-h" onclick="openModalIdx('+vIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome">'+v.titulo+'</div></div>';
+        return '<div class="don-card-h" onclick="openModalIdx('+vIdx+')"><div class="don-card-h-img">'+imgContent+'</div><div class="don-card-h-nome" title="'+v.titulo.replace(/"/g,'&quot;')+'"><span>'+v.titulo+'</span></div></div>';
       }).join('')+'</div>';
     }
   }else{html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:1.25rem;">'+nomeClasse+'</h2>';}
