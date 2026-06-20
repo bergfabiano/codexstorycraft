@@ -442,11 +442,6 @@ main{
   border-radius:8px;margin-bottom:1.25rem;
 }
 .classe-extra-content{flex:1;min-width:0;}
-.classe-extra-label{
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;
-  letter-spacing:0.18em;color:var(--violet-bright);opacity:0.8;
-  text-transform:uppercase;margin-bottom:0.4rem;
-}
 .classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;margin:0;}
 .vinculo-cards-wrap{
   display:flex;flex-wrap:nowrap;gap:0.65rem;
@@ -2658,7 +2653,20 @@ function getDeusImg(n){return DEUS_IMGS[n]||null;}
 function getRacaImg(n){return RACA_IMGS[n]||null;}
 function getRacaHabImg(cat){return RACA_HAB_IMGS[cat]||RACA_HAB_IMGS[(cat||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getRacaLFImg(tipo){return (tipo==='linhagem'?RACA_LF_IMGS.linhagem:RACA_LF_IMGS.fardo)||null;}
-function getDonGrauImg(classe,grau){var k=(classe+'|'+grau).replace(/[.#$\/\[\]]/g,'_');return DON_GRAU_IMGS[k]||null;}
+function getDonGrauImg(classe,grau){
+  var k=(classe+'|'+grau).replace(/[.#$\/\[\]]/g,'_');
+  if(DON_GRAU_IMGS[k]) return DON_GRAU_IMGS[k];
+  // Fallback tolerante a espaço/maiúsculas/acentos divergentes entre a aba Classes e a aba Dons
+  var alvoC=deaccent(_limpaNome(classe)),alvoG=deaccent(_limpaNome(grau));
+  var keys=Object.keys(DON_GRAU_IMGS);
+  for(var i=0;i<keys.length;i++){
+    var pipeIdx=keys[i].indexOf('|');
+    if(pipeIdx<0) continue;
+    var kc=deaccent(_limpaNome(keys[i].slice(0,pipeIdx))),kg=deaccent(_limpaNome(keys[i].slice(pipeIdx+1)));
+    if(kc===alvoC&&kg===alvoG) return DON_GRAU_IMGS[keys[i]];
+  }
+  return null;
+}
 function getSpellImg(nome){return GRIM_SPELL_IMGS[nome]||GRIM_SPELL_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getEstigmaImg(nome){return ESTIGMA_IMGS[nome]||ESTIGMA_IMGS[(nome||'').replace(/[.#$\/\[\]]/g,'_')]||null;}
 function getDeusGracaImg(deus,titulo){var k=(deus+'|'+titulo).replace(/[.#$\/\[\]]/g,'_');return DEUS_GRACA_IMGS[k]||null;}
@@ -3332,6 +3340,9 @@ function gf(row){
 }
 function tag(label,cls){if(!label)return '';return '<span class="tag '+cls+'">'+label+'</span>';}
 function _limpaNome(s){return (s||'').replace(/[\uFEFF\u200B\u00A0]/g,'').trim();}
+// Compara dois nomes (classe, grau, etc.) ignorando espaços extras, maiúsculas/minúsculas e acentos —
+// usado em todo lugar que casa nomes entre abas diferentes da planilha (evita bugs tipo "Floromante" vs " floromante ").
+function nomesIguais(a,b){return deaccent(_limpaNome(a))===deaccent(_limpaNome(b));}
 // Resolve um nome de classe "sujo" (espaços/maiúsculas/acentos divergentes na aba Conjuradores)
 // para o nome canônico tal como está na aba Classes — garante que a chave de imagem salva no
 // admin seja a mesma usada na renderização (getClassVinculoImg/getClassFeiticosImg usam nomeClasse vindo de DB.classes).
@@ -3776,13 +3787,13 @@ function verDonsClasse(nomeClasse){
     html+='</div>';
     // Dados da aba separada "Conjuradores" (Categoria, Classe, Feitiços Adquiridos, Vínculo 1..6)
     var conjRow=getConjuradorRow(nomeClasse);
-    // ── Feitiços Adquiridos — card único (ícone + texto corrido), logo abaixo do Poder de Kit ──
+    // ── Feitiços Adquiridos — título de seção acima + card com ícone e texto centralizados (padrão Linhagem) ──
     var feitTxt=classeFeitTxt(conjRow);
     if(feitTxt){
       var _feitImg=getClassFeiticosImg(nomeClasse);
-      html+='<div class="classe-extra-block">'+imgBox(_feitImg,'✦',92)
+      html+='<div class="dons-title" style="margin-bottom:0.6rem;">✦ Feitiços Adquiridos</div>';
+      html+='<div class="classe-extra-block" style="align-items:center;">'+imgBox(_feitImg,'✦',64,'margin-bottom:0;')
         +'<div class="classe-extra-content">'
-          +'<div class="classe-extra-label">Feitiços Adquiridos</div>'
           +'<p>'+feitTxt.trim().replace(/\n+/g,'<br>')+'</p>'
         +'</div>'
       +'</div>';
@@ -6077,7 +6088,7 @@ var _adminSecoes = [
       var nomes=[];
       classes.forEach(function(cl){
         graus.forEach(function(gr){
-          var temDon=DB.dons.some(function(d){return gf(d,'Classe','classe')===cl&&gf(d,'Grau','grau')===gr;});
+          var temDon=DB.dons.some(function(d){return nomesIguais(gf(d,'Classe','classe'),cl)&&nomesIguais(gf(d,'Grau','grau'),gr);});
           if(temDon) nomes.push(cl+'|'+gr);
         });
       });
