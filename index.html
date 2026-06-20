@@ -3313,7 +3313,7 @@ function renderVinculoModal(r){
   var nome=r['_nome_display']||'(sem nome)';
   var classe=r['_classe']||'';
   var msg=r['_mensagem']||'';
-  var imgUrl=getClassVinculoImg(classe);
+  var imgUrl=getClassVinculoImg(classe,nome);
   var imgHtml=imgUrl
     ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
     :'<span style="font-size:3rem;opacity:0.18;">☄</span>';
