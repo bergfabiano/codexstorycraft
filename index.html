@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&family=Uncial+Antiqua&family=MedievalSharp&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07080e;
@@ -14,20 +15,20 @@
   --bg3:#10111c;
   --surface:#141520;
   --surface2:#1a1b2e;
-  --border:rgba(140,100,220,0.14);
-  --border-glow:rgba(180,130,255,0.35);
+  --border:rgba(140,100,220,0.18);
+  --border-glow:rgba(150,130,255,0.4);
 
-  /* Neon accent palette */
+  /* Accent palette — roxo / azul / preto */
   --violet:#9b5de5;
   --violet-bright:#c084fc;
   --violet-dim:rgba(155,93,229,0.6);
   --violet-glow:rgba(155,93,229,0.2);
-  --cyan:#00d4ff;
-  --cyan-dim:rgba(0,212,255,0.5);
+  --cyan:#3d8dfd;
+  --cyan-dim:rgba(61,141,253,0.5);
   --magenta:#f72585;
-  --gold:#c9a44a;
-  --gold-light:#e8c56a;
-  --gold-glow:rgba(201,164,74,0.2);
+  --gold:#cf9f3f;
+  --gold-light:#f0c869;
+  --gold-glow:rgba(207,159,63,0.2);
 
   /* Category colors */
   --cat-combate:#f8933b;        /* Combatentes */
@@ -48,11 +49,11 @@
   --cat-deus-negativa:#ff5c5c;
   --cat-deus-neutra:#c0c0ff;
 
-  --text:#d8dae8;
-  --text-dim:rgba(216,218,232,0.55);
-  --text-faint:rgba(216,218,232,0.25);
+  --text:#e7e4f5;
+  --text-dim:rgba(231,228,245,0.72);
+  --text-faint:rgba(231,228,245,0.46);
   --blood:#c0392b;
-  --ember:#e55c2a;
+  --ember:#e8763c;
   --green:#6dffb3;
 }
 
@@ -83,8 +84,8 @@ body::after{
   position:fixed;inset:0;
   background:
     radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.06) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(0,212,255,0.04) 0%,transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(247,37,133,0.04) 0%,transparent 60%);
+    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(61,141,253,0.045) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(10,6,20,0.5) 0%,transparent 60%);
   pointer-events:none;z-index:0;
 }
 
@@ -112,33 +113,41 @@ body::after{
 }
 
 .sidebar-brand{
-  padding:1.5rem 1.25rem 1rem;
+  padding:1.1rem 1.25rem;
   border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
 }
-.sidebar-brand::before{
-  content:'✦';
-  display:block;
-  font-size:0.9rem;
-  color:var(--violet);
-  margin-bottom:0.5rem;
-  filter:drop-shadow(0 0 6px var(--violet));
+.sidebar-seal{
+  flex-shrink:0;
+  width:34px;height:34px;
+  border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.85rem;
+  color:var(--gold-light);
+  box-shadow:0 0 8px var(--gold-glow);
 }
+.sidebar-brand-text{min-width:0;}
 .sidebar-title{
-  font-family:'Cinzel',serif;
-  font-size:1rem;
+  font-family:'Cinzel Decorative',serif;
+  font-size:1.05rem;
   font-weight:700;
   color:var(--gold-light);
-  letter-spacing:0.08em;
-  line-height:1.3;
-  text-shadow:0 0 20px var(--gold-glow);
+  letter-spacing:0.04em;
+  line-height:1;
+  text-shadow:0 0 16px var(--gold-glow);
+  white-space:nowrap;
 }
 .sidebar-sub{
-  font-size:0.6rem;
+  font-size:0.58rem;
   font-weight:600;
   color:var(--text-faint);
-  letter-spacing:0.2em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  margin-top:0.3rem;
+  margin-top:0.35rem;
+  white-space:nowrap;
 }
 
 .sidebar-nav{
@@ -217,7 +226,7 @@ body::after{
   padding:0.38rem 0.7rem;
   font-family:'Raleway',sans-serif;
   font-size:0.82rem;
-  border-radius:4px;
+  border-radius:0;
   outline:none;
   transition:border-color 0.2s;
 }
@@ -230,7 +239,7 @@ body::after{
   padding:0.38rem 0.6rem;
   font-family:'Raleway',sans-serif;
   font-size:0.82rem;
-  border-radius:4px;
+  border-radius:0;
   outline:none;
   min-width:130px;
 }
@@ -239,12 +248,13 @@ body::after{
   background:var(--violet);
   border:none;
   color:#fff;
-  padding:0.38rem 1.1rem;
+  padding:0.58rem 1.5rem;
   font-family:'Cinzel',serif;
-  font-size:0.62rem;
+  font-size:0.74rem;
+  font-weight:600;
   letter-spacing:0.12em;
   cursor:pointer;
-  border-radius:4px;
+  border-radius:0;
   white-space:nowrap;
   text-transform:uppercase;
   transition:all 0.2s;
@@ -275,7 +285,7 @@ main{
   padding:0.9rem 1.1rem;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:0;
 }
 .fg{display:flex;flex-direction:column;gap:0.28rem;min-width:130px;flex:1;}
 .fg label{
@@ -289,7 +299,7 @@ main{
   color:var(--text);
   padding:0.38rem 0.6rem;
   font-family:'Raleway',sans-serif;font-size:0.85rem;
-  border-radius:4px;outline:none;transition:border-color 0.2s;
+  border-radius:0;outline:none;transition:border-color 0.2s;
 }
 .fg select option{background:#0c0d16;}
 .fg input:focus,.fg select:focus{border-color:var(--violet);}
@@ -299,7 +309,7 @@ main{
   border:1px solid var(--border);color:var(--text-faint);
   padding:0.38rem 0.9rem;font-family:'Raleway',sans-serif;
   font-weight:600;font-size:0.62rem;letter-spacing:0.1em;
-  cursor:pointer;border-radius:4px;text-transform:uppercase;transition:all 0.2s;
+  cursor:pointer;border-radius:0;text-transform:uppercase;transition:all 0.2s;
 }
 .btn-clear:hover{color:var(--text);border-color:var(--violet-dim);}
 
@@ -310,7 +320,7 @@ main{
 .card{
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:0;
   padding:1.1rem;
   cursor:pointer;
   transition:all 0.2s;
@@ -375,7 +385,7 @@ main{
 .tag{
   font-family:'Raleway',sans-serif;font-weight:700;
   font-size:0.58rem;letter-spacing:0.07em;
-  padding:0.18rem 0.5rem;border-radius:3px;
+  padding:0.18rem 0.5rem;border-radius:0;
   border:1px solid;text-transform:uppercase;
 }
 .tag-class{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.35);background:rgba(126,207,245,0.08);}
@@ -401,7 +411,7 @@ main{
   color:var(--card-accent,var(--violet-bright));
   background:transparent;
   border:1px solid var(--card-accent,rgba(155,93,229,0.3));
-  border-radius:4px;cursor:pointer;transition:all 0.2s;text-align:center;
+  border-radius:0;cursor:pointer;transition:all 0.2s;text-align:center;
   opacity:0.8;
 }
 .btn-ver-dons:hover{background:var(--card-accent-faint,rgba(155,93,229,0.1));opacity:1;}
@@ -413,7 +423,7 @@ main{
   font-family:'Raleway',sans-serif;font-weight:600;font-size:0.68rem;
   letter-spacing:0.12em;color:var(--text-faint);
   background:transparent;border:1px solid var(--border);
-  padding:0.42rem 1rem;border-radius:4px;cursor:pointer;
+  padding:0.42rem 1rem;border-radius:0;cursor:pointer;
   margin-bottom:1.5rem;display:inline-flex;align-items:center;gap:0.4rem;
   text-transform:uppercase;transition:all 0.2s;
 }
@@ -421,7 +431,7 @@ main{
 .classe-header{
   display:grid;grid-template-columns:1fr 1fr;gap:0.7rem 1.75rem;
   padding:1.1rem;background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;margin-bottom:1.5rem;
+  border-radius:0;margin-bottom:1.5rem;
 }
 .classe-header-full{grid-column:1/-1;}
 .classe-field label{
@@ -439,7 +449,7 @@ main{
 .classe-extra-block{
   display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem;
   background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;margin-bottom:1.25rem;
+  border-radius:0;margin-bottom:1.25rem;
 }
 .classe-extra-content{flex:1;min-width:0;}
 .classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;margin:0;}
@@ -465,14 +475,14 @@ main{
 }
 .don-item{
   padding:0.9rem 1rem;background:var(--surface);border:1px solid var(--border);
-  border-radius:6px;margin-bottom:0.55rem;transition:border-color 0.2s;
+  border-radius:0;margin-bottom:0.55rem;transition:border-color 0.2s;
 }
 .don-item:hover{border-color:var(--violet-dim);}
 .don-header{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.45rem;flex-wrap:wrap;}
 .don-nome{font-family:'Cinzel',serif;font-size:0.92rem;font-weight:600;color:var(--text);}
 .don-grau{
   font-family:'Raleway',sans-serif;font-weight:700;font-size:0.57rem;
-  letter-spacing:0.1em;padding:0.17rem 0.55rem;border-radius:3px;
+  letter-spacing:0.1em;padding:0.17rem 0.55rem;border-radius:0;
   border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
   background:rgba(155,93,229,0.1);text-transform:uppercase;
 }
@@ -510,7 +520,7 @@ main{
   display:flex;align-items:stretch;gap:0;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:6px;margin-bottom:5px;
+  border-radius:0;margin-bottom:5px;
   overflow:hidden;cursor:pointer;
   transition:border-color 0.18s,background 0.18s;
   min-height:64px;
@@ -542,7 +552,7 @@ main{
 
 /* ── IDIOMAS ── */
 .idioma-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);border-radius:0;
   overflow:hidden;cursor:pointer;transition:border-color 0.18s,transform 0.18s;
   display:flex;flex-direction:column;
 }
@@ -569,7 +579,7 @@ main{
 /* Modal de idioma */
 .idioma-modal-alfabeto{
   display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
-  text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:3px;
+  text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:0;
   border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
   background:rgba(155,93,229,0.1);margin-bottom:0.75rem;
 }
@@ -584,13 +594,13 @@ main{
   display:flex;flex-wrap:wrap;gap:0.3rem;
 }
 .idioma-raca-tag{
-  font-size:0.72rem;padding:0.2rem 0.55rem;border-radius:3px;
+  font-size:0.72rem;padding:0.2rem 0.55rem;border-radius:0;
   background:var(--surface2);border:1px solid var(--border);
   color:var(--text-dim);
 }
 .idioma-bonus-box{
   padding:0.65rem 0.85rem;background:rgba(155,93,229,0.07);
-  border-left:2px solid var(--violet-dim);border-radius:0 4px 4px 0;
+  border-left:2px solid var(--violet-dim);border-radius:0;
   font-size:0.86rem;color:var(--text);line-height:1.6;
 }
 
@@ -673,7 +683,7 @@ main{
   font-family:'Cinzel',serif;font-size:1.9rem;font-weight:700;
   color:var(--gold-light);letter-spacing:0.06em;
   margin-bottom:0.4rem;
-  text-shadow:0 0 30px rgba(212,175,55,0.3);
+  text-shadow:0 0 30px rgba(207,159,63,0.3);
 }
 .ora-porta-sub{
   font-family:'Raleway',sans-serif;font-weight:500;
@@ -693,7 +703,7 @@ main{
 .ora-porta-input{
   width:100%;
   background:rgba(10,8,20,0.6);
-  border:1px solid rgba(155,93,229,0.35);border-radius:4px;
+  border:1px solid rgba(155,93,229,0.35);border-radius:0;
   color:var(--text);padding:0.75rem 1.1rem;
   font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.06em;
   outline:none;text-align:center;
@@ -714,7 +724,7 @@ main{
   width:100%;padding:0.85rem 1.5rem;
   position:relative;overflow:hidden;
   background:rgba(155,93,229,0.1);
-  border:1px solid rgba(155,93,229,0.5);border-radius:4px;
+  border:1px solid rgba(155,93,229,0.5);border-radius:0;
   color:rgba(200,180,255,0.9);
   font-family:'Cinzel',serif;font-size:0.82rem;font-weight:600;
   letter-spacing:0.15em;text-transform:uppercase;
@@ -762,7 +772,7 @@ main{
 .modal-overlay.open{display:flex;}
 .modal{
   background:var(--bg3);border:1px solid rgba(155,93,229,0.35);
-  border-radius:10px;padding:2rem;max-width:580px;width:100%;
+  border-radius:0;padding:2rem;max-width:580px;width:100%;
   max-height:82vh;overflow-y:auto;position:relative;
   animation:modalIn 0.2s ease;
   box-shadow:0 24px 80px rgba(0,0,0,0.8),0 0 40px rgba(155,93,229,0.08);
@@ -772,19 +782,33 @@ main{
   content:'';position:absolute;top:0;left:15%;right:15%;height:1px;
   background:linear-gradient(90deg,transparent,var(--violet),transparent);
 }
-.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-faint);font-size:1.4rem;cursor:pointer;transition:color 0.2s;}
-.modal-close:hover{color:var(--violet-bright);}
+.modal-close{
+  position:absolute;top:0;right:0;
+  width:34px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface);
+  border:none;
+  border-left:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  border-radius:0;
+  color:var(--text-faint);
+  font-size:1rem;
+  line-height:1;
+  cursor:pointer;
+  transition:background 0.15s,color 0.15s;
+}
+.modal-close:hover{background:var(--blood);color:#fff;}
 .modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);margin-bottom:0.5rem;text-transform:uppercase;}
 .modal-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
-.modal-sub{display:block;margin:0.6rem 0;padding:0.55rem 0.75rem;background:rgba(155,93,229,0.07);border-left:2px solid var(--violet-dim);border-radius:0 6px 6px 0;}
+.modal-sub{display:block;margin:0.6rem 0;padding:0.55rem 0.75rem;background:rgba(155,93,229,0.07);border-left:2px solid var(--violet-dim);border-radius:0;}
 .modal-sub-title{display:block;font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--gold-light);letter-spacing:0.06em;margin-bottom:0.2rem;}
-.modal-sub-body{display:block;font-size:0.88rem;color:var(--text-dim);line-height:1.55;}
+.modal-sub-body{display:block;font-family:'EB Garamond',serif;font-size:1rem;color:var(--text-dim);line-height:1.6;}
 .modal-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
 .modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem 1.5rem;}
 .modal-field label{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.75;display:block;margin-bottom:0.12rem;text-transform:uppercase;}
 .modal-field p{font-size:0.9rem;color:var(--text);}
 .modal-field.full{grid-column:1/-1;}
-.modal-desc{color:var(--text-dim);font-size:0.9rem;line-height:1.72;border-left:2px solid var(--violet-dim);padding-left:1rem;margin:1rem 0;}
+.modal-desc{font-family:'EB Garamond',serif;color:var(--text-dim);font-size:1.05rem;line-height:1.75;border-left:2px solid var(--violet-dim);padding-left:1rem;margin:1rem 0;}
 
 /* ── HORIZONTAL CARD (vantagens, estigmas, feitiços) ── */
 .card-h{
@@ -792,7 +816,7 @@ main{
   gap:0.85rem;padding:0.65rem 0.9rem;
 }
 .card-h .card-h-img{
-  width:52px;height:52px;flex-shrink:0;border-radius:5px;
+  width:52px;height:52px;flex-shrink:0;border-radius:0;
   border:1px solid rgba(155,93,229,0.15);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;overflow:hidden;
@@ -815,7 +839,7 @@ main{
 }
 .modal-hero-img{
   width:110px;height:110px;flex-shrink:0;
-  border-radius:8px;overflow:hidden;
+  border-radius:0;overflow:hidden;
   border:1px solid rgba(155,93,229,0.2);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;
@@ -833,7 +857,7 @@ main{
 .card-img-wrap{
   width:100%;
   aspect-ratio:1/1;
-  border-radius:5px;
+  border-radius:0;
   overflow:hidden;
   margin-bottom:0.7rem;
   border:1px solid rgba(155,93,229,0.12);
@@ -854,7 +878,7 @@ main{
 /* Modal image 1:1 */
 .modal-img-wrap{
   width:120px;height:120px;
-  border-radius:8px;overflow:hidden;flex-shrink:0;
+  border-radius:0;overflow:hidden;flex-shrink:0;
   border:1px solid rgba(155,93,229,0.2);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;
@@ -866,7 +890,7 @@ main{
 }
 .result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
 /* ── LAYOUT TOGGLE (grid / list) ── */
-.layout-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0;}
+.layout-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:0;overflow:hidden;flex-shrink:0;}
 .layout-toggle-btn{
   display:flex;align-items:center;justify-content:center;
   width:30px;height:28px;
@@ -894,7 +918,7 @@ main{
   padding:0.42rem 0.75rem;
   font-family:'Raleway',sans-serif;font-weight:700;font-size:0.7rem;
   letter-spacing:0.06em;text-transform:uppercase;
-  border:1px solid var(--border);border-radius:4px;
+  border:1px solid var(--border);border-radius:0;
   color:var(--text-faint);background:var(--surface);
   cursor:pointer;transition:all 0.15s;white-space:nowrap;user-select:none;
 }
@@ -904,14 +928,14 @@ main{
 .chk-filter-btn.open .chk-arrow{transform:rotate(180deg);}
 .chk-filter-badge{
   display:inline-flex;align-items:center;justify-content:center;
-  min-width:16px;height:16px;padding:0 4px;border-radius:8px;
+  min-width:16px;height:16px;padding:0 4px;border-radius:0;
   background:var(--violet);color:#fff;font-size:0.58rem;font-weight:700;
 }
 .chk-filter-panel{
   display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:200;
   min-width:200px;max-width:280px;
   background:var(--bg3);border:1px solid rgba(155,93,229,0.3);
-  border-radius:6px;padding:0.5rem 0;
+  border-radius:0;padding:0.5rem 0;
   box-shadow:0 8px 32px rgba(0,0,0,0.6);
   max-height:260px;overflow-y:auto;
 }
@@ -944,7 +968,7 @@ main{
 .home-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:0.7rem;margin-bottom:2rem;}
 .stat-box{
   text-align:center;padding:1rem 0.6rem;
-  border:1px solid var(--border);border-radius:8px;
+  border:1px solid var(--border);border-radius:0;
   background:var(--surface);transition:all 0.2s;position:relative;overflow:hidden;
 }
 .stat-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(155,93,229,0.04),transparent);pointer-events:none;}
@@ -956,34 +980,34 @@ main{
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:rgba(155,93,229,0.3);border-radius:3px;}
+::-webkit-scrollbar-thumb{background:rgba(155,93,229,0.3);border-radius:0;}
 ::-webkit-scrollbar-thumb:hover{background:rgba(155,93,229,0.5);}
 
 /* ── CONTADOR ── */
 .cnt-wrap{max-width:900px;margin:0 auto;}
 .cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--violet-bright);text-transform:uppercase;display:block;margin-bottom:0.28rem;}
-.cnt-input{background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;width:110px;}
+.cnt-input{background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;width:110px;}
 .cnt-input:focus{border-color:var(--violet);}
-.cnt-select{background:rgba(155,93,229,0.05);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:4px;outline:none;width:170px;}
+.cnt-select{background:rgba(155,93,229,0.05);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:0;outline:none;width:170px;}
 .cnt-select option{background:#0c0d16;}
-.cnt-rb-input{width:52px;text-align:center;background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:4px;outline:none;}
+.cnt-rb-input{width:52px;text-align:center;background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;}
 .cnt-rb-input:focus{border-color:var(--violet);}
-.cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.12em;background:transparent;border:1px solid var(--border);color:var(--text-faint);padding:0.38rem 0.9rem;border-radius:4px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
+.cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.1em;background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:0.52rem 1.1rem;border-radius:0;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
 .cnt-btn:hover{border-color:var(--violet);color:var(--text);}
-.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:1.5rem;flex-wrap:nowrap;overflow:hidden;}
+.cnt-pts-bar{display:flex;align-items:center;gap:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:0;margin-bottom:1.5rem;flex-wrap:nowrap;overflow:hidden;}
 .cnt-pts-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);min-width:2.5rem;text-align:center;}
 .cnt-table{width:100%;border-collapse:collapse;}
 .cnt-table th{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.18em;color:var(--violet-bright);opacity:0.65;text-align:center;padding:0.5rem 0.5rem 0.7rem;border-bottom:1px solid var(--border);text-transform:uppercase;}
 .cnt-table th:first-child{text-align:left;}
 .cnt-table td{padding:0.6rem 0.5rem;border-bottom:1px solid rgba(140,100,220,0.07);text-align:center;vertical-align:middle;}
 .cnt-table td:first-child{text-align:left;}
-.attr-btn{width:30px;height:30px;background:var(--surface);border:1px solid var(--border);color:var(--violet-bright);font-size:1.2rem;cursor:pointer;border-radius:4px;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
+.attr-btn{width:34px;height:34px;background:var(--surface);border:1px solid var(--border);color:var(--violet-bright);font-size:1.3rem;cursor:pointer;border-radius:0;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
 .attr-btn:hover{background:rgba(155,93,229,0.15);border-color:var(--violet);}
 .attr-btn:disabled{opacity:0.15;cursor:not-allowed;}
 .attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(155,93,229,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
 
 /* ── DEBUG BANNERS ── */
-.debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:6px;font-size:0.83rem;color:var(--text-dim);}
+.debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:0;font-size:0.83rem;color:var(--text-dim);}
 
 /* ── CATEGORY TABS (vantagens, loja, etc.) ── */
 .vd-checkbox-filter{
@@ -995,7 +1019,7 @@ main{
   letter-spacing:0.08em;text-transform:uppercase;
   color:var(--text-dim);cursor:pointer;
   background:var(--surface2);border:1px solid var(--border);
-  border-radius:20px;padding:0.3rem 0.75rem;
+  border-radius:0;padding:0.3rem 0.75rem;
   transition:all 0.15s;user-select:none;
 }
 .vd-checkbox-label:hover{color:var(--text);border-color:var(--violet-dim);}
@@ -1014,7 +1038,7 @@ main{
   letter-spacing:0.08em;text-transform:uppercase;
   color:var(--text-dim);cursor:pointer;
   background:var(--surface2);border:1px solid var(--border);
-  border-radius:20px;padding:0.3rem 0.9rem;
+  border-radius:0;padding:0.3rem 0.9rem;
   transition:all 0.15s;
 }
 .vd-checkbox-all.active{background:rgba(155,93,229,0.2);border-color:var(--violet-bright);color:var(--text);}
@@ -1023,18 +1047,18 @@ main{
   margin-bottom:0;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:6px;
+  border-radius:0;
   overflow:hidden;
 }
 .vd-cat-btn{
   display:inline-flex;align-items:center;gap:0.35rem;
-  padding:0.48rem 0.85rem;
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.65rem;
-  letter-spacing:0.07em;text-transform:uppercase;
+  padding:0.6rem 0.85rem;
+  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;
+  letter-spacing:0.06em;text-transform:uppercase;
   border:none;
   border-right:1px solid var(--border);
   border-radius:0;
-  color:var(--text-faint);background:transparent;
+  color:var(--text-dim);background:transparent;
   cursor:pointer;transition:all 0.15s;white-space:nowrap;
 }
 .vd-cat-btn:last-child{border-right:none;}
@@ -1055,7 +1079,7 @@ main{
   display:inline-flex;align-items:center;justify-content:center;
   min-width:18px;height:18px;padding:0 4px;
   background:rgba(255,255,255,0.15);
-  border-radius:9px;
+  border-radius:0;
   font-size:0.58rem;font-weight:700;
   margin-left:0.2rem;
 }
@@ -1064,7 +1088,7 @@ main{
 .card-vd-versateis {--card-accent:#c084fc;--card-accent-faint:rgba(192,132,252,0.1);}
 .card-vd-combate   {--card-accent:var(--cat-combate);--card-accent-faint:var(--cat-combate-dim);}
 .card-vd-magicas   {--card-accent:var(--cat-conjurador);--card-accent-faint:var(--cat-conjurador-dim);}
-.card-vd-ataques   {--card-accent:var(--cyan);--card-accent-faint:rgba(0,212,255,0.08);}
+.card-vd-ataques   {--card-accent:var(--cyan);--card-accent-faint:rgba(61,141,253,0.08);}
 .card-vd-superpoderes{--card-accent:#f72585;--card-accent-faint:rgba(247,37,133,0.1);}
 .card-vd-desvantagens{--card-accent:var(--cat-desvantagem);--card-accent-faint:rgba(255,92,138,0.1);}
 .card-vd-maldicoes {--card-accent:#c03030;--card-accent-faint:rgba(192,48,48,0.1);}
@@ -1073,7 +1097,7 @@ main{
 /* ── VELKARION MAP ── */
 .vel-map-wrap{
   width:100%;
-  border-radius:12px;
+  border-radius:0;
   overflow:hidden;
   border:1px solid rgba(155,93,229,0.25);
   position:relative;
@@ -1102,10 +1126,10 @@ main{
   font-family:'Cinzel',serif;font-size:0.7rem;font-weight:600;
   letter-spacing:0.18em;text-transform:uppercase;
   color:rgba(232,197,106,0.85);
-  text-shadow:0 0 20px rgba(201,164,74,0.5);
+  text-shadow:0 0 20px rgba(207,159,63,0.5);
   pointer-events:none;
 }
-.vel-map-caption-glyph{font-size:0.9rem;color:var(--gold-light);filter:drop-shadow(0 0 8px rgba(201,164,74,0.7));}
+.vel-map-caption-glyph{font-size:0.9rem;color:var(--gold-light);filter:drop-shadow(0 0 8px rgba(207,159,63,0.7));}
 
 /* ── CONTINENTE GRID ── */
 .vel-continent-grid{
@@ -1132,7 +1156,7 @@ main{
 .vel-cont-card{
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:0;
   overflow:hidden;
   cursor:pointer;
   transition:all 0.22s;
@@ -1163,7 +1187,7 @@ main{
 .vel-cont-badge{
   font-family:'Raleway',sans-serif;font-weight:700;
   font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;
-  padding:0.2rem 0.55rem;border-radius:3px;
+  padding:0.2rem 0.55rem;border-radius:0;
   border:1px solid var(--vel-accent,var(--violet));
   color:var(--vel-accent,var(--violet));
   background:var(--vel-accent-faint,rgba(155,93,229,0.1));
@@ -1212,7 +1236,7 @@ main{
   padding:1.5rem;
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:0;
   position:relative;overflow:hidden;
 }
 .vel-det-header::before{
@@ -1224,14 +1248,14 @@ main{
 .vel-det-title{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold-light);line-height:1.15;margin-bottom:0.5rem;text-shadow:0 0 40px var(--gold-glow);}
 .vel-det-capital{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.9rem;color:var(--text-dim);display:flex;align-items:center;gap:0.4rem;}
 .vel-det-capital::before{content:'⚑';color:var(--gold-light);}
-.vel-det-resumo{font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem;}
+.vel-det-resumo{font-family:'EB Garamond',serif;font-size:1.02rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem;}
 .vel-det-cenario{font-size:0.85rem;color:var(--violet-bright);opacity:0.75;font-style:italic;margin-bottom:1rem;line-height:1.65;}
 .vel-det-destaques{
   padding:0.85rem 1.1rem;
   background:rgba(155,93,229,0.05);
   border:1px solid rgba(155,93,229,0.15);
   border-left:3px solid var(--violet);
-  border-radius:0 8px 8px 0;
+  border-radius:0;
   font-size:0.85rem;color:var(--text-dim);line-height:1.7;
   margin-bottom:1.5rem;
 }
@@ -1254,7 +1278,7 @@ main{
 .vel-regiao-card{
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:8px;
+  border-radius:0;
   padding:1.1rem;
   cursor:pointer;
   transition:all 0.2s;
@@ -1283,7 +1307,7 @@ main{
   width:100%;
   aspect-ratio:16/9;
   object-fit:cover;
-  border-radius:5px 5px 0 0;
+  border-radius:0;
   display:block;
   border-bottom:1px solid var(--border);
   transition:filter 0.3s;
@@ -1293,7 +1317,7 @@ main{
   width:100%;
   aspect-ratio:16/9;
   background:linear-gradient(135deg,var(--surface2) 0%,var(--bg3) 100%);
-  border-radius:5px 5px 0 0;
+  border-radius:0;
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
   font-size:1.5rem;color:rgba(155,93,229,0.12);
@@ -1306,7 +1330,7 @@ main{
   width:100%;
   aspect-ratio:16/9;
   object-fit:cover;
-  border-radius:8px;
+  border-radius:0;
   display:block;
   margin-bottom:1.1rem;
   border:1px solid var(--border);
@@ -1316,7 +1340,7 @@ main{
   width:100%;
   aspect-ratio:16/9;
   background:linear-gradient(135deg,var(--surface) 0%,var(--bg3) 50%,var(--surface2) 100%);
-  border-radius:8px;
+  border-radius:0;
   display:flex;align-items:center;justify-content:center;
   border:1px dashed rgba(155,93,229,0.2);
   margin-bottom:1.1rem;
@@ -1360,7 +1384,7 @@ main{
   max-width:94vw;
   max-height:92vh;
   object-fit:contain;
-  border-radius:6px;
+  border-radius:0;
   box-shadow:0 0 80px rgba(0,0,0,0.9);
   cursor:default;
   animation:lbIn 0.22s cubic-bezier(0.22,1,0.36,1);
@@ -1418,8 +1442,8 @@ main{
   position:fixed;inset:0;
   background:
     radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.08) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(0,212,255,0.05) 0%,transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(247,37,133,0.05) 0%,transparent 60%);
+    radial-gradient(ellipse 40% 50% at 95% 10%,rgba(61,141,253,0.06) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(10,6,20,0.55) 0%,transparent 60%);
   pointer-events:none;
 }
 .splash-inner{
@@ -1470,7 +1494,7 @@ main{
 .splash-progress-bar-bg{
   height:3px;
   background:rgba(155,93,229,0.12);
-  border-radius:2px;
+  border-radius:0;
   overflow:hidden;
   margin-bottom:1rem;
 }
@@ -1478,7 +1502,7 @@ main{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,var(--violet),var(--violet-bright),var(--cyan));
-  border-radius:2px;
+  border-radius:0;
   transition:width 0.3s ease;
   box-shadow:0 0 10px rgba(155,93,229,0.6);
 }
@@ -1508,8 +1532,8 @@ main{
 @keyframes hourglassSpin{
   0%   {transform:rotate(0deg);   filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
   45%  {transform:rotate(0deg);   filter:drop-shadow(0 0 28px var(--violet)) drop-shadow(0 0 56px rgba(155,93,229,0.7));}
-  50%  {transform:rotate(180deg); filter:drop-shadow(0 0 28px var(--gold))   drop-shadow(0 0 56px rgba(201,164,74,0.6));}
-  95%  {transform:rotate(180deg); filter:drop-shadow(0 0 14px var(--gold))   drop-shadow(0 0 30px rgba(201,164,74,0.35));}
+  50%  {transform:rotate(180deg); filter:drop-shadow(0 0 28px var(--gold))   drop-shadow(0 0 56px rgba(207,159,63,0.6));}
+  95%  {transform:rotate(180deg); filter:drop-shadow(0 0 14px var(--gold))   drop-shadow(0 0 30px rgba(207,159,63,0.35));}
   100% {transform:rotate(360deg); filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
 }
 .splash-hourglass-ring{
@@ -1562,14 +1586,14 @@ main{
   letter-spacing:0.14em;
   color:var(--gold-light);
   opacity:0.9;
-  text-shadow:0 0 18px rgba(201,164,74,0.4);
+  text-shadow:0 0 18px rgba(207,159,63,0.4);
   margin-bottom:0.2rem;
 }
 .splash-name-input{
   width:100%;
   background:rgba(155,93,229,0.07);
   border:1px solid rgba(155,93,229,0.3);
-  border-radius:5px;
+  border-radius:0;
   color:var(--text);
   padding:0.65rem 1rem;
   font-family:'Cinzel',serif;
@@ -1616,7 +1640,7 @@ main{
   border:1px solid rgba(192,132,252,0.45);
   padding:0.75rem 2.8rem;
   width:100%;
-  border-radius:3px;
+  border-radius:0;
   cursor:pointer;
   position:relative;
   box-shadow:
@@ -1676,12 +1700,12 @@ main{
 .greet-rune{
   font-size:2rem;
   color:var(--gold);
-  filter:drop-shadow(0 0 16px rgba(201,164,74,0.6));
+  filter:drop-shadow(0 0 16px rgba(207,159,63,0.6));
   animation:greetRune 1.8s ease-in-out infinite;
 }
 @keyframes greetRune{
-  0%,100%{transform:scale(1);filter:drop-shadow(0 0 16px rgba(201,164,74,0.6));}
-  50%{transform:scale(1.12);filter:drop-shadow(0 0 30px rgba(201,164,74,0.9));}
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 16px rgba(207,159,63,0.6));}
+  50%{transform:scale(1.12);filter:drop-shadow(0 0 30px rgba(207,159,63,0.9));}
 }
 .greet-line-top{
   width:120px;height:1px;
@@ -1694,7 +1718,7 @@ main{
   font-weight:700;
   color:var(--gold-light);
   letter-spacing:0.18em;
-  text-shadow:0 0 30px rgba(201,164,74,0.5),0 0 60px rgba(201,164,74,0.2);
+  text-shadow:0 0 30px rgba(207,159,63,0.5),0 0 60px rgba(207,159,63,0.2);
   text-align:center;
 }
 .greet-msg{
@@ -1737,7 +1761,7 @@ main{
 /* Mapa do continente na aba de detalhe */
 .vel-cont-map-wrap{
   width:100%;
-  border-radius:10px;
+  border-radius:0;
   overflow:hidden;
   border:1px solid var(--border);
   margin-bottom:1.5rem;
@@ -1773,7 +1797,7 @@ main{
   font-family:'Cinzel',serif;font-size:0.68rem;font-weight:600;
   letter-spacing:0.18em;text-transform:uppercase;
   color:rgba(232,197,106,0.85);
-  text-shadow:0 0 16px rgba(201,164,74,0.5);
+  text-shadow:0 0 16px rgba(207,159,63,0.5);
 }
 .vel-cont-map-zoom-hint{
   font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:600;
@@ -1836,23 +1860,26 @@ main{
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sidebar-brand">
-    <div class="sidebar-title">Codex StoryCraft</div>
-    <div class="sidebar-sub">Sistema RPG de Mesa</div>
+    <div class="sidebar-seal">✧</div>
+    <div class="sidebar-brand-text">
+      <div class="sidebar-title">Codex</div>
+      <div class="sidebar-sub">StoryCraft</div>
+    </div>
   </div>
   <div class="sidebar-nav">
-    <div class="nav-tab active" data-page="inicio"    onclick="showPage('inicio')">    <span class="tab-sym">⌂</span> Início</div>
-    <div class="nav-tab" data-page="contador"  onclick="showPage('contador')">  <span class="tab-sym">◆</span> Contador</div>
-    <div class="nav-tab" data-page="racas"     onclick="showPage('racas')">     <span class="tab-sym">☯</span> Raças</div>
-    <div class="nav-tab" data-page="classes"   onclick="showPage('classes')">   <span class="tab-sym">⚔</span> Classes</div>
-    <div class="nav-tab" data-page="vantagens" onclick="showPage('vantagens')"> <span class="tab-sym">△</span> Vantagens</div>
-    <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">     <span class="tab-sym">✤</span> Loja</div>
-    <div class="nav-tab" data-page="grimorio"  onclick="showPage('grimorio')">  <span class="tab-sym">✦</span> Grimório</div>
-    <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">    <span class="tab-sym">☀</span> Deuses</div>
-    <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')"> <span class="tab-sym">⚐</span> Velkarion</div>
-    <div class="nav-tab" data-page="idiomas"   onclick="showPage('idiomas');renderIdiomas()">  <span class="tab-sym">✎</span> Idiomas</div>
-    <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">  <span class="tab-sym">✸</span> Estigmas</div>
-    <div class="nav-tab" data-page="oraculo"   onclick="showPage('oraculo');oraculo_init()">  <span class="tab-sym">◈</span> Oráculo</div>
-    <div class="nav-tab" data-page="admin" id="nav-admin" onclick="showPage('admin');adminInit()" style="display:none;"><span class="tab-sym">⚙</span> Admin</div>
+    <div class="nav-tab active" data-page="inicio"    onclick="showPage('inicio')">Início</div>
+    <div class="nav-tab" data-page="contador"  onclick="showPage('contador')">Contador</div>
+    <div class="nav-tab" data-page="racas"     onclick="showPage('racas')">Raças</div>
+    <div class="nav-tab" data-page="classes"   onclick="showPage('classes')">Classes</div>
+    <div class="nav-tab" data-page="vantagens" onclick="showPage('vantagens')">Vantagens</div>
+    <div class="nav-tab" data-page="itens"     onclick="showPage('itens')">Loja</div>
+    <div class="nav-tab" data-page="grimorio"  onclick="showPage('grimorio')">Grimório</div>
+    <div class="nav-tab" data-page="deuses"    onclick="showPage('deuses')">Deuses</div>
+    <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')">Velkarion</div>
+    <div class="nav-tab" data-page="idiomas"   onclick="showPage('idiomas');renderIdiomas()">Idiomas</div>
+    <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">Estigmas</div>
+    <div class="nav-tab" data-page="oraculo"   onclick="showPage('oraculo');oraculo_init()">Oráculo</div>
+    <div class="nav-tab" data-page="admin" id="nav-admin" onclick="showPage('admin');adminInit()" style="display:none;">Admin</div>
   </div>
   <div class="sidebar-bottom" id="sidebar-bottom-secret" onclick="adminSecretClick()" style="cursor:default;user-select:none;">
     <div style="font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.35rem;opacity:0.8;" id="adventurer-greet"></div>
@@ -1863,15 +1890,15 @@ main{
 
 <!-- MODAL DE SENHA ADMIN -->
 <div id="admin-pwd-modal" style="display:none;position:fixed;inset:0;background:rgba(4,4,12,0.92);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
-  <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:10px;padding:2rem;width:320px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
+  <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:0;padding:2rem;width:320px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
     <div style="font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--violet-bright);text-transform:uppercase;margin-bottom:1rem;opacity:0.7;">Acesso Restrito</div>
     <h3 style="font-family:Cinzel,serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:1.25rem;">⚙ Painel Admin</h3>
     <input type="password" id="admin-pwd-input" placeholder="Senha..." onkeydown="if(event.key==='Enter')adminCheckPwd()"
-      style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.55rem 0.8rem;border-radius:4px;font-family:Raleway,sans-serif;font-size:0.9rem;text-align:center;box-sizing:border-box;outline:none;">
+      style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.55rem 0.8rem;border-radius:0;font-family:Raleway,sans-serif;font-size:0.9rem;text-align:center;box-sizing:border-box;outline:none;">
     <div id="admin-pwd-err" style="color:#f64242;font-size:0.75rem;margin-top:0.5rem;min-height:1rem;"></div>
     <div style="display:flex;gap:0.75rem;margin-top:1rem;">
-      <button onclick="adminCheckPwd()" style="flex:1;padding:0.55rem;background:var(--violet);color:#fff;border:none;border-radius:4px;font-family:Raleway,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">Entrar</button>
-      <button onclick="document.getElementById('admin-pwd-modal').style.display='none';document.getElementById('admin-pwd-input').value='';document.getElementById('admin-pwd-err').textContent='';" style="flex:1;padding:0.55rem;background:var(--surface);color:var(--text-faint);border:1px solid var(--border);border-radius:4px;font-family:Raleway,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">Cancelar</button>
+      <button onclick="adminCheckPwd()" style="flex:1;padding:0.55rem;background:var(--violet);color:#fff;border:none;border-radius:0;font-family:Raleway,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">Entrar</button>
+      <button onclick="document.getElementById('admin-pwd-modal').style.display='none';document.getElementById('admin-pwd-input').value='';document.getElementById('admin-pwd-err').textContent='';" style="flex:1;padding:0.55rem;background:var(--surface);color:var(--text-faint);border:1px solid var(--border);border-radius:0;font-family:Raleway,sans-serif;font-weight:700;font-size:0.8rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">Cancelar</button>
     </div>
   </div>
 </div>
@@ -1923,7 +1950,7 @@ main{
 
   <!-- CONTADOR -->
   <div id="page-contador" class="page">
-    <h2 class="section-title"><span class="stitle-sym">◆</span> Contador de Atributos</h2>
+    <h2 class="section-title">Contador de Atributos</h2>
     <div class="cnt-wrap">
       <div style="display:flex;flex-wrap:wrap;gap:1.25rem;margin-bottom:1.5rem;align-items:flex-end;">
         <div style="display:flex;flex-direction:column;gap:0.3rem;">
@@ -1945,7 +1972,7 @@ main{
         <input type="number" id="rb-car" value="0">
       </div>
       <!-- Escolhas raciais dinâmicas -->
-      <div id="cnt-racial-choices" style="display:none;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid rgba(201,164,74,0.25);border-radius:8px;border-left:3px solid var(--gold-light);"></div>
+      <div id="cnt-racial-choices" style="display:none;margin-bottom:1rem;padding:0.8rem 1.1rem;background:var(--surface);border:1px solid rgba(207,159,63,0.25);border-radius:0;border-left:3px solid var(--gold-light);"></div>
       <div class="cnt-pts-bar">
         <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
         <span class="cnt-pts-num" id="cnt-pts">10</span>
@@ -1960,26 +1987,26 @@ main{
         </tr></thead>
         <tbody id="cnt-tbody"></tbody>
       </table>
-      <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;">
+      <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:0;">
         <div style="font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.85rem;text-align:center;text-shadow:0 0 12px rgba(192,132,252,0.7),0 0 24px rgba(155,93,229,0.4);">&#x2726; Tabela de Custo de Pontos</div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.5rem;">
-          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">1&ordm; Ponto</div>
             <div style="font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--gold-light);">1</div>
           </div>
-          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">2&ordm; Ponto</div>
             <div style="font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--gold-light);">1</div>
           </div>
-          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">3&ordm; Ponto</div>
             <div style="font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--violet-bright);">2</div>
           </div>
-          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;text-align:center;">
+          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">4&ordm; Ponto</div>
             <div style="font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--ember);">3</div>
           </div>
-          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid rgba(109,255,179,0.2);border-radius:6px;text-align:center;">
+          <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid rgba(109,255,179,0.2);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">Reduzir</div>
             <div style="font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:var(--green);">+1</div>
           </div>
@@ -1991,11 +2018,11 @@ main{
   <!-- RAÇAS -->
   <div id="page-racas" class="page">
     <div id="racas-lista">
-      <h2 class="section-title"><span class="stitle-sym">☯</span> Raças</h2>
+      <h2 class="section-title">Raças</h2>
       <!-- Pills de categoria -->
       <div class="vd-cats" id="raca-cats" style="margin-bottom:0;"></div>
       <!-- Banner de info da categoria selecionada -->
-      <div id="raca-cat-info" style="display:none;margin-top:0.85rem;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);position:relative;">
+      <div id="raca-cat-info" style="display:none;margin-top:0.85rem;border:1px solid var(--border);border-radius:0;overflow:hidden;background:var(--surface);position:relative;">
         <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),transparent);"></div>
         <div style="padding:1rem 1.25rem 0.9rem;">
           <div id="raca-cat-nome" style="font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--gold-light);letter-spacing:0.08em;margin-bottom:0.5rem;"></div>
@@ -2026,7 +2053,7 @@ main{
   <!-- CLASSES -->
   <div id="page-classes" class="page">
     <div id="classes-lista">
-      <h2 class="section-title"><span class="stitle-sym">⚔</span> Classes &amp; Dons</h2>
+      <h2 class="section-title">Classes &amp; Dons</h2>
       <div class="filter-bar" style="align-items:flex-end;">
         <div class="fg"><label>Buscar</label><input type="text" id="f-class-search" placeholder="Nome, individualidade..." oninput="renderClasses()"></div>
         <div class="fg" style="flex:0 0 auto;">
@@ -2060,10 +2087,10 @@ main{
 
   <!-- VANTAGENS -->
   <div id="page-vantagens" class="page">
-    <h2 class="section-title"><span class="stitle-sym">△</span> Vantagens &amp; Desvantagens</h2>
+    <h2 class="section-title">Vantagens &amp; Desvantagens</h2>
 
     <!-- Tabs de categoria vantagens: grid 8 colunas, retangulares encaixadas -->
-    <div id="vd-tabs" style="display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:0.75rem;">
+    <div id="vd-tabs" style="display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--border);border-radius:0;overflow:hidden;margin-bottom:0.75rem;">
       <button class="vd-tab-btn active" data-cat="todas"        onclick="switchVdTab('todas')"        style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(155,93,229,0.18);color:var(--text);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Todas</button>
       <button class="vd-tab-btn" data-cat="versateis"    onclick="switchVdTab('versateis')"    style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Versáteis</button>
       <button class="vd-tab-btn" data-cat="combate"      onclick="switchVdTab('combate')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Combate</button>
@@ -2104,10 +2131,10 @@ main{
 
   <!-- ITENS / LOJA -->
   <div id="page-itens" class="page">
-    <h2 class="section-title"><span class="stitle-sym">✤</span> Loja de Velkarion</h2>
+    <h2 class="section-title">Loja de Velkarion</h2>
 
     <!-- Categoria tabs -->
-    <div id="loja-cats" style="margin-bottom:0.75rem;display:grid;grid-template-columns:repeat(9,1fr);border:1px solid var(--border);border-radius:6px;overflow:hidden;">
+    <div id="loja-cats" style="margin-bottom:0.75rem;display:grid;grid-template-columns:repeat(9,1fr);border:1px solid var(--border);border-radius:0;overflow:hidden;">
       <!-- Linha 1 — ordem alfabética: Alquímicos, Aprimoramentos, Armadura, Armas, Base (Est.), Base (Mel.), Encantamentos, Fócus, Gastronomia -->
       <button class="vd-cat-btn" data-lcat="alquimicos" onclick="switchLoja('alquimicos')" style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Alqu&#xED;micos</button>
       <button class="vd-cat-btn" data-lcat="aprimor"    onclick="switchLoja('aprimor')"    style="border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:0.65rem 0.5rem;font-size:0.72rem;">Aprimoramentos</button>
@@ -2179,7 +2206,7 @@ main{
 
   <!-- GRIMÓRIO -->
   <div id="page-grimorio" class="page">
-    <h2 class="section-title"><span class="stitle-sym">✦</span> Grimório</h2>
+    <h2 class="section-title">Grimório</h2>
     <div class="filter-bar" style="align-items:flex-end;flex-wrap:wrap;">
       <div class="fg"><label>Buscar</label><input type="text" id="f-mag-search" placeholder="Nome, efeito, escola..." oninput="renderGrimorio()"></div>
       <div class="fg" style="flex:0 0 auto;">
@@ -2242,7 +2269,7 @@ main{
   <!-- DEUSES -->
   <div id="page-deuses" class="page">
     <div id="deuses-lista">
-      <h2 class="section-title"><span class="stitle-sym">☀</span> Deuses &amp; Graças</h2>
+      <h2 class="section-title">Deuses &amp; Graças</h2>
       <div class="filter-bar">
         <div class="fg"><label>Buscar</label><input type="text" id="f-deus-search" placeholder="Nome, domínio..." oninput="renderDeuses()"></div>
         <div class="fg"><label>Polaridade</label><select id="f-deus-align" onchange="renderDeuses()"><option value="">Todas</option></select></div>
@@ -2263,7 +2290,7 @@ main{
   <div id="page-velkarion" class="page">
     <!-- Vista: lista de continentes ou detalhe de um continente -->
     <div id="vel-lista">
-      <h2 class="section-title"><span class="stitle-sym">⚐</span> Velkarion — O Mundo</h2>
+      <h2 class="section-title">Velkarion — O Mundo</h2>
 
       <!-- MAPA CENTRAL -->
       <div class="vel-map-wrap">
@@ -2301,7 +2328,7 @@ main{
 
   <!-- IDIOMAS -->
   <div id="page-idiomas" class="page">
-    <h2 class="section-title"><span class="stitle-sym">✎</span> Idiomas de Velkarion</h2>
+    <h2 class="section-title">Idiomas de Velkarion</h2>
     <div class="filter-bar">
       <div class="fg"><label>Buscar</label><input type="text" id="f-idioma-search" placeholder="Nome, raça, categoria..." oninput="renderIdiomas()"></div>
       <div class="fg">
@@ -2323,7 +2350,7 @@ main{
 
   <!-- ESTIGMAS -->
   <div id="page-estigmas" class="page">
-    <h2 class="section-title"><span class="stitle-sym">✸</span> Estigmas</h2>
+    <h2 class="section-title">Estigmas</h2>
     <div class="filter-bar">
       <div class="fg"><label>Buscar</label><input type="text" id="f-est-search" placeholder="Nome, perícia, poder..." oninput="renderEstigmas()"></div>
       <div class="fg" style="flex:0 0 auto;">
@@ -2356,7 +2383,7 @@ main{
 
   <!-- ORÁCULO IA -->
   <div id="page-oraculo" class="page">
-    <h2 class="section-title"><span class="stitle-sym">◈</span> Oráculo</h2>
+    <h2 class="section-title">Oráculo</h2>
     <div style="max-width:860px;margin:0 auto;">
 
       <!-- PORTA DE ENTRADA -->
@@ -2404,7 +2431,7 @@ main{
       <!-- Chat container -->
       <div id="oraculo-chat" style="
         min-height:360px;max-height:520px;overflow-y:auto;
-        background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+        background:var(--bg2);border:1px solid var(--border);border-radius:0;
         padding:1.1rem 1.25rem;margin-bottom:1rem;
         display:flex;flex-direction:column;gap:0.9rem;
         scroll-behavior:smooth;
@@ -2434,7 +2461,7 @@ main{
             color:var(--text);
             padding:0.65rem 0.85rem;
             font-family:'Raleway',sans-serif;font-size:0.88rem;
-            border-radius:6px;outline:none;
+            border-radius:0;outline:none;
             transition:border-color 0.2s;line-height:1.5;
           "
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();oraculo_enviar();}"
@@ -2445,7 +2472,7 @@ main{
           background:var(--violet);border:none;color:#fff;
           padding:0.65rem 1.3rem;font-family:'Cinzel',serif;
           font-size:0.65rem;letter-spacing:0.12em;cursor:pointer;
-          border-radius:6px;text-transform:uppercase;
+          border-radius:0;text-transform:uppercase;
           transition:all 0.2s;white-space:nowrap;
           box-shadow:0 0 14px rgba(155,93,229,0.35);
           align-self:stretch;
@@ -2458,15 +2485,15 @@ main{
 
   <!-- ADMIN — Gerenciador de Imagens -->
   <div id="page-admin" class="page">
-    <h2 class="section-title"><span class="stitle-sym">⚙</span> Admin — Imagens</h2>
+    <h2 class="section-title">Admin — Imagens</h2>
 
     <!-- Abas de seção -->
-    <div id="admin-secao-tabs" style="display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1rem;"></div>
+    <div id="admin-secao-tabs" style="display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--border);border-radius:0;overflow:hidden;margin-bottom:1rem;"></div>
 
     <!-- Busca -->
     <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
       <input type="text" id="admin-search" placeholder="Buscar item..." oninput="adminRenderCards()"
-        style="flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.8rem;border-radius:4px;font-family:Raleway,sans-serif;font-size:0.85rem;outline:none;">
+        style="flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.8rem;border-radius:0;font-family:Raleway,sans-serif;font-size:0.85rem;outline:none;">
       <div style="font-size:0.75rem;color:var(--text-faint);display:flex;align-items:center;" id="admin-count"></div>
     </div>
 
@@ -2476,9 +2503,9 @@ main{
 
   <!-- Modal de URL de imagem -->
   <div id="admin-img-modal" style="display:none;position:fixed;inset:0;background:rgba(4,4,12,0.92);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
-    <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:10px;padding:1.75rem;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
+    <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:0;padding:1.75rem;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
       <div style="display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem;">
-        <div id="aim-preview-wrap" style="width:80px;height:80px;border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <div id="aim-preview-wrap" style="width:80px;height:80px;border-radius:0;overflow:hidden;border:1px solid var(--border);background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
           <img id="aim-preview-img" style="width:100%;height:100%;object-fit:cover;display:none;">
           <span id="aim-preview-sym" style="font-family:Cinzel,serif;font-size:1.5rem;color:rgba(155,93,229,0.2);">✦</span>
         </div>
@@ -2490,18 +2517,18 @@ main{
       </div>
       <label style="font-family:Raleway,sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;display:block;margin-bottom:0.4rem;">URL da Imagem</label>
       <input type="text" id="aim-url-input" placeholder="https://i.imgur.com/..." oninput="aimPreview()"
-        style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.75rem;border-radius:4px;font-family:Raleway,sans-serif;font-size:0.85rem;box-sizing:border-box;outline:none;margin-bottom:0.75rem;">
+        style="width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.75rem;border-radius:0;font-family:Raleway,sans-serif;font-size:0.85rem;box-sizing:border-box;outline:none;margin-bottom:0.75rem;">
       <div style="display:flex;gap:0.6rem;">
         <button onclick="aimSalvar()" id="aim-save-btn"
-          style="flex:1;padding:0.55rem;background:var(--violet);color:#fff;border:none;border-radius:4px;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">
+          style="flex:1;padding:0.55rem;background:var(--violet);color:#fff;border:none;border-radius:0;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;">
           Salvar
         </button>
         <button onclick="aimRemover()" id="aim-remove-btn"
-          style="padding:0.55rem 0.9rem;background:rgba(246,66,66,0.12);color:#f64242;border:1px solid rgba(246,66,66,0.3);border-radius:4px;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;">
+          style="padding:0.55rem 0.9rem;background:rgba(246,66,66,0.12);color:#f64242;border:1px solid rgba(246,66,66,0.3);border-radius:0;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;">
           Remover
         </button>
         <button onclick="document.getElementById('admin-img-modal').style.display='none';"
-          style="padding:0.55rem 0.9rem;background:var(--surface);color:var(--text-faint);border:1px solid var(--border);border-radius:4px;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;">
+          style="padding:0.55rem 0.9rem;background:var(--surface);color:var(--text-faint);border:1px solid var(--border);border-radius:0;font-family:Raleway,sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;">
           ✕
         </button>
       </div>
@@ -2706,7 +2733,7 @@ function imgBox(u,sym,size,extra){
   var style=typeof size==='number'
     ?'width:'+size+'px;height:'+size+'px;'
     :'width:100%;aspect-ratio:1/1;';
-  return '<div style="'+style+'border-radius:6px;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(155,93,229,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
+  return '<div style="'+style+'border-radius:0;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(155,93,229,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
 }
 
 // Card-level 1:1 image placeholder (url optional)
@@ -3283,7 +3310,7 @@ function renderIdiomaModal(r){
     ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
     :'<span style="font-size:3rem;opacity:0.18;">✎</span>';
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-    +'<div style="flex:0 0 100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
     +'<div style="flex:1;padding-top:0.2rem;">'
       +(cat?'<div class="modal-type">'+cat+'</div>':'')
       +'<h2 class="modal-name">'+nome+'</h2>'
@@ -3318,7 +3345,7 @@ function renderVinculoModal(r){
     ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
     :'<span style="font-size:3rem;opacity:0.18;">☄</span>';
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-    +'<div style="flex:0 0 100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
     +'<div style="flex:1;padding-top:0.2rem;">'
       +'<div class="modal-type">'+(classe?'Vínculo de '+classe:'Vínculo')+'</div>'
       +'<h2 class="modal-name">'+nome+'</h2>'
@@ -3441,7 +3468,7 @@ function renderRacasCatPills(){
   }
   if(!catOrder.length){el.innerHTML='';return;}
   var total=catOrder.length+1;
-  el.style.cssText='display:grid;grid-template-columns:repeat('+total+',1fr);margin-bottom:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;gap:0;';
+  el.style.cssText='display:grid;grid-template-columns:repeat('+total+',1fr);margin-bottom:0;border:1px solid var(--border);border-radius:0;overflow:hidden;gap:0;';
   var btns='<button class="vd-cat-btn'+(RACA_ACTIVE_CAT===''?' active':'')+'" onclick="switchRacaCat(\'\')" style="border-right:1px solid var(--border);border-radius:0;padding:0.65rem 0.5rem;font-size:0.72rem;">Todas</button>';
   for(var i=0;i<catOrder.length;i++){
     var cn=catOrder[i];
@@ -3538,17 +3565,17 @@ function renderRacas(){
   var html='';
   // Bloco de info da categoria inline
   if(desc||traco||vdCat){
-    html+='<div style="margin-bottom:1.5rem;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface);position:relative;">';
+    html+='<div style="margin-bottom:1.5rem;border:1px solid var(--border);border-radius:0;overflow:hidden;background:var(--surface);position:relative;">';
     html+='<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),transparent);"></div>';
     html+='<div style="padding:1rem 1.25rem 1rem;">';
     html+='<div style="font-family:Cinzel,serif;font-size:1rem;font-weight:700;color:var(--gold-light);letter-spacing:0.08em;margin-bottom:'+(desc?'0.5rem':'0.7rem')+';">◈ '+RACA_ACTIVE_CAT+'</div>';
     if(desc) html+='<p style="color:var(--text-dim);font-size:0.88rem;line-height:1.65;margin-bottom:0.75rem;">'+desc+'</p>';
     if(traco||vdCat){
       html+='<div style="display:flex;flex-wrap:wrap;gap:0.6rem;">';
-      if(traco) html+='<div style="flex:1;min-width:200px;padding:0.65rem 0.9rem;border-radius:6px;border:1px solid var(--border);border-left:3px solid var(--violet-bright);background:rgba(0,0,0,0.2);">'+
+      if(traco) html+='<div style="flex:1;min-width:200px;padding:0.65rem 0.9rem;border-radius:0;border:1px solid var(--border);border-left:3px solid var(--violet-bright);background:rgba(0,0,0,0.2);">'+
         '<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--violet-bright);display:block;margin-bottom:0.35rem;">⚡ Traço Racial de Categoria</span>'+
         '<p style="font-size:0.86rem;color:var(--text-dim);line-height:1.55;">'+traco+'</p></div>';
-      if(vdCat) html+='<div style="flex:1;min-width:200px;padding:0.65rem 0.9rem;border-radius:6px;border:1px solid var(--border);border-left:3px solid var(--cat-desvantagem);background:rgba(0,0,0,0.2);">'+
+      if(vdCat) html+='<div style="flex:1;min-width:200px;padding:0.65rem 0.9rem;border-radius:0;border:1px solid var(--border);border-left:3px solid var(--cat-desvantagem);background:rgba(0,0,0,0.2);">'+
         '<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--cat-desvantagem);display:block;margin-bottom:0.35rem;">▽ Vantagem / Desvantagem de Categoria</span>'+
         '<p style="font-size:0.86rem;color:var(--text-dim);line-height:1.55;">'+vdCat+'</p></div>';
       html+='</div>';
@@ -3579,7 +3606,7 @@ function abrirDetalhesRaca(idx){
   var html='';
   // Header: avatar pequeno à esquerda, nome + descrição à direita
   html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">';
-  html+='<div style="width:80px;height:80px;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid rgba(155,93,229,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;">'+(getRacaImg(n)?'<img src="'+getRacaImg(n)+'" style="width:100%;height:100%;object-fit:cover;">':'<span style="font-family:Cinzel,serif;font-size:1.4rem;color:rgba(155,93,229,0.2);">☯</span>')+'</div>';
+  html+='<div style="width:80px;height:80px;flex-shrink:0;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;">'+(getRacaImg(n)?'<img src="'+getRacaImg(n)+'" style="width:100%;height:100%;object-fit:cover;">':'<span style="font-family:Cinzel,serif;font-size:1.4rem;color:rgba(155,93,229,0.2);">☯</span>')+'</div>';
   html+='<div style="flex:1;min-width:0;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
   html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.5rem;">'+n+'</h2>';
@@ -3593,7 +3620,7 @@ function abrirDetalhesRaca(idx){
     html+='<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;">⚡ Habilidades Raciais</div>';
     var _habIcon=getRacaHabImg(cat);
     habs.forEach(function(h){
-      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--gold-light);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--gold-light);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+      var _iconHtml=_habIcon?'<img src="'+_habIcon+'" style="width:48px;height:48px;border-radius:0;object-fit:cover;flex-shrink:0;border:2px solid var(--gold-light);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:0;flex-shrink:0;border:2px solid var(--gold-light);background:var(--surface2);align-items:center;justify-content:center;"></span>';
       html+='<div class="modal-sub" style="padding:0.6rem 0.75rem;">'+'<span class="modal-sub-title" style="display:block;margin-bottom:0.45rem;">'+h[1]+'</span>'+'<div style="display:flex;align-items:center;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_iconHtml+'</div>'+'<span class="modal-sub-body" style="flex:1;min-width:0;">'+formatDesc(h[0])+'</span>'+'</div>'+'</div>';
     });
   }
@@ -3602,15 +3629,15 @@ function abrirDetalhesRaca(idx){
   if(lin){
     html+='<hr class="modal-divider">';
     var _linIcon=getRacaLFImg('linhagem');
-    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--green);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--green);background:var(--surface2);align-items:center;justify-content:center;"></span>';
-    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">✦ Linhagem</div>'+'<div style="display:flex;align-items:center;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+lin+'</p>'+'</div></div>';
+    var _linIconHtml=_linIcon?'<img src="'+_linIcon+'" style="width:48px;height:48px;border-radius:0;object-fit:cover;flex-shrink:0;border:2px solid var(--green);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:0;flex-shrink:0;border:2px solid var(--green);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+    html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--green);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">Linhagem</div>'+'<div style="display:flex;align-items:center;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_linIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+lin+'</p>'+'</div></div>';
   }
 
   // Fardo
   if(fardo){
     html+='<hr class="modal-divider">';
     var _farIcon=getRacaLFImg('fardo');
-    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:48px;height:48px;border-radius:4px;object-fit:cover;flex-shrink:0;border:2px solid var(--cat-desvantagem);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:4px;flex-shrink:0;border:2px solid var(--cat-desvantagem);background:var(--surface2);align-items:center;justify-content:center;"></span>';
+    var _farIconHtml=_farIcon?'<img src="'+_farIcon+'" style="width:48px;height:48px;border-radius:0;object-fit:cover;flex-shrink:0;border:2px solid var(--cat-desvantagem);">':'<span style="display:inline-flex;width:48px;height:48px;border-radius:0;flex-shrink:0;border:2px solid var(--cat-desvantagem);background:var(--surface2);align-items:center;justify-content:center;"></span>';
     html+='<div style="padding:0.1rem 0;">'+'<div style="font-family:Cinzel,serif;font-size:0.78rem;font-weight:700;color:var(--cat-desvantagem);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.45rem;">▽ Fardo</div>'+'<div style="display:flex;align-items:center;gap:0.75rem;">'+'<div style="flex-shrink:0;">'+_farIconHtml+'</div>'+'<p style="color:var(--text-dim);font-size:0.9rem;line-height:1.6;margin:0;flex:1;">'+fardo+'</p>'+'</div></div>';
   }
 
@@ -3768,7 +3795,7 @@ function verDonsClasse(nomeClasse){
       ?'<img src="'+_cImg+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
       :'<span style="font-size:2rem;opacity:0.2;">⚔</span>';
     html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-      +'<div style="flex:0 0 120px;height:120px;border-radius:8px;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+_imgBox+'</div>'
+      +'<div style="flex:0 0 120px;height:120px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+_imgBox+'</div>'
       +'<div style="flex:1;padding-top:0.25rem;">'
         +'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">'+(cat||'classe')+'</div>'
         +'<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0;">'+nomeClasse+'</h2>'
@@ -3791,7 +3818,7 @@ function verDonsClasse(nomeClasse){
     var feitTxt=classeFeitTxt(conjRow);
     if(feitTxt){
       var _feitImg=getClassFeiticosImg(nomeClasse);
-      html+='<div class="dons-title" style="margin-bottom:0.6rem;">✦ Feitiços Adquiridos</div>';
+      html+='<div class="dons-title" style="margin-bottom:0.6rem;">Feitiços Adquiridos</div>';
       html+='<div class="classe-extra-block" style="align-items:center;">'+imgBox(_feitImg,'✦',64,'margin-bottom:0;')
         +'<div class="classe-extra-content">'
           +'<p>'+feitTxt.trim().replace(/\n+/g,'<br>')+'</p>'
@@ -3801,7 +3828,7 @@ function verDonsClasse(nomeClasse){
     // ── Vínculo — grade de cards (um por opção, "Vínculo 1".."Vínculo 6"), cada um com seu próprio ícone ──
     var vinculos=getVinculosDaClasse(conjRow);
     if(vinculos.length){
-      html+='<div class="dons-title" style="margin-bottom:0.6rem;">✦ Vínculo de '+nomeClasse+'</div>';
+      html+='<div class="dons-title" style="margin-bottom:0.6rem;">Vínculo de '+nomeClasse+'</div>';
       html+='<div class="vinculo-cards-wrap">'+vinculos.map(function(v){
         var vIdx=_storeModal({_tipo:'vinculo',_nome_display:v.titulo,_classe:nomeClasse,_mensagem:v.mensagem});
         var _vImg=getClassVinculoImg(nomeClasse,v.titulo);
@@ -3813,7 +3840,7 @@ function verDonsClasse(nomeClasse){
   if(graus.length){
     var _donsLayout=getLayout('dons');
     var _toggleHtml='<div id="dons-toggle-wrap" data-classe="'+nomeClasse+'" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem;">'
-      +'<div class="dons-title" style="margin-bottom:0;border:none;padding:0;">✦ Dons de '+nomeClasse+' <span style="font-size:0.7rem;opacity:0.4;">('+dons.length+' dons)</span></div>'
+      +'<div class="dons-title" style="margin-bottom:0;border:none;padding:0;">Dons de '+nomeClasse+' <span style="font-size:0.7rem;opacity:0.4;">('+dons.length+' dons)</span></div>'
       +'<div class="layout-toggle">'
         +'<button class="layout-toggle-btn'+(_donsLayout==='h'?' active':'')+'" id="toggle-dons-h" onclick="setLayout(&quot;dons&quot;,&quot;h&quot;)" title="Lista">☰</button>'
         +'<button class="layout-toggle-btn'+(_donsLayout==='v'?' active':'')+'" id="toggle-dons-v" onclick="setLayout(&quot;dons&quot;,&quot;v&quot;)" title="Grade">⊞</button>'
@@ -4494,7 +4521,7 @@ function openLojaModal(idx){
     var armTipo=row['Tipo']||row['Categoria']||row['Sub-categoria']||'';
     if(armTipo){
       var armColor=lojaGroupAccent('armadura',armTipo);
-      armBadge='<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.65rem;border-radius:4px;border:1px solid '+armColor+';color:'+armColor+';background:rgba(0,0,0,0.3);margin-left:0.6rem;">'+armTipo+'</span>';
+      armBadge='<span style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.65rem;border-radius:0;border:1px solid '+armColor+';color:'+armColor+';background:rgba(0,0,0,0.3);margin-left:0.6rem;">'+armTipo+'</span>';
     }
   }
 
@@ -4540,7 +4567,7 @@ function openLojaModal(idx){
 
   // Price highlight at bottom
   if(preco){
-    html+='<div style="margin-top:1rem;padding:0.6rem 0.9rem;background:rgba(201,164,74,0.08);border:1px solid rgba(201,164,74,0.25);border-radius:6px;display:flex;align-items:center;gap:0.6rem;">'+
+    html+='<div style="margin-top:1rem;padding:0.6rem 0.9rem;background:rgba(207,159,63,0.08);border:1px solid rgba(207,159,63,0.25);border-radius:0;display:flex;align-items:center;gap:0.6rem;">'+
       '<span style="font-family:Cinzel,serif;font-size:0.65rem;font-weight:700;color:var(--gold-light);opacity:0.7;text-transform:uppercase;letter-spacing:0.12em;">Pre\u00e7o</span>'+
       priceSpan(preco,'1.2rem')+
     '</div>';
@@ -4622,7 +4649,7 @@ function renderDeuses(){
     var rCopy={};for(var k in r)rCopy[k]=r[k];rCopy['_nome_display']=n;
     return '<div class="card '+cc+'" onclick="openModalIdx('+_storeModal(rCopy)+')" style="cursor:pointer;">'+imgBox(getDeusImg(n),'☀')+
       '<div style="padding:0.75rem 0.85rem 1rem;text-align:center;">'+
-      '<div style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:0.92rem;font-weight:700;color:var(--gold-light);line-height:1.3;margin-bottom:0.55rem;letter-spacing:0.02em;text-shadow:0 0 12px rgba(212,175,55,0.3);">'+n+'</div>'+
+      '<div style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:0.92rem;font-weight:700;color:var(--gold-light);line-height:1.3;margin-bottom:0.55rem;letter-spacing:0.02em;text-shadow:0 0 12px rgba(207,159,63,0.3);">'+n+'</div>'+
       (sob?'<div style="font-family:Raleway,sans-serif;font-size:0.7rem;font-weight:600;color:#e8b86d;letter-spacing:0.07em;font-style:italic;">'+sob+'</div>':'')+
       '</div></div>';
   }).join('');
@@ -4654,12 +4681,12 @@ function verGracasDeus(nomeDeus){
   // ── HEADER: imagem ao lado do nome+subtítulo+desc ──
   var html='<div style="display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.75rem;">';
   if(imgU){
-    html+='<div style="flex-shrink:0;width:140px;height:140px;border-radius:10px;overflow:hidden;border:2px solid var(--gold-light);box-shadow:0 0 18px rgba(212,175,55,0.25);">'+
+    html+='<div style="flex-shrink:0;width:140px;height:140px;border-radius:0;overflow:hidden;border:2px solid var(--gold-light);box-shadow:0 0 18px rgba(207,159,63,0.25);">'+
       '<img src="'+imgU+'" style="width:100%;height:100%;object-fit:cover;"></div>';
   }
   html+='<div style="flex:1;min-width:0;padding-top:0.25rem;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.55rem;letter-spacing:0.25em;color:var(--violet-bright);text-transform:uppercase;opacity:0.7;margin-bottom:0.4rem;">Divindade</div>';
-  html+='<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.75rem;font-weight:700;color:var(--gold-light);line-height:1.2;margin-bottom:0.35rem;text-shadow:0 0 20px rgba(212,175,55,0.3);">'+nomeDeus+'</h2>';
+  html+='<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.75rem;font-weight:700;color:var(--gold-light);line-height:1.2;margin-bottom:0.35rem;text-shadow:0 0 20px rgba(207,159,63,0.3);">'+nomeDeus+'</h2>';
   if(sob) html+='<div style="font-family:Raleway,sans-serif;font-size:0.85rem;font-weight:600;color:var(--violet-bright);letter-spacing:0.05em;margin-bottom:0.75rem;">'+sob+'</div>';
   if(desc) html+='<p style="color:var(--text-dim);font-size:0.87rem;line-height:1.65;margin:0;">'+desc+'</p>';
   html+='</div></div>';
@@ -4898,7 +4925,7 @@ function abrirRegiaoModal(idx){
   if(r['_vel_regiao_cenario'])html+='<p style="font-size:0.88rem;color:var(--violet-bright);font-style:italic;opacity:0.8;margin-bottom:0.85rem;line-height:1.65;">'+r['_vel_regiao_cenario']+'</p>';
   if(r['_vel_regiao_resumo'])html+='<p style="font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem;">'+r['_vel_regiao_resumo']+'</p>';
   if(r['_vel_regiao_destaques']){
-    html+='<div style="padding:0.85rem 1.1rem;background:rgba(155,93,229,0.05);border:1px solid rgba(155,93,229,0.15);border-left:3px solid '+ac+';border-radius:0 8px 8px 0;">';
+    html+='<div style="padding:0.85rem 1.1rem;background:rgba(155,93,229,0.05);border:1px solid rgba(155,93,229,0.15);border-left:3px solid '+ac+';border-radius:0;">';
     html+='<div style="font-family:Cinzel,serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:'+ac+';text-transform:uppercase;margin-bottom:0.65rem;">✦ Destaques</div>';
     html+=formatarDestaques(r['_vel_regiao_destaques'],ac);
     html+='</div>';
@@ -5073,7 +5100,7 @@ function openModal(rowOrStr){
     var _deusDesc=gf(row,'Descrição','Descricao','descricao','Lore','lore','desc')||'';
     html='<div style="padding:0;">'+
       '<div style="display:flex;gap:1.25rem;align-items:center;margin-bottom:1.25rem;">'+
-      (_deusImg?'<div style="flex-shrink:0;width:110px;height:110px;border-radius:8px;overflow:hidden;border:1px solid rgba(212,175,55,0.4);"><img src="'+_deusImg+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+
+      (_deusImg?'<div style="flex-shrink:0;width:110px;height:110px;border-radius:0;overflow:hidden;border:1px solid rgba(207,159,63,0.4);"><img src="'+_deusImg+'" style="width:100%;height:100%;object-fit:cover;"></div>':'')+
       '<div style="flex:1;min-width:0;">'+
       '<h2 style="font-family:\"Cinzel Decorative\",Cinzel,serif;font-size:1.25rem;font-weight:700;color:var(--gold-light);line-height:1.25;margin-bottom:0.3rem;">'+nome+'</h2>'+
       (_deusSob?'<div style="font-family:Raleway,sans-serif;font-size:0.75rem;font-weight:600;color:#e8b86d;letter-spacing:0.06em;font-style:italic;">'+_deusSob+'</div>':'')+
@@ -5418,7 +5445,7 @@ function renderRacialChoices(){
     if(ch.fixed){
       // Show as locked badge
       var lbl=ch.options==='any'?'?':(ATTR_LABELS[ch.options[0]]||ch.options[0]);
-      html+='<span style="font-family:Raleway,sans-serif;font-size:0.82rem;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:0.25rem 0.65rem;">'+lbl+'</span>';
+      html+='<span style="font-family:Raleway,sans-serif;font-size:0.82rem;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:0;padding:0.25rem 0.65rem;">'+lbl+'</span>';
     } else {
       var opts=ch.options==='any'?ALL_ATTRS:ch.options;
       html+='<select class="cnt-select" style="min-width:150px;" onchange="cntChoiceSelect('+i+',this.value)">';
@@ -5479,10 +5506,10 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
   font-size:0.95rem;font-weight:700;
 }
 .ora-msg-ai   .ora-avatar{background:rgba(155,93,229,0.2);border:1px solid var(--violet-dim);color:var(--violet-bright);}
-.ora-msg-user .ora-avatar{background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);color:var(--cyan);font-family:'Cinzel',serif;font-size:0.7rem;}
+.ora-msg-user .ora-avatar{background:rgba(61,141,253,0.12);border:1px solid rgba(61,141,253,0.3);color:var(--cyan);font-family:'Cinzel',serif;font-size:0.7rem;}
 
 .ora-bubble{
-  max-width:82%;padding:0.75rem 1rem;border-radius:8px;
+  max-width:82%;padding:0.75rem 1rem;border-radius:0;
   font-size:0.87rem;line-height:1.7;
 }
 .ora-msg-ai   .ora-bubble{
@@ -5512,7 +5539,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
   background:transparent;border:1px solid var(--border);
   color:var(--text-dim);padding:0.32rem 0.75rem;
   font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;
-  border-radius:20px;cursor:pointer;transition:all 0.18s;
+  border-radius:0;cursor:pointer;transition:all 0.18s;
   letter-spacing:0.05em;
 }
 .ora-sug:hover{border-color:var(--violet-dim);color:var(--violet-bright);background:rgba(155,93,229,0.08);}
@@ -6192,16 +6219,16 @@ function adminRenderCards(){
   var subfiltroHtml = '';
   if(subs.length){
     subfiltroHtml = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.75rem;">'+
-      '<button class="vd-cat-btn'+(!_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\'\')" style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:4px;">Todos</button>'+
+      '<button class="vd-cat-btn'+(!_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\'\')" style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:0;">Todos</button>'+
       subs.map(function(sub){
-        return '<button class="vd-cat-btn'+(sub===_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\''+sub.replace(/'/g,"\\'")+'\') " style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:4px;">'+sub+'</button>';
+        return '<button class="vd-cat-btn'+(sub===_adminSubfiltro?' active':'')+'" onclick="adminSetSub(\''+sub.replace(/'/g,"\\'")+'\') " style="padding:0.35rem 0.7rem;font-size:0.68rem;border-radius:0;">'+sub+'</button>';
       }).join('')+
     '</div>';
   }
 
   // Descrição para seções de categoria
   var descHtml = secaoObj.descricao
-    ? '<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:rgba(155,93,229,0.07);border-radius:4px;border-left:2px solid var(--violet-dim);">'+secaoObj.descricao+'</div>'
+    ? '<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:rgba(155,93,229,0.07);border-radius:0;border-left:2px solid var(--violet-dim);">'+secaoObj.descricao+'</div>'
     : '';
 
   // Nomes/chaves a exibir
@@ -6224,7 +6251,7 @@ function adminRenderCards(){
     var imgHtml=temImg
       ?'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
       :'<div style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><span style="font-size:1.8rem;opacity:0.15;">✦</span></div>';
-    return '<div onclick="aimAbrir(\''+nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')\" style="background:var(--surface);border:1px solid '+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+';border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseenter="this.style.borderColor=\'var(--violet-dim)\'" onmouseleave="this.style.borderColor=\''+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+'\'">'+
+    return '<div onclick="aimAbrir(\''+nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')\" style="background:var(--surface);border:1px solid '+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+';border-radius:0;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseenter="this.style.borderColor=\'var(--violet-dim)\'" onmouseleave="this.style.borderColor=\''+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+'\'">'+
       '<div style="width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--surface2);">'+imgHtml+'</div>'+
       '<div style="padding:0.45rem 0.55rem;display:flex;align-items:center;justify-content:space-between;gap:0.3rem;">'+
         '<span style="font-family:Raleway,sans-serif;font-size:0.72rem;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">'+nome+'</span>'+
