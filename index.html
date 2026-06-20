@@ -449,11 +449,12 @@ main{
 }
 .classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;margin:0;}
 .vinculo-cards-wrap{
-  display:flex;flex-wrap:wrap;gap:0.65rem;
+  display:flex;flex-wrap:nowrap;gap:0.65rem;
   margin-top:0.2rem;margin-bottom:1.5rem;
+  overflow-x:auto;
 }
 .vinculo-cards-wrap .don-card-h{
-  margin-bottom:0;flex:0 1 auto;width:auto;min-width:200px;max-width:320px;
+  margin-bottom:0;flex:1 1 0;min-width:0;
 }
 .vinculo-cards-wrap .don-card-h-img{flex:0 0 76px;width:76px;height:76px;font-size:1.7rem;}
 .vinculo-cards-wrap .don-card-h-nome{
@@ -3367,20 +3368,23 @@ function getVinculosDaClasse(conjRow){
   }
   return out;
 }
-// "Título\nMensagem completa" (preferencial) ou "Título: mensagem" ou texto único como fallback
+// "Título: mensagem completa" (preferencial — funciona mesmo se a mensagem tiver vários parágrafos depois)
+// ou "Título\nMensagem completa" (se não houver dois-pontos perto do início) ou texto único como fallback
 function parseVinculoCell(txt){
   txt=(txt||'').trim();
   if(!txt) return null;
+  // 1) "Nome: resto do texto" — o dois-pontos perto do início sempre define o título,
+  //    mesmo que o resto do texto tenha quebras de linha/parágrafos extras depois (ex: regras de escala).
+  var m=txt.match(/^([^\n:]{2,80}):\s*([\s\S]+)$/);
+  if(m) return {titulo:m[1].trim(),mensagem:m[2].trim()};
+  // 2) Sem dois-pontos no início: usa a 1ª linha como título e o resto como mensagem
   var nlIdx=txt.search(/\r?\n/);
   if(nlIdx>-1){
     var titulo=txt.slice(0,nlIdx).trim();
     var msg=txt.slice(nlIdx).replace(/^\r?\n+/,'').trim();
     if(titulo) return {titulo:titulo,mensagem:msg||titulo};
   }
-  var m=txt.match(/^([^\n:]{2,60}):\s*([\s\S]+)$/);
-  if(m) return {titulo:m[1].trim(),mensagem:m[2].trim()};
-  var sm=txt.match(/^(.{4,80}?[.!?])\s+([\s\S]+)$/);
-  if(sm) return {titulo:sm[1].trim(),mensagem:txt};
+  // 3) Texto único e curto: vira o próprio título
   return {titulo:txt.length>60?txt.slice(0,57).trim()+'…':txt,mensagem:txt};
 }
 // Verifica se uma coluna pertence a Vínculo/Feitiços Adquiridos (usado p/ nunca expor isso no pop-up de classe)
