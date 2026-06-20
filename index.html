@@ -449,10 +449,14 @@ main{
 }
 .classe-extra-content p{font-size:0.88rem;color:var(--text-dim);line-height:1.65;margin:0;}
 .vinculo-cards-wrap{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
-  gap:0.5rem;margin-top:0.2rem;margin-bottom:1.5rem;
+  display:flex;flex-wrap:wrap;gap:0.65rem;
+  margin-top:0.2rem;margin-bottom:1.5rem;
 }
-.vinculo-cards-wrap .don-card-h{margin-bottom:0;}
+.vinculo-cards-wrap .don-card-h{
+  margin-bottom:0;flex:0 1 auto;width:auto;min-width:200px;max-width:100%;
+}
+.vinculo-cards-wrap .don-card-h-img{flex:0 0 76px;width:76px;font-size:1.7rem;}
+.vinculo-cards-wrap .don-card-h-nome{font-size:0.92rem;padding:0.6rem 1.1rem;hyphens:none;}
 .dons-title{
   font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold-light);
   letter-spacing:0.12em;margin-bottom:1rem;padding-bottom:0.5rem;
