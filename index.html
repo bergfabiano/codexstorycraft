@@ -371,10 +371,9 @@ main{
 
 .card-type{
   font-family:'Raleway',sans-serif;font-weight:700;
-  font-size:0.58rem;letter-spacing:0.2em;
+  font-size:0.68rem;letter-spacing:0.14em;
   color:var(--card-accent,var(--violet-bright));
   margin-bottom:0.35rem;text-transform:uppercase;
-  opacity:0.85;
 }
 .card-name{
   font-family:'Cinzel',serif;font-size:0.98rem;font-weight:600;
@@ -389,24 +388,24 @@ main{
 .card-tags{display:flex;flex-wrap:wrap;gap:0.28rem;}
 .tag{
   font-family:'Raleway',sans-serif;font-weight:700;
-  font-size:0.58rem;letter-spacing:0.07em;
-  padding:0.18rem 0.5rem;border-radius:0;
+  font-size:0.64rem;letter-spacing:0.06em;
+  padding:0.22rem 0.6rem;border-radius:0;
   border:1px solid;text-transform:uppercase;
 }
-.tag-class{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.35);background:rgba(126,207,245,0.08);}
-.tag-rare{color:var(--cat-especialista);border-color:rgba(199,125,255,0.35);background:rgba(199,125,255,0.08);}
-.tag-danger{color:var(--ember);border-color:rgba(229,92,42,0.35);background:rgba(229,92,42,0.08);}
-.tag-gold{color:var(--gold-light);border-color:rgba(232,197,106,0.35);background:rgba(232,197,106,0.08);}
-.tag-gray{color:var(--text-dim);border-color:rgba(216,218,232,0.12);}
-.tag-green{color:var(--cat-suporte);border-color:rgba(109,255,179,0.3);background:rgba(109,255,179,0.07);}
-.tag-blood{color:var(--blood);border-color:rgba(192,57,43,0.35);background:rgba(192,57,43,0.08);}
-.tag-combate{color:var(--cat-combate);border-color:rgba(255,140,66,0.35);background:rgba(255,140,66,0.08);}
-.tag-suporte{color:var(--cat-suporte);border-color:rgba(109,255,179,0.3);background:rgba(109,255,179,0.07);}
-.tag-conjurador{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.35);background:rgba(126,207,245,0.08);}
-.tag-especialista{color:var(--cat-especialista);border-color:rgba(199,125,255,0.35);background:rgba(199,125,255,0.08);}
-.tag-positiva{color:var(--cat-deus-positiva);border-color:rgba(255,224,102,0.3);background:rgba(255,224,102,0.07);}
-.tag-negativa{color:var(--cat-deus-negativa);border-color:rgba(255,92,92,0.3);background:rgba(255,92,92,0.07);}
-.tag-neutra{color:var(--cat-deus-neutra);border-color:rgba(192,192,255,0.3);background:rgba(192,192,255,0.07);}
+.tag-class{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.75);background:rgba(126,207,245,0.2);}
+.tag-rare{color:var(--cat-especialista);border-color:rgba(199,125,255,0.75);background:rgba(199,125,255,0.2);}
+.tag-danger{color:var(--ember);border-color:rgba(229,92,42,0.75);background:rgba(229,92,42,0.2);}
+.tag-gold{color:var(--gold-light);border-color:rgba(232,197,106,0.75);background:rgba(232,197,106,0.2);}
+.tag-gray{color:var(--text);border-color:rgba(231,228,245,0.45);background:rgba(231,228,245,0.1);}
+.tag-green{color:var(--cat-suporte);border-color:rgba(109,255,179,0.7);background:rgba(109,255,179,0.18);}
+.tag-blood{color:#ff7a68;border-color:rgba(192,57,43,0.75);background:rgba(192,57,43,0.2);}
+.tag-combate{color:var(--cat-combate);border-color:rgba(255,140,66,0.75);background:rgba(255,140,66,0.2);}
+.tag-suporte{color:var(--cat-suporte);border-color:rgba(109,255,179,0.7);background:rgba(109,255,179,0.18);}
+.tag-conjurador{color:var(--cat-conjurador);border-color:rgba(126,207,245,0.75);background:rgba(126,207,245,0.2);}
+.tag-especialista{color:var(--cat-especialista);border-color:rgba(199,125,255,0.75);background:rgba(199,125,255,0.2);}
+.tag-positiva{color:var(--cat-deus-positiva);border-color:rgba(255,224,102,0.7);background:rgba(255,224,102,0.18);}
+.tag-negativa{color:var(--cat-deus-negativa);border-color:rgba(255,92,92,0.7);background:rgba(255,92,92,0.18);}
+.tag-neutra{color:var(--cat-deus-neutra);border-color:rgba(192,192,255,0.7);background:rgba(192,192,255,0.18);}
 
 /* ── BTN VER DONS ── */
 .btn-ver-dons{
@@ -893,7 +892,7 @@ main{
   font-family:'Cinzel',serif;font-size:2rem;
   color:rgba(155,93,229,0.15);user-select:none;
 }
-.result-count{font-family:'Raleway',sans-serif;font-weight:600;font-size:0.63rem;letter-spacing:0.12em;color:var(--text-faint);margin-bottom:1rem;text-transform:uppercase;}
+.result-count{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.1em;color:var(--violet-bright);margin-bottom:1rem;text-transform:uppercase;}
 /* ── LAYOUT TOGGLE (grid / list) ── */
 .layout-toggle{display:flex;gap:0;border:1px solid var(--border);border-radius:0;overflow:hidden;flex-shrink:0;}
 .layout-toggle-btn{
@@ -3810,8 +3809,8 @@ function verDonsClasse(nomeClasse){
     html+='<div class="classe-header">';
     if(atb)html+='<div class="classe-field"><label>Atributo de Classe</label><p class="destaque">'+atb+'</p></div>';
     if(res)html+='<div class="classe-field"><label>Resistência</label><p>'+res+'</p></div>';
-    if(pvi)html+='<div class="classe-field"><label>PV Inicial</label><p>'+pvi+(pvn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pvn+'/nível)</span>':'')+'</p></div>';
-    if(pmi)html+='<div class="classe-field"><label>PM Inicial</label><p>'+pmi+(pmn?' <span style="color:var(--text-faint);font-size:0.8rem;">(+'+pmn+'/nível)</span>':'')+'</p></div>';
+    if(pvi)html+='<div class="classe-field"><label>PV Inicial</label><p>'+pvi+(pvn?' <span style="color:var(--gold-light);font-size:0.85rem;font-weight:600;">(+'+pvn+'/nível)</span>':'')+'</p></div>';
+    if(pmi)html+='<div class="classe-field"><label>PM Inicial</label><p>'+pmi+(pmn?' <span style="color:var(--gold-light);font-size:0.85rem;font-weight:600;">(+'+pmn+'/nível)</span>':'')+'</p></div>';
     if(pro)html+='<div class="classe-field classe-header-full"><label>Proficiências</label><p>'+pro+'</p></div>';
     if(per)html+='<div class="classe-field"><label>Perícia Inicial</label><p>'+per+'</p></div>';
     if(pex)html+='<div class="classe-field"><label>Perícias Extras</label><p>'+pex+'</p></div>';
