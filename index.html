@@ -1008,40 +1008,89 @@ main{
 }
 .ficha-sel-new-btn:hover{background:var(--violet-bright);}
 
-.ficha-header{
-  display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;
-  background:var(--surface);border:1px solid var(--border);
-  padding:1rem 1.25rem;margin-bottom:1.25rem;
-}
+.ficha-shell{display:flex;gap:1.25rem;align-items:stretch;}
+.ficha-sidebar{width:228px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
+.ficha-main{flex:1;min-width:0;}
+.ficha-shell{flex-wrap:wrap;}
+@media(max-width:1100px){.ficha-chat-panel{width:100%;max-height:420px;}}
+
+.ficha-chat-panel{width:280px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
+.fc-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.fc-tab{flex:1;text-align:center;padding:0.6rem 0.4rem;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
+.fc-tab:hover{color:var(--text);}
+.fc-tab.active{color:var(--violet-bright);border-bottom-color:var(--violet);}
+.fc-feed{flex:1;overflow-y:auto;padding:0.7rem;display:flex;flex-direction:column;gap:0.55rem;min-height:0;}
+.fc-feed::-webkit-scrollbar{width:6px;}
+.fc-feed::-webkit-scrollbar-thumb{background:var(--border-glow);}
+.fc-empty{color:var(--text-faint);font-size:0.72rem;text-align:center;padding:1rem 0.5rem;}
+.fc-msg{background:var(--bg3);border:1px solid var(--border);padding:0.5rem 0.6rem;font-size:0.78rem;}
+.fc-msg-head{display:flex;justify-content:space-between;gap:0.5rem;color:var(--text-faint);font-size:0.6rem;margin-bottom:0.3rem;}
+.fc-msg-autor{color:var(--violet-bright);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fc-msg-texto{color:var(--text-dim);word-break:break-word;}
+.fc-roll{text-align:center;}
+.fc-roll-die{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:700;color:var(--text);margin:0.15rem 0;}
+.fc-roll-die.crit{color:var(--gold-light);text-shadow:0 0 12px var(--gold-glow);}
+.fc-roll-die.fail{color:var(--blood);}
+.fc-roll-peri{font-family:'Cinzel',serif;font-size:0.76rem;color:var(--text);}
+.fc-roll-sub{font-size:0.66rem;color:var(--text-faint);margin-top:0.15rem;}
+.fc-roll-tag{display:inline-block;margin-top:0.35rem;font-size:0.58rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0.4rem;background:rgba(192,57,43,0.15);color:var(--blood);border:1px solid rgba(192,57,43,0.4);}
+.fc-roll-tag.crit{background:rgba(232,197,106,0.15);color:var(--gold-light);border-color:rgba(232,197,106,0.4);}
+.fc-input-row{display:flex;border-top:1px solid var(--border);padding:0.5rem;gap:0.4rem;flex-shrink:0;}
+.fc-input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.5rem;font-size:0.78rem;outline:none;font-family:'Raleway',sans-serif;}
+.fc-input:focus{border-color:var(--violet-dim);}
+.fc-send-btn{background:var(--violet);border:none;color:#fff;padding:0 0.8rem;cursor:pointer;font-size:0.85rem;flex-shrink:0;}
+.fc-send-btn:hover{background:var(--violet-bright);}
+
+.fs-portrait{padding:1.1rem 1rem 0.9rem;text-align:center;border-bottom:1px solid var(--border);}
+.fs-avatar-wrap{position:relative;width:84px;height:84px;margin:0 auto 0.65rem;}
 .ficha-header-avatar{
-  width:54px;height:54px;border-radius:50%;flex-shrink:0;
+  width:84px;height:84px;border-radius:50%;flex-shrink:0;
   border:2px solid var(--gold);box-shadow:0 0 10px var(--gold-glow);
   display:flex;align-items:center;justify-content:center;
   font-size:1.4rem;color:var(--gold-light);background:var(--surface2);
 }
-.ficha-header-info{flex:1;min-width:180px;}
-.ficha-h-nome-input{
-  font-family:'Cinzel',serif;font-size:1.1rem;color:var(--text);
-  background:transparent;border:none;border-bottom:1px solid transparent;
-  padding:0.15rem 0;width:100%;outline:none;transition:border-color 0.15s;
+.fs-lvl-badge{
+  position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);
+  width:26px;height:26px;border-radius:50%;background:var(--bg2);
+  border:1.5px solid var(--gold);color:var(--gold-light);
+  font-family:'Cinzel',serif;font-size:0.78rem;text-align:center;padding:0;outline:none;
 }
-.ficha-h-nome-input:focus{border-bottom-color:var(--violet-dim);}
-.ficha-h-sub{display:flex;align-items:center;gap:0.4rem;margin-top:0.35rem;font-size:0.78rem;color:var(--text-faint);flex-wrap:wrap;}
-.ficha-h-dot{opacity:0.5;}
-.ficha-h-nivel-input{
-  width:42px;background:var(--surface2);border:1px solid var(--border);color:var(--text);
-  text-align:center;font-size:0.78rem;padding:0.1rem 0.2rem;outline:none;
+.fs-lvl-badge::-webkit-inner-spin-button,.fs-lvl-badge::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+.fs-nome-input{
+  width:100%;text-align:center;font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);
+  background:transparent;border:none;border-bottom:1px solid transparent;padding:0.2rem 0;outline:none;transition:border-color 0.15s;
 }
-.ficha-header-res{display:flex;gap:0.9rem;flex-wrap:wrap;align-items:flex-end;}
-.ficha-res-box{display:flex;flex-direction:column;gap:0.25rem;align-items:center;}
-.ficha-res-box label{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);}
-.ficha-res-vals{display:flex;align-items:center;gap:0.25rem;color:var(--text-faint);font-size:0.85rem;}
-.ficha-res-input{
-  width:48px;background:var(--surface2);border:1px solid var(--border);color:var(--text);
-  text-align:center;font-size:0.85rem;padding:0.25rem 0.2rem;outline:none;font-family:'Raleway',sans-serif;font-weight:600;
-}
-.ficha-res-input:focus{border-color:var(--violet-dim);}
-.ficha-header-actions{display:flex;flex-direction:column;align-items:flex-end;gap:0.4rem;margin-left:auto;}
+.fs-nome-input:focus{border-bottom-color:var(--violet-dim);}
+.fs-escala{font-size:0.7rem;color:var(--gold-light);letter-spacing:0.05em;margin-top:0.25rem;cursor:pointer;text-decoration:underline dotted rgba(232,197,106,0.4);}
+.fs-escala-info{font-size:0.72rem;color:var(--text-dim);line-height:1.55;text-align:left;padding-top:0.5rem;}
+.fs-tags{display:flex;flex-wrap:wrap;gap:0.3rem;justify-content:center;margin-top:0.65rem;}
+
+.fs-stats{padding:0.9rem 1rem;display:flex;flex-direction:column;gap:0.65rem;}
+.fs-row{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;}
+.fs-label{color:var(--text);font-size:0.66rem;letter-spacing:0.04em;text-transform:uppercase;}
+.fs-editval{font-family:'Cinzel',serif;color:var(--text);cursor:pointer;padding:0.05rem 0.3rem;border:1px solid transparent;display:inline-block;}
+.fs-editval:hover{border-color:var(--violet-dim);}
+.fs-editval input{width:38px;text-align:center;background:var(--bg2);border:1px solid var(--violet);color:var(--text);font-family:'Cinzel',serif;font-size:0.78rem;padding:0.05rem 0;outline:none;}
+.fs-editval input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.fs-bar-block{display:flex;flex-direction:column;gap:0.3rem;}
+.fs-bar-head{display:flex;justify-content:space-between;font-size:0.78rem;}
+.fs-bar{height:8px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;position:relative;}
+.fs-bar-fill{height:100%;width:0%;background:var(--blood);}
+.fs-bar-pm .fs-bar-fill{background:var(--cyan);}
+.fs-box2{display:flex;gap:0.5rem;}
+.fs-box{flex:1;background:var(--bg3);border:1px solid var(--border);text-align:center;padding:0.5rem 0.3rem;}
+.fs-box-val{font-size:1.05rem;display:block;}
+.fs-resist{display:flex;flex-direction:column;gap:0.5rem;margin-top:0.15rem;border-top:1px solid var(--border);padding-top:0.65rem;}
+.fs-resist-box{background:var(--bg3);border:1px solid var(--border);padding:0.5rem 0.5rem 0.45rem;position:relative;text-align:center;}
+.fs-resist-pencil{position:absolute;top:0.3rem;right:0.35rem;background:transparent;border:none;color:var(--text-faint);cursor:pointer;font-size:0.7rem;padding:0.1rem;line-height:1;}
+.fs-resist-pencil:hover{color:var(--violet-bright);}
+.fs-resist-name{font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text);}
+.fs-resist-sub{font-size:0.64rem;color:var(--text-faint);margin-top:0.1rem;letter-spacing:0.04em;}
+.fs-resist-total{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold-light);margin-top:0.2rem;}
+.fs-resist-edit{display:flex;gap:0.3rem;justify-content:center;margin-top:0.3rem;}
+.fs-resist-edit select,.fs-resist-edit input{font-size:0.64rem;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);padding:0.15rem;width:44px;}
+
+.fs-foot{padding:0.8rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:auto;}
 .ficha-save-status{font-size:0.65rem;color:var(--green);opacity:0;transition:opacity 0.3s;white-space:nowrap;}
 .ficha-save-status.show{opacity:1;}
 .ficha-btn-voltar{
@@ -1051,17 +1100,77 @@ main{
 }
 .ficha-btn-voltar:hover{border-color:var(--violet-dim);color:var(--text);}
 
-.ficha-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:1.25rem;}
+.ficha-tabs{display:flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);margin-bottom:1.25rem;}
 .ficha-tab{
-  padding:0.6rem 1rem;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;
+  padding:0.7rem 1rem;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;
   text-transform:uppercase;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;
   transition:all 0.15s;
 }
-.ficha-tab:hover{color:var(--text);}
-.ficha-tab.active{color:var(--violet-bright);border-bottom-color:var(--violet);text-shadow:0 0 10px rgba(90,140,255,0.35);}
+.ficha-tab:hover{color:var(--text);background:rgba(140,100,220,0.05);}
+.ficha-tab.active{color:var(--violet-bright);border-bottom-color:var(--violet);background:rgba(90,140,255,0.06);text-shadow:0 0 10px rgba(90,140,255,0.35);}
 
 .ficha-tab-content{display:none;}
 .ficha-tab-content.active{display:block;animation:fadeIn 0.18s ease;}
+
+/* ── VISÃO GERAL (ficha) ── */
+.fg-grid{display:flex;flex-direction:column;gap:1.25rem;}
+.fg-block{background:var(--surface);border:1px solid var(--border);padding:1rem 1.1rem;}
+.fg-block-title{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:0.85rem;display:flex;align-items:center;justify-content:space-between;text-shadow:0 0 10px rgba(90,140,255,0.3);}
+.fg-attrs{display:grid;grid-template-columns:repeat(6,1fr);gap:0.6rem;}
+@media(max-width:680px){.fg-attrs{grid-template-columns:repeat(3,1fr);}}
+.fg-attr-card{background:var(--bg3);border:1px solid var(--border);padding:0.65rem 0.4rem;text-align:center;}
+.fg-attr-label{font-family:'Cinzel',serif;font-size:0.76rem;letter-spacing:0.06em;color:var(--text);}
+.fg-attr-label span{display:block;font-family:'Raleway',sans-serif;font-size:0.56rem;color:var(--text-faint);font-weight:400;letter-spacing:0.02em;}
+.fg-attr-val{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);margin-top:0.4rem;padding:0.2rem 0;cursor:pointer;border:1px solid transparent;}
+.fg-attr-val:hover{border-color:var(--violet-dim);}
+.fg-attr-val input{width:100%;text-align:center;background:var(--bg2);border:1px solid var(--violet);color:var(--text);font-family:'Cinzel',serif;font-size:0.9rem;padding:0.15rem 0;outline:none;}
+.fg-attr-val input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+.fg-peri-scroll{max-height:560px;overflow-y:auto;padding-right:0.3rem;display:grid;grid-template-columns:1fr 1fr;gap:0 1.2rem;align-content:start;}
+@media(max-width:640px){.fg-peri-scroll{grid-template-columns:1fr;}}
+.fg-peri-scroll::-webkit-scrollbar{width:6px;}
+.fg-peri-scroll::-webkit-scrollbar-thumb{background:var(--border-glow);}
+.fg-peri-row{display:grid;grid-template-columns:1fr 56px 50px 40px;align-items:center;gap:0.4rem;padding:0.32rem 0.1rem;border-bottom:1px solid rgba(140,100,220,0.06);cursor:pointer;transition:background 0.12s;}
+.fg-peri-row:hover{background:rgba(140,100,220,0.07);}
+.fg-peri-nome{font-size:0.8rem;color:var(--text-dim);display:flex;align-items:center;gap:0.25rem;overflow:hidden;}
+.fg-peri-nome span.txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fg-peri-oficio{background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text-faint);font-size:0.6rem;padding:0.1rem;max-width:72px;cursor:auto;}
+.fg-peri-sel{background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text-faint);font-size:0.66rem;padding:0.22rem;outline:none;cursor:auto;}
+.fg-peri-sel option{background:#0c0d16;}
+.fg-peri-bonus{width:100%;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);text-align:center;font-size:0.78rem;padding:0.22rem;outline:none;-moz-appearance:textfield;cursor:text;}
+.fg-peri-bonus::-webkit-outer-spin-button,.fg-peri-bonus::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.fg-peri-total{font-family:'Cinzel',serif;font-weight:700;font-size:0.88rem;color:var(--gold-light);text-align:center;}
+
+.fg-vd-item{border-bottom:1px solid rgba(140,100,220,0.07);}
+.fg-vd-item:last-child{border-bottom:none;}
+.fg-vd-head{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.1rem;cursor:pointer;font-size:0.82rem;color:var(--text-dim);transition:color 0.15s;}
+.fg-vd-head:hover{color:var(--text);}
+.fg-vd-remove{background:transparent;border:none;color:var(--text-faint);cursor:pointer;font-size:0.95rem;line-height:1;padding:0 0.3rem;}
+.fg-vd-remove:hover{color:var(--blood);}
+.fg-vd-edit{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 0.8rem;padding:0.3rem 0.1rem 0.9rem;}
+.fg-vd-edit label{grid-column:1/-1;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.12em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-top:0.3rem;}
+.fg-vd-edit label:first-child{margin-top:0;}
+.fg-vd-edit input,.fg-vd-edit textarea{grid-column:1/-1;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);font-family:'Raleway',sans-serif;font-size:0.8rem;padding:0.4rem 0.55rem;outline:none;resize:vertical;}
+.fg-vd-edit textarea{min-height:60px;}
+.fg-vd-empty{color:var(--text);font-size:0.78rem;padding:0.6rem 0;text-align:center;}
+.fg-add-btn{background:var(--violet);color:#fff;border:none;width:22px;height:22px;font-size:0.85rem;cursor:pointer;line-height:1;}
+.fg-add-btn:hover{background:var(--violet-bright);}
+
+.fg-picker-overlay{position:fixed;inset:0;background:rgba(4,4,10,0.78);display:none;align-items:center;justify-content:center;z-index:300;padding:1.5rem;}
+.fg-picker-overlay.open{display:flex;}
+.fg-picker-box{background:var(--bg2);border:1px solid var(--border-glow);max-width:480px;width:100%;max-height:80vh;display:flex;flex-direction:column;}
+.fg-picker-box-head{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.fg-picker-box-head h3{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--violet-bright);}
+.fg-picker-close{background:transparent;border:none;color:var(--text-faint);font-size:1.2rem;cursor:pointer;}
+.fg-picker-search{margin:0.9rem 1.2rem 0.5rem;background:rgba(37,90,214,0.06);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.85rem;outline:none;}
+.fg-picker-list{overflow-y:auto;padding:0.3rem 1.2rem 0.5rem;flex:1;}
+.fg-picker-item{display:flex;justify-content:space-between;gap:0.6rem;padding:0.5rem 0.3rem;border-bottom:1px solid rgba(140,100,220,0.07);cursor:pointer;font-size:0.85rem;color:var(--text-dim);}
+.fg-picker-item:hover{color:var(--text);background:rgba(37,90,214,0.06);}
+.fg-picker-custo{color:var(--gold-light);font-size:0.72rem;white-space:nowrap;}
+.fg-picker-manual{margin:0.4rem 1.2rem 1rem;text-align:center;background:transparent;border:1px dashed var(--border);color:var(--text-faint);padding:0.5rem;cursor:pointer;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;width:calc(100% - 2.4rem);}
+.fg-picker-manual:hover{border-color:var(--violet-dim);color:var(--text);}
+
+.fg-avatar-clickable{cursor:pointer;background-size:cover;background-position:center;}
 
 /* ── HOME ── */
 .home-wrap{max-width:900px;margin:0 auto;padding:1rem 0;}
@@ -2650,87 +2759,129 @@ main{
 
     <!-- Editor da ficha (some até uma ficha ser escolhida/criada) -->
     <div id="ficha-editor" class="ficha-editor" style="display:none;">
+      <div class="ficha-shell">
 
-      <!-- Cabeçalho fixo -->
-      <div class="ficha-header">
-        <div class="ficha-header-avatar" id="ficha-h-avatar">✦</div>
-        <div class="ficha-header-info">
-          <input type="text" id="ficha-h-nome" class="ficha-h-nome-input" placeholder="Nome do personagem" oninput="fichaMarkDirty()">
-          <div class="ficha-h-sub">
-            <span id="ficha-h-raca">Raça —</span>
-            <span class="ficha-h-dot">•</span>
-            <span id="ficha-h-classe">Classe —</span>
-            <span class="ficha-h-dot">•</span>
-            <span>Nível</span>
-            <input type="number" id="ficha-h-nivel" class="ficha-h-nivel-input" min="1" max="50" value="1" oninput="fichaMarkDirty()">
+        <!-- Sidebar fixa: retrato, recursos, resistências -->
+        <div class="ficha-sidebar">
+          <div class="fs-portrait">
+            <div class="fs-avatar-wrap">
+              <div class="ficha-header-avatar fg-avatar-clickable" id="ficha-h-avatar" onclick="fichaEditarAvatar()" title="Clique para definir uma imagem"></div>
+              <input type="number" id="ficha-h-nivel" class="fs-lvl-badge" min="1" max="50" value="1" oninput="fichaMarkDirty();fgEscalaUpdate();">
+            </div>
+            <input type="text" id="ficha-h-nome" class="fs-nome-input" placeholder="Nome do personagem" oninput="fichaMarkDirty()">
+            <div class="fs-escala" id="ficha-h-escala" onclick="fgEscalaToggle()">Escala: Comum</div>
+            <div class="fs-escala-info" id="fs-escala-info"></div>
+            <div class="fs-tags" id="ficha-h-tags"></div>
+          </div>
+
+          <div class="fs-stats">
+            <div class="fs-row"><span class="fs-label">Protagonismo</span><span class="fs-editval" id="fs-pp" data-field="pp">0</span></div>
+            <div class="fs-row"><span class="fs-label">Inspiração</span><span class="fs-editval" id="fs-insp" data-field="inspiracao">0</span></div>
+            <div class="fs-row"><span class="fs-label">Iniciativa</span><span class="fs-editval" id="fs-inic" data-field="iniciativa">+0</span></div>
+
+            <div class="fs-bar-block">
+              <div class="fs-bar-head"><span class="fs-label">Pontos de vida</span><span><span class="fs-editval" id="fs-pv-atual" data-field="pv-atual">0</span>/<span class="fs-editval" id="fs-pv-max" data-field="pv-max">0</span></span></div>
+              <div class="fs-bar" id="fs-pv-bar"><div class="fs-bar-fill" id="fs-pv-fill"></div></div>
+            </div>
+            <div class="fs-bar-block">
+              <div class="fs-bar-head"><span class="fs-label">Pontos de mana</span><span><span class="fs-editval" id="fs-pm-atual" data-field="pm-atual">0</span>/<span class="fs-editval" id="fs-pm-max" data-field="pm-max">0</span></span></div>
+              <div class="fs-bar fs-bar-pm" id="fs-pm-bar"><div class="fs-bar-fill" id="fs-pm-fill"></div></div>
+            </div>
+
+            <div class="fs-row"><span class="fs-label">Carga</span><span id="fg-carga-disp">0 / 0</span></div>
+
+            <div class="fs-box2">
+              <div class="fs-box"><div class="fs-editval fs-box-val" id="fs-vanguarda" data-field="vanguarda">0</div><div class="fs-label">Vanguarda</div></div>
+              <div class="fs-box"><div class="fs-editval fs-box-val" id="fs-md" data-field="mitigacao">0</div><div class="fs-label">MD</div></div>
+            </div>
+
+            <div class="fs-resist" id="fg-resist-list"></div>
+          </div>
+
+          <div class="fs-foot">
+            <span id="ficha-save-status" class="ficha-save-status"></span>
+            <button class="ficha-btn-voltar" onclick="fichaVoltarLista()">← Mesa</button>
           </div>
         </div>
-        <div class="ficha-header-res">
-          <div class="ficha-res-box">
-            <label>PV</label>
-            <div class="ficha-res-vals">
-              <input type="number" id="ficha-h-pv-atual" class="ficha-res-input" value="0" oninput="fichaMarkDirty()">
-              <span>/</span>
-              <input type="number" id="ficha-h-pv-max" class="ficha-res-input" value="0" oninput="fichaMarkDirty()">
+
+        <!-- Coluna principal: abas -->
+        <div class="ficha-main">
+          <div class="ficha-tabs">
+            <div class="ficha-tab active" data-ftab="geral"    onclick="fichaSwitchTab('geral')">Visão Geral</div>
+            <div class="ficha-tab" data-ftab="raca"      onclick="fichaSwitchTab('raca')">Raça</div>
+            <div class="ficha-tab" data-ftab="classe"    onclick="fichaSwitchTab('classe')">Classe</div>
+            <div class="ficha-tab" data-ftab="estigma"   onclick="fichaSwitchTab('estigma')">Estigma</div>
+            <div class="ficha-tab" data-ftab="vant"      onclick="fichaSwitchTab('vant')">Vantagens &amp; Desv.</div>
+            <div class="ficha-tab" data-ftab="inv"       onclick="fichaSwitchTab('inv')">Inventário</div>
+            <div class="ficha-tab" data-ftab="feiticos"  onclick="fichaSwitchTab('feiticos')">Feitiços</div>
+          </div>
+
+          <div class="ficha-tab-content active" id="ftab-geral">
+            <div class="fg-grid">
+
+              <div class="fg-block fg-atributos">
+                <div class="fg-block-title">Atributos</div>
+                <div class="fg-attrs" id="fg-attrs"></div>
+              </div>
+
+              <div class="fg-block fg-pericias">
+                <div class="fg-block-title">Perícias</div>
+                <div class="fg-peri-scroll" id="fg-peri-list"></div>
+              </div>
+
             </div>
           </div>
-          <div class="ficha-res-box">
-            <label>PM</label>
-            <div class="ficha-res-vals">
-              <input type="number" id="ficha-h-pm-atual" class="ficha-res-input" value="0" oninput="fichaMarkDirty()">
-              <span>/</span>
-              <input type="number" id="ficha-h-pm-max" class="ficha-res-input" value="0" oninput="fichaMarkDirty()">
+          <div class="ficha-tab-content" id="ftab-raca">
+            <p class="state-msg-inline">Raça — habilidades raciais, linhagem e fardo (em construção).</p>
+          </div>
+          <div class="ficha-tab-content" id="ftab-classe">
+            <p class="state-msg-inline">Classe — proficiências, perícias, kit, individualidade e dons (em construção).</p>
+          </div>
+          <div class="ficha-tab-content" id="ftab-estigma">
+            <p class="state-msg-inline">Estigma — origem e idiomas (em construção).</p>
+          </div>
+          <div class="ficha-tab-content" id="ftab-vant">
+            <div class="fg-grid">
+              <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
+                <div class="fg-block fg-vant" style="flex:1;min-width:220px;">
+                  <div class="fg-block-title">Vantagens <button class="fg-add-btn" onclick="fgAbrirPicker('vantagens')" title="Adicionar">+</button></div>
+                  <div id="fg-vant-list"></div>
+                </div>
+
+                <div class="fg-block fg-desv" style="flex:1;min-width:220px;">
+                  <div class="fg-block-title">Desvantagens <button class="fg-add-btn" onclick="fgAbrirPicker('desvantagens')" title="Adicionar">+</button></div>
+                  <div id="fg-desv-list"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="ficha-res-box">
-            <label>Inspiração</label>
-            <input type="number" id="ficha-h-insp" class="ficha-res-input" min="0" max="2" value="0" oninput="fichaMarkDirty()">
+          <div class="ficha-tab-content" id="ftab-inv">
+            <p class="state-msg-inline">Inventário — itens e dinheiro (em construção).</p>
           </div>
-          <div class="ficha-res-box">
-            <label>P. Protag.</label>
-            <input type="number" id="ficha-h-pp" class="ficha-res-input" min="0" value="0" oninput="fichaMarkDirty()">
+          <div class="ficha-tab-content" id="ftab-feiticos">
+            <p class="state-msg-inline">Feitiços conhecidos (em construção).</p>
           </div>
         </div>
-        <div class="ficha-header-actions">
-          <span id="ficha-save-status" class="ficha-save-status"></span>
-          <button class="ficha-btn-voltar" onclick="fichaVoltarLista()">← Mesa</button>
+
+        <!-- Painel de Chat / Rolagens (só existe dentro da ficha) -->
+        <div class="ficha-chat-panel">
+          <div class="fc-tabs">
+            <div class="fc-tab active" data-fctab="chat" onclick="fcSwitchTab('chat')">Chat</div>
+            <div class="fc-tab" data-fctab="compendio" onclick="fcSwitchTab('compendio')">Compêndio</div>
+          </div>
+          <div id="fctab-chat" style="display:flex;flex-direction:column;flex:1;min-height:0;">
+            <div class="fc-feed" id="fc-feed"><div class="fc-empty">Carregando...</div></div>
+            <div class="fc-input-row">
+              <input type="text" id="fc-input" class="fc-input" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')chatEnviarMsg()">
+              <button class="fc-send-btn" onclick="chatEnviarMsg()" title="Enviar">➤</button>
+            </div>
+          </div>
+          <div id="fctab-compendio" style="display:none;flex:1;padding:1rem;">
+            <p class="state-msg-inline">Compêndio (em construção).</p>
+          </div>
         </div>
-      </div>
 
-      <!-- Abas internas -->
-      <div class="ficha-tabs">
-        <div class="ficha-tab active" data-ftab="geral"    onclick="fichaSwitchTab('geral')">Visão Geral</div>
-        <div class="ficha-tab" data-ftab="raca"      onclick="fichaSwitchTab('raca')">Raça</div>
-        <div class="ficha-tab" data-ftab="classe"    onclick="fichaSwitchTab('classe')">Classe</div>
-        <div class="ficha-tab" data-ftab="estigma"   onclick="fichaSwitchTab('estigma')">Estigma</div>
-        <div class="ficha-tab" data-ftab="vant"      onclick="fichaSwitchTab('vant')">Vantagens &amp; Desv.</div>
-        <div class="ficha-tab" data-ftab="inv"       onclick="fichaSwitchTab('inv')">Inventário</div>
-        <div class="ficha-tab" data-ftab="feiticos"  onclick="fichaSwitchTab('feiticos')">Feitiços</div>
       </div>
-
-      <!-- Conteúdo das abas -->
-      <div class="ficha-tab-content active" id="ftab-geral">
-        <p class="state-msg-inline">Visão Geral — atributos, perícias, XP e anotações (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-raca">
-        <p class="state-msg-inline">Raça — habilidades raciais, linhagem e fardo (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-classe">
-        <p class="state-msg-inline">Classe — proficiências, perícias, kit, individualidade e dons (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-estigma">
-        <p class="state-msg-inline">Estigma — origem e idiomas (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-vant">
-        <p class="state-msg-inline">Vantagens &amp; Desvantagens escolhidas (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-inv">
-        <p class="state-msg-inline">Inventário — itens e dinheiro (em construção).</p>
-      </div>
-      <div class="ficha-tab-content" id="ftab-feiticos">
-        <p class="state-msg-inline">Feitiços conhecidos (em construção).</p>
-      </div>
-
     </div>
   </div>
 
@@ -2897,6 +3048,19 @@ main{
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- PICKER VANTAGENS/DESVANTAGENS (ficha) -->
+<div class="fg-picker-overlay" id="fgPickerOverlay" onclick="if(event.target===this)fgFecharPicker()">
+  <div class="fg-picker-box">
+    <div class="fg-picker-box-head">
+      <h3 id="fgPickerTitulo">Adicionar</h3>
+      <button class="fg-picker-close" onclick="fgFecharPicker()">✕</button>
+    </div>
+    <input type="text" id="fgPickerBusca" class="fg-picker-search" placeholder="Buscar..." oninput="fgPickerFiltro()">
+    <div class="fg-picker-list" id="fgPickerList"></div>
+    <button class="fg-picker-manual" onclick="fgPickerManual()">+ Adicionar em branco</button>
   </div>
 </div>
 
@@ -6685,7 +6849,7 @@ function adminRemover(){}
 <!-- ── FIREBASE SDK ── -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, get, update, onValue, push, query, orderByChild, equalTo } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getDatabase, ref, set, get, update, onValue, push, query, orderByChild, equalTo, limitToLast } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const firebaseConfig = {
@@ -6920,18 +7084,25 @@ function fichaNovoEsqueleto(donoUid, donoNome){
     donoUid: donoUid,
     donoNome: donoNome || 'Aventureiro',
     criadoEm: Date.now(),
-    nome: '',
+    nome: '', avatar: '',
     nivel: 1,
-    raca: '', classe: '', estigma: '',
+    raca: '', classe: '', devocao: '', estigma: '',
     pv:{atual:0,max:0}, pm:{atual:0,max:0},
-    inspiracao:0, pp:0,
+    inspiracao:0, pp:0, iniciativa:0,
     xp:0,
     atributos:{for:0,des:0,con:0,int:0,sab:0,car:0},
-    pericias:{},      // { "Acrobacia": {treinada:false, bonus:0} , ... }
+    pericias: PERICIAS_PADRAO.map(function(p){return {nome:p.nome,atributo:p.atributo,bonus:0,oficio:!!p.oficio,oficioEscolhido:p.oficio?OFICIOS_LISTA[0]:''};}),
+    resistencias:{
+      fortitude:{atributo:'con',bonus:0},
+      reflexos:{atributo:'des',bonus:0},
+      vontade:{atributo:'sab',bonus:0}
+    },
+    carga:{atual:0,max:10},
+    vanguarda:0, mitigacao:0,
     dons:[],
     vantagens:[], desvantagens:[],
     idiomas:[],
-    inventario:[], dinheiro:0,
+    inventario:[], dinheiro:{floreis:0,floroes:0,florins:0},
     feiticos:[],
     anotacoes:''
   };
@@ -7004,6 +7175,7 @@ window.fichaAbrir=async function(fichaId){
     document.getElementById('ficha-selector').style.display='none';
     document.getElementById('ficha-editor').style.display='block';
     fichaSwitchTab('geral');
+    fcAttach(window.currentMesa.id);
   }catch(e){
     console.error(e);
     alert('Erro ao abrir a ficha.');
@@ -7011,6 +7183,7 @@ window.fichaAbrir=async function(fichaId){
 };
 
 window.fichaVoltarLista=function(){
+  fcDetach();
   window.currentFicha=null;
   document.getElementById('ficha-editor').style.display='none';
   document.getElementById('ficha-selector').style.display='flex';
@@ -7020,16 +7193,30 @@ window.fichaVoltarLista=function(){
 function fichaPreencherCampos(d){
   fichaSuppressDirty=true;
   document.getElementById('ficha-h-nome').value = d.nome||'';
-  document.getElementById('ficha-h-raca').textContent = d.raca||'Raça —';
-  document.getElementById('ficha-h-classe').textContent = d.classe||'Classe —';
   document.getElementById('ficha-h-nivel').value = d.nivel||1;
-  document.getElementById('ficha-h-pv-atual').value = (d.pv&&d.pv.atual)||0;
-  document.getElementById('ficha-h-pv-max').value = (d.pv&&d.pv.max)||0;
-  document.getElementById('ficha-h-pm-atual').value = (d.pm&&d.pm.atual)||0;
-  document.getElementById('ficha-h-pm-max').value = (d.pm&&d.pm.max)||0;
-  document.getElementById('ficha-h-insp').value = d.inspiracao||0;
-  document.getElementById('ficha-h-pp').value = d.pp||0;
+  var av=document.getElementById('ficha-h-avatar');
+  if(av){
+    if(d.avatar) av.style.backgroundImage='url(\''+d.avatar+'\')';
+    else av.style.backgroundImage='';
+  }
+  var tagsEl=document.getElementById('ficha-h-tags');
+  if(tagsEl){
+    var t='';
+    if(d.raca) t+=tag(d.raca,'tag-class');
+    if(d.classe) t+=tag(d.classe,'tag-conjurador');
+    if(d.devocao) t+=tag(d.devocao,'tag-gold');
+    if(d.estigma) t+=tag(d.estigma,'tag-rare');
+    tagsEl.innerHTML=t;
+  }
   fichaSuppressDirty=false;
+  fgEscalaUpdate();
+  fsRenderStats();
+  fgRenderAtributos();
+  fgRenderPericias();
+  fgRenderResistencias();
+  fgCargaUpdate();
+  fgRenderVD('vantagens');
+  fgRenderVD('desvantagens');
 }
 
 window.fichaSwitchTab=function(tab){
@@ -7056,16 +7243,20 @@ async function fichaSalvar(){
   var patch={
     nome: document.getElementById('ficha-h-nome').value.trim(),
     nivel: parseInt(document.getElementById('ficha-h-nivel').value,10)||1,
-    pv:{
-      atual: parseInt(document.getElementById('ficha-h-pv-atual').value,10)||0,
-      max: parseInt(document.getElementById('ficha-h-pv-max').value,10)||0
-    },
-    pm:{
-      atual: parseInt(document.getElementById('ficha-h-pm-atual').value,10)||0,
-      max: parseInt(document.getElementById('ficha-h-pm-max').value,10)||0
-    },
-    inspiracao: parseInt(document.getElementById('ficha-h-insp').value,10)||0,
-    pp: parseInt(document.getElementById('ficha-h-pp').value,10)||0
+    pv: f.dados.pv,
+    pm: f.dados.pm,
+    inspiracao: f.dados.inspiracao||0,
+    pp: f.dados.pp||0,
+    iniciativa: f.dados.iniciativa||0,
+    avatar: f.dados.avatar||'',
+    atributos: f.dados.atributos,
+    pericias: f.dados.pericias,
+    resistencias: f.dados.resistencias,
+    carga: f.dados.carga,
+    vanguarda: f.dados.vanguarda||0,
+    mitigacao: f.dados.mitigacao||0,
+    vantagens: f.dados.vantagens||[],
+    desvantagens: f.dados.desvantagens||[]
   };
   try{
     await update(ref(db,'mesas/'+f.mesaId+'/fichas/'+f.id), patch);
@@ -7078,6 +7269,466 @@ async function fichaSalvar(){
     if(st2){st2.textContent='Erro ao salvar';st2.classList.add('show');}
   }
 }
+
+// ── VISÃO GERAL — dados padrão ──
+var OFICIOS_LISTA=['Culinária','Alquimia','Ferraria','Escriba','Joalheria','Runomancia','Golemancia'];
+var PERICIAS_PADRAO=[
+  {nome:'Acrobacia',atributo:'des'},{nome:'Adestramento',atributo:'car'},{nome:'Armadilhas',atributo:'int'},
+  {nome:'Atletismo',atributo:'for'},{nome:'Atuação',atributo:'car'},{nome:'Cavalgar',atributo:'des'},
+  {nome:'Cirurgia',atributo:'int'},{nome:'Cura',atributo:'sab'},{nome:'Diplomacia',atributo:'car'},
+  {nome:'Disfarce',atributo:'car'},{nome:'Enganação',atributo:'car'},{nome:'Furtividade',atributo:'des'},
+  {nome:'Guerra',atributo:'int'},{nome:'Intimidação',atributo:'car'},{nome:'Intuição',atributo:'sab'},
+  {nome:'Investigação',atributo:'int'},{nome:'Jogatina',atributo:'car'},{nome:'Ladinagem',atributo:'des'},
+  {nome:'Luta',atributo:'for'},{nome:'Misticismo',atributo:'int'},{nome:'Nobreza',atributo:'int'},
+  {nome:'Ofício',atributo:'int',oficio:true},{nome:'Percepção',atributo:'sab'},
+  {nome:'Ofício',atributo:'int',oficio:true},{nome:'Pilotagem',atributo:'des'},
+  {nome:'Pontaria',atributo:'des'},{nome:'Prestidigitação',atributo:'des'},{nome:'Religião',atributo:'sab'},
+  {nome:'Sedução',atributo:'car'},{nome:'Sobrevivência',atributo:'sab'}
+];
+var RESIST_PADRAO=[
+  {key:'fortitude',nome:'Fortitude',atributo:'con'},
+  {key:'reflexos',nome:'Reflexos',atributo:'des'},
+  {key:'vontade',nome:'Vontade',atributo:'sab'}
+];
+var ESCALA_INFO=[
+  {min:1,max:9,nome:'Comum',flavor:'Você é carne fresca. Iniciantes forjando seus primeiros feitos. Poring, slimes, goblins — essas são suas medidas.',bonus:''},
+  {min:10,max:19,nome:'Lendário',flavor:'Sua marca começa a se gravar na pedra da história. Ogros, trolls, mantícoras — criaturas que antes aterrorizavam vilas inteiras agora podem ser suas presas.',bonus:'Vantagem ou dom de classe de 1º grau grátis.'},
+  {min:20,max:29,nome:'Colossal',flavor:'Poder que desafia os limites comuns. Dragões jovens, gigantes, quimeras — você caminha entre forças que dobram montanhas.',bonus:'Vantagem ou dom de 2º grau grátis.'},
+  {min:30,max:39,nome:'Titânico',flavor:'Força e domínio que impõem respeito absoluto. Dragões anciões, lichs plenos, krakens — você é uma força da natureza.',bonus:'Vantagem ou dom de 3º grau grátis.'},
+  {min:40,max:49,nome:'Mítico',flavor:'Quase lendas vivas. Você dobra a realidade. Deuses caídos, espíritos primordiais são seus iguais agora.',bonus:'Dom de 4º grau ou vantagem equivalente.'},
+  {min:50,max:50,nome:'Épico',flavor:'O ápice. Deus pleno. Encarnação cósmica. Você transcendeu.',bonus:'Dom de 5º grau ou vantagem final.'}
+];
+function escalaFor(n){
+  for(var i=0;i<ESCALA_INFO.length;i++){ if(n>=ESCALA_INFO[i].min&&n<=ESCALA_INFO[i].max) return ESCALA_INFO[i]; }
+  return ESCALA_INFO[ESCALA_INFO.length-1];
+}
+var fgEscalaOpen=false;
+window.fgEscalaToggle=function(){ fgEscalaOpen=!fgEscalaOpen; fgEscalaUpdate(); };
+function fgEscalaUpdate(){
+  var nivel=parseInt(document.getElementById('ficha-h-nivel').value,10)||1;
+  if(nivel<1) nivel=1; if(nivel>50) nivel=50;
+  document.getElementById('ficha-h-nivel').value=nivel;
+  var e=escalaFor(nivel);
+  var el=document.getElementById('ficha-h-escala');
+  if(el) el.textContent='Escala: '+e.nome;
+  var info=document.getElementById('fs-escala-info');
+  if(info){
+    info.innerHTML=e.flavor+(e.bonus?'<div style="margin-top:0.35rem;color:var(--gold-light);">'+e.bonus+'</div>':'');
+    info.style.display=fgEscalaOpen?'block':'none';
+  }
+}
+
+// ── Atributos (clique no valor para editar manualmente) ──
+function fgRenderAtributos(){
+  var f=window.currentFicha; if(!f) return;
+  var atr=f.dados.atributos||(f.dados.atributos={for:0,des:0,con:0,int:0,sab:0,car:0});
+  var html='';
+  CNT_ATTRS.forEach(function(a){
+    var v=atr[a.id]||0;
+    html+='<div class="fg-attr-card">'+
+      '<div class="fg-attr-label">'+a.nome+'<span>'+a.full+'</span></div>'+
+      '<div class="fg-attr-val" data-attr="'+a.id+'">'+(v>=0?'+':'')+v+'</div>'+
+    '</div>';
+  });
+  var el=document.getElementById('fg-attrs');
+  if(el) el.innerHTML=html;
+}
+
+// ── Perícias (duas colunas; Ofício tem seletor de especialidade) ──
+function fgRenderPericias(){
+  var f=window.currentFicha; if(!f) return;
+  var lista=f.dados.pericias;
+  if(!lista||!lista.length){
+    lista=PERICIAS_PADRAO.map(function(p){return {nome:p.nome,atributo:p.atributo,bonus:0,oficio:!!p.oficio,oficioEscolhido:p.oficio?OFICIOS_LISTA[0]:''};});
+    f.dados.pericias=lista;
+  }
+  var atr=f.dados.atributos||{};
+  var html='';
+  lista.forEach(function(p,i){
+    var mod=atr[p.atributo]||0, bonus=p.bonus||0, total=mod+bonus;
+    var nomeHtml = p.oficio
+      ? '<span class="txt">Ofício</span><select class="fg-peri-oficio" onchange="fgPeriUpdate('+i+',\'oficioEscolhido\',this.value)">'+OFICIOS_LISTA.map(function(o){return '<option'+(o===p.oficioEscolhido?' selected':'')+'>'+o+'</option>';}).join('')+'</select>'
+      : '<span class="txt">'+p.nome+'</span>';
+    html+='<div class="fg-peri-row" onclick="fgPeriRowClick(event,'+i+')">'+
+      '<span class="fg-peri-nome">'+nomeHtml+'</span>'+
+      '<select class="fg-peri-sel" onchange="fgPeriUpdate('+i+',\'atributo\',this.value)">'+
+        CNT_ATTRS.map(function(a){return '<option value="'+a.id+'"'+(a.id===p.atributo?' selected':'')+'>'+a.nome+'</option>';}).join('')+
+      '</select>'+
+      '<input type="number" class="fg-peri-bonus" value="'+bonus+'" oninput="fgPeriUpdate('+i+',\'bonus\',this.value)">'+
+      '<span class="fg-peri-total">'+(total>=0?'+':'')+total+'</span>'+
+    '</div>';
+  });
+  var el=document.getElementById('fg-peri-list');
+  if(el) el.innerHTML=html;
+}
+function fgPeriUpdate(i,campo,valor){
+  var f=window.currentFicha; if(!f) return;
+  var p=f.dados.pericias[i]; if(!p) return;
+  if(campo==='bonus') p.bonus=parseInt(valor,10)||0;
+  else if(campo==='oficioEscolhido') p.oficioEscolhido=valor;
+  else p.atributo=valor;
+  fgRenderPericias();
+  fichaMarkDirty();
+}
+
+// ── Resistências (caixas compactas na sidebar, lápis no canto) ──
+var fgResistEditing=null;
+function fgRenderResistencias(){
+  var f=window.currentFicha; if(!f) return;
+  var res=f.dados.resistencias;
+  if(!res){
+    res={};
+    RESIST_PADRAO.forEach(function(r){res[r.key]={atributo:r.atributo,bonus:0};});
+    f.dados.resistencias=res;
+  }
+  var atr=f.dados.atributos||{};
+  var html='';
+  RESIST_PADRAO.forEach(function(r){
+    var entry=res[r.key]||(res[r.key]={atributo:r.atributo,bonus:0});
+    var mod=atr[entry.atributo]||0, bonus=entry.bonus||0, total=mod+bonus;
+    var editing=(fgResistEditing===r.key);
+    html+='<div class="fs-resist-box">'+
+      '<button class="fs-resist-pencil" onclick="fgResistToggleEdit(\''+r.key+'\')" title="Editar">'+(editing?'✓':'✎')+'</button>'+
+      '<div class="fs-resist-name">'+r.nome+'</div>';
+    if(editing){
+      html+='<div class="fs-resist-edit">'+
+        '<select onchange="fgResistUpdate(\''+r.key+'\',\'atributo\',this.value)">'+
+          CNT_ATTRS.map(function(a){return '<option value="'+a.id+'"'+(a.id===entry.atributo?' selected':'')+'>'+a.nome+'</option>';}).join('')+
+        '</select>'+
+        '<input type="number" value="'+bonus+'" oninput="fgResistUpdate(\''+r.key+'\',\'bonus\',this.value)">'+
+      '</div>';
+    } else {
+      html+='<div class="fs-resist-sub">'+entry.atributo.toUpperCase()+'</div>';
+    }
+    html+='<div class="fs-resist-total">'+(total>=0?'+':'')+total+'</div></div>';
+  });
+  var el=document.getElementById('fg-resist-list');
+  if(el) el.innerHTML=html;
+}
+function fgResistToggleEdit(key){
+  fgResistEditing=(fgResistEditing===key)?null:key;
+  fgRenderResistencias();
+}
+function fgResistUpdate(key,campo,valor){
+  var f=window.currentFicha; if(!f) return;
+  var entry=f.dados.resistencias[key]; if(!entry) return;
+  if(campo==='bonus') entry.bonus=parseInt(valor,10)||0; else entry.atributo=valor;
+  fgRenderResistencias();
+  fichaMarkDirty();
+}
+
+// ── Carga ──
+function fgCargaUpdate(){
+  var f=window.currentFicha; if(!f) return;
+  var forV=(f.dados.atributos&&f.dados.atributos.for)||0;
+  var max=10+forV*2;
+  if(!f.dados.carga) f.dados.carga={atual:0,max:max}; else f.dados.carga.max=max;
+  var el=document.getElementById('fg-carga-disp');
+  if(el) el.textContent=(f.dados.carga.atual||0)+' / '+max;
+}
+
+// ── Sidebar: protagonismo/inspiração/iniciativa/PV/PM/vanguarda/MD, clique para editar ──
+function fsSign(v){ return (v>=0?'+':'')+v; }
+function fsRenderStats(){
+  var f=window.currentFicha; if(!f) return;
+  var d=f.dados;
+  var map={
+    'fs-pp': d.pp||0,
+    'fs-insp': d.inspiracao||0,
+    'fs-inic': fsSign(d.iniciativa||0),
+    'fs-pv-atual': (d.pv&&d.pv.atual)||0,
+    'fs-pv-max': (d.pv&&d.pv.max)||0,
+    'fs-pm-atual': (d.pm&&d.pm.atual)||0,
+    'fs-pm-max': (d.pm&&d.pm.max)||0,
+    'fs-vanguarda': d.vanguarda||0,
+    'fs-md': d.mitigacao||0
+  };
+  for(var id in map){ var el=document.getElementById(id); if(el) el.textContent=map[id]; }
+  var pvMax=(d.pv&&d.pv.max)||0, pvAtual=(d.pv&&d.pv.atual)||0;
+  var pvPct = pvMax>0 ? Math.max(0,Math.min(100,(pvAtual/pvMax)*100)) : 0;
+  var pvFill=document.getElementById('fs-pv-fill'); if(pvFill) pvFill.style.width=pvPct+'%';
+  var pmMax=(d.pm&&d.pm.max)||0, pmAtual=(d.pm&&d.pm.atual)||0;
+  var pmPct = pmMax>0 ? Math.max(0,Math.min(100,(pmAtual/pmMax)*100)) : 0;
+  var pmFill=document.getElementById('fs-pm-fill'); if(pmFill) pmFill.style.width=pmPct+'%';
+}
+function fsCommitEdit(field, value){
+  var f=window.currentFicha; if(!f) return;
+  var v=parseInt(value,10); if(isNaN(v)) v=0;
+  if(field==='pp'){ f.dados.pp=Math.max(0,v); }
+  else if(field==='inspiracao'){ f.dados.inspiracao=Math.max(0,Math.min(2,v)); }
+  else if(field==='iniciativa'){ f.dados.iniciativa=v; }
+  else if(field==='pv-atual'){ f.dados.pv.atual=v; }
+  else if(field==='pv-max'){ f.dados.pv.max=Math.max(0,v); if(f.dados.pv.atual>f.dados.pv.max) f.dados.pv.atual=f.dados.pv.max; }
+  else if(field==='pm-atual'){ f.dados.pm.atual=v; }
+  else if(field==='pm-max'){ f.dados.pm.max=Math.max(0,v); if(f.dados.pm.atual>f.dados.pm.max) f.dados.pm.atual=f.dados.pm.max; }
+  else if(field==='vanguarda'){ f.dados.vanguarda=v; }
+  else if(field==='mitigacao'){ f.dados.mitigacao=v; }
+  fsRenderStats();
+  fichaMarkDirty();
+}
+function fsBarClick(e, which){
+  var f=window.currentFicha; if(!f) return;
+  var rect=e.currentTarget.getBoundingClientRect();
+  var pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+  var maxV = which==='pv' ? (f.dados.pv.max||0) : (f.dados.pm.max||0);
+  var newVal=Math.round(pct*maxV);
+  if(which==='pv') f.dados.pv.atual=newVal; else f.dados.pm.atual=newVal;
+  fsRenderStats();
+  fichaMarkDirty();
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var pvBar=document.getElementById('fs-pv-bar'); if(pvBar) pvBar.addEventListener('click', function(e){fsBarClick(e,'pv');});
+  var pmBar=document.getElementById('fs-pm-bar'); if(pmBar) pmBar.addEventListener('click', function(e){fsBarClick(e,'pm');});
+});
+// Caso o script rode após o DOMContentLoaded já ter disparado:
+if(document.readyState!=='loading'){
+  var _pvBar=document.getElementById('fs-pv-bar'); if(_pvBar) _pvBar.addEventListener('click', function(e){fsBarClick(e,'pv');});
+  var _pmBar=document.getElementById('fs-pm-bar'); if(_pmBar) _pmBar.addEventListener('click', function(e){fsBarClick(e,'pm');});
+}
+
+// ── Clique-para-editar unificado (atributos principais + stats da sidebar) ──
+document.addEventListener('click', function(e){
+  var elA=e.target.closest('.fg-attr-val');
+  var elB=e.target.closest('.fs-editval');
+  var el=elA||elB;
+  if(!el || el.querySelector('input')) return;
+  var f=window.currentFicha; if(!f) return;
+  var input=document.createElement('input');
+  input.type='number';
+  if(elA){
+    var a=el.dataset.attr;
+    input.value=f.dados.atributos[a]||0;
+    el.textContent=''; el.appendChild(input);
+    input.focus(); input.select();
+    input.addEventListener('blur', function(){
+      var v=parseInt(input.value,10); if(isNaN(v))v=0; if(v<-5)v=-5; if(v>15)v=15;
+      f.dados.atributos[a]=v;
+      fgRenderAtributos(); fgRenderPericias(); fgRenderResistencias(); fgCargaUpdate();
+      fichaMarkDirty();
+    });
+  } else {
+    var field=el.dataset.field;
+    input.value=el.textContent.replace('+','');
+    el.textContent=''; el.appendChild(input);
+    input.focus(); input.select();
+    input.addEventListener('blur', function(){ fsCommitEdit(field, input.value); });
+  }
+  input.addEventListener('keydown', function(ev){ if(ev.key==='Enter') input.blur(); });
+});
+
+// ── Chat / Rolagens (painel da ficha, sincronizado por mesa) ──
+function fcEsc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function fcFmtHora(ts){
+  var d=new Date(ts||Date.now());
+  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
+  return hh+':'+mm;
+}
+var fcUnsub=null;
+function fcAttach(mesaId){
+  fcDetach();
+  var feed=document.getElementById('fc-feed');
+  if(feed) feed.innerHTML='<div class="fc-empty">Carregando...</div>';
+  var chatQuery=query(ref(db,'mesas/'+mesaId+'/chat'), limitToLast(50));
+  fcUnsub=onValue(chatQuery, function(snap){
+    var data=snap.exists()?snap.val():{};
+    var ids=Object.keys(data);
+    ids.sort(function(a,b){return (data[a].ts||0)-(data[b].ts||0);});
+    var html='';
+    if(!ids.length){
+      html='<div class="fc-empty">Nenhuma mensagem ainda. Clica numa perícia pra rolar, ou manda um oi!</div>';
+    }
+    ids.forEach(function(id){
+      var m=data[id];
+      if(m.tipo==='roll'){
+        var critClass = m.dado===20 ? ' crit' : (m.dado===1 ? ' fail' : '');
+        html+='<div class="fc-msg fc-roll">'+
+          '<div class="fc-msg-head"><span class="fc-msg-autor">'+fcEsc(m.autor)+'</span><span>'+fcFmtHora(m.ts)+'</span></div>'+
+          '<div class="fc-roll-die'+critClass+'">'+m.dado+'</div>'+
+          '<div class="fc-roll-peri">Teste de '+fcEsc(m.pericia)+'</div>'+
+          '<div class="fc-roll-sub">'+m.dado+' '+(m.mod>=0?'+':'')+m.mod+' = <strong style="color:var(--text);">'+m.total+'</strong></div>'+
+          (m.dado===20?'<span class="fc-roll-tag crit">Crítico</span>':'')+
+          (m.dado===1?'<span class="fc-roll-tag">Falha crítica</span>':'')+
+        '</div>';
+      } else {
+        html+='<div class="fc-msg">'+
+          '<div class="fc-msg-head"><span class="fc-msg-autor">'+fcEsc(m.autor)+'</span><span>'+fcFmtHora(m.ts)+'</span></div>'+
+          '<div class="fc-msg-texto">'+fcEsc(m.texto)+'</div>'+
+        '</div>';
+      }
+    });
+    var feedEl=document.getElementById('fc-feed');
+    if(feedEl){ feedEl.innerHTML=html; feedEl.scrollTop=feedEl.scrollHeight; }
+  });
+}
+function fcDetach(){
+  if(fcUnsub){ fcUnsub(); fcUnsub=null; }
+}
+window.chatEnviarMsg=function(){
+  var input=document.getElementById('fc-input');
+  if(!input) return;
+  var texto=input.value.trim();
+  if(!texto||!window.currentMesa||!window.currentUser) return;
+  push(ref(db,'mesas/'+window.currentMesa.id+'/chat'),{
+    tipo:'msg',
+    autor: window.currentUser.displayName||window.currentUser.email||'Aventureiro',
+    autorUid: window.currentUser.uid,
+    texto: texto,
+    ts: Date.now()
+  });
+  input.value='';
+};
+window.fgPeriRowClick=function(e,i){
+  if(e.target.closest('select, input')) return;
+  fgRolarPericia(i);
+};
+function fgRolarPericia(i){
+  var f=window.currentFicha; if(!f||!window.currentMesa||!window.currentUser) return;
+  var p=f.dados.pericias[i]; if(!p) return;
+  var atr=f.dados.atributos||{};
+  var mod=(atr[p.atributo]||0)+(p.bonus||0);
+  var dado=Math.floor(Math.random()*20)+1;
+  var nome = p.oficio ? ('Ofício ('+(p.oficioEscolhido||'')+')') : p.nome;
+  push(ref(db,'mesas/'+window.currentMesa.id+'/chat'),{
+    tipo:'roll',
+    autor: window.currentUser.displayName||window.currentUser.email||'Aventureiro',
+    autorUid: window.currentUser.uid,
+    pericia: nome,
+    dado: dado,
+    mod: mod,
+    total: dado+mod,
+    ts: Date.now()
+  });
+}
+window.fcSwitchTab=function(tab){
+  document.querySelectorAll('.fc-tab').forEach(function(t){t.classList.remove('active');});
+  var tEl=document.querySelector('.fc-tab[data-fctab="'+tab+'"]'); if(tEl) tEl.classList.add('active');
+  var chatEl=document.getElementById('fctab-chat'); if(chatEl) chatEl.style.display = tab==='chat'?'flex':'none';
+  var compEl=document.getElementById('fctab-compendio'); if(compEl) compEl.style.display = tab==='compendio'?'flex':'none';
+};
+
+// ── Vantagens / Desvantagens ──
+var fgVdAberto=null;
+function fgRenderVD(tipo){
+  var f=window.currentFicha; if(!f) return;
+  var lista=f.dados[tipo]||(f.dados[tipo]=[]);
+  var html='';
+  lista.forEach(function(it,i){
+    var aberto=(fgVdAberto===tipo+i);
+    html+='<div class="fg-vd-item"><div class="fg-vd-head" onclick="fgVdToggle(\''+tipo+'\','+i+')">'+
+        '<span>'+(it.nome||'(sem nome)')+'</span>'+
+        '<button class="fg-vd-remove" onclick="event.stopPropagation();fgVdRemover(\''+tipo+'\','+i+')" title="Remover">×</button>'+
+      '</div>';
+    if(aberto){
+      html+='<div class="fg-vd-edit">'+
+        fgVdCampo(tipo,i,'descricao','Descrição',it.descricao,'textarea')+
+        fgVdCampo(tipo,i,'origem','Origem',it.origem)+
+        fgVdCampo(tipo,i,'custoPM','Custo de PM',it.custoPM)+
+        fgVdCampo(tipo,i,'cd','CD',it.cd)+
+        fgVdCampo(tipo,i,'execucao','Execução',it.execucao)+
+        fgVdCampo(tipo,i,'duracao','Duração',it.duracao)+
+      '</div>';
+    }
+    html+='</div>';
+  });
+  var elId=(tipo==='vantagens')?'fg-vant-list':'fg-desv-list';
+  var el=document.getElementById(elId);
+  if(el) el.innerHTML=html||'<div class="fg-vd-empty">Nenhuma ainda.</div>';
+}
+function fgVdCampo(tipo,i,campo,label,valor,tag2){
+  valor=(valor===undefined||valor===null)?'':valor;
+  if(tag2==='textarea'){
+    return '<label>'+label+'</label><textarea oninput="fgVdUpdate(\''+tipo+'\','+i+',\''+campo+'\',this.value)">'+String(valor).replace(/</g,'&lt;')+'</textarea>';
+  }
+  return '<label>'+label+'</label><input type="text" value="'+String(valor).replace(/"/g,'&quot;')+'" oninput="fgVdUpdate(\''+tipo+'\','+i+',\''+campo+'\',this.value)">';
+}
+function fgVdToggle(tipo,i){
+  var k=tipo+i;
+  fgVdAberto=(fgVdAberto===k)?null:k;
+  fgRenderVD(tipo);
+}
+function fgVdUpdate(tipo,i,campo,valor){
+  var f=window.currentFicha; if(!f||!f.dados[tipo]||!f.dados[tipo][i]) return;
+  f.dados[tipo][i][campo]=valor;
+  fichaMarkDirty();
+}
+function fgVdRemover(tipo,i){
+  var f=window.currentFicha; if(!f) return;
+  f.dados[tipo].splice(i,1);
+  fgRenderVD(tipo);
+  fichaMarkDirty();
+}
+
+// ── Picker (selecionar vantagem/desvantagem do Codex) ──
+var FG_PICKER_TIPO=null;
+var fgPickerCache=[];
+function fgAbrirPicker(tipo){
+  FG_PICKER_TIPO=tipo;
+  document.getElementById('fgPickerTitulo').textContent = (tipo==='vantagens') ? 'Adicionar Vantagem' : 'Adicionar Desvantagem';
+  document.getElementById('fgPickerBusca').value='';
+  fgPickerFiltro();
+  document.getElementById('fgPickerOverlay').classList.add('open');
+}
+function fgFecharPicker(){
+  document.getElementById('fgPickerOverlay').classList.remove('open');
+}
+function fgPickerPool(){
+  if(FG_PICKER_TIPO==='vantagens'){
+    return [].concat(VD.versateis||[],VD.combate||[],VD.magicas||[],VD.ataques||[],VD.superpoderes||[]);
+  }
+  return [].concat(VD.desvantagens||[],VD.maldicoes||[]);
+}
+function fgPickerFiltro(){
+  var s=(document.getElementById('fgPickerBusca').value||'').toLowerCase();
+  var pool=fgPickerPool();
+  var data=pool.filter(function(r){return !s||vdNome(r).toLowerCase().indexOf(s)>-1;}).slice(0,150);
+  var html=data.map(function(r,i){
+    var custo=vdCusto(r);
+    return '<div class="fg-picker-item" onclick="fgPickerEscolher('+i+')"><span>'+vdNome(r)+'</span>'+(custo?'<span class="fg-picker-custo">'+custo+' pts</span>':'')+'</div>';
+  }).join('');
+  var el=document.getElementById('fgPickerList');
+  if(el) el.innerHTML=html||'<div class="fg-vd-empty">'+(pool.length?'Nada encontrado.':'Nada carregado do Codex ainda — confira a aba inicial.')+'</div>';
+  fgPickerCache=data;
+}
+function fgPickerEscolher(i){
+  var r=fgPickerCache[i]; if(!r) return;
+  var f=window.currentFicha; if(!f) return;
+  var item={nome:vdNome(r),descricao:vdDesc(r)||'',origem:'',custoPM:'',cd:'',execucao:'',duracao:''};
+  var arr=f.dados[FG_PICKER_TIPO]||(f.dados[FG_PICKER_TIPO]=[]);
+  arr.push(item);
+  fgRenderVD(FG_PICKER_TIPO);
+  fichaMarkDirty();
+  fgFecharPicker();
+}
+function fgPickerManual(){
+  var f=window.currentFicha; if(!f) return;
+  var nome=prompt('Nome da '+(FG_PICKER_TIPO==='vantagens'?'vantagem':'desvantagem')+':');
+  if(!nome) return;
+  var arr=f.dados[FG_PICKER_TIPO]||(f.dados[FG_PICKER_TIPO]=[]);
+  arr.push({nome:nome,descricao:'',origem:'',custoPM:'',cd:'',execucao:'',duracao:''});
+  fgRenderVD(FG_PICKER_TIPO);
+  fichaMarkDirty();
+  fgFecharPicker();
+}
+
+// ── Avatar ──
+window.fichaEditarAvatar=function(){
+  var f=window.currentFicha; if(!f) return;
+  var url=prompt('Cole a URL da imagem do personagem:', f.dados.avatar||'');
+  if(url===null) return;
+  f.dados.avatar=url.trim();
+  var av=document.getElementById('ficha-h-avatar');
+  if(av){
+    if(f.dados.avatar){av.style.backgroundImage='url(\''+f.dados.avatar+'\')';av.textContent='';}
+    else{av.style.backgroundImage='';av.textContent='✦';}
+  }
+  fichaMarkDirty();
+};
+
+
 
 const auth = getAuth(app);
 
