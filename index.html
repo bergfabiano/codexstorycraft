@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velkarion</title>
+<title>Codex StoryCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&family=Uncial+Antiqua&family=MedievalSharp&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
@@ -19,10 +19,10 @@
   --border-glow:rgba(150,130,255,0.4);
 
   /* Accent palette — roxo / azul / preto */
-  --violet:#255ad6;
-  --violet-bright:#5a8cff;
-  --violet-dim:rgba(37,90,214,0.6);
-  --violet-glow:rgba(37,90,214,0.2);
+  --violet:#9b5de5;
+  --violet-bright:#c084fc;
+  --violet-dim:rgba(155,93,229,0.6);
+  --violet-glow:rgba(155,93,229,0.2);
   --cyan:#3d8dfd;
   --cyan-dim:rgba(61,141,253,0.5);
   --magenta:#f72585;
@@ -87,7 +87,7 @@ body::after{
   content:'';
   position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(37,90,214,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.06) 0%,transparent 60%),
     radial-gradient(ellipse 40% 50% at 95% 10%,rgba(61,141,253,0.045) 0%,transparent 55%),
     radial-gradient(ellipse 50% 40% at 50% 100%,rgba(10,6,20,0.5) 0%,transparent 60%);
   pointer-events:none;z-index:0;
@@ -136,10 +136,10 @@ body::after{
 .sidebar-brand-text{min-width:0;}
 .sidebar-title{
   font-family:'Cinzel Decorative',serif;
-  font-size:0.92rem;
+  font-size:1.05rem;
   font-weight:700;
   color:var(--gold-light);
-  letter-spacing:0.02em;
+  letter-spacing:0.04em;
   line-height:1;
   text-shadow:0 0 16px var(--gold-glow);
   white-space:nowrap;
@@ -176,37 +176,15 @@ body::after{
 }
 .nav-tab:hover{
   color:var(--text);
-  background:rgba(37,90,214,0.06);
+  background:rgba(155,93,229,0.06);
 }
 .nav-tab.active{
   color:var(--violet-bright);
   border-left-color:var(--violet);
-  background:rgba(37,90,214,0.1);
-  text-shadow:0 0 12px rgba(90,140,255,0.4);
+  background:rgba(155,93,229,0.1);
+  text-shadow:0 0 12px rgba(192,132,252,0.4);
 }
 .tab-sym{font-size:0.85rem;opacity:0.8;}
-
-.sidebar-auth{
-  padding:0.85rem 1.25rem;
-  border-top:1px solid var(--border);
-}
-.auth-signin-btn{
-  display:block;width:100%;
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.06em;
-  text-transform:uppercase;
-  background:var(--violet);color:#fff;border:none;border-radius:0;
-  padding:0.6rem 0.8rem;cursor:pointer;transition:all 0.2s;
-}
-.auth-signin-btn:hover{background:var(--violet-bright);}
-.auth-user{display:flex;align-items:center;gap:0.6rem;}
-.auth-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);flex-shrink:0;object-fit:cover;}
-.auth-name{flex:1;min-width:0;font-size:0.78rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.auth-signout-btn{
-  font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
-  background:transparent;border:1px solid var(--border);color:var(--text-faint);
-  padding:0.3rem 0.55rem;cursor:pointer;border-radius:0;flex-shrink:0;transition:all 0.15s;
-}
-.auth-signout-btn:hover{border-color:var(--blood);color:#fff;background:var(--blood);}
 
 .sidebar-bottom{
   padding:0.75rem 1.25rem;
@@ -223,9 +201,6 @@ body::after{
 
 /* ── TOPBAR ── */
 #topbar{
-  display:none;
-}
-#topbar.show-topbar{
   background:rgba(10,10,20,0.9);
   border-bottom:1px solid var(--border);
   padding:0.6rem 1.5rem;
@@ -249,7 +224,7 @@ body::after{
 #topbar input{
   flex:1;
   min-width:180px;
-  background:rgba(37,90,214,0.06);
+  background:rgba(155,93,229,0.06);
   border:1px solid var(--border);
   color:var(--text);
   padding:0.38rem 0.7rem;
@@ -262,7 +237,7 @@ body::after{
 #topbar input:focus{border-color:var(--violet);}
 #topbar input::placeholder{color:var(--text-faint);}
 #topbar select{
-  background:rgba(37,90,214,0.05);
+  background:rgba(155,93,229,0.05);
   border:1px solid var(--border);
   color:var(--text);
   padding:0.38rem 0.6rem;
@@ -287,9 +262,9 @@ body::after{
   white-space:nowrap;
   text-transform:uppercase;
   transition:all 0.2s;
-  box-shadow:0 0 12px rgba(37,90,214,0.3);
+  box-shadow:0 0 12px rgba(155,93,229,0.3);
 }
-.btn-load:hover{background:var(--violet-bright);box-shadow:0 0 20px rgba(37,90,214,0.5);}
+.btn-load:hover{background:var(--violet-bright);box-shadow:0 0 20px rgba(155,93,229,0.5);}
 .status-dot{width:7px;height:7px;border-radius:50%;background:#444;flex-shrink:0;}
 .status-dot.ok{background:#4caf50;box-shadow:0 0 6px #4caf50;}
 .status-dot.err{background:var(--blood);box-shadow:0 0 6px var(--blood);}
@@ -323,7 +298,7 @@ main{
   letter-spacing:0.12em;text-transform:uppercase;
 }
 .fg input,.fg select{
-  background:rgba(37,90,214,0.06);
+  background:rgba(155,93,229,0.06);
   border:1px solid var(--border);
   color:var(--text);
   padding:0.38rem 0.6rem;
@@ -366,7 +341,7 @@ main{
   border-color:var(--card-accent,var(--violet-dim));
   transform:translateY(-2px);
   background:var(--surface2);
-  box-shadow:0 6px 24px rgba(0,0,0,0.5),0 0 0 1px var(--card-accent-faint,rgba(37,90,214,0.12));
+  box-shadow:0 6px 24px rgba(0,0,0,0.5),0 0 0 1px var(--card-accent-faint,rgba(155,93,229,0.12));
 }
 .card:hover::before{opacity:1;}
 
@@ -439,11 +414,11 @@ main{
   letter-spacing:0.15em;text-transform:uppercase;
   color:var(--card-accent,var(--violet-bright));
   background:transparent;
-  border:1px solid var(--card-accent,rgba(37,90,214,0.3));
+  border:1px solid var(--card-accent,rgba(155,93,229,0.3));
   border-radius:0;cursor:pointer;transition:all 0.2s;text-align:center;
   opacity:0.8;
 }
-.btn-ver-dons:hover{background:var(--card-accent-faint,rgba(37,90,214,0.1));opacity:1;}
+.btn-ver-dons:hover{background:var(--card-accent-faint,rgba(155,93,229,0.1));opacity:1;}
 
 /* ── CLASS / DEUS DETAIL ── */
 .classe-detail{display:none;animation:fadeIn 0.3s ease;}
@@ -512,8 +487,8 @@ main{
 .don-grau{
   font-family:'Raleway',sans-serif;font-weight:700;font-size:0.57rem;
   letter-spacing:0.1em;padding:0.17rem 0.55rem;border-radius:0;
-  border:1px solid rgba(37,90,214,0.4);color:var(--violet-bright);
-  background:rgba(37,90,214,0.1);text-transform:uppercase;
+  border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
+  background:rgba(155,93,229,0.1);text-transform:uppercase;
 }
 .don-desc{font-size:0.86rem;color:var(--text-dim);line-height:1.6;}
 .grau-section{margin-bottom:1.2rem;}
@@ -540,7 +515,7 @@ main{
   font-family:'Raleway',sans-serif;font-weight:700;font-size:0.75rem;
   letter-spacing:0.12em;color:var(--violet-bright);text-transform:uppercase;
   text-align:center;padding:0.4rem 0 0.6rem;
-  border-bottom:1.5px solid rgba(37,90,214,0.45);
+  border-bottom:1.5px solid rgba(155,93,229,0.45);
   margin-bottom:0.5rem;
   white-space:nowrap;
 }
@@ -609,8 +584,8 @@ main{
 .idioma-modal-alfabeto{
   display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
   text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:0;
-  border:1px solid rgba(37,90,214,0.4);color:var(--violet-bright);
-  background:rgba(37,90,214,0.1);margin-bottom:0.75rem;
+  border:1px solid rgba(155,93,229,0.4);color:var(--violet-bright);
+  background:rgba(155,93,229,0.1);margin-bottom:0.75rem;
 }
 .idioma-modal-field{margin-bottom:0.9rem;}
 .idioma-modal-field label{
@@ -628,7 +603,7 @@ main{
   color:var(--text-dim);
 }
 .idioma-bonus-box{
-  padding:0.65rem 0.85rem;background:rgba(37,90,214,0.07);
+  padding:0.65rem 0.85rem;background:rgba(155,93,229,0.07);
   border-left:2px solid var(--violet-dim);border-radius:0;
   font-size:0.86rem;color:var(--text);line-height:1.6;
 }
@@ -644,8 +619,8 @@ main{
 #oraculo-porta::before{
   content:'';position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(37,90,214,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37,90,214,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(155,93,229,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155,93,229,0.06) 1px, transparent 1px);
   background-size:40px 40px;
   mask-image:radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
   pointer-events:none;
@@ -655,13 +630,13 @@ main{
   content:'◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈ ✦ ◈';
   position:absolute;bottom:1.5rem;left:0;right:0;
   font-size:0.6rem;letter-spacing:0.5em;
-  color:rgba(37,90,214,0.15);text-align:center;
+  color:rgba(155,93,229,0.15);text-align:center;
   pointer-events:none;
 }
 .ora-porta-runas-topo{
   position:absolute;top:1.5rem;left:0;right:0;
   font-size:0.6rem;letter-spacing:0.5em;
-  color:rgba(37,90,214,0.15);text-align:center;
+  color:rgba(155,93,229,0.15);text-align:center;
   pointer-events:none;
 }
 /* Olho central */
@@ -671,29 +646,29 @@ main{
   margin-bottom:2.2rem;
 }
 .ora-porta-ring{
-  position:absolute;border-radius:50%;border:1px solid rgba(37,90,214,0.3);
+  position:absolute;border-radius:50%;border:1px solid rgba(155,93,229,0.3);
   animation:oraRing 4s ease-in-out infinite;
 }
 .ora-porta-ring:nth-child(1){width:160px;height:160px;animation-delay:0s;}
-.ora-porta-ring:nth-child(2){width:130px;height:130px;border-color:rgba(37,90,214,0.2);animation-delay:0.6s;}
-.ora-porta-ring:nth-child(3){width:100px;height:100px;border-color:rgba(37,90,214,0.15);animation-delay:1.2s;}
+.ora-porta-ring:nth-child(2){width:130px;height:130px;border-color:rgba(155,93,229,0.2);animation-delay:0.6s;}
+.ora-porta-ring:nth-child(3){width:100px;height:100px;border-color:rgba(155,93,229,0.15);animation-delay:1.2s;}
 @keyframes oraRing{
-  0%,100%{box-shadow:0 0 0 0 rgba(37,90,214,0);transform:scale(1);}
-  50%{box-shadow:0 0 30px 4px rgba(37,90,214,0.15);transform:scale(1.04);}
+  0%,100%{box-shadow:0 0 0 0 rgba(155,93,229,0);transform:scale(1);}
+  50%{box-shadow:0 0 30px 4px rgba(155,93,229,0.15);transform:scale(1.04);}
 }
 .ora-porta-eye{
   position:relative;z-index:2;
   width:72px;height:72px;border-radius:50%;
   background:radial-gradient(ellipse at 40% 40%, rgba(180,120,255,0.35) 0%, rgba(100,50,200,0.2) 50%, transparent 80%);
-  border:1.5px solid rgba(37,90,214,0.6);
+  border:1.5px solid rgba(155,93,229,0.6);
   display:flex;align-items:center;justify-content:center;
   font-size:2rem;
-  box-shadow:0 0 30px rgba(37,90,214,0.3), inset 0 0 20px rgba(37,90,214,0.15);
+  box-shadow:0 0 30px rgba(155,93,229,0.3), inset 0 0 20px rgba(155,93,229,0.15);
   animation:oraEyePulse 3s ease-in-out infinite;
 }
 @keyframes oraEyePulse{
-  0%,100%{box-shadow:0 0 20px rgba(37,90,214,0.2),inset 0 0 15px rgba(37,90,214,0.1);}
-  50%{box-shadow:0 0 50px rgba(37,90,214,0.45),inset 0 0 25px rgba(37,90,214,0.2);}
+  0%,100%{box-shadow:0 0 20px rgba(155,93,229,0.2),inset 0 0 15px rgba(155,93,229,0.1);}
+  50%{box-shadow:0 0 50px rgba(155,93,229,0.45),inset 0 0 25px rgba(155,93,229,0.2);}
 }
 /* Divisor ornamental */
 .ora-porta-ornament{
@@ -702,10 +677,10 @@ main{
 }
 .ora-porta-ornament-line{
   flex:1;height:1px;
-  background:linear-gradient(90deg, transparent, rgba(37,90,214,0.4), transparent);
+  background:linear-gradient(90deg, transparent, rgba(155,93,229,0.4), transparent);
 }
 .ora-porta-ornament-sym{
-  font-size:0.7rem;color:rgba(37,90,214,0.5);letter-spacing:0.2em;
+  font-size:0.7rem;color:rgba(155,93,229,0.5);letter-spacing:0.2em;
 }
 /* Títulos */
 .ora-porta-titulo{
@@ -727,33 +702,33 @@ main{
 .ora-porta-label{
   font-family:'Cinzel',serif;font-size:0.72rem;font-weight:600;
   letter-spacing:0.18em;text-transform:uppercase;
-  color:rgba(37,90,214,0.7);align-self:flex-start;
+  color:rgba(155,93,229,0.7);align-self:flex-start;
 }
 .ora-porta-input{
   width:100%;
   background:rgba(10,8,20,0.6);
-  border:1px solid rgba(37,90,214,0.35);border-radius:0;
+  border:1px solid rgba(155,93,229,0.35);border-radius:0;
   color:var(--text);padding:0.75rem 1.1rem;
   font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.06em;
   outline:none;text-align:center;
   transition:border-color 0.25s,box-shadow 0.25s;
-  box-shadow:inset 0 0 20px rgba(37,90,214,0.05);
+  box-shadow:inset 0 0 20px rgba(155,93,229,0.05);
 }
 .ora-porta-input:focus{
-  border-color:rgba(37,90,214,0.7);
-  box-shadow:0 0 0 3px rgba(37,90,214,0.1),inset 0 0 20px rgba(37,90,214,0.08);
+  border-color:rgba(155,93,229,0.7);
+  box-shadow:0 0 0 3px rgba(155,93,229,0.1),inset 0 0 20px rgba(155,93,229,0.08);
 }
 .ora-porta-input.invalid{animation:shake 0.4s ease;}
 .ora-porta-input::placeholder{
-  color:rgba(37,90,214,0.25);font-family:'Raleway',sans-serif;
+  color:rgba(155,93,229,0.25);font-family:'Raleway',sans-serif;
   font-size:0.82rem;letter-spacing:0.06em;font-style:italic;
 }
 /* Botão */
 .ora-porta-btn{
   width:100%;padding:0.85rem 1.5rem;
   position:relative;overflow:hidden;
-  background:rgba(37,90,214,0.1);
-  border:1px solid rgba(37,90,214,0.5);border-radius:0;
+  background:rgba(155,93,229,0.1);
+  border:1px solid rgba(155,93,229,0.5);border-radius:0;
   color:rgba(200,180,255,0.9);
   font-family:'Cinzel',serif;font-size:0.82rem;font-weight:600;
   letter-spacing:0.15em;text-transform:uppercase;
@@ -761,20 +736,20 @@ main{
 }
 .ora-porta-btn::before{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(37,90,214,0.15),transparent 60%);
+  background:linear-gradient(135deg,rgba(155,93,229,0.15),transparent 60%);
   opacity:0;transition:opacity 0.25s;
 }
 .ora-porta-btn:hover{
-  background:rgba(37,90,214,0.18);
-  border-color:rgba(37,90,214,0.8);
+  background:rgba(155,93,229,0.18);
+  border-color:rgba(155,93,229,0.8);
   color:#fff;
-  box-shadow:0 0 25px rgba(37,90,214,0.25),inset 0 0 15px rgba(37,90,214,0.08);
+  box-shadow:0 0 25px rgba(155,93,229,0.25),inset 0 0 15px rgba(155,93,229,0.08);
 }
 .ora-porta-btn:hover::before{opacity:1;}
 /* Aviso */
 .ora-porta-aviso{
   font-family:'Raleway',sans-serif;
-  font-size:0.7rem;color:rgba(37,90,214,0.35);
+  font-size:0.7rem;color:rgba(155,93,229,0.35);
   margin-top:1.8rem;font-style:italic;line-height:1.8;
   letter-spacing:0.04em;
 }
@@ -800,11 +775,11 @@ main{
 }
 .modal-overlay.open{display:flex;}
 .modal{
-  background:var(--bg3);border:1px solid rgba(37,90,214,0.35);
+  background:var(--bg3);border:1px solid rgba(155,93,229,0.35);
   border-radius:0;padding:2rem;max-width:580px;width:100%;
   max-height:82vh;overflow-y:auto;position:relative;
   animation:modalIn 0.2s ease;
-  box-shadow:0 24px 80px rgba(0,0,0,0.8),0 0 40px rgba(37,90,214,0.08);
+  box-shadow:0 24px 80px rgba(0,0,0,0.8),0 0 40px rgba(155,93,229,0.08);
 }
 @keyframes modalIn{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
 .modal::before{
@@ -829,7 +804,7 @@ main{
 .modal-close:hover{background:var(--blood);color:#fff;}
 .modal-type{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);margin-bottom:0.5rem;text-transform:uppercase;}
 .modal-name{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:600;color:var(--gold-light);margin-bottom:1rem;}
-.modal-sub{display:block;margin:0.6rem 0;padding:0.55rem 0.75rem;background:rgba(37,90,214,0.07);border-left:2px solid var(--violet-dim);border-radius:0;}
+.modal-sub{display:block;margin:0.6rem 0;padding:0.55rem 0.75rem;background:rgba(155,93,229,0.07);border-left:2px solid var(--violet-dim);border-radius:0;}
 .modal-sub-title{display:block;font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--gold-light);letter-spacing:0.06em;margin-bottom:0.2rem;}
 .modal-sub-body{display:block;font-family:'EB Garamond',serif;font-size:1rem;color:var(--text-dim);line-height:1.6;text-align:justify;hyphens:auto;-webkit-hyphens:auto;}
 .modal-divider{border:none;border-top:1px solid var(--border);margin:1rem 0;}
@@ -846,14 +821,14 @@ main{
 }
 .card-h .card-h-img{
   width:52px;height:52px;flex-shrink:0;border-radius:0;
-  border:1px solid rgba(37,90,214,0.15);
+  border:1px solid rgba(155,93,229,0.15);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .card-h .card-h-img img{width:100%;height:100%;object-fit:cover;}
 .card-h .card-h-sym{
   font-family:'Cinzel',serif;font-size:1.2rem;
-  color:rgba(37,90,214,0.18);user-select:none;
+  color:rgba(155,93,229,0.18);user-select:none;
 }
 .card-h .card-h-body{flex:1;min-width:0;}
 .card-h .card-name{
@@ -869,14 +844,14 @@ main{
 .modal-hero-img{
   width:110px;height:110px;flex-shrink:0;
   border-radius:0;overflow:hidden;
-  border:1px solid rgba(37,90,214,0.2);
+  border:1px solid rgba(155,93,229,0.2);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;
 }
 .modal-hero-img img{width:100%;height:100%;object-fit:cover;}
 .modal-hero-img .modal-hero-sym{
   font-family:'Cinzel',serif;font-size:2.2rem;
-  color:rgba(37,90,214,0.15);user-select:none;
+  color:rgba(155,93,229,0.15);user-select:none;
 }
 .modal-hero-info{flex:1;min-width:0;}
 .modal-hero-info .modal-type{margin-bottom:0.4rem;}
@@ -889,7 +864,7 @@ main{
   border-radius:0;
   overflow:hidden;
   margin-bottom:0.7rem;
-  border:1px solid rgba(37,90,214,0.12);
+  border:1px solid rgba(155,93,229,0.12);
   background:linear-gradient(135deg,var(--surface2) 0%,var(--bg3) 100%);
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
@@ -899,7 +874,7 @@ main{
 .card-img-wrap .card-img-sym{
   font-family:'Cinzel',serif;
   font-size:1.8rem;
-  color:rgba(37,90,214,0.12);
+  color:rgba(155,93,229,0.12);
   user-select:none;
   line-height:1;
 }
@@ -908,14 +883,14 @@ main{
 .modal-img-wrap{
   width:120px;height:120px;
   border-radius:0;overflow:hidden;flex-shrink:0;
-  border:1px solid rgba(37,90,214,0.2);
+  border:1px solid rgba(155,93,229,0.2);
   background:linear-gradient(135deg,var(--surface2),var(--bg3));
   display:flex;align-items:center;justify-content:center;
 }
 .modal-img-wrap img{width:100%;height:100%;object-fit:cover;}
 .modal-img-wrap .modal-img-sym{
   font-family:'Cinzel',serif;font-size:2rem;
-  color:rgba(37,90,214,0.15);user-select:none;
+  color:rgba(155,93,229,0.15);user-select:none;
 }
 .result-count{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.1em;color:var(--violet-bright);margin-bottom:1rem;text-transform:uppercase;}
 /* ── LAYOUT TOGGLE (grid / list) ── */
@@ -937,7 +912,7 @@ main{
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .card-v .card-v-img img{width:100%;height:100%;object-fit:cover;display:block;}
-.card-v .card-v-sym{font-family:'Cinzel',serif;font-size:1.8rem;color:rgba(37,90,214,0.12);user-select:none;}
+.card-v .card-v-sym{font-family:'Cinzel',serif;font-size:1.8rem;color:rgba(155,93,229,0.12);user-select:none;}
 .card-v .card-v-body{padding:0.6rem 0.75rem 0.7rem;flex:1;display:flex;flex-direction:column;gap:0.15rem;}
 .card-v .card-type{margin-bottom:0.1rem;}
 .card-v .card-name{font-size:0.92rem;}
@@ -952,7 +927,7 @@ main{
   cursor:pointer;transition:all 0.15s;white-space:nowrap;user-select:none;
 }
 .chk-filter-btn:hover,.chk-filter-btn.has-sel{color:var(--text);border-color:var(--violet-dim);}
-.chk-filter-btn.has-sel{background:rgba(37,90,214,0.08);}
+.chk-filter-btn.has-sel{background:rgba(155,93,229,0.08);}
 .chk-filter-btn .chk-arrow{font-size:0.55rem;opacity:0.5;transition:transform 0.15s;}
 .chk-filter-btn.open .chk-arrow{transform:rotate(180deg);}
 .chk-filter-badge{
@@ -963,7 +938,7 @@ main{
 .chk-filter-panel{
   display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:200;
   min-width:200px;max-width:280px;
-  background:var(--bg3);border:1px solid rgba(37,90,214,0.3);
+  background:var(--bg3);border:1px solid rgba(155,93,229,0.3);
   border-radius:0;padding:0.5rem 0;
   box-shadow:0 8px 32px rgba(0,0,0,0.6);
   max-height:260px;overflow-y:auto;
@@ -975,202 +950,11 @@ main{
   font-family:'Raleway',sans-serif;font-size:0.8rem;color:var(--text-dim);
   transition:background 0.12s;
 }
-.chk-filter-panel label:hover{background:rgba(37,90,214,0.08);color:var(--text);}
+.chk-filter-panel label:hover{background:rgba(155,93,229,0.08);color:var(--text);}
 .chk-filter-panel input[type=checkbox]{accent-color:var(--violet);width:13px;height:13px;cursor:pointer;flex-shrink:0;}
 
 .section-title{font-family:'Cinzel',serif;font-size:0.98rem;color:var(--gold-light);letter-spacing:0.12em;margin-bottom:1.5rem;padding-bottom:0.55rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;}
 .stitle-sym{color:var(--violet-bright);opacity:0.7;font-size:0.9rem;}
-
-/* ── FICHA DE PERSONAGEM ── */
-.state-msg-inline{color:var(--text-faint);font-size:0.85rem;padding:2rem 0;text-align:center;}
-
-.ficha-selector{display:flex;flex-direction:column;gap:0.6rem;max-width:680px;margin:0 auto;}
-.ficha-sel-item{
-  display:flex;align-items:center;gap:0.85rem;
-  background:var(--surface);border:1px solid var(--border);
-  padding:0.85rem 1.1rem;cursor:pointer;transition:all 0.15s;
-}
-.ficha-sel-item:hover{border-color:var(--violet-dim);background:var(--surface2);}
-.ficha-sel-avatar{
-  width:38px;height:38px;border-radius:50%;flex-shrink:0;
-  border:1.5px solid var(--gold);object-fit:cover;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel Decorative',serif;color:var(--gold-light);background:var(--surface2);
-}
-.ficha-sel-name{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);}
-.ficha-sel-meta{font-size:0.72rem;color:var(--text-faint);margin-top:0.15rem;}
-.ficha-sel-owner{margin-left:auto;font-size:0.65rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;}
-.ficha-sel-empty{text-align:center;color:var(--text-faint);font-size:0.85rem;padding:2rem 0;}
-.ficha-sel-new-btn{
-  margin:0.5rem auto 0;display:block;
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.07em;text-transform:uppercase;
-  background:var(--violet);color:#fff;border:none;padding:0.7rem 1.4rem;cursor:pointer;transition:background 0.18s;
-}
-.ficha-sel-new-btn:hover{background:var(--violet-bright);}
-
-.ficha-shell{display:flex;gap:1.25rem;align-items:stretch;}
-.ficha-sidebar{width:228px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
-.ficha-main{flex:1;min-width:0;}
-.ficha-shell{flex-wrap:wrap;}
-@media(max-width:1100px){.ficha-chat-panel{width:100%;max-height:420px;}}
-
-.ficha-chat-panel{width:280px;flex-shrink:0;background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
-.fc-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
-.fc-tab{flex:1;text-align:center;padding:0.6rem 0.4rem;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
-.fc-tab:hover{color:var(--text);}
-.fc-tab.active{color:var(--violet-bright);border-bottom-color:var(--violet);}
-.fc-feed{flex:1;overflow-y:auto;padding:0.7rem;display:flex;flex-direction:column;gap:0.55rem;min-height:0;}
-.fc-feed::-webkit-scrollbar{width:6px;}
-.fc-feed::-webkit-scrollbar-thumb{background:var(--border-glow);}
-.fc-empty{color:var(--text-faint);font-size:0.72rem;text-align:center;padding:1rem 0.5rem;}
-.fc-msg{background:var(--bg3);border:1px solid var(--border);padding:0.5rem 0.6rem;font-size:0.78rem;}
-.fc-msg-head{display:flex;justify-content:space-between;gap:0.5rem;color:var(--text-faint);font-size:0.6rem;margin-bottom:0.3rem;}
-.fc-msg-autor{color:var(--violet-bright);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.fc-msg-texto{color:var(--text-dim);word-break:break-word;}
-.fc-roll{text-align:center;}
-.fc-roll-die{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:700;color:var(--text);margin:0.15rem 0;}
-.fc-roll-die.crit{color:var(--gold-light);text-shadow:0 0 12px var(--gold-glow);}
-.fc-roll-die.fail{color:var(--blood);}
-.fc-roll-peri{font-family:'Cinzel',serif;font-size:0.76rem;color:var(--text);}
-.fc-roll-sub{font-size:0.66rem;color:var(--text-faint);margin-top:0.15rem;}
-.fc-roll-tag{display:inline-block;margin-top:0.35rem;font-size:0.58rem;letter-spacing:0.05em;text-transform:uppercase;padding:0.15rem 0.4rem;background:rgba(192,57,43,0.15);color:var(--blood);border:1px solid rgba(192,57,43,0.4);}
-.fc-roll-tag.crit{background:rgba(232,197,106,0.15);color:var(--gold-light);border-color:rgba(232,197,106,0.4);}
-.fc-input-row{display:flex;border-top:1px solid var(--border);padding:0.5rem;gap:0.4rem;flex-shrink:0;}
-.fc-input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:0.4rem 0.5rem;font-size:0.78rem;outline:none;font-family:'Raleway',sans-serif;}
-.fc-input:focus{border-color:var(--violet-dim);}
-.fc-send-btn{background:var(--violet);border:none;color:#fff;padding:0 0.8rem;cursor:pointer;font-size:0.85rem;flex-shrink:0;}
-.fc-send-btn:hover{background:var(--violet-bright);}
-
-.fs-portrait{padding:1.1rem 1rem 0.9rem;text-align:center;border-bottom:1px solid var(--border);}
-.fs-avatar-wrap{position:relative;width:84px;height:84px;margin:0 auto 0.65rem;}
-.ficha-header-avatar{
-  width:84px;height:84px;border-radius:50%;flex-shrink:0;
-  border:2px solid var(--gold);box-shadow:0 0 10px var(--gold-glow);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;color:var(--gold-light);background:var(--surface2);
-}
-.fs-lvl-badge{
-  position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);
-  width:26px;height:26px;border-radius:50%;background:var(--bg2);
-  border:1.5px solid var(--gold);color:var(--gold-light);
-  font-family:'Cinzel',serif;font-size:0.78rem;text-align:center;padding:0;outline:none;
-}
-.fs-lvl-badge::-webkit-inner-spin-button,.fs-lvl-badge::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
-.fs-nome-input{
-  width:100%;text-align:center;font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);
-  background:transparent;border:none;border-bottom:1px solid transparent;padding:0.2rem 0;outline:none;transition:border-color 0.15s;
-}
-.fs-nome-input:focus{border-bottom-color:var(--violet-dim);}
-.fs-escala{font-size:0.7rem;color:var(--gold-light);letter-spacing:0.05em;margin-top:0.25rem;cursor:pointer;text-decoration:underline dotted rgba(232,197,106,0.4);}
-.fs-escala-info{font-size:0.72rem;color:var(--text-dim);line-height:1.55;text-align:left;padding-top:0.5rem;}
-.fs-tags{display:flex;flex-wrap:wrap;gap:0.3rem;justify-content:center;margin-top:0.65rem;}
-
-.fs-stats{padding:0.9rem 1rem;display:flex;flex-direction:column;gap:0.65rem;}
-.fs-row{display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;}
-.fs-label{color:var(--text);font-size:0.66rem;letter-spacing:0.04em;text-transform:uppercase;}
-.fs-editval{font-family:'Cinzel',serif;color:var(--text);cursor:pointer;padding:0.05rem 0.3rem;border:1px solid transparent;display:inline-block;}
-.fs-editval:hover{border-color:var(--violet-dim);}
-.fs-editval input{width:38px;text-align:center;background:var(--bg2);border:1px solid var(--violet);color:var(--text);font-family:'Cinzel',serif;font-size:0.78rem;padding:0.05rem 0;outline:none;}
-.fs-editval input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-.fs-bar-block{display:flex;flex-direction:column;gap:0.3rem;}
-.fs-bar-head{display:flex;justify-content:space-between;font-size:0.78rem;}
-.fs-bar{height:8px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;position:relative;}
-.fs-bar-fill{height:100%;width:0%;background:var(--blood);}
-.fs-bar-pm .fs-bar-fill{background:var(--cyan);}
-.fs-box2{display:flex;gap:0.5rem;}
-.fs-box{flex:1;background:var(--bg3);border:1px solid var(--border);text-align:center;padding:0.5rem 0.3rem;}
-.fs-box-val{font-size:1.05rem;display:block;}
-.fs-resist{display:flex;flex-direction:column;gap:0.5rem;margin-top:0.15rem;border-top:1px solid var(--border);padding-top:0.65rem;}
-.fs-resist-box{background:var(--bg3);border:1px solid var(--border);padding:0.5rem 0.5rem 0.45rem;position:relative;text-align:center;}
-.fs-resist-pencil{position:absolute;top:0.3rem;right:0.35rem;background:transparent;border:none;color:var(--text-faint);cursor:pointer;font-size:0.7rem;padding:0.1rem;line-height:1;}
-.fs-resist-pencil:hover{color:var(--violet-bright);}
-.fs-resist-name{font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text);}
-.fs-resist-sub{font-size:0.64rem;color:var(--text-faint);margin-top:0.1rem;letter-spacing:0.04em;}
-.fs-resist-total{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold-light);margin-top:0.2rem;}
-.fs-resist-edit{display:flex;gap:0.3rem;justify-content:center;margin-top:0.3rem;}
-.fs-resist-edit select,.fs-resist-edit input{font-size:0.64rem;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);padding:0.15rem;width:44px;}
-
-.fs-foot{padding:0.8rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:auto;}
-.ficha-save-status{font-size:0.65rem;color:var(--green);opacity:0;transition:opacity 0.3s;white-space:nowrap;}
-.ficha-save-status.show{opacity:1;}
-.ficha-btn-voltar{
-  font-family:'Raleway',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
-  background:transparent;border:1px solid var(--border);color:var(--text-faint);
-  padding:0.35rem 0.7rem;cursor:pointer;transition:all 0.15s;white-space:nowrap;
-}
-.ficha-btn-voltar:hover{border-color:var(--violet-dim);color:var(--text);}
-
-.ficha-tabs{display:flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);margin-bottom:1.25rem;}
-.ficha-tab{
-  padding:0.7rem 1rem;font-family:'Raleway',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;
-  text-transform:uppercase;color:var(--text-faint);cursor:pointer;border-bottom:2px solid transparent;
-  transition:all 0.15s;
-}
-.ficha-tab:hover{color:var(--text);background:rgba(140,100,220,0.05);}
-.ficha-tab.active{color:var(--violet-bright);border-bottom-color:var(--violet);background:rgba(90,140,255,0.06);text-shadow:0 0 10px rgba(90,140,255,0.35);}
-
-.ficha-tab-content{display:none;}
-.ficha-tab-content.active{display:block;animation:fadeIn 0.18s ease;}
-
-/* ── VISÃO GERAL (ficha) ── */
-.fg-grid{display:flex;flex-direction:column;gap:1.25rem;}
-.fg-block{background:var(--surface);border:1px solid var(--border);padding:1rem 1.1rem;}
-.fg-block-title{font-family:'Cinzel',serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--violet-bright);margin-bottom:0.85rem;display:flex;align-items:center;justify-content:space-between;text-shadow:0 0 10px rgba(90,140,255,0.3);}
-.fg-attrs{display:grid;grid-template-columns:repeat(6,1fr);gap:0.6rem;}
-@media(max-width:680px){.fg-attrs{grid-template-columns:repeat(3,1fr);}}
-.fg-attr-card{background:var(--bg3);border:1px solid var(--border);padding:0.65rem 0.4rem;text-align:center;}
-.fg-attr-label{font-family:'Cinzel',serif;font-size:0.76rem;letter-spacing:0.06em;color:var(--text);}
-.fg-attr-label span{display:block;font-family:'Raleway',sans-serif;font-size:0.56rem;color:var(--text-faint);font-weight:400;letter-spacing:0.02em;}
-.fg-attr-val{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--text);margin-top:0.4rem;padding:0.2rem 0;cursor:pointer;border:1px solid transparent;}
-.fg-attr-val:hover{border-color:var(--violet-dim);}
-.fg-attr-val input{width:100%;text-align:center;background:var(--bg2);border:1px solid var(--violet);color:var(--text);font-family:'Cinzel',serif;font-size:0.9rem;padding:0.15rem 0;outline:none;}
-.fg-attr-val input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-
-.fg-peri-scroll{max-height:560px;overflow-y:auto;padding-right:0.3rem;display:grid;grid-template-columns:1fr 1fr;gap:0 1.2rem;align-content:start;}
-@media(max-width:640px){.fg-peri-scroll{grid-template-columns:1fr;}}
-.fg-peri-scroll::-webkit-scrollbar{width:6px;}
-.fg-peri-scroll::-webkit-scrollbar-thumb{background:var(--border-glow);}
-.fg-peri-row{display:grid;grid-template-columns:1fr 56px 50px 40px;align-items:center;gap:0.4rem;padding:0.32rem 0.1rem;border-bottom:1px solid rgba(140,100,220,0.06);cursor:pointer;transition:background 0.12s;}
-.fg-peri-row:hover{background:rgba(140,100,220,0.07);}
-.fg-peri-nome{font-size:0.8rem;color:var(--text-dim);display:flex;align-items:center;gap:0.25rem;overflow:hidden;}
-.fg-peri-nome span.txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.fg-peri-oficio{background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text-faint);font-size:0.6rem;padding:0.1rem;max-width:72px;cursor:auto;}
-.fg-peri-sel{background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text-faint);font-size:0.66rem;padding:0.22rem;outline:none;cursor:auto;}
-.fg-peri-sel option{background:#0c0d16;}
-.fg-peri-bonus{width:100%;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);text-align:center;font-size:0.78rem;padding:0.22rem;outline:none;-moz-appearance:textfield;cursor:text;}
-.fg-peri-bonus::-webkit-outer-spin-button,.fg-peri-bonus::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-.fg-peri-total{font-family:'Cinzel',serif;font-weight:700;font-size:0.88rem;color:var(--gold-light);text-align:center;}
-
-.fg-vd-item{border-bottom:1px solid rgba(140,100,220,0.07);}
-.fg-vd-item:last-child{border-bottom:none;}
-.fg-vd-head{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.1rem;cursor:pointer;font-size:0.82rem;color:var(--text-dim);transition:color 0.15s;}
-.fg-vd-head:hover{color:var(--text);}
-.fg-vd-remove{background:transparent;border:none;color:var(--text-faint);cursor:pointer;font-size:0.95rem;line-height:1;padding:0 0.3rem;}
-.fg-vd-remove:hover{color:var(--blood);}
-.fg-vd-edit{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 0.8rem;padding:0.3rem 0.1rem 0.9rem;}
-.fg-vd-edit label{grid-column:1/-1;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.58rem;letter-spacing:0.12em;color:var(--violet-bright);opacity:0.75;text-transform:uppercase;margin-top:0.3rem;}
-.fg-vd-edit label:first-child{margin-top:0;}
-.fg-vd-edit input,.fg-vd-edit textarea{grid-column:1/-1;background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);font-family:'Raleway',sans-serif;font-size:0.8rem;padding:0.4rem 0.55rem;outline:none;resize:vertical;}
-.fg-vd-edit textarea{min-height:60px;}
-.fg-vd-empty{color:var(--text);font-size:0.78rem;padding:0.6rem 0;text-align:center;}
-.fg-add-btn{background:var(--violet);color:#fff;border:none;width:22px;height:22px;font-size:0.85rem;cursor:pointer;line-height:1;}
-.fg-add-btn:hover{background:var(--violet-bright);}
-
-.fg-picker-overlay{position:fixed;inset:0;background:rgba(4,4,10,0.78);display:none;align-items:center;justify-content:center;z-index:300;padding:1.5rem;}
-.fg-picker-overlay.open{display:flex;}
-.fg-picker-box{background:var(--bg2);border:1px solid var(--border-glow);max-width:480px;width:100%;max-height:80vh;display:flex;flex-direction:column;}
-.fg-picker-box-head{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.fg-picker-box-head h3{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--violet-bright);}
-.fg-picker-close{background:transparent;border:none;color:var(--text-faint);font-size:1.2rem;cursor:pointer;}
-.fg-picker-search{margin:0.9rem 1.2rem 0.5rem;background:rgba(37,90,214,0.06);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.7rem;font-family:'Raleway',sans-serif;font-size:0.85rem;outline:none;}
-.fg-picker-list{overflow-y:auto;padding:0.3rem 1.2rem 0.5rem;flex:1;}
-.fg-picker-item{display:flex;justify-content:space-between;gap:0.6rem;padding:0.5rem 0.3rem;border-bottom:1px solid rgba(140,100,220,0.07);cursor:pointer;font-size:0.85rem;color:var(--text-dim);}
-.fg-picker-item:hover{color:var(--text);background:rgba(37,90,214,0.06);}
-.fg-picker-custo{color:var(--gold-light);font-size:0.72rem;white-space:nowrap;}
-.fg-picker-manual{margin:0.4rem 1.2rem 1rem;text-align:center;background:transparent;border:1px dashed var(--border);color:var(--text-faint);padding:0.5rem;cursor:pointer;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;width:calc(100% - 2.4rem);}
-.fg-picker-manual:hover{border-color:var(--violet-dim);color:var(--text);}
-
-.fg-avatar-clickable{cursor:pointer;background-size:cover;background-position:center;}
 
 /* ── HOME ── */
 .home-wrap{max-width:900px;margin:0 auto;padding:1rem 0;}
@@ -1191,7 +975,7 @@ main{
   border:1px solid var(--border);border-radius:0;
   background:var(--surface);transition:all 0.2s;position:relative;overflow:hidden;
 }
-.stat-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(37,90,214,0.04),transparent);pointer-events:none;}
+.stat-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(155,93,229,0.04),transparent);pointer-events:none;}
 .stat-box:hover{border-color:var(--violet-dim);background:var(--surface2);}
 .stat-sym{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--violet-bright);display:block;margin-bottom:0.4rem;filter:drop-shadow(0 0 6px var(--violet));}
 .stat-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:700;color:var(--gold-light);display:block;line-height:1;text-shadow:0 0 20px var(--gold-glow);}
@@ -1200,17 +984,17 @@ main{
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:rgba(37,90,214,0.3);border-radius:0;}
-::-webkit-scrollbar-thumb:hover{background:rgba(37,90,214,0.5);}
+::-webkit-scrollbar-thumb{background:rgba(155,93,229,0.3);border-radius:0;}
+::-webkit-scrollbar-thumb:hover{background:rgba(155,93,229,0.5);}
 
 /* ── CONTADOR ── */
 .cnt-wrap{max-width:900px;margin:0 auto;}
 .cnt-lbl{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--violet-bright);text-transform:uppercase;display:block;margin-bottom:0.28rem;}
-.cnt-input{background:rgba(37,90,214,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;width:110px;}
+.cnt-input{background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;width:110px;}
 .cnt-input:focus{border-color:var(--violet);}
-.cnt-select{background:rgba(37,90,214,0.05);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:0;outline:none;width:170px;}
+.cnt-select{background:rgba(155,93,229,0.05);border:1px solid var(--border);color:var(--text);padding:0.38rem 0.65rem;font-family:'Raleway',sans-serif;font-size:0.85rem;border-radius:0;outline:none;width:170px;}
 .cnt-select option{background:#0c0d16;}
-.cnt-rb-input{width:52px;text-align:center;background:rgba(37,90,214,0.06);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;}
+.cnt-rb-input{width:52px;text-align:center;background:rgba(155,93,229,0.06);border:1px solid var(--border);color:var(--text);padding:0.3rem;font-family:'Raleway',sans-serif;font-size:0.88rem;border-radius:0;outline:none;}
 .cnt-rb-input:focus{border-color:var(--violet);}
 .cnt-btn{font-family:'Raleway',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.1em;background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:0.52rem 1.1rem;border-radius:0;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
 .cnt-btn:hover{border-color:var(--violet);color:var(--text);}
@@ -1222,9 +1006,9 @@ main{
 .cnt-table td{padding:0.6rem 0.5rem;border-bottom:1px solid rgba(140,100,220,0.07);text-align:center;vertical-align:middle;}
 .cnt-table td:first-child{text-align:left;}
 .attr-btn{width:34px;height:34px;background:var(--surface);border:1px solid var(--border);color:var(--violet-bright);font-size:1.3rem;cursor:pointer;border-radius:0;font-weight:bold;vertical-align:middle;transition:all 0.15s;}
-.attr-btn:hover{background:rgba(37,90,214,0.15);border-color:var(--violet);}
+.attr-btn:hover{background:rgba(155,93,229,0.15);border-color:var(--violet);}
 .attr-btn:disabled{opacity:0.15;cursor:not-allowed;}
-.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(37,90,214,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
+.attr-val{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:600;color:var(--text);display:inline-block;min-width:2.2rem;text-align:center;background:rgba(155,93,229,0.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);height:30px;line-height:30px;}
 
 /* ── DEBUG BANNERS ── */
 .debug-banner{display:none;margin-bottom:1rem;padding:0.7rem 1rem;background:rgba(120,30,30,0.25);border:1px solid rgba(120,30,30,0.5);border-radius:0;font-size:0.83rem;color:var(--text-dim);}
@@ -1245,7 +1029,7 @@ main{
 .vd-checkbox-label:hover{color:var(--text);border-color:var(--violet-dim);}
 .vd-checkbox-label input{display:none;}
 .vd-checkbox-label.checked{
-  background:rgba(37,90,214,0.15);
+  background:rgba(155,93,229,0.15);
   border-color:var(--violet-bright);color:var(--text);
 }
 .vd-checkbox-label.checked-neg{
@@ -1261,7 +1045,7 @@ main{
   border-radius:0;padding:0.3rem 0.9rem;
   transition:all 0.15s;
 }
-.vd-checkbox-all.active{background:rgba(37,90,214,0.2);border-color:var(--violet-bright);color:var(--text);}
+.vd-checkbox-all.active{background:rgba(155,93,229,0.2);border-color:var(--violet-bright);color:var(--text);}
 .vd-cats{
   display:flex;flex-wrap:wrap;gap:0;
   margin-bottom:0;
@@ -1282,7 +1066,7 @@ main{
   cursor:pointer;transition:all 0.15s;white-space:nowrap;
 }
 .vd-cat-btn:last-child{border-right:none;}
-.vd-cat-btn:hover{color:var(--text);background:rgba(37,90,214,0.08);}
+.vd-cat-btn:hover{color:var(--text);background:rgba(155,93,229,0.08);}
 .vd-cat-btn.active{
   color:#fff;background:var(--violet);
   border-right-color:var(--violet);
@@ -1305,7 +1089,7 @@ main{
 }
 
 /* Card accent por categoria de vantagem */
-.card-vd-versateis {--card-accent:#c084fc;--card-accent-faint:rgba(90,140,255,0.1);}
+.card-vd-versateis {--card-accent:#c084fc;--card-accent-faint:rgba(192,132,252,0.1);}
 .card-vd-combate   {--card-accent:var(--cat-combate);--card-accent-faint:var(--cat-combate-dim);}
 .card-vd-magicas   {--card-accent:var(--cat-conjurador);--card-accent-faint:var(--cat-conjurador-dim);}
 .card-vd-ataques   {--card-accent:var(--cyan);--card-accent-faint:rgba(61,141,253,0.08);}
@@ -1319,10 +1103,10 @@ main{
   width:100%;
   border-radius:0;
   overflow:hidden;
-  border:1px solid rgba(37,90,214,0.25);
+  border:1px solid rgba(155,93,229,0.25);
   position:relative;
   background:var(--surface);
-  box-shadow:0 8px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(37,90,214,0.1);
+  box-shadow:0 8px 40px rgba(0,0,0,0.6),0 0 0 1px rgba(155,93,229,0.1);
 }
 .vel-map-inner{position:relative;width:100%;}
 .vel-map-img{
@@ -1371,7 +1155,7 @@ main{
 }
 .vel-cont-banner-sym{
   font-family:'Cinzel',serif;font-size:2rem;
-  color:rgba(37,90,214,0.15);user-select:none;
+  color:rgba(155,93,229,0.15);user-select:none;
 }
 .vel-cont-card{
   background:var(--surface);
@@ -1392,7 +1176,7 @@ main{
   border-color:var(--vel-accent,var(--violet-dim));
   transform:translateY(-3px);
   background:var(--surface2);
-  box-shadow:0 8px 30px rgba(0,0,0,0.5),0 0 0 1px var(--vel-accent-faint,rgba(37,90,214,0.12));
+  box-shadow:0 8px 30px rgba(0,0,0,0.5),0 0 0 1px var(--vel-accent-faint,rgba(155,93,229,0.12));
 }
 .vel-cont-card:hover::before{opacity:1;}
 .vel-cont-body{padding:1.2rem 1.2rem 1rem;}
@@ -1410,7 +1194,7 @@ main{
   padding:0.2rem 0.55rem;border-radius:0;
   border:1px solid var(--vel-accent,var(--violet));
   color:var(--vel-accent,var(--violet));
-  background:var(--vel-accent-faint,rgba(37,90,214,0.1));
+  background:var(--vel-accent-faint,rgba(155,93,229,0.1));
   white-space:nowrap;flex-shrink:0;
 }
 .vel-cont-capital{
@@ -1472,8 +1256,8 @@ main{
 .vel-det-cenario{font-size:0.85rem;color:var(--violet-bright);opacity:0.75;font-style:italic;margin-bottom:1rem;line-height:1.65;}
 .vel-det-destaques{
   padding:0.85rem 1.1rem;
-  background:rgba(37,90,214,0.05);
-  border:1px solid rgba(37,90,214,0.15);
+  background:rgba(155,93,229,0.05);
+  border:1px solid rgba(155,93,229,0.15);
   border-left:3px solid var(--violet);
   border-radius:0;
   font-size:0.85rem;color:var(--text-dim);line-height:1.7;
@@ -1540,7 +1324,7 @@ main{
   border-radius:0;
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;color:rgba(37,90,214,0.12);
+  font-size:1.5rem;color:rgba(155,93,229,0.12);
   font-family:'Cinzel',serif;
 }
 .vel-regiao-card-body{padding:1rem 1.1rem 0.9rem;}
@@ -1562,11 +1346,11 @@ main{
   background:linear-gradient(135deg,var(--surface) 0%,var(--bg3) 50%,var(--surface2) 100%);
   border-radius:0;
   display:flex;align-items:center;justify-content:center;
-  border:1px dashed rgba(37,90,214,0.2);
+  border:1px dashed rgba(155,93,229,0.2);
   margin-bottom:1.1rem;
   font-family:'Cinzel',serif;
   font-size:0.7rem;letter-spacing:0.12em;
-  color:rgba(37,90,214,0.25);
+  color:rgba(155,93,229,0.25);
   text-transform:uppercase;
 }
 
@@ -1648,130 +1432,6 @@ main{
   visibility:hidden;
   pointer-events:none;
 }
-
-/* ── TELA DE SELEÇÃO DE MESA ── */
-#mesa-screen{
-  position:fixed;inset:0;
-  z-index:99998;
-  background:var(--bg);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:2rem;
-  opacity:0;
-  transition:opacity 0.4s ease;
-}
-#mesa-screen.visible{display:flex;}
-#mesa-screen.show{opacity:1;}
-.mesa-inner{
-  width:100%;max-width:440px;
-  text-align:center;
-}
-.mesa-title{
-  font-family:'Cinzel Decorative',serif;
-  font-size:1.8rem;font-weight:700;
-  color:var(--gold-light);
-  text-shadow:0 0 20px var(--gold-glow);
-  margin-bottom:0.5rem;
-}
-.mesa-sub{
-  font-family:'Raleway',sans-serif;
-  font-size:0.85rem;color:var(--text-dim);
-  margin-bottom:2rem;
-}
-.mesa-list{
-  display:flex;flex-direction:column;gap:0.5rem;
-  margin-bottom:1.5rem;
-  max-height:240px;overflow-y:auto;
-  text-align:left;
-}
-.mesa-empty{
-  font-family:'Raleway',sans-serif;font-size:0.82rem;
-  color:var(--text-faint);text-align:center;
-  padding:1rem 0;
-}
-.mesa-item{
-  display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
-  padding:0.75rem 1rem;
-  background:var(--surface);
-  border:1px solid var(--border);
-  cursor:pointer;
-  transition:all 0.15s;
-}
-.mesa-item:hover{border-color:var(--violet-dim);background:var(--surface2);}
-.mesa-item-name{
-  font-family:'Cinzel',serif;font-size:0.88rem;color:var(--text);
-}
-.mesa-item-role{
-  font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;
-  letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);
-  opacity:0.8;flex-shrink:0;
-}
-.mesa-divider{
-  font-family:'Raleway',sans-serif;font-size:0.65rem;
-  letter-spacing:0.15em;text-transform:uppercase;
-  color:var(--text-faint);
-  margin:1.25rem 0;
-  position:relative;
-}
-.mesa-divider::before,.mesa-divider::after{
-  content:'';position:absolute;top:50%;width:38%;height:1px;
-  background:var(--border);
-}
-.mesa-divider::before{left:0;}
-.mesa-divider::after{right:0;}
-.mesa-form{
-  display:flex;gap:0.6rem;margin-bottom:0.75rem;
-}
-.mesa-input{
-  flex:1;min-width:0;
-  background:var(--surface);
-  border:1px solid var(--border);
-  color:var(--text);
-  padding:0.6rem 0.8rem;
-  font-family:'Raleway',sans-serif;font-size:0.85rem;
-  outline:none;
-}
-.mesa-input:focus{border-color:var(--violet);}
-.mesa-input::placeholder{color:var(--text-faint);}
-.mesa-input-code{text-transform:uppercase;letter-spacing:0.1em;}
-.mesa-btn{
-  font-family:'Cinzel',serif;font-weight:700;font-size:0.7rem;
-  letter-spacing:0.06em;text-transform:uppercase;
-  background:var(--violet);color:#fff;border:none;
-  padding:0.6rem 1.1rem;cursor:pointer;white-space:nowrap;
-  transition:all 0.2s;
-}
-.mesa-btn:hover{background:var(--violet-bright);}
-.mesa-btn-ghost{
-  background:transparent;border:1px solid var(--border);color:var(--text-dim);
-}
-.mesa-btn-ghost:hover{border-color:var(--violet);color:var(--text);}
-.mesa-msg{
-  font-family:'Raleway',sans-serif;font-size:0.78rem;
-  margin-top:0.75rem;min-height:1.2em;
-}
-.mesa-msg.err{color:var(--blood);}
-.mesa-msg.ok{color:var(--green);}
-.mesa-pending-wrap{margin-bottom:0.5rem;}
-.mesa-pending-list{display:flex;flex-direction:column;gap:0.5rem;text-align:left;}
-.mesa-pending-item{
-  display:flex;align-items:center;justify-content:space-between;gap:0.6rem;
-  padding:0.65rem 0.9rem;
-  background:rgba(207,159,63,0.06);
-  border:1px solid rgba(207,159,63,0.3);
-}
-.mesa-pending-info{min-width:0;}
-.mesa-pending-name{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--text);display:block;}
-.mesa-pending-mesa{font-family:'Raleway',sans-serif;font-size:0.65rem;color:var(--text-faint);display:block;margin-top:0.1rem;}
-.mesa-pending-actions{display:flex;gap:0.4rem;flex-shrink:0;}
-.mesa-pending-btn{
-  font-family:'Raleway',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.04em;text-transform:uppercase;
-  border:none;padding:0.35rem 0.6rem;cursor:pointer;
-}
-.mesa-pending-ok{background:var(--green);color:#0a1a10;}
-.mesa-pending-no{background:transparent;border:1px solid var(--border);color:var(--text-faint);}
-.mesa-pending-no:hover{border-color:var(--blood);color:#fff;background:var(--blood);}
 #splash-screen::before{
   content:'';
   position:fixed;inset:0;
@@ -1785,7 +1445,7 @@ main{
   content:'';
   position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(37,90,214,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 60% at 5% 50%,rgba(155,93,229,0.08) 0%,transparent 60%),
     radial-gradient(ellipse 40% 50% at 95% 10%,rgba(61,141,253,0.06) 0%,transparent 55%),
     radial-gradient(ellipse 50% 40% at 50% 100%,rgba(10,6,20,0.55) 0%,transparent 60%);
   pointer-events:none;
@@ -1804,13 +1464,13 @@ main{
   font-family:'Cinzel',serif;
   font-size:3rem;
   color:var(--violet);
-  filter:drop-shadow(0 0 30px var(--violet)) drop-shadow(0 0 60px rgba(37,90,214,0.4));
+  filter:drop-shadow(0 0 30px var(--violet)) drop-shadow(0 0 60px rgba(155,93,229,0.4));
   margin-bottom:1.25rem;
   animation:splashPulse 2.5s ease-in-out infinite;
 }
 @keyframes splashPulse{
-  0%,100%{filter:drop-shadow(0 0 20px var(--violet)) drop-shadow(0 0 40px rgba(37,90,214,0.3));}
-  50%{filter:drop-shadow(0 0 40px var(--violet)) drop-shadow(0 0 80px rgba(37,90,214,0.6));}
+  0%,100%{filter:drop-shadow(0 0 20px var(--violet)) drop-shadow(0 0 40px rgba(155,93,229,0.3));}
+  50%{filter:drop-shadow(0 0 40px var(--violet)) drop-shadow(0 0 80px rgba(155,93,229,0.6));}
 }
 .splash-title{
   font-family:'Cinzel',serif;
@@ -1837,7 +1497,7 @@ main{
 }
 .splash-progress-bar-bg{
   height:3px;
-  background:rgba(37,90,214,0.12);
+  background:rgba(155,93,229,0.12);
   border-radius:0;
   overflow:hidden;
   margin-bottom:1rem;
@@ -1848,7 +1508,7 @@ main{
   background:linear-gradient(90deg,var(--violet),var(--violet-bright),var(--cyan));
   border-radius:0;
   transition:width 0.3s ease;
-  box-shadow:0 0 10px rgba(37,90,214,0.6);
+  box-shadow:0 0 10px rgba(155,93,229,0.6);
 }
 .splash-status-text{
   font-family:'Raleway',sans-serif;
@@ -1870,26 +1530,26 @@ main{
   font-size:3.2rem;
   line-height:1;
   animation:hourglassSpin 2.4s ease-in-out infinite;
-  filter:drop-shadow(0 0 18px var(--violet)) drop-shadow(0 0 36px rgba(37,90,214,0.5));
+  filter:drop-shadow(0 0 18px var(--violet)) drop-shadow(0 0 36px rgba(155,93,229,0.5));
   display:block;
 }
 @keyframes hourglassSpin{
-  0%   {transform:rotate(0deg);   filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(37,90,214,0.4));}
-  45%  {transform:rotate(0deg);   filter:drop-shadow(0 0 28px var(--violet)) drop-shadow(0 0 56px rgba(37,90,214,0.7));}
+  0%   {transform:rotate(0deg);   filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
+  45%  {transform:rotate(0deg);   filter:drop-shadow(0 0 28px var(--violet)) drop-shadow(0 0 56px rgba(155,93,229,0.7));}
   50%  {transform:rotate(180deg); filter:drop-shadow(0 0 28px var(--gold))   drop-shadow(0 0 56px rgba(207,159,63,0.6));}
   95%  {transform:rotate(180deg); filter:drop-shadow(0 0 14px var(--gold))   drop-shadow(0 0 30px rgba(207,159,63,0.35));}
-  100% {transform:rotate(360deg); filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(37,90,214,0.4));}
+  100% {transform:rotate(360deg); filter:drop-shadow(0 0 14px var(--violet)) drop-shadow(0 0 30px rgba(155,93,229,0.4));}
 }
 .splash-hourglass-ring{
   position:absolute;inset:0;
   border-radius:50%;
-  border:1px solid rgba(37,90,214,0.2);
+  border:1px solid rgba(155,93,229,0.2);
   animation:ringPulse 2.4s ease-in-out infinite;
 }
 .splash-hourglass-ring2{
   position:absolute;inset:-8px;
   border-radius:50%;
-  border:1px solid rgba(37,90,214,0.08);
+  border:1px solid rgba(155,93,229,0.08);
   animation:ringPulse 2.4s ease-in-out infinite 0.4s;
 }
 @keyframes ringPulse{
@@ -1909,7 +1569,7 @@ main{
   margin-bottom:2rem;
   min-height:1.4em;
   transition:opacity 0.4s ease;
-  text-shadow:0 0 12px rgba(90,140,255,0.3);
+  text-shadow:0 0 12px rgba(192,132,252,0.3);
 }
 .splash-theme-msg.fade{opacity:0;}
 
@@ -1935,8 +1595,8 @@ main{
 }
 .splash-name-input{
   width:100%;
-  background:rgba(37,90,214,0.07);
-  border:1px solid rgba(37,90,214,0.3);
+  background:rgba(155,93,229,0.07);
+  border:1px solid rgba(155,93,229,0.3);
   border-radius:0;
   color:var(--text);
   padding:0.65rem 1rem;
@@ -1949,7 +1609,7 @@ main{
 }
 .splash-name-input:focus{
   border-color:var(--violet);
-  box-shadow:0 0 18px rgba(37,90,214,0.25);
+  box-shadow:0 0 18px rgba(155,93,229,0.25);
 }
 .splash-name-input::placeholder{
   color:var(--text-faint);
@@ -1980,17 +1640,17 @@ main{
   letter-spacing:0.22em;
   text-transform:uppercase;
   color:#fff;
-  background:linear-gradient(160deg,rgba(35,75,190,0.95) 0%,rgba(20,45,140,0.98) 100%);
-  border:1px solid rgba(90,140,255,0.45);
+  background:linear-gradient(160deg,rgba(100,55,180,0.95) 0%,rgba(75,30,140,0.98) 100%);
+  border:1px solid rgba(192,132,252,0.45);
   padding:0.75rem 2.8rem;
   width:100%;
   border-radius:0;
   cursor:pointer;
   position:relative;
   box-shadow:
-    0 0 18px rgba(37,90,214,0.35),
+    0 0 18px rgba(155,93,229,0.35),
     0 4px 24px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(90,140,255,0.15);
+    inset 0 1px 0 rgba(192,132,252,0.15);
   transition:all 0.25s ease;
   animation:btnAppear 0.5s ease forwards;
   overflow:hidden;
@@ -1998,18 +1658,18 @@ main{
 #splash-enter-btn::before{
   content:'';
   position:absolute;inset:0;
-  background:linear-gradient(160deg,rgba(90,140,255,0.12) 0%,transparent 60%);
+  background:linear-gradient(160deg,rgba(192,132,252,0.12) 0%,transparent 60%);
   opacity:1;
   transition:opacity 0.25s;
 }
 #splash-enter-btn:hover{
-  background:linear-gradient(160deg,rgba(55,100,230,0.98) 0%,rgba(30,65,170,1) 100%);
-  border-color:rgba(90,140,255,0.75);
+  background:linear-gradient(160deg,rgba(130,75,220,0.98) 0%,rgba(100,45,180,1) 100%);
+  border-color:rgba(192,132,252,0.75);
   box-shadow:
-    0 0 35px rgba(37,90,214,0.55),
-    0 0 70px rgba(37,90,214,0.2),
+    0 0 35px rgba(155,93,229,0.55),
+    0 0 70px rgba(155,93,229,0.2),
     0 6px 30px rgba(0,0,0,0.7),
-    inset 0 1px 0 rgba(90,140,255,0.25);
+    inset 0 1px 0 rgba(192,132,252,0.25);
   transform:translateY(-2px);
   text-shadow:0 0 10px rgba(255,255,255,0.5);
 }
@@ -2076,7 +1736,7 @@ main{
   line-height:1.7;
   text-align:center;
   max-width:400px;
-  text-shadow:0 0 20px rgba(37,90,214,0.2);
+  text-shadow:0 0 20px rgba(155,93,229,0.2);
 }
 .greet-sigil{
   font-size:0.65rem;
@@ -2116,7 +1776,7 @@ main{
 }
 .vel-cont-map-wrap:hover{
   border-color:var(--vel-det-accent,var(--violet-dim));
-  box-shadow:0 6px 32px rgba(0,0,0,0.65),0 0 0 1px var(--vel-det-accent,rgba(37,90,214,0.2));
+  box-shadow:0 6px 32px rgba(0,0,0,0.65),0 0 0 1px var(--vel-det-accent,rgba(155,93,229,0.2));
 }
 .vel-cont-map-img{
   width:100%;
@@ -2155,7 +1815,7 @@ main{
 <!-- SPLASH SCREEN DE LOADING -->
 <div id="splash-screen">
   <div class="splash-inner">
-    <div class="splash-title">Velkarion</div>
+    <div class="splash-title">Codex StoryCraft</div>
     <div class="splash-sub">Sistema RPG de Mesa</div>
 
     <div class="splash-hourglass-wrap">
@@ -2174,8 +1834,17 @@ main{
     </div>
 
     <div class="splash-name-wrap" id="splash-name-wrap">
-      <div class="splash-name-label" id="splash-name-label">Identifique-se para continuar</div>
-      <button id="splash-enter-btn" onclick="fbSignIn()">Entrar com Google</button>
+      <div class="splash-name-label" id="splash-name-label">Quem se aventura hoje?</div>
+      <input
+        class="splash-name-input"
+        id="splash-name-input"
+        type="text"
+        maxlength="40"
+        placeholder="Digite seu nome..."
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter')entrarNoCodex()"
+      />
+      <button id="splash-enter-btn" onclick="entrarNoCodex()">Entrar no Codex</button>
       <div class="splash-enter-note" id="splash-enter-note">Todos os dados foram carregados com sucesso</div>
     </div>
 
@@ -2190,36 +1859,6 @@ main{
   </div>
 </div>
 
-<!-- TELA DE SELEÇÃO DE MESA -->
-<div id="mesa-screen">
-  <div class="mesa-inner">
-    <div class="mesa-title">Suas Mesas</div>
-    <div class="mesa-sub">Escolha uma campanha pra entrar, ou crie uma nova</div>
-
-    <div class="mesa-list" id="mesa-list">
-      <div class="mesa-empty">Carregando suas mesas...</div>
-    </div>
-
-    <div class="mesa-pending-wrap" id="mesa-pending-wrap" style="display:none;">
-      <div class="mesa-divider">pedidos de entrada</div>
-      <div class="mesa-pending-list" id="mesa-pending-list"></div>
-    </div>
-
-    <div class="mesa-divider">ou</div>
-
-    <div class="mesa-form" id="mesa-create-form" style="display:none;">
-      <input type="text" id="mesa-create-input" class="mesa-input" placeholder="Nome da nova mesa..." maxlength="40">
-      <button class="mesa-btn" onclick="criarMesa()">Criar Mesa</button>
-    </div>
-    <div class="mesa-form">
-      <input type="text" id="mesa-join-input" class="mesa-input mesa-input-code" placeholder="Código de convite..." maxlength="8">
-      <button class="mesa-btn mesa-btn-ghost" onclick="entrarComCodigo()">Entrar com Código</button>
-    </div>
-
-    <div class="mesa-msg" id="mesa-msg"></div>
-  </div>
-</div>
-
 <div id="app-shell">
 
 <!-- SIDEBAR -->
@@ -2227,7 +1866,7 @@ main{
   <div class="sidebar-brand">
     <div class="sidebar-seal">✧</div>
     <div class="sidebar-brand-text">
-      <div class="sidebar-title">Velkarion</div>
+      <div class="sidebar-title">Codex</div>
       <div class="sidebar-sub">StoryCraft</div>
     </div>
   </div>
@@ -2243,12 +1882,8 @@ main{
     <div class="nav-tab" data-page="velkarion" onclick="showPage('velkarion')">Velkarion</div>
     <div class="nav-tab" data-page="idiomas"   onclick="showPage('idiomas');renderIdiomas()">Idiomas</div>
     <div class="nav-tab" data-page="estigmas"  onclick="showPage('estigmas')">Estigmas</div>
-    <div class="nav-tab" data-page="ficha"     onclick="showPage('ficha');fichaInit()">Ficha</div>
     <div class="nav-tab" data-page="oraculo"   onclick="showPage('oraculo');oraculo_init()">Oráculo</div>
     <div class="nav-tab" data-page="admin" id="nav-admin" onclick="showPage('admin');adminInit()" style="display:none;">Admin</div>
-  </div>
-  <div class="sidebar-auth" id="sidebar-auth">
-    <button class="auth-signin-btn" onclick="fbSignIn()">Entrar com Google</button>
   </div>
   <div class="sidebar-bottom" id="sidebar-bottom-secret" onclick="adminSecretClick()" style="cursor:default;user-select:none;">
     <div style="font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.35rem;opacity:0.8;" id="adventurer-greet"></div>
@@ -2259,7 +1894,7 @@ main{
 
 <!-- MODAL DE SENHA ADMIN -->
 <div id="admin-pwd-modal" style="display:none;position:fixed;inset:0;background:rgba(4,4,12,0.92);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
-  <div style="background:var(--bg3);border:1px solid rgba(37,90,214,0.35);border-radius:0;padding:2rem;width:320px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
+  <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:0;padding:2rem;width:320px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
     <div style="font-family:Cinzel,serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--violet-bright);text-transform:uppercase;margin-bottom:1rem;opacity:0.7;">Acesso Restrito</div>
     <h3 style="font-family:Cinzel,serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:1.25rem;">⚙ Painel Admin</h3>
     <input type="password" id="admin-pwd-input" placeholder="Senha..." onkeydown="if(event.key==='Enter')adminCheckPwd()"
@@ -2301,7 +1936,7 @@ main{
     <div class="home-wrap">
       <div class="home-hero">
         <span class="home-glyph">✦</span>
-        <h2 class="home-title">Velkarion</h2>
+        <h2 class="home-title">Codex StoryCraft</h2>
         <p class="home-desc">O repositório vivo do universo de Velkarion. Raças, classes, magias, deuses e estigmas — tudo conectado ao seu Google Sheets em tempo real.</p>
       </div>
       <div class="home-stats">
@@ -2345,7 +1980,7 @@ main{
       <div class="cnt-pts-bar">
         <span style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;letter-spacing:0.15em;color:var(--text-dim);text-transform:uppercase;">Pontos Restantes</span>
         <span class="cnt-pts-num" id="cnt-pts">10</span>
-        <span style="color:rgba(37,90,214,0.3);font-size:1.2rem;">/</span>
+        <span style="color:rgba(155,93,229,0.3);font-size:1.2rem;">/</span>
         <span style="font-family:'Cinzel',serif;font-size:1.4rem;font-weight:700;color:var(--text-faint);">10</span>
         <span id="cnt-warn" style="font-family:'Raleway',sans-serif;font-weight:700;font-size:0.63rem;color:var(--blood);display:none;">⚠ Pontos excedidos</span>
         <span id="cnt-escala" style="font-size:0.75rem;color:var(--text-faint);margin-left:auto;white-space:nowrap;">Nível 1-9 — max 5 por atributo</span>
@@ -2357,7 +1992,7 @@ main{
         <tbody id="cnt-tbody"></tbody>
       </table>
       <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:0;">
-        <div style="font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.85rem;text-align:center;text-shadow:0 0 12px rgba(90,140,255,0.7),0 0 24px rgba(37,90,214,0.4);">&#x2726; Tabela de Custo de Pontos</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--violet-bright);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.85rem;text-align:center;text-shadow:0 0 12px rgba(192,132,252,0.7),0 0 24px rgba(155,93,229,0.4);">&#x2726; Tabela de Custo de Pontos</div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.5rem;">
           <div style="padding:0.65rem 0.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:0;text-align:center;">
             <div style="font-family:'Raleway',sans-serif;font-size:0.6rem;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">1&ordm; Ponto</div>
@@ -2460,7 +2095,7 @@ main{
 
     <!-- Tabs de categoria vantagens: grid 8 colunas, retangulares encaixadas -->
     <div id="vd-tabs" style="display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--border);border-radius:0;overflow:hidden;margin-bottom:0.75rem;">
-      <button class="vd-tab-btn active" data-cat="todas"        onclick="switchVdTab('todas')"        style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(37,90,214,0.18);color:var(--text);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Todas</button>
+      <button class="vd-tab-btn active" data-cat="todas"        onclick="switchVdTab('todas')"        style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:rgba(155,93,229,0.18);color:var(--text);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Todas</button>
       <button class="vd-tab-btn" data-cat="versateis"    onclick="switchVdTab('versateis')"    style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Versáteis</button>
       <button class="vd-tab-btn" data-cat="combate"      onclick="switchVdTab('combate')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Combate</button>
       <button class="vd-tab-btn" data-cat="magicas"      onclick="switchVdTab('magicas')"      style="padding:0.65rem 0.4rem;font-size:0.72rem;font-family:'Raleway',sans-serif;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:transparent;color:var(--text-dim);border:none;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;">Mágicas</button>
@@ -2750,141 +2385,6 @@ main{
     <div class="cards-grid" id="grid-estigmas"><div class="state-msg" style="grid-column:1/-1"><span class="state-sym">✸</span><h3>Nenhum estigma carregado</h3><p>Conecte o Google Sheets.</p></div></div>
   </div>
 
-  <!-- FICHA DE PERSONAGEM -->
-  <div id="page-ficha" class="page">
-    <h2 class="section-title">Ficha de Personagem</h2>
-
-    <!-- Seletor de fichas (lista de fichas da mesa atual) -->
-    <div id="ficha-selector" class="ficha-selector"></div>
-
-    <!-- Editor da ficha (some até uma ficha ser escolhida/criada) -->
-    <div id="ficha-editor" class="ficha-editor" style="display:none;">
-      <div class="ficha-shell">
-
-        <!-- Sidebar fixa: retrato, recursos, resistências -->
-        <div class="ficha-sidebar">
-          <div class="fs-portrait">
-            <div class="fs-avatar-wrap">
-              <div class="ficha-header-avatar fg-avatar-clickable" id="ficha-h-avatar" onclick="fichaEditarAvatar()" title="Clique para definir uma imagem"></div>
-              <input type="number" id="ficha-h-nivel" class="fs-lvl-badge" min="1" max="50" value="1" oninput="fichaMarkDirty();fgEscalaUpdate();">
-            </div>
-            <input type="text" id="ficha-h-nome" class="fs-nome-input" placeholder="Nome do personagem" oninput="fichaMarkDirty()">
-            <div class="fs-escala" id="ficha-h-escala" onclick="fgEscalaToggle()">Escala: Comum</div>
-            <div class="fs-escala-info" id="fs-escala-info"></div>
-            <div class="fs-tags" id="ficha-h-tags"></div>
-          </div>
-
-          <div class="fs-stats">
-            <div class="fs-row"><span class="fs-label">Protagonismo</span><span class="fs-editval" id="fs-pp" data-field="pp">0</span></div>
-            <div class="fs-row"><span class="fs-label">Inspiração</span><span class="fs-editval" id="fs-insp" data-field="inspiracao">0</span></div>
-            <div class="fs-row"><span class="fs-label">Iniciativa</span><span class="fs-editval" id="fs-inic" data-field="iniciativa">+0</span></div>
-
-            <div class="fs-bar-block">
-              <div class="fs-bar-head"><span class="fs-label">Pontos de vida</span><span><span class="fs-editval" id="fs-pv-atual" data-field="pv-atual">0</span>/<span class="fs-editval" id="fs-pv-max" data-field="pv-max">0</span></span></div>
-              <div class="fs-bar" id="fs-pv-bar"><div class="fs-bar-fill" id="fs-pv-fill"></div></div>
-            </div>
-            <div class="fs-bar-block">
-              <div class="fs-bar-head"><span class="fs-label">Pontos de mana</span><span><span class="fs-editval" id="fs-pm-atual" data-field="pm-atual">0</span>/<span class="fs-editval" id="fs-pm-max" data-field="pm-max">0</span></span></div>
-              <div class="fs-bar fs-bar-pm" id="fs-pm-bar"><div class="fs-bar-fill" id="fs-pm-fill"></div></div>
-            </div>
-
-            <div class="fs-row"><span class="fs-label">Carga</span><span id="fg-carga-disp">0 / 0</span></div>
-
-            <div class="fs-box2">
-              <div class="fs-box"><div class="fs-editval fs-box-val" id="fs-vanguarda" data-field="vanguarda">0</div><div class="fs-label">Vanguarda</div></div>
-              <div class="fs-box"><div class="fs-editval fs-box-val" id="fs-md" data-field="mitigacao">0</div><div class="fs-label">MD</div></div>
-            </div>
-
-            <div class="fs-resist" id="fg-resist-list"></div>
-          </div>
-
-          <div class="fs-foot">
-            <span id="ficha-save-status" class="ficha-save-status"></span>
-            <button class="ficha-btn-voltar" onclick="fichaVoltarLista()">← Mesa</button>
-          </div>
-        </div>
-
-        <!-- Coluna principal: abas -->
-        <div class="ficha-main">
-          <div class="ficha-tabs">
-            <div class="ficha-tab active" data-ftab="geral"    onclick="fichaSwitchTab('geral')">Visão Geral</div>
-            <div class="ficha-tab" data-ftab="raca"      onclick="fichaSwitchTab('raca')">Raça</div>
-            <div class="ficha-tab" data-ftab="classe"    onclick="fichaSwitchTab('classe')">Classe</div>
-            <div class="ficha-tab" data-ftab="estigma"   onclick="fichaSwitchTab('estigma')">Estigma</div>
-            <div class="ficha-tab" data-ftab="vant"      onclick="fichaSwitchTab('vant')">Vantagens &amp; Desv.</div>
-            <div class="ficha-tab" data-ftab="inv"       onclick="fichaSwitchTab('inv')">Inventário</div>
-            <div class="ficha-tab" data-ftab="feiticos"  onclick="fichaSwitchTab('feiticos')">Feitiços</div>
-          </div>
-
-          <div class="ficha-tab-content active" id="ftab-geral">
-            <div class="fg-grid">
-
-              <div class="fg-block fg-atributos">
-                <div class="fg-block-title">Atributos</div>
-                <div class="fg-attrs" id="fg-attrs"></div>
-              </div>
-
-              <div class="fg-block fg-pericias">
-                <div class="fg-block-title">Perícias</div>
-                <div class="fg-peri-scroll" id="fg-peri-list"></div>
-              </div>
-
-            </div>
-          </div>
-          <div class="ficha-tab-content" id="ftab-raca">
-            <p class="state-msg-inline">Raça — habilidades raciais, linhagem e fardo (em construção).</p>
-          </div>
-          <div class="ficha-tab-content" id="ftab-classe">
-            <p class="state-msg-inline">Classe — proficiências, perícias, kit, individualidade e dons (em construção).</p>
-          </div>
-          <div class="ficha-tab-content" id="ftab-estigma">
-            <p class="state-msg-inline">Estigma — origem e idiomas (em construção).</p>
-          </div>
-          <div class="ficha-tab-content" id="ftab-vant">
-            <div class="fg-grid">
-              <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
-                <div class="fg-block fg-vant" style="flex:1;min-width:220px;">
-                  <div class="fg-block-title">Vantagens <button class="fg-add-btn" onclick="fgAbrirPicker('vantagens')" title="Adicionar">+</button></div>
-                  <div id="fg-vant-list"></div>
-                </div>
-
-                <div class="fg-block fg-desv" style="flex:1;min-width:220px;">
-                  <div class="fg-block-title">Desvantagens <button class="fg-add-btn" onclick="fgAbrirPicker('desvantagens')" title="Adicionar">+</button></div>
-                  <div id="fg-desv-list"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="ficha-tab-content" id="ftab-inv">
-            <p class="state-msg-inline">Inventário — itens e dinheiro (em construção).</p>
-          </div>
-          <div class="ficha-tab-content" id="ftab-feiticos">
-            <p class="state-msg-inline">Feitiços conhecidos (em construção).</p>
-          </div>
-        </div>
-
-        <!-- Painel de Chat / Rolagens (só existe dentro da ficha) -->
-        <div class="ficha-chat-panel">
-          <div class="fc-tabs">
-            <div class="fc-tab active" data-fctab="chat" onclick="fcSwitchTab('chat')">Chat</div>
-            <div class="fc-tab" data-fctab="compendio" onclick="fcSwitchTab('compendio')">Compêndio</div>
-          </div>
-          <div id="fctab-chat" style="display:flex;flex-direction:column;flex:1;min-height:0;">
-            <div class="fc-feed" id="fc-feed"><div class="fc-empty">Carregando...</div></div>
-            <div class="fc-input-row">
-              <input type="text" id="fc-input" class="fc-input" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')chatEnviarMsg()">
-              <button class="fc-send-btn" onclick="chatEnviarMsg()" title="Enviar">➤</button>
-            </div>
-          </div>
-          <div id="fctab-compendio" style="display:none;flex:1;padding:1rem;">
-            <p class="state-msg-inline">Compêndio (em construção).</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
   <!-- ORÁCULO IA -->
   <div id="page-oraculo" class="page">
     <h2 class="section-title">Oráculo</h2>
@@ -2960,7 +2460,7 @@ main{
           placeholder="Digite sua pergunta sobre as regras do Storycraft..."
           style="
             flex:1;resize:none;
-            background:rgba(37,90,214,0.06);
+            background:rgba(155,93,229,0.06);
             border:1px solid var(--border);
             color:var(--text);
             padding:0.65rem 0.85rem;
@@ -2978,7 +2478,7 @@ main{
           font-size:0.65rem;letter-spacing:0.12em;cursor:pointer;
           border-radius:0;text-transform:uppercase;
           transition:all 0.2s;white-space:nowrap;
-          box-shadow:0 0 14px rgba(37,90,214,0.35);
+          box-shadow:0 0 14px rgba(155,93,229,0.35);
           align-self:stretch;
         ">Consultar</button>
       </div>
@@ -3007,11 +2507,11 @@ main{
 
   <!-- Modal de URL de imagem -->
   <div id="admin-img-modal" style="display:none;position:fixed;inset:0;background:rgba(4,4,12,0.92);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
-    <div style="background:var(--bg3);border:1px solid rgba(37,90,214,0.35);border-radius:0;padding:1.75rem;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
+    <div style="background:var(--bg3);border:1px solid rgba(155,93,229,0.35);border-radius:0;padding:1.75rem;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.8);">
       <div style="display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem;">
         <div id="aim-preview-wrap" style="width:80px;height:80px;border-radius:0;overflow:hidden;border:1px solid var(--border);background:var(--surface2);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
           <img id="aim-preview-img" style="width:100%;height:100%;object-fit:cover;display:none;">
-          <span id="aim-preview-sym" style="font-family:Cinzel,serif;font-size:1.5rem;color:rgba(37,90,214,0.2);">✦</span>
+          <span id="aim-preview-sym" style="font-family:Cinzel,serif;font-size:1.5rem;color:rgba(155,93,229,0.2);">✦</span>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="font-family:Raleway,sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.15em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.25rem;" id="aim-secao-label"></div>
@@ -3048,19 +2548,6 @@ main{
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalBody"></div>
-  </div>
-</div>
-
-<!-- PICKER VANTAGENS/DESVANTAGENS (ficha) -->
-<div class="fg-picker-overlay" id="fgPickerOverlay" onclick="if(event.target===this)fgFecharPicker()">
-  <div class="fg-picker-box">
-    <div class="fg-picker-box-head">
-      <h3 id="fgPickerTitulo">Adicionar</h3>
-      <button class="fg-picker-close" onclick="fgFecharPicker()">✕</button>
-    </div>
-    <input type="text" id="fgPickerBusca" class="fg-picker-search" placeholder="Buscar..." oninput="fgPickerFiltro()">
-    <div class="fg-picker-list" id="fgPickerList"></div>
-    <button class="fg-picker-manual" onclick="fgPickerManual()">+ Adicionar em branco</button>
   </div>
 </div>
 
@@ -3246,11 +2733,11 @@ function modalHero(url, sym, tipo, nome){
 function imgBox(u,sym,size,extra){
   var s=size||'100%';
   var inner=u?'<img src="'+u+'" style="width:100%;height:100%;object-fit:cover;">'
-    :'<span style="font-family:Cinzel,serif;font-size:1.6rem;color:rgba(37,90,214,0.15);">'+sym+'</span>';
+    :'<span style="font-family:Cinzel,serif;font-size:1.6rem;color:rgba(155,93,229,0.15);">'+sym+'</span>';
   var style=typeof size==='number'
     ?'width:'+size+'px;height:'+size+'px;'
     :'width:100%;aspect-ratio:1/1;';
-  return '<div style="'+style+'border-radius:0;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(37,90,214,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
+  return '<div style="'+style+'border-radius:0;overflow:hidden;margin-bottom:0.7rem;border:1px solid rgba(155,93,229,0.15);background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;'+(extra||'')+'">'+inner+'</div>';
 }
 
 // Card-level 1:1 image placeholder (url optional)
@@ -3409,18 +2896,18 @@ var CODEX_GREETINGS=[
 ];
 var CODEX_SIGILS=['✦','◈','◆','⚔','✧','⚗','☽','⚡'];
 
-var _splashDataReady=false;
-var _splashUserHandled=false;
-
-function checkSplashReady(){
-  if(_splashDataReady && window.currentUser && !_splashUserHandled){
-    _splashUserHandled=true;
-    showGreetingAndEnter(window.currentUser);
+function entrarNoCodex(){
+  var inp=document.getElementById('splash-name-input');
+  var name=inp?inp.value.trim():'';
+  if(!name){
+    if(inp){
+      inp.classList.add('invalid');
+      inp.focus();
+      setTimeout(function(){inp.classList.remove('invalid');},700);
+    }
+    return;
   }
-}
-
-function showGreetingAndEnter(user){
-  var name=(user&&(user.displayName||user.email))||'Aventureiro';
+  // Store name
   window.ADVENTURER_NAME=name;
 
   // Pick a random greeting
@@ -3435,19 +2922,18 @@ function showGreetingAndEnter(user){
   if(msgEl) msgEl.textContent=msg;
   if(sigilEl) sigilEl.textContent=g.sigil;
 
-  // Hide login wrap, show overlay
+  // Hide name-wrap, show overlay
   var wrap=document.getElementById('splash-name-wrap');
   if(wrap) wrap.style.display='none';
   var overlay=document.getElementById('splash-greeting-overlay');
   if(overlay) overlay.classList.add('visible');
 
-  // After 2.8s, close splash and show mesa selection
+  // After 2.8s, close splash and enter the app
   setTimeout(function(){
     var sp=document.getElementById('splash-screen');
     if(sp) sp.classList.add('hidden');
     var greet=document.getElementById('adventurer-greet');
     if(greet) greet.textContent='Bem-vindo, '+name;
-    if(window.mesaScreenShow) window.mesaScreenShow();
   },2800);
 }
 
@@ -3487,12 +2973,12 @@ async function autoLoadAll(){
   if(noteEl) noteEl.textContent=note;
   splashSetText(loaded>0?'Pronto! O Codex aguarda.':'Carregamento concluído com falhas parciais.');
   splashStopMsgs();
-  _splashDataReady=true;
-  if(!window.currentUser){
-    var wrap=document.getElementById('splash-name-wrap');
-    if(wrap){wrap.style.display='flex';}
-  }
-  checkSplashReady();
+  var wrap=document.getElementById('splash-name-wrap');
+  if(wrap){wrap.style.display='flex';}
+  setTimeout(function(){
+    var inp=document.getElementById('splash-name-input');
+    if(inp) inp.focus();
+  },150);
 }
 
 async function autoLoadTab(tabKey,url){
@@ -3828,7 +3314,7 @@ function renderIdiomaModal(r){
     ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
     :'<span style="font-size:3rem;opacity:0.18;">✎</span>';
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(37,90,214,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
     +'<div style="flex:1;padding-top:0.2rem;">'
       +(cat?'<div class="modal-type">'+cat+'</div>':'')
       +'<h2 class="modal-name">'+nome+'</h2>'
@@ -3863,7 +3349,7 @@ function renderVinculoModal(r){
     ?'<img src="'+imgUrl+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
     :'<span style="font-size:3rem;opacity:0.18;">☄</span>';
   var html='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(37,90,214,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
+    +'<div style="flex:0 0 100px;height:100px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+imgHtml+'</div>'
     +'<div style="flex:1;padding-top:0.2rem;">'
       +'<div class="modal-type">'+(classe?'Vínculo de '+classe:'Vínculo')+'</div>'
       +'<h2 class="modal-name">'+nome+'</h2>'
@@ -4124,7 +3610,7 @@ function abrirDetalhesRaca(idx){
   var html='';
   // Header: avatar pequeno à esquerda, nome + descrição à direita
   html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">';
-  html+='<div style="width:80px;height:80px;flex-shrink:0;border-radius:0;overflow:hidden;border:1px solid rgba(37,90,214,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;">'+(getRacaImg(n)?'<img src="'+getRacaImg(n)+'" style="width:100%;height:100%;object-fit:cover;">':'<span style="font-family:Cinzel,serif;font-size:1.4rem;color:rgba(37,90,214,0.2);">☯</span>')+'</div>';
+  html+='<div style="width:80px;height:80px;flex-shrink:0;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.2);background:var(--surface);display:flex;align-items:center;justify-content:center;">'+(getRacaImg(n)?'<img src="'+getRacaImg(n)+'" style="width:100%;height:100%;object-fit:cover;">':'<span style="font-family:Cinzel,serif;font-size:1.4rem;color:rgba(155,93,229,0.2);">☯</span>')+'</div>';
   html+='<div style="flex:1;min-width:0;">';
   html+='<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.7;text-transform:uppercase;margin-bottom:0.3rem;">'+(cat||'raça')+'</div>';
   html+='<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0.5rem;">'+n+'</h2>';
@@ -4313,7 +3799,7 @@ function verDonsClasse(nomeClasse){
       ?'<img src="'+_cImg+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
       :'<span style="font-size:2rem;opacity:0.2;">⚔</span>';
     html+='<div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1rem;">'
-      +'<div style="flex:0 0 120px;height:120px;border-radius:0;overflow:hidden;border:1px solid rgba(37,90,214,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+_imgBox+'</div>'
+      +'<div style="flex:0 0 120px;height:120px;border-radius:0;overflow:hidden;border:1px solid rgba(155,93,229,0.3);background:var(--surface2);display:flex;align-items:center;justify-content:center;">'+_imgBox+'</div>'
       +'<div style="flex:1;padding-top:0.25rem;">'
         +'<div style="font-family:Raleway,sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.2em;color:var(--violet-bright);opacity:0.6;text-transform:uppercase;margin-bottom:0.35rem;">'+(cat||'classe')+'</div>'
         +'<h2 style="font-family:Cinzel,serif;font-size:1.9rem;font-weight:700;color:var(--gold-light);margin-bottom:0;">'+nomeClasse+'</h2>'
@@ -4421,7 +3907,7 @@ function switchVdTab(tab){
   // Atualiza visual dos botões de tab
   document.querySelectorAll('.vd-tab-btn').forEach(function(b){
     var isActive = b.getAttribute('data-cat') === tab;
-    b.style.background = isActive ? 'rgba(37,90,214,0.2)' : 'transparent';
+    b.style.background = isActive ? 'rgba(155,93,229,0.2)' : 'transparent';
     b.style.color = isActive ? 'var(--text)' : 'var(--text-dim)';
   });
   // Mostra/esconde checkboxes (só na aba Todas)
@@ -5270,7 +4756,7 @@ var VEL_CONT_TO_KEY={
 function velGetAccent(nome){
   var k=deaccent(nome||'').replace(/\s+/g,' ').trim();
   for(var n in VEL_ACCENT){if(k.indexOf(deaccent(n))>-1)return VEL_ACCENT[n];}
-  return {accent:'var(--violet)',faint:'rgba(37,90,214,0.12)'};
+  return {accent:'var(--violet)',faint:'rgba(155,93,229,0.12)'};
 }
 
 function velGetRegioesKey(nome){
@@ -5443,7 +4929,7 @@ function abrirRegiaoModal(idx){
   if(r['_vel_regiao_cenario'])html+='<p style="font-size:0.88rem;color:var(--violet-bright);font-style:italic;opacity:0.8;margin-bottom:0.85rem;line-height:1.65;">'+r['_vel_regiao_cenario']+'</p>';
   if(r['_vel_regiao_resumo'])html+='<p style="font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:1rem;">'+r['_vel_regiao_resumo']+'</p>';
   if(r['_vel_regiao_destaques']){
-    html+='<div style="padding:0.85rem 1.1rem;background:rgba(37,90,214,0.05);border:1px solid rgba(37,90,214,0.15);border-left:3px solid '+ac+';border-radius:0;">';
+    html+='<div style="padding:0.85rem 1.1rem;background:rgba(155,93,229,0.05);border:1px solid rgba(155,93,229,0.15);border-left:3px solid '+ac+';border-radius:0;">';
     html+='<div style="font-family:Cinzel,serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:'+ac+';text-transform:uppercase;margin-bottom:0.65rem;">✦ Destaques</div>';
     html+=formatarDestaques(r['_vel_regiao_destaques'],ac);
     html+='</div>';
@@ -6023,7 +5509,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
   display:flex;align-items:center;justify-content:center;
   font-size:0.95rem;font-weight:700;
 }
-.ora-msg-ai   .ora-avatar{background:rgba(37,90,214,0.2);border:1px solid var(--violet-dim);color:var(--violet-bright);}
+.ora-msg-ai   .ora-avatar{background:rgba(155,93,229,0.2);border:1px solid var(--violet-dim);color:var(--violet-bright);}
 .ora-msg-user .ora-avatar{background:rgba(61,141,253,0.12);border:1px solid rgba(61,141,253,0.3);color:var(--cyan);font-family:'Cinzel',serif;font-size:0.7rem;}
 
 .ora-bubble{
@@ -6035,7 +5521,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
   color:var(--text);border-top-left-radius:2px;
 }
 .ora-msg-user .ora-bubble{
-  background:rgba(37,90,214,0.12);border:1px solid rgba(37,90,214,0.25);
+  background:rgba(155,93,229,0.12);border:1px solid rgba(155,93,229,0.25);
   color:var(--text);border-top-right-radius:2px;text-align:right;
 }
 .ora-bubble p{margin:0;}
@@ -6060,7 +5546,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharLightb
   border-radius:0;cursor:pointer;transition:all 0.18s;
   letter-spacing:0.05em;
 }
-.ora-sug:hover{border-color:var(--violet-dim);color:var(--violet-bright);background:rgba(37,90,214,0.08);}
+.ora-sug:hover{border-color:var(--violet-dim);color:var(--violet-bright);background:rgba(155,93,229,0.08);}
 
 /* Highlight de termos de regra na resposta */
 .ora-rule-term{color:var(--violet-bright);font-weight:600;}
@@ -6746,7 +6232,7 @@ function adminRenderCards(){
 
   // Descrição para seções de categoria
   var descHtml = secaoObj.descricao
-    ? '<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:rgba(37,90,214,0.07);border-radius:0;border-left:2px solid var(--violet-dim);">'+secaoObj.descricao+'</div>'
+    ? '<div style="font-size:0.78rem;color:var(--text-faint);margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:rgba(155,93,229,0.07);border-radius:0;border-left:2px solid var(--violet-dim);">'+secaoObj.descricao+'</div>'
     : '';
 
   // Nomes/chaves a exibir
@@ -6769,7 +6255,7 @@ function adminRenderCards(){
     var imgHtml=temImg
       ?'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;display:block;">'
       :'<div style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;"><span style="font-size:1.8rem;opacity:0.15;">✦</span></div>';
-    return '<div onclick="aimAbrir(\''+nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')\" style="background:var(--surface);border:1px solid '+(temImg?'rgba(37,90,214,0.4)':'var(--border)')+';border-radius:0;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseenter="this.style.borderColor=\'var(--violet-dim)\'" onmouseleave="this.style.borderColor=\''+(temImg?'rgba(37,90,214,0.4)':'var(--border)')+'\'">'+
+    return '<div onclick="aimAbrir(\''+nome.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')\" style="background:var(--surface);border:1px solid '+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+';border-radius:0;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseenter="this.style.borderColor=\'var(--violet-dim)\'" onmouseleave="this.style.borderColor=\''+(temImg?'rgba(155,93,229,0.4)':'var(--border)')+'\'">'+
       '<div style="width:100%;aspect-ratio:1/1;overflow:hidden;background:var(--surface2);">'+imgHtml+'</div>'+
       '<div style="padding:0.45rem 0.55rem;display:flex;align-items:center;justify-content:space-between;gap:0.3rem;">'+
         '<span style="font-family:Raleway,sans-serif;font-size:0.72rem;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">'+nome+'</span>'+
@@ -6849,922 +6335,20 @@ function adminRemover(){}
 <!-- ── FIREBASE SDK ── -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, get, update, onValue, push, query, orderByChild, equalTo, limitToLast } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBofDlVfeUZCHIboE1V2Ksm1Wu5v-LoNuY",
-  authDomain: "velkarion-af6f2.firebaseapp.com",
-  databaseURL: "https://velkarion-af6f2-default-rtdb.firebaseio.com",
-  projectId: "velkarion-af6f2",
-  storageBucket: "velkarion-af6f2.firebasestorage.app",
-  messagingSenderId: "1066751318569",
-  appId: "1:1066751318569:web:4ebb7c0af3d2dce7309a38"
+  apiKey: "AIzaSyCHXeSA0dZhc-rE8x6_z9sAn8CWLkOPQ9w",
+  authDomain: "codexstorycraft.firebaseapp.com",
+  databaseURL: "https://codexstorycraft-default-rtdb.firebaseio.com",
+  projectId: "codexstorycraft",
+  storageBucket: "codexstorycraft.firebasestorage.app",
+  messagingSenderId: "619344478282",
+  appId: "1:619344478282:web:c4f3df6d7344dbe6f9e6b3"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
-// ── Mesas (campanhas) ──
-function gerarCodigoMesa(){
-  var chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O/1/I, evita confusão na leitura
-  var code='';
-  for(var i=0;i<6;i++) code+=chars[Math.floor(Math.random()*chars.length)];
-  return code;
-}
-
-function mesaMsg(text,type){
-  var el=document.getElementById('mesa-msg');
-  if(!el) return;
-  el.textContent=text||'';
-  el.className='mesa-msg'+(type?' '+type:'');
-}
-
-window.mesaScreenShow=function(){
-  var ms=document.getElementById('mesa-screen');
-  if(!ms) return;
-  ms.classList.add('visible');
-  setTimeout(function(){ms.classList.add('show');},10);
-  carregarMinhasMesas();
-};
-
-function mesaScreenHide(){
-  var ms=document.getElementById('mesa-screen');
-  if(!ms) return;
-  ms.classList.remove('show');
-  setTimeout(function(){ms.classList.remove('visible');},400);
-}
-
-async function carregarMinhasMesas(){
-  var listEl=document.getElementById('mesa-list');
-  if(!listEl||!window.currentUser) return;
-
-  var ehMestre=(window.currentUser.email||'').toLowerCase()===MESTRE_EMAIL.toLowerCase();
-  var createForm=document.getElementById('mesa-create-form');
-  if(createForm) createForm.style.display=ehMestre?'flex':'none';
-
-  listEl.innerHTML='<div class="mesa-empty">Carregando suas mesas...</div>';
-  try{
-    var uid=window.currentUser.uid;
-    var snap=await get(ref(db,'usuarios/'+uid+'/mesas'));
-    var ids=snap.exists()?Object.keys(snap.val()):[];
-    var items=[];
-    for(var i=0;i<ids.length;i++){
-      var mSnap=await get(ref(db,'mesas/'+ids[i]));
-      if(mSnap.exists()){
-        var m=mSnap.val();
-        items.push({id:ids[i],nome:m.nome,dono:m.donoId===uid});
-      }
-    }
-    if(!items.length){
-      listEl.innerHTML='<div class="mesa-empty">Você ainda não tem nenhuma mesa. '+(ehMestre?'Crie uma':'Peça um código de convite ao mestre')+'.</div>';
-    } else {
-      listEl.innerHTML=items.map(function(it){
-        var nomeSeguro=(it.nome||'Mesa sem nome').replace(/'/g,"\\'");
-        return '<div class="mesa-item" onclick="entrarNaMesa(\''+it.id+'\',\''+nomeSeguro+'\')">'+
-          '<span class="mesa-item-name">'+(it.nome||'Mesa sem nome')+'</span>'+
-          '<span class="mesa-item-role">'+(it.dono?'Mestre':'Jogador')+'</span>'+
-        '</div>';
-      }).join('');
-    }
-    if(ehMestre) carregarPedidosPendentes(items.filter(function(it){return it.dono;}).map(function(it){return it.id;}));
-  }catch(e){
-    console.error(e);
-    listEl.innerHTML='<div class="mesa-empty">Não foi possível carregar suas mesas.</div>';
-  }
-}
-
-async function carregarPedidosPendentes(mesaIds){
-  var wrap=document.getElementById('mesa-pending-wrap');
-  var listEl=document.getElementById('mesa-pending-list');
-  if(!wrap||!listEl) return;
-  var pedidos=[];
-  for(var i=0;i<mesaIds.length;i++){
-    var mesaId=mesaIds[i];
-    var pSnap=await get(ref(db,'mesas/'+mesaId+'/pendentes'));
-    if(pSnap.exists()){
-      var pData=pSnap.val();
-      for(var uid in pData){
-        pedidos.push({mesaId:mesaId,uid:uid,nome:pData[uid].nome,mesaNome:pData[uid].mesaNome||''});
-      }
-    }
-  }
-  if(!pedidos.length){
-    wrap.style.display='none';
-    listEl.innerHTML='';
-    return;
-  }
-  wrap.style.display='block';
-  listEl.innerHTML=pedidos.map(function(p){
-    return '<div class="mesa-pending-item">'+
-      '<div class="mesa-pending-info">'+
-        '<span class="mesa-pending-name">'+(p.nome||'Aventureiro')+'</span>'+
-        '<span class="mesa-pending-mesa">'+(p.mesaNome||'')+'</span>'+
-      '</div>'+
-      '<div class="mesa-pending-actions">'+
-        '<button class="mesa-pending-btn mesa-pending-ok" onclick="aprovarPedido(\''+p.mesaId+'\',\''+p.uid+'\')">Aprovar</button>'+
-        '<button class="mesa-pending-btn mesa-pending-no" onclick="rejeitarPedido(\''+p.mesaId+'\',\''+p.uid+'\')">Recusar</button>'+
-      '</div>'+
-    '</div>';
-  }).join('');
-}
-
-window.aprovarPedido=async function(mesaId,uid){
-  try{
-    await set(ref(db,'mesas/'+mesaId+'/membros/'+uid),true);
-    await set(ref(db,'usuarios/'+uid+'/mesas/'+mesaId),true);
-    await set(ref(db,'mesas/'+mesaId+'/pendentes/'+uid),null);
-    carregarMinhasMesas();
-  }catch(e){
-    console.error(e);
-    alert('Erro ao aprovar o pedido.');
-  }
-};
-
-window.rejeitarPedido=async function(mesaId,uid){
-  try{
-    await set(ref(db,'mesas/'+mesaId+'/pendentes/'+uid),null);
-    carregarMinhasMesas();
-  }catch(e){
-    console.error(e);
-    alert('Erro ao recusar o pedido.');
-  }
-};
-
-var MESTRE_EMAIL='hnd.fbo@gmail.com';
-
-window.criarMesa=async function(){
-  var inp=document.getElementById('mesa-create-input');
-  var nome=inp?inp.value.trim():'';
-  if(!nome){mesaMsg('Digite um nome pra mesa.','err');return;}
-  if(!window.currentUser){mesaMsg('Você precisa estar logado.','err');return;}
-  if((window.currentUser.email||'').toLowerCase()!==MESTRE_EMAIL.toLowerCase()){
-    mesaMsg('Só o mestre pode criar mesas.','err');
-    return;
-  }
-  mesaMsg('Criando mesa...','');
-  try{
-    var uid=window.currentUser.uid;
-    var donoNome=window.currentUser.displayName||window.currentUser.email||'Mestre';
-    var newRef=push(ref(db,'mesas'));
-    var mesaId=newRef.key;
-    var codigo=gerarCodigoMesa();
-    var membrosObj={};membrosObj[uid]=true;
-    await set(newRef,{
-      nome:nome,
-      donoId:uid,
-      donoNome:donoNome,
-      codigo:codigo,
-      criadoEm:Date.now(),
-      membros:membrosObj
-    });
-    await set(ref(db,'usuarios/'+uid+'/mesas/'+mesaId),true);
-    mesaMsg('Mesa criada! Código de convite: '+codigo,'ok');
-    if(inp) inp.value='';
-    setTimeout(function(){entrarNaMesa(mesaId,nome);},1200);
-  }catch(e){
-    console.error(e);
-    mesaMsg('Erro ao criar a mesa. Tenta de novo.','err');
-  }
-};
-
-window.entrarComCodigo=async function(){
-  var inp=document.getElementById('mesa-join-input');
-  var codigo=inp?inp.value.trim().toUpperCase():'';
-  if(!codigo){mesaMsg('Digite um código de convite.','err');return;}
-  if(!window.currentUser){mesaMsg('Você precisa estar logado.','err');return;}
-  mesaMsg('Procurando mesa...','');
-  try{
-    var uid=window.currentUser.uid;
-    var q=query(ref(db,'mesas'),orderByChild('codigo'),equalTo(codigo));
-    var snap=await get(q);
-    if(!snap.exists()){mesaMsg('Código não encontrado. Confere com quem te convidou.','err');return;}
-    var mesaId=Object.keys(snap.val())[0];
-    var mesa=snap.val()[mesaId];
-    if(mesa.membros&&mesa.membros[uid]){
-      mesaMsg('Você já faz parte dessa mesa.','ok');
-      if(inp) inp.value='';
-      setTimeout(function(){entrarNaMesa(mesaId,mesa.nome);},900);
-      return;
-    }
-    if(mesa.pendentes&&mesa.pendentes[uid]){
-      mesaMsg('Seu pedido pra essa mesa já está aguardando aprovação do mestre.','ok');
-      return;
-    }
-    var nomeJogador=window.currentUser.displayName||window.currentUser.email||'Aventureiro';
-    await set(ref(db,'mesas/'+mesaId+'/pendentes/'+uid),{
-      nome:nomeJogador,
-      email:window.currentUser.email||'',
-      mesaNome:mesa.nome||'',
-      solicitadoEm:Date.now()
-    });
-    mesaMsg('Pedido enviado! Aguarde o mestre aprovar sua entrada em "'+mesa.nome+'".','ok');
-    if(inp) inp.value='';
-  }catch(e){
-    console.error(e);
-    mesaMsg('Erro ao enviar o pedido. Tenta de novo.','err');
-  }
-};
-
-window.entrarNaMesa=function(mesaId,nome){
-  window.currentMesa={id:mesaId,nome:nome};
-  mesaScreenHide();
-};
-
-// ════════════════════════════════════════════════════
-// ── FICHA DE PERSONAGEM ──
-// ════════════════════════════════════════════════════
-window.currentFicha = null;      // {id, mesaId, ...dados} — ficha aberta no editor
-var fichaSaveTimer = null;       // debounce de salvamento automático
-var fichaSuppressDirty = false;  // evita salvar enquanto estamos só carregando os campos na tela
-
-// Estrutura "vazia" de uma ficha nova
-function fichaNovoEsqueleto(donoUid, donoNome){
-  return {
-    donoUid: donoUid,
-    donoNome: donoNome || 'Aventureiro',
-    criadoEm: Date.now(),
-    nome: '', avatar: '',
-    nivel: 1,
-    raca: '', classe: '', devocao: '', estigma: '',
-    pv:{atual:0,max:0}, pm:{atual:0,max:0},
-    inspiracao:0, pp:0, iniciativa:0,
-    xp:0,
-    atributos:{for:0,des:0,con:0,int:0,sab:0,car:0},
-    pericias: PERICIAS_PADRAO.map(function(p){return {nome:p.nome,atributo:p.atributo,bonus:0,oficio:!!p.oficio,oficioEscolhido:p.oficio?OFICIOS_LISTA[0]:''};}),
-    resistencias:{
-      fortitude:{atributo:'con',bonus:0},
-      reflexos:{atributo:'des',bonus:0},
-      vontade:{atributo:'sab',bonus:0}
-    },
-    carga:{atual:0,max:10},
-    vanguarda:0, mitigacao:0,
-    dons:[],
-    vantagens:[], desvantagens:[],
-    idiomas:[],
-    inventario:[], dinheiro:{floreis:0,floroes:0,florins:0},
-    feiticos:[],
-    anotacoes:''
-  };
-}
-
-window.fichaInit = function(){
-  if(!window.currentMesa){
-    var sel=document.getElementById('ficha-selector');
-    if(sel) sel.innerHTML='<div class="ficha-sel-empty">Entre em uma mesa primeiro pra ver as fichas dela.</div>';
-    document.getElementById('ficha-editor').style.display='none';
-    return;
-  }
-  document.getElementById('ficha-editor').style.display='none';
-  document.getElementById('ficha-selector').style.display='flex';
-  fichaCarregarLista();
-};
-
-async function fichaCarregarLista(){
-  var sel=document.getElementById('ficha-selector');
-  if(!sel||!window.currentMesa) return;
-  sel.innerHTML='<div class="ficha-sel-empty">Carregando fichas da mesa...</div>';
-  try{
-    var snap=await get(ref(db,'mesas/'+window.currentMesa.id+'/fichas'));
-    var fichas=snap.exists()?snap.val():{};
-    var ids=Object.keys(fichas);
-    var html='';
-    ids.forEach(function(id){
-      var f=fichas[id];
-      var nome=f.nome||'(sem nome)';
-      var inicial=nome.trim().charAt(0).toUpperCase()||'?';
-      html+='<div class="ficha-sel-item" onclick="fichaAbrir(\''+id+'\')">'+
-        '<div class="ficha-sel-avatar">'+inicial+'</div>'+
-        '<div><div class="ficha-sel-name">'+nome+'</div>'+
-        '<div class="ficha-sel-meta">'+(f.raca||'Raça —')+' · '+(f.classe||'Classe —')+' · Nível '+(f.nivel||1)+'</div></div>'+
-        '<div class="ficha-sel-owner">'+(f.donoNome||'')+'</div>'+
-      '</div>';
-    });
-    if(!ids.length){
-      html='<div class="ficha-sel-empty">Nenhuma ficha criada nesta mesa ainda.</div>';
-    }
-    html+='<button class="ficha-sel-new-btn" onclick="fichaCriarNova()">+ Nova Ficha</button>';
-    sel.innerHTML=html;
-  }catch(e){
-    console.error(e);
-    sel.innerHTML='<div class="ficha-sel-empty">Erro ao carregar as fichas.</div>';
-  }
-}
-
-window.fichaCriarNova=async function(){
-  if(!window.currentMesa||!window.currentUser) return;
-  try{
-    var novaRef=push(ref(db,'mesas/'+window.currentMesa.id+'/fichas'));
-    var dados=fichaNovoEsqueleto(window.currentUser.uid, window.currentUser.displayName||window.currentUser.email);
-    await set(novaRef,dados);
-    fichaAbrir(novaRef.key);
-  }catch(e){
-    console.error(e);
-    alert('Não foi possível criar a ficha. Tenta de novo.');
-  }
-};
-
-window.fichaAbrir=async function(fichaId){
-  if(!window.currentMesa) return;
-  try{
-    var snap=await get(ref(db,'mesas/'+window.currentMesa.id+'/fichas/'+fichaId));
-    if(!snap.exists()){alert('Essa ficha não existe mais.');fichaCarregarLista();return;}
-    var dados=snap.val();
-    window.currentFicha={id:fichaId, mesaId:window.currentMesa.id, dados:dados};
-    fichaPreencherCampos(dados);
-    document.getElementById('ficha-selector').style.display='none';
-    document.getElementById('ficha-editor').style.display='block';
-    fichaSwitchTab('geral');
-    fcAttach(window.currentMesa.id);
-  }catch(e){
-    console.error(e);
-    alert('Erro ao abrir a ficha.');
-  }
-};
-
-window.fichaVoltarLista=function(){
-  fcDetach();
-  window.currentFicha=null;
-  document.getElementById('ficha-editor').style.display='none';
-  document.getElementById('ficha-selector').style.display='flex';
-  fichaCarregarLista();
-};
-
-function fichaPreencherCampos(d){
-  fichaSuppressDirty=true;
-  document.getElementById('ficha-h-nome').value = d.nome||'';
-  document.getElementById('ficha-h-nivel').value = d.nivel||1;
-  var av=document.getElementById('ficha-h-avatar');
-  if(av){
-    if(d.avatar) av.style.backgroundImage='url(\''+d.avatar+'\')';
-    else av.style.backgroundImage='';
-  }
-  var tagsEl=document.getElementById('ficha-h-tags');
-  if(tagsEl){
-    var t='';
-    if(d.raca) t+=tag(d.raca,'tag-class');
-    if(d.classe) t+=tag(d.classe,'tag-conjurador');
-    if(d.devocao) t+=tag(d.devocao,'tag-gold');
-    if(d.estigma) t+=tag(d.estigma,'tag-rare');
-    tagsEl.innerHTML=t;
-  }
-  fichaSuppressDirty=false;
-  fgEscalaUpdate();
-  fsRenderStats();
-  fgRenderAtributos();
-  fgRenderPericias();
-  fgRenderResistencias();
-  fgCargaUpdate();
-  fgRenderVD('vantagens');
-  fgRenderVD('desvantagens');
-}
-
-window.fichaSwitchTab=function(tab){
-  document.querySelectorAll('.ficha-tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.ficha-tab-content').forEach(function(c){c.classList.remove('active');});
-  var tEl=document.querySelector('.ficha-tab[data-ftab="'+tab+'"]');
-  var cEl=document.getElementById('ftab-'+tab);
-  if(tEl) tEl.classList.add('active');
-  if(cEl) cEl.classList.add('active');
-};
-
-// Salvamento automático com debounce (espera 700ms após a última digitação)
-window.fichaMarkDirty=function(){
-  if(fichaSuppressDirty||!window.currentFicha) return;
-  var st=document.getElementById('ficha-save-status');
-  if(st){st.textContent='Salvando...';st.classList.add('show');}
-  clearTimeout(fichaSaveTimer);
-  fichaSaveTimer=setTimeout(fichaSalvar, 700);
-};
-
-async function fichaSalvar(){
-  if(!window.currentFicha) return;
-  var f=window.currentFicha;
-  var patch={
-    nome: document.getElementById('ficha-h-nome').value.trim(),
-    nivel: parseInt(document.getElementById('ficha-h-nivel').value,10)||1,
-    pv: f.dados.pv,
-    pm: f.dados.pm,
-    inspiracao: f.dados.inspiracao||0,
-    pp: f.dados.pp||0,
-    iniciativa: f.dados.iniciativa||0,
-    avatar: f.dados.avatar||'',
-    atributos: f.dados.atributos,
-    pericias: f.dados.pericias,
-    resistencias: f.dados.resistencias,
-    carga: f.dados.carga,
-    vanguarda: f.dados.vanguarda||0,
-    mitigacao: f.dados.mitigacao||0,
-    vantagens: f.dados.vantagens||[],
-    desvantagens: f.dados.desvantagens||[]
-  };
-  try{
-    await update(ref(db,'mesas/'+f.mesaId+'/fichas/'+f.id), patch);
-    Object.assign(f.dados, patch);
-    var st=document.getElementById('ficha-save-status');
-    if(st){st.textContent='Salvo ✓';setTimeout(function(){st.classList.remove('show');},1200);}
-  }catch(e){
-    console.error(e);
-    var st2=document.getElementById('ficha-save-status');
-    if(st2){st2.textContent='Erro ao salvar';st2.classList.add('show');}
-  }
-}
-
-// ── VISÃO GERAL — dados padrão ──
-var OFICIOS_LISTA=['Culinária','Alquimia','Ferraria','Escriba','Joalheria','Runomancia','Golemancia'];
-var PERICIAS_PADRAO=[
-  {nome:'Acrobacia',atributo:'des'},{nome:'Adestramento',atributo:'car'},{nome:'Armadilhas',atributo:'int'},
-  {nome:'Atletismo',atributo:'for'},{nome:'Atuação',atributo:'car'},{nome:'Cavalgar',atributo:'des'},
-  {nome:'Cirurgia',atributo:'int'},{nome:'Cura',atributo:'sab'},{nome:'Diplomacia',atributo:'car'},
-  {nome:'Disfarce',atributo:'car'},{nome:'Enganação',atributo:'car'},{nome:'Furtividade',atributo:'des'},
-  {nome:'Guerra',atributo:'int'},{nome:'Intimidação',atributo:'car'},{nome:'Intuição',atributo:'sab'},
-  {nome:'Investigação',atributo:'int'},{nome:'Jogatina',atributo:'car'},{nome:'Ladinagem',atributo:'des'},
-  {nome:'Luta',atributo:'for'},{nome:'Misticismo',atributo:'int'},{nome:'Nobreza',atributo:'int'},
-  {nome:'Ofício',atributo:'int',oficio:true},{nome:'Percepção',atributo:'sab'},
-  {nome:'Ofício',atributo:'int',oficio:true},{nome:'Pilotagem',atributo:'des'},
-  {nome:'Pontaria',atributo:'des'},{nome:'Prestidigitação',atributo:'des'},{nome:'Religião',atributo:'sab'},
-  {nome:'Sedução',atributo:'car'},{nome:'Sobrevivência',atributo:'sab'}
-];
-var RESIST_PADRAO=[
-  {key:'fortitude',nome:'Fortitude',atributo:'con'},
-  {key:'reflexos',nome:'Reflexos',atributo:'des'},
-  {key:'vontade',nome:'Vontade',atributo:'sab'}
-];
-var ESCALA_INFO=[
-  {min:1,max:9,nome:'Comum',flavor:'Você é carne fresca. Iniciantes forjando seus primeiros feitos. Poring, slimes, goblins — essas são suas medidas.',bonus:''},
-  {min:10,max:19,nome:'Lendário',flavor:'Sua marca começa a se gravar na pedra da história. Ogros, trolls, mantícoras — criaturas que antes aterrorizavam vilas inteiras agora podem ser suas presas.',bonus:'Vantagem ou dom de classe de 1º grau grátis.'},
-  {min:20,max:29,nome:'Colossal',flavor:'Poder que desafia os limites comuns. Dragões jovens, gigantes, quimeras — você caminha entre forças que dobram montanhas.',bonus:'Vantagem ou dom de 2º grau grátis.'},
-  {min:30,max:39,nome:'Titânico',flavor:'Força e domínio que impõem respeito absoluto. Dragões anciões, lichs plenos, krakens — você é uma força da natureza.',bonus:'Vantagem ou dom de 3º grau grátis.'},
-  {min:40,max:49,nome:'Mítico',flavor:'Quase lendas vivas. Você dobra a realidade. Deuses caídos, espíritos primordiais são seus iguais agora.',bonus:'Dom de 4º grau ou vantagem equivalente.'},
-  {min:50,max:50,nome:'Épico',flavor:'O ápice. Deus pleno. Encarnação cósmica. Você transcendeu.',bonus:'Dom de 5º grau ou vantagem final.'}
-];
-function escalaFor(n){
-  for(var i=0;i<ESCALA_INFO.length;i++){ if(n>=ESCALA_INFO[i].min&&n<=ESCALA_INFO[i].max) return ESCALA_INFO[i]; }
-  return ESCALA_INFO[ESCALA_INFO.length-1];
-}
-var fgEscalaOpen=false;
-window.fgEscalaToggle=function(){ fgEscalaOpen=!fgEscalaOpen; fgEscalaUpdate(); };
-function fgEscalaUpdate(){
-  var nivel=parseInt(document.getElementById('ficha-h-nivel').value,10)||1;
-  if(nivel<1) nivel=1; if(nivel>50) nivel=50;
-  document.getElementById('ficha-h-nivel').value=nivel;
-  var e=escalaFor(nivel);
-  var el=document.getElementById('ficha-h-escala');
-  if(el) el.textContent='Escala: '+e.nome;
-  var info=document.getElementById('fs-escala-info');
-  if(info){
-    info.innerHTML=e.flavor+(e.bonus?'<div style="margin-top:0.35rem;color:var(--gold-light);">'+e.bonus+'</div>':'');
-    info.style.display=fgEscalaOpen?'block':'none';
-  }
-}
-
-// ── Atributos (clique no valor para editar manualmente) ──
-function fgRenderAtributos(){
-  var f=window.currentFicha; if(!f) return;
-  var atr=f.dados.atributos||(f.dados.atributos={for:0,des:0,con:0,int:0,sab:0,car:0});
-  var html='';
-  CNT_ATTRS.forEach(function(a){
-    var v=atr[a.id]||0;
-    html+='<div class="fg-attr-card">'+
-      '<div class="fg-attr-label">'+a.nome+'<span>'+a.full+'</span></div>'+
-      '<div class="fg-attr-val" data-attr="'+a.id+'">'+(v>=0?'+':'')+v+'</div>'+
-    '</div>';
-  });
-  var el=document.getElementById('fg-attrs');
-  if(el) el.innerHTML=html;
-}
-
-// ── Perícias (duas colunas; Ofício tem seletor de especialidade) ──
-function fgRenderPericias(){
-  var f=window.currentFicha; if(!f) return;
-  var lista=f.dados.pericias;
-  if(!lista||!lista.length){
-    lista=PERICIAS_PADRAO.map(function(p){return {nome:p.nome,atributo:p.atributo,bonus:0,oficio:!!p.oficio,oficioEscolhido:p.oficio?OFICIOS_LISTA[0]:''};});
-    f.dados.pericias=lista;
-  }
-  var atr=f.dados.atributos||{};
-  var html='';
-  lista.forEach(function(p,i){
-    var mod=atr[p.atributo]||0, bonus=p.bonus||0, total=mod+bonus;
-    var nomeHtml = p.oficio
-      ? '<span class="txt">Ofício</span><select class="fg-peri-oficio" onchange="fgPeriUpdate('+i+',\'oficioEscolhido\',this.value)">'+OFICIOS_LISTA.map(function(o){return '<option'+(o===p.oficioEscolhido?' selected':'')+'>'+o+'</option>';}).join('')+'</select>'
-      : '<span class="txt">'+p.nome+'</span>';
-    html+='<div class="fg-peri-row" onclick="fgPeriRowClick(event,'+i+')">'+
-      '<span class="fg-peri-nome">'+nomeHtml+'</span>'+
-      '<select class="fg-peri-sel" onchange="fgPeriUpdate('+i+',\'atributo\',this.value)">'+
-        CNT_ATTRS.map(function(a){return '<option value="'+a.id+'"'+(a.id===p.atributo?' selected':'')+'>'+a.nome+'</option>';}).join('')+
-      '</select>'+
-      '<input type="number" class="fg-peri-bonus" value="'+bonus+'" oninput="fgPeriUpdate('+i+',\'bonus\',this.value)">'+
-      '<span class="fg-peri-total">'+(total>=0?'+':'')+total+'</span>'+
-    '</div>';
-  });
-  var el=document.getElementById('fg-peri-list');
-  if(el) el.innerHTML=html;
-}
-function fgPeriUpdate(i,campo,valor){
-  var f=window.currentFicha; if(!f) return;
-  var p=f.dados.pericias[i]; if(!p) return;
-  if(campo==='bonus') p.bonus=parseInt(valor,10)||0;
-  else if(campo==='oficioEscolhido') p.oficioEscolhido=valor;
-  else p.atributo=valor;
-  fgRenderPericias();
-  fichaMarkDirty();
-}
-
-// ── Resistências (caixas compactas na sidebar, lápis no canto) ──
-var fgResistEditing=null;
-function fgRenderResistencias(){
-  var f=window.currentFicha; if(!f) return;
-  var res=f.dados.resistencias;
-  if(!res){
-    res={};
-    RESIST_PADRAO.forEach(function(r){res[r.key]={atributo:r.atributo,bonus:0};});
-    f.dados.resistencias=res;
-  }
-  var atr=f.dados.atributos||{};
-  var html='';
-  RESIST_PADRAO.forEach(function(r){
-    var entry=res[r.key]||(res[r.key]={atributo:r.atributo,bonus:0});
-    var mod=atr[entry.atributo]||0, bonus=entry.bonus||0, total=mod+bonus;
-    var editing=(fgResistEditing===r.key);
-    html+='<div class="fs-resist-box">'+
-      '<button class="fs-resist-pencil" onclick="fgResistToggleEdit(\''+r.key+'\')" title="Editar">'+(editing?'✓':'✎')+'</button>'+
-      '<div class="fs-resist-name">'+r.nome+'</div>';
-    if(editing){
-      html+='<div class="fs-resist-edit">'+
-        '<select onchange="fgResistUpdate(\''+r.key+'\',\'atributo\',this.value)">'+
-          CNT_ATTRS.map(function(a){return '<option value="'+a.id+'"'+(a.id===entry.atributo?' selected':'')+'>'+a.nome+'</option>';}).join('')+
-        '</select>'+
-        '<input type="number" value="'+bonus+'" oninput="fgResistUpdate(\''+r.key+'\',\'bonus\',this.value)">'+
-      '</div>';
-    } else {
-      html+='<div class="fs-resist-sub">'+entry.atributo.toUpperCase()+'</div>';
-    }
-    html+='<div class="fs-resist-total">'+(total>=0?'+':'')+total+'</div></div>';
-  });
-  var el=document.getElementById('fg-resist-list');
-  if(el) el.innerHTML=html;
-}
-function fgResistToggleEdit(key){
-  fgResistEditing=(fgResistEditing===key)?null:key;
-  fgRenderResistencias();
-}
-function fgResistUpdate(key,campo,valor){
-  var f=window.currentFicha; if(!f) return;
-  var entry=f.dados.resistencias[key]; if(!entry) return;
-  if(campo==='bonus') entry.bonus=parseInt(valor,10)||0; else entry.atributo=valor;
-  fgRenderResistencias();
-  fichaMarkDirty();
-}
-
-// ── Carga ──
-function fgCargaUpdate(){
-  var f=window.currentFicha; if(!f) return;
-  var forV=(f.dados.atributos&&f.dados.atributos.for)||0;
-  var max=10+forV*2;
-  if(!f.dados.carga) f.dados.carga={atual:0,max:max}; else f.dados.carga.max=max;
-  var el=document.getElementById('fg-carga-disp');
-  if(el) el.textContent=(f.dados.carga.atual||0)+' / '+max;
-}
-
-// ── Sidebar: protagonismo/inspiração/iniciativa/PV/PM/vanguarda/MD, clique para editar ──
-function fsSign(v){ return (v>=0?'+':'')+v; }
-function fsRenderStats(){
-  var f=window.currentFicha; if(!f) return;
-  var d=f.dados;
-  var map={
-    'fs-pp': d.pp||0,
-    'fs-insp': d.inspiracao||0,
-    'fs-inic': fsSign(d.iniciativa||0),
-    'fs-pv-atual': (d.pv&&d.pv.atual)||0,
-    'fs-pv-max': (d.pv&&d.pv.max)||0,
-    'fs-pm-atual': (d.pm&&d.pm.atual)||0,
-    'fs-pm-max': (d.pm&&d.pm.max)||0,
-    'fs-vanguarda': d.vanguarda||0,
-    'fs-md': d.mitigacao||0
-  };
-  for(var id in map){ var el=document.getElementById(id); if(el) el.textContent=map[id]; }
-  var pvMax=(d.pv&&d.pv.max)||0, pvAtual=(d.pv&&d.pv.atual)||0;
-  var pvPct = pvMax>0 ? Math.max(0,Math.min(100,(pvAtual/pvMax)*100)) : 0;
-  var pvFill=document.getElementById('fs-pv-fill'); if(pvFill) pvFill.style.width=pvPct+'%';
-  var pmMax=(d.pm&&d.pm.max)||0, pmAtual=(d.pm&&d.pm.atual)||0;
-  var pmPct = pmMax>0 ? Math.max(0,Math.min(100,(pmAtual/pmMax)*100)) : 0;
-  var pmFill=document.getElementById('fs-pm-fill'); if(pmFill) pmFill.style.width=pmPct+'%';
-}
-function fsCommitEdit(field, value){
-  var f=window.currentFicha; if(!f) return;
-  var v=parseInt(value,10); if(isNaN(v)) v=0;
-  if(field==='pp'){ f.dados.pp=Math.max(0,v); }
-  else if(field==='inspiracao'){ f.dados.inspiracao=Math.max(0,Math.min(2,v)); }
-  else if(field==='iniciativa'){ f.dados.iniciativa=v; }
-  else if(field==='pv-atual'){ f.dados.pv.atual=v; }
-  else if(field==='pv-max'){ f.dados.pv.max=Math.max(0,v); if(f.dados.pv.atual>f.dados.pv.max) f.dados.pv.atual=f.dados.pv.max; }
-  else if(field==='pm-atual'){ f.dados.pm.atual=v; }
-  else if(field==='pm-max'){ f.dados.pm.max=Math.max(0,v); if(f.dados.pm.atual>f.dados.pm.max) f.dados.pm.atual=f.dados.pm.max; }
-  else if(field==='vanguarda'){ f.dados.vanguarda=v; }
-  else if(field==='mitigacao'){ f.dados.mitigacao=v; }
-  fsRenderStats();
-  fichaMarkDirty();
-}
-function fsBarClick(e, which){
-  var f=window.currentFicha; if(!f) return;
-  var rect=e.currentTarget.getBoundingClientRect();
-  var pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
-  var maxV = which==='pv' ? (f.dados.pv.max||0) : (f.dados.pm.max||0);
-  var newVal=Math.round(pct*maxV);
-  if(which==='pv') f.dados.pv.atual=newVal; else f.dados.pm.atual=newVal;
-  fsRenderStats();
-  fichaMarkDirty();
-}
-document.addEventListener('DOMContentLoaded', function(){
-  var pvBar=document.getElementById('fs-pv-bar'); if(pvBar) pvBar.addEventListener('click', function(e){fsBarClick(e,'pv');});
-  var pmBar=document.getElementById('fs-pm-bar'); if(pmBar) pmBar.addEventListener('click', function(e){fsBarClick(e,'pm');});
-});
-// Caso o script rode após o DOMContentLoaded já ter disparado:
-if(document.readyState!=='loading'){
-  var _pvBar=document.getElementById('fs-pv-bar'); if(_pvBar) _pvBar.addEventListener('click', function(e){fsBarClick(e,'pv');});
-  var _pmBar=document.getElementById('fs-pm-bar'); if(_pmBar) _pmBar.addEventListener('click', function(e){fsBarClick(e,'pm');});
-}
-
-// ── Clique-para-editar unificado (atributos principais + stats da sidebar) ──
-document.addEventListener('click', function(e){
-  var elA=e.target.closest('.fg-attr-val');
-  var elB=e.target.closest('.fs-editval');
-  var el=elA||elB;
-  if(!el || el.querySelector('input')) return;
-  var f=window.currentFicha; if(!f) return;
-  var input=document.createElement('input');
-  input.type='number';
-  if(elA){
-    var a=el.dataset.attr;
-    input.value=f.dados.atributos[a]||0;
-    el.textContent=''; el.appendChild(input);
-    input.focus(); input.select();
-    input.addEventListener('blur', function(){
-      var v=parseInt(input.value,10); if(isNaN(v))v=0; if(v<-5)v=-5; if(v>15)v=15;
-      f.dados.atributos[a]=v;
-      fgRenderAtributos(); fgRenderPericias(); fgRenderResistencias(); fgCargaUpdate();
-      fichaMarkDirty();
-    });
-  } else {
-    var field=el.dataset.field;
-    input.value=el.textContent.replace('+','');
-    el.textContent=''; el.appendChild(input);
-    input.focus(); input.select();
-    input.addEventListener('blur', function(){ fsCommitEdit(field, input.value); });
-  }
-  input.addEventListener('keydown', function(ev){ if(ev.key==='Enter') input.blur(); });
-});
-
-// ── Chat / Rolagens (painel da ficha, sincronizado por mesa) ──
-function fcEsc(s){
-  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  });
-}
-function fcFmtHora(ts){
-  var d=new Date(ts||Date.now());
-  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
-  return hh+':'+mm;
-}
-var fcUnsub=null;
-function fcAttach(mesaId){
-  fcDetach();
-  var feed=document.getElementById('fc-feed');
-  if(feed) feed.innerHTML='<div class="fc-empty">Carregando...</div>';
-  var chatQuery=query(ref(db,'mesas/'+mesaId+'/chat'), limitToLast(50));
-  fcUnsub=onValue(chatQuery, function(snap){
-    var data=snap.exists()?snap.val():{};
-    var ids=Object.keys(data);
-    ids.sort(function(a,b){return (data[a].ts||0)-(data[b].ts||0);});
-    var html='';
-    if(!ids.length){
-      html='<div class="fc-empty">Nenhuma mensagem ainda. Clica numa perícia pra rolar, ou manda um oi!</div>';
-    }
-    ids.forEach(function(id){
-      var m=data[id];
-      if(m.tipo==='roll'){
-        var critClass = m.dado===20 ? ' crit' : (m.dado===1 ? ' fail' : '');
-        html+='<div class="fc-msg fc-roll">'+
-          '<div class="fc-msg-head"><span class="fc-msg-autor">'+fcEsc(m.autor)+'</span><span>'+fcFmtHora(m.ts)+'</span></div>'+
-          '<div class="fc-roll-die'+critClass+'">'+m.dado+'</div>'+
-          '<div class="fc-roll-peri">Teste de '+fcEsc(m.pericia)+'</div>'+
-          '<div class="fc-roll-sub">'+m.dado+' '+(m.mod>=0?'+':'')+m.mod+' = <strong style="color:var(--text);">'+m.total+'</strong></div>'+
-          (m.dado===20?'<span class="fc-roll-tag crit">Crítico</span>':'')+
-          (m.dado===1?'<span class="fc-roll-tag">Falha crítica</span>':'')+
-        '</div>';
-      } else {
-        html+='<div class="fc-msg">'+
-          '<div class="fc-msg-head"><span class="fc-msg-autor">'+fcEsc(m.autor)+'</span><span>'+fcFmtHora(m.ts)+'</span></div>'+
-          '<div class="fc-msg-texto">'+fcEsc(m.texto)+'</div>'+
-        '</div>';
-      }
-    });
-    var feedEl=document.getElementById('fc-feed');
-    if(feedEl){ feedEl.innerHTML=html; feedEl.scrollTop=feedEl.scrollHeight; }
-  });
-}
-function fcDetach(){
-  if(fcUnsub){ fcUnsub(); fcUnsub=null; }
-}
-window.chatEnviarMsg=function(){
-  var input=document.getElementById('fc-input');
-  if(!input) return;
-  var texto=input.value.trim();
-  if(!texto||!window.currentMesa||!window.currentUser) return;
-  push(ref(db,'mesas/'+window.currentMesa.id+'/chat'),{
-    tipo:'msg',
-    autor: window.currentUser.displayName||window.currentUser.email||'Aventureiro',
-    autorUid: window.currentUser.uid,
-    texto: texto,
-    ts: Date.now()
-  });
-  input.value='';
-};
-window.fgPeriRowClick=function(e,i){
-  if(e.target.closest('select, input')) return;
-  fgRolarPericia(i);
-};
-function fgRolarPericia(i){
-  var f=window.currentFicha; if(!f||!window.currentMesa||!window.currentUser) return;
-  var p=f.dados.pericias[i]; if(!p) return;
-  var atr=f.dados.atributos||{};
-  var mod=(atr[p.atributo]||0)+(p.bonus||0);
-  var dado=Math.floor(Math.random()*20)+1;
-  var nome = p.oficio ? ('Ofício ('+(p.oficioEscolhido||'')+')') : p.nome;
-  push(ref(db,'mesas/'+window.currentMesa.id+'/chat'),{
-    tipo:'roll',
-    autor: window.currentUser.displayName||window.currentUser.email||'Aventureiro',
-    autorUid: window.currentUser.uid,
-    pericia: nome,
-    dado: dado,
-    mod: mod,
-    total: dado+mod,
-    ts: Date.now()
-  });
-}
-window.fcSwitchTab=function(tab){
-  document.querySelectorAll('.fc-tab').forEach(function(t){t.classList.remove('active');});
-  var tEl=document.querySelector('.fc-tab[data-fctab="'+tab+'"]'); if(tEl) tEl.classList.add('active');
-  var chatEl=document.getElementById('fctab-chat'); if(chatEl) chatEl.style.display = tab==='chat'?'flex':'none';
-  var compEl=document.getElementById('fctab-compendio'); if(compEl) compEl.style.display = tab==='compendio'?'flex':'none';
-};
-
-// ── Vantagens / Desvantagens ──
-var fgVdAberto=null;
-function fgRenderVD(tipo){
-  var f=window.currentFicha; if(!f) return;
-  var lista=f.dados[tipo]||(f.dados[tipo]=[]);
-  var html='';
-  lista.forEach(function(it,i){
-    var aberto=(fgVdAberto===tipo+i);
-    html+='<div class="fg-vd-item"><div class="fg-vd-head" onclick="fgVdToggle(\''+tipo+'\','+i+')">'+
-        '<span>'+(it.nome||'(sem nome)')+'</span>'+
-        '<button class="fg-vd-remove" onclick="event.stopPropagation();fgVdRemover(\''+tipo+'\','+i+')" title="Remover">×</button>'+
-      '</div>';
-    if(aberto){
-      html+='<div class="fg-vd-edit">'+
-        fgVdCampo(tipo,i,'descricao','Descrição',it.descricao,'textarea')+
-        fgVdCampo(tipo,i,'origem','Origem',it.origem)+
-        fgVdCampo(tipo,i,'custoPM','Custo de PM',it.custoPM)+
-        fgVdCampo(tipo,i,'cd','CD',it.cd)+
-        fgVdCampo(tipo,i,'execucao','Execução',it.execucao)+
-        fgVdCampo(tipo,i,'duracao','Duração',it.duracao)+
-      '</div>';
-    }
-    html+='</div>';
-  });
-  var elId=(tipo==='vantagens')?'fg-vant-list':'fg-desv-list';
-  var el=document.getElementById(elId);
-  if(el) el.innerHTML=html||'<div class="fg-vd-empty">Nenhuma ainda.</div>';
-}
-function fgVdCampo(tipo,i,campo,label,valor,tag2){
-  valor=(valor===undefined||valor===null)?'':valor;
-  if(tag2==='textarea'){
-    return '<label>'+label+'</label><textarea oninput="fgVdUpdate(\''+tipo+'\','+i+',\''+campo+'\',this.value)">'+String(valor).replace(/</g,'&lt;')+'</textarea>';
-  }
-  return '<label>'+label+'</label><input type="text" value="'+String(valor).replace(/"/g,'&quot;')+'" oninput="fgVdUpdate(\''+tipo+'\','+i+',\''+campo+'\',this.value)">';
-}
-function fgVdToggle(tipo,i){
-  var k=tipo+i;
-  fgVdAberto=(fgVdAberto===k)?null:k;
-  fgRenderVD(tipo);
-}
-function fgVdUpdate(tipo,i,campo,valor){
-  var f=window.currentFicha; if(!f||!f.dados[tipo]||!f.dados[tipo][i]) return;
-  f.dados[tipo][i][campo]=valor;
-  fichaMarkDirty();
-}
-function fgVdRemover(tipo,i){
-  var f=window.currentFicha; if(!f) return;
-  f.dados[tipo].splice(i,1);
-  fgRenderVD(tipo);
-  fichaMarkDirty();
-}
-
-// ── Picker (selecionar vantagem/desvantagem do Codex) ──
-var FG_PICKER_TIPO=null;
-var fgPickerCache=[];
-function fgAbrirPicker(tipo){
-  FG_PICKER_TIPO=tipo;
-  document.getElementById('fgPickerTitulo').textContent = (tipo==='vantagens') ? 'Adicionar Vantagem' : 'Adicionar Desvantagem';
-  document.getElementById('fgPickerBusca').value='';
-  fgPickerFiltro();
-  document.getElementById('fgPickerOverlay').classList.add('open');
-}
-function fgFecharPicker(){
-  document.getElementById('fgPickerOverlay').classList.remove('open');
-}
-function fgPickerPool(){
-  if(FG_PICKER_TIPO==='vantagens'){
-    return [].concat(VD.versateis||[],VD.combate||[],VD.magicas||[],VD.ataques||[],VD.superpoderes||[]);
-  }
-  return [].concat(VD.desvantagens||[],VD.maldicoes||[]);
-}
-function fgPickerFiltro(){
-  var s=(document.getElementById('fgPickerBusca').value||'').toLowerCase();
-  var pool=fgPickerPool();
-  var data=pool.filter(function(r){return !s||vdNome(r).toLowerCase().indexOf(s)>-1;}).slice(0,150);
-  var html=data.map(function(r,i){
-    var custo=vdCusto(r);
-    return '<div class="fg-picker-item" onclick="fgPickerEscolher('+i+')"><span>'+vdNome(r)+'</span>'+(custo?'<span class="fg-picker-custo">'+custo+' pts</span>':'')+'</div>';
-  }).join('');
-  var el=document.getElementById('fgPickerList');
-  if(el) el.innerHTML=html||'<div class="fg-vd-empty">'+(pool.length?'Nada encontrado.':'Nada carregado do Codex ainda — confira a aba inicial.')+'</div>';
-  fgPickerCache=data;
-}
-function fgPickerEscolher(i){
-  var r=fgPickerCache[i]; if(!r) return;
-  var f=window.currentFicha; if(!f) return;
-  var item={nome:vdNome(r),descricao:vdDesc(r)||'',origem:'',custoPM:'',cd:'',execucao:'',duracao:''};
-  var arr=f.dados[FG_PICKER_TIPO]||(f.dados[FG_PICKER_TIPO]=[]);
-  arr.push(item);
-  fgRenderVD(FG_PICKER_TIPO);
-  fichaMarkDirty();
-  fgFecharPicker();
-}
-function fgPickerManual(){
-  var f=window.currentFicha; if(!f) return;
-  var nome=prompt('Nome da '+(FG_PICKER_TIPO==='vantagens'?'vantagem':'desvantagem')+':');
-  if(!nome) return;
-  var arr=f.dados[FG_PICKER_TIPO]||(f.dados[FG_PICKER_TIPO]=[]);
-  arr.push({nome:nome,descricao:'',origem:'',custoPM:'',cd:'',execucao:'',duracao:''});
-  fgRenderVD(FG_PICKER_TIPO);
-  fichaMarkDirty();
-  fgFecharPicker();
-}
-
-// ── Avatar ──
-window.fichaEditarAvatar=function(){
-  var f=window.currentFicha; if(!f) return;
-  var url=prompt('Cole a URL da imagem do personagem:', f.dados.avatar||'');
-  if(url===null) return;
-  f.dados.avatar=url.trim();
-  var av=document.getElementById('ficha-h-avatar');
-  if(av){
-    if(f.dados.avatar){av.style.backgroundImage='url(\''+f.dados.avatar+'\')';av.textContent='';}
-    else{av.style.backgroundImage='';av.textContent='✦';}
-  }
-  fichaMarkDirty();
-};
-
-
-
-const auth = getAuth(app);
-
-// ── Autenticação (login com Google) ──
-function renderAuthUI(user){
-  var el = document.getElementById('sidebar-auth');
-  if(!el) return;
-  if(user){
-    var foto = user.photoURL || '';
-    var nome = user.displayName || user.email || 'Aventureiro';
-    el.innerHTML =
-      '<div class="auth-user">'+
-        (foto ? '<img class="auth-avatar" src="'+foto+'" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">' : '')+
-        '<span class="auth-name">'+nome+'</span>'+
-        '<button class="auth-signout-btn" onclick="fbSignOut()">Sair</button>'+
-      '</div>';
-  } else {
-    el.innerHTML = '<button class="auth-signin-btn" onclick="fbSignIn()">Entrar com Google</button>';
-  }
-}
-
-window.fbSignIn = function(){
-  signInWithPopup(auth, new GoogleAuthProvider()).catch(function(err){
-    console.error('Erro no login:', err);
-    alert('Não foi possível entrar com o Google.\n\nMotivo: '+(err.code||err.message||'desconhecido'));
-  });
-};
-window.fbSignOut = function(){
-  signOut(auth);
-};
-
-onAuthStateChanged(auth, function(user){
-  window.currentUser = user;
-  renderAuthUI(user);
-  if(typeof checkSplashReady==='function') checkSplashReady();
-});
 
 
 // ── Injeta imagens nos placeholders do DOM sem re-renderizar ──
