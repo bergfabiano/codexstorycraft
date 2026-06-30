@@ -8465,7 +8465,7 @@ function adminRemover(){}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, get, update, remove, onValue, push, query, orderByChild, orderByKey, equalTo, limitToLast, limitToFirst, goOffline, goOnline } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, setPersistence, browserLocalPersistence, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBofDlVfeUZCHIboE1V2Ksm1Wu5v-LoNuY",
@@ -15500,7 +15500,13 @@ function _dmMakeDraggable(el,handle){
 
 
 window.fbSignIn = function(){
-  signInWithRedirect(auth, new GoogleAuthProvider()).catch(function(err){
+  var avisoTimer = setTimeout(function(){
+    fgModalAlert('O login está demorando demais pra iniciar.\n\nIsso geralmente acontece quando o navegador bloqueia cookies/dados de sites de terceiros (necessário pro Google Login). Tenta:\n\n1) Desativar bloqueadores de anúncio/privacidade (uBlock, Brave Shields, etc) pra este site\n2) Desativar "Bloquear cookies de terceiros" nas configs do navegador (ou usar uma exceção pra firebaseapp.com e google.com)\n3) Sair do modo anônimo/privado, se estiver nele\n4) Tentar em outro navegador (Chrome ou Firefox normal, sem extensões)');
+  }, 6000);
+  setPersistence(auth, browserLocalPersistence).catch(function(){}).then(function(){
+    return signInWithRedirect(auth, new GoogleAuthProvider());
+  }).catch(function(err){
+    clearTimeout(avisoTimer);
     console.error('Erro no login:', err);
     fgModalAlert('Não foi possível entrar com o Google.\n\nMotivo: '+(err.code||err.message||'desconhecido'));
   });
