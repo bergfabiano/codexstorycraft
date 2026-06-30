@@ -8465,7 +8465,7 @@ function adminRemover(){}
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, get, update, remove, onValue, push, query, orderByChild, orderByKey, equalTo, limitToLast, limitToFirst, goOffline, goOnline } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBofDlVfeUZCHIboE1V2Ksm1Wu5v-LoNuY",
@@ -15500,7 +15500,7 @@ function _dmMakeDraggable(el,handle){
 
 
 window.fbSignIn = function(){
-  signInWithPopup(auth, new GoogleAuthProvider()).catch(function(err){
+  signInWithRedirect(auth, new GoogleAuthProvider()).catch(function(err){
     console.error('Erro no login:', err);
     fgModalAlert('Não foi possível entrar com o Google.\n\nMotivo: '+(err.code||err.message||'desconhecido'));
   });
@@ -15508,6 +15508,15 @@ window.fbSignIn = function(){
 window.fbSignOut = function(){
   signOut(auth);
 };
+
+// Captura o resultado do login por redirect (quando o usuário volta do Google).
+// Erros aqui (ex: domínio não autorizado) ficam visíveis em vez de falhar silenciosamente.
+getRedirectResult(auth).catch(function(err){
+  console.error('Erro no retorno do login (redirect):', err);
+  if(err && err.code && err.code!=='auth/no-current-user') {
+    fgModalAlert('Não foi possível concluir o login com o Google.\n\nMotivo: '+(err.code||err.message||'desconhecido'));
+  }
+});
 
 onAuthStateChanged(auth, function(user){
   window.currentUser = user;
